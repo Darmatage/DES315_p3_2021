@@ -30,4 +30,9 @@ public class botB01_DeployLaser : MonoBehaviour, botB01_IAttack
     {
         scrWeapons.SetButtonStatus(index, false);
     }
+
+    public void Cancel()
+    {
+        
+    }
 }

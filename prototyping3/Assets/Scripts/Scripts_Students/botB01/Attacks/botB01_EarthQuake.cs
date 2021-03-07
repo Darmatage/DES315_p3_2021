@@ -147,4 +147,10 @@ public class botB01_EarthQuake : MonoBehaviour, botB01_IAttack
         currentState = botB01_AttackState.inactive;
         mesh.enabled = false;
     }
+
+    public void Cancel()
+    {
+        Ready();
+        col.enabled = false;
+    }
 }

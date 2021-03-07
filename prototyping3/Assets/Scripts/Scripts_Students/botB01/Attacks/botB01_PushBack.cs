@@ -112,9 +112,9 @@ public class botB01_PushBack : MonoBehaviour, botB01_IAttack
         currentState = botB01_AttackState.stage_0;
         AuraCylinder.transform.localScale = startDimensions;
         
-        cooldownTimer    = 0;
-        attackTimer      = 0;
-        decayTimer = 0;
+        cooldownTimer = 0;
+        attackTimer   = 0;
+        decayTimer    = 0;
         
         mesh.enabled = true;
         mesh.material.color = Safe;
@@ -127,5 +127,11 @@ public class botB01_PushBack : MonoBehaviour, botB01_IAttack
         scrWeapons.SetButtonStatus(index, false);
         currentState = botB01_AttackState.inactive;
         mesh.enabled = false;
+    }
+
+    public void Cancel()
+    {
+        Ready();
+        col.enabled = false;
     }
 }

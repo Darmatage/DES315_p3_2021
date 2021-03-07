@@ -2,4 +2,5 @@
 {
     void Attack();
     void Ready();
+    void Cancel();
 }
