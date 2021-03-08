@@ -29,6 +29,7 @@ namespace BotB04.Controller
 		[SerializeField]
 		public ShieldData ShieldBaseStats;
 
+		[System.Serializable]
 		public class ShieldRuntimeData
 		{
 			public float powerFront;
@@ -63,7 +64,8 @@ namespace BotB04.Controller
 			}
 
 		}
-		private ShieldRuntimeData shieldRuntime;
+		[SerializeField]
+		public ShieldRuntimeData shieldRuntime;
 
 		[System.Serializable]
         public class ShieldReferenceStorage
@@ -94,6 +96,13 @@ namespace BotB04.Controller
 		private GameHandler gameHandler;
 		private string thisPlayer;
 		private bool notMyWeapon = true;
+
+
+
+		[SerializeField]
+		private Color shieldReadyColor;
+		[SerializeField]
+		private Color shieldDownColor;
 
 		void Start()
 		{
@@ -127,15 +136,15 @@ namespace BotB04.Controller
 
         private void Update()
         {
-			RepairShield(ref shieldRuntime.powerFront,  ShieldBaseStats.PowerFrontMax,  ref shieldRuntime.delayFront, DamageParticleReferences.dmgParticlesFront);
-			RepairShield(ref shieldRuntime.powerBack,   ShieldBaseStats.PowerBackMax,   ref shieldRuntime.delayBack, DamageParticleReferences.dmgParticlesBack);
-			RepairShield(ref shieldRuntime.powerLeft,   ShieldBaseStats.PowerLeftMax,   ref shieldRuntime.delayLeft, DamageParticleReferences.dmgParticlesLeft);
-			RepairShield(ref shieldRuntime.powerRight,  ShieldBaseStats.PowerRightMax,  ref shieldRuntime.delayRight, DamageParticleReferences.dmgParticlesRight);
-			RepairShield(ref shieldRuntime.powerTop,    ShieldBaseStats.PowerTopMax,    ref shieldRuntime.delayTop, DamageParticleReferences.dmgParticlesTop);
-			RepairShield(ref shieldRuntime.powerBottom, ShieldBaseStats.PowerBottomMax, ref shieldRuntime.delayBottom, null);
+			//RepairShield(ref shieldRuntime.powerFront,  ShieldBaseStats.PowerFrontMax,  ref shieldRuntime.delayFront, DamageParticleReferences.dmgParticlesFront, ShieldReferences.shieldFrontObj);
+			//RepairShield(ref shieldRuntime.powerBack,   ShieldBaseStats.PowerBackMax,   ref shieldRuntime.delayBack, DamageParticleReferences.dmgParticlesBack, ShieldReferences.shieldBackObj);
+			RepairShield(ref shieldRuntime.powerLeft,   ShieldBaseStats.PowerLeftMax,   ref shieldRuntime.delayLeft, DamageParticleReferences.dmgParticlesLeft, ShieldReferences.shieldLeftObj);
+			RepairShield(ref shieldRuntime.powerRight,  ShieldBaseStats.PowerRightMax,  ref shieldRuntime.delayRight, DamageParticleReferences.dmgParticlesRight, ShieldReferences.shieldRightObj);
+			//RepairShield(ref shieldRuntime.powerTop,    ShieldBaseStats.PowerTopMax,    ref shieldRuntime.delayTop, DamageParticleReferences.dmgParticlesTop, ShieldReferences.shieldTopObj);
+			//RepairShield(ref shieldRuntime.powerBottom, ShieldBaseStats.PowerBottomMax, ref shieldRuntime.delayBottom, null, ShieldReferences.shieldBottomObj);
 		}
 
-		private void RepairShield(ref float shieldHealth, float shieldMax, ref float delay, GameObject damageParticles)
+		private void RepairShield(ref float shieldHealth, float shieldMax, ref float delay, GameObject damageParticles, GameObject shieldObj)
         {
 			delay -= Time.deltaTime;
 			if(delay <= 0)
@@ -143,7 +152,23 @@ namespace BotB04.Controller
 				shieldHealth = Mathf.Min(shieldHealth + ShieldBaseStats.RechargeRate * Time.deltaTime, shieldMax);
 				if(damageParticles != null)
 					damageParticles.SetActive(false);
+
+				
+
 			}
+
+
+			shieldObj.SetActive(true);
+			Renderer shieldRenderer = shieldObj.GetComponent<Renderer>();
+
+			if (shieldObj == ShieldReferences.shieldLeftObj)
+				shieldRenderer.material.color = shieldReadyColor;
+			else if (shieldObj == ShieldReferences.shieldRightObj)
+				shieldRenderer.material.color = shieldReadyColor;
+			else
+				shieldRenderer.material.color = new Color(255f / 255f, 0 / 255f, 0 / 255f);
+
+			shieldRenderer.material.color = new Color(shieldRenderer.material.color.r, shieldRenderer.material.color.g, shieldRenderer.material.color.b, shieldHealth / shieldMax);
 		}
 
 
@@ -332,12 +357,14 @@ namespace BotB04.Controller
 
 		IEnumerator ShieldHitDisplay(GameObject shieldObj)
 		{
-			shieldObj.SetActive(true);
-			// Renderer shieldRenderer = GetComponent<Renderer> ();
-			// shieldRenderer.material.color = new Color(255,200,0,1f);
-			yield return new WaitForSeconds(0.4f);
-			//shieldRenderer.material.color = new Color(255,200,0,0f);
-			shieldObj.SetActive(false);
+			//shieldObj.SetActive(true);
+			//Renderer shieldRenderer = shieldObj.GetComponent<Renderer> ();
+			//shieldRenderer.material.color = new Color(255,200,0,1f);
+			//yield return new WaitForSeconds(0.4f);
+			////shieldRenderer.material.color = new Color(255,200,0,0f);
+			//shieldObj.SetActive(false);
+
+			yield return null;
 		}
 
 

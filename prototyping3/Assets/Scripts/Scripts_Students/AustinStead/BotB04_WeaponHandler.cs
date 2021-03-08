@@ -19,6 +19,11 @@ namespace BotB04.Controller
 		string button3;
 		string button4; // currently boost in player move script
 
+
+		public GameObject leftWeapon;
+		public GameObject rightWeapon;
+
+
 		void Start()
 		{
 			button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;

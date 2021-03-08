@@ -299,15 +299,15 @@ MonoBehaviour:
   compassSides: {fileID: 1029706280859159121}
   compassVertical: {fileID: 4587639291210960121}
   knockBackSpeed: 10
-  ShieldStats:
-    RechargeDelay: 2
-    rechargeRate: 1
-    shieldPowerFront: 5
-    shieldPowerBack: 5
-    shieldPowerLeft: 5
-    shieldPowerRight: 5
-    shieldPowerTop: 5
-    shieldPowerBottom: 5
+  ShieldBaseStats:
+    RechargeDelay: 0.5
+    RechargeRate: 0.05
+    PowerFrontMax: 5
+    PowerBackMax: 5
+    PowerLeftMax: 5
+    PowerRightMax: 5
+    PowerTopMax: 5
+    PowerBottomMax: 5
   ShieldReferences:
     shieldFrontObj: {fileID: 5842800509108774881}
     shieldBackObj: {fileID: 4646661635187871857}
@@ -321,11 +321,8 @@ MonoBehaviour:
     dmgParticlesLeft: {fileID: 1892345917183961140}
     dmgParticlesRight: {fileID: 6173963377318405683}
     dmgParticlesTop: {fileID: 869345424931871733}
-  dmgParticlesFront: {fileID: 8597115311037407773}
-  dmgParticlesBack: {fileID: 4910112883522963572}
-  dmgParticlesLeft: {fileID: 1892345917183961140}
-  dmgParticlesRight: {fileID: 6173963377318405683}
-  dmgParticlesTop: {fileID: 869345424931871733}
+  leftShieldColor: {r: 1, g: 0, b: 0, a: 1}
+  rightShieldColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &6560889895655178434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -685,7 +682,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: botSHIELDS_art
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 803272875843732804, guid: f3ce26a275528f54aa8e326dfe9c7f23, type: 3}
+    - {fileID: 5799614333456560416, guid: f3ce26a275528f54aa8e326dfe9c7f23, type: 3}
+    - {fileID: 8951774417816070867, guid: f3ce26a275528f54aa8e326dfe9c7f23, type: 3}
+    - {fileID: 3554100571301520989, guid: f3ce26a275528f54aa8e326dfe9c7f23, type: 3}
+    - {fileID: 3462724479731253247, guid: f3ce26a275528f54aa8e326dfe9c7f23, type: 3}
+    - {fileID: 2561444821216452068, guid: f3ce26a275528f54aa8e326dfe9c7f23, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f3ce26a275528f54aa8e326dfe9c7f23, type: 3}
 --- !u!4 &2051409660847960395 stripped
 Transform:
