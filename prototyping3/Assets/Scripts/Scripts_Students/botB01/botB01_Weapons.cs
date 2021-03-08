@@ -32,14 +32,17 @@ public class botB01_Weapons : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            if (Input.GetButtonDown(buttons[i]) && !buttonStatuses[i])
-                Attack(i);
-        }
-
         if (scrMove.isGrabbed || !scrMove.isGrounded || scrMove.isTurtled)
             CancelAllAttacks();
+
+        else
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                if (Input.GetButtonDown(buttons[i]) && !buttonStatuses[i])
+                    Attack(i);
+            }
+        }
     }
 
     #region Helpers

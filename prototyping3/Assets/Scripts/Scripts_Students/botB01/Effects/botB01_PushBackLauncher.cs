@@ -3,7 +3,7 @@
 public class botB01_PushBackLauncher : MonoBehaviour
 {
     public Transform source;
-    [Range(0, 1000)] public float Knockback = 100.0f;
+    [Range(0, 1000)] public float Knockback = 125;
 
     private void OnTriggerEnter(Collider other)
     {
