@@ -122,6 +122,8 @@ public class RocketJump : MonoBehaviour
         // Check for the jump button
         if (Input.GetButtonDown(button1) && JumpVec != new Vector3(0.0f, 0.0f, 0.0f))
         {
+            if (GetComponent<LotsaShot>() != null) GetComponent<LotsaShot>().Flip();
+
             JumpVec += new Vector3(0.0f, 1.0f, 0.0f) * UpStrength;
             RigidBod.AddForce(JumpVec, ForceMode.Impulse);
 
