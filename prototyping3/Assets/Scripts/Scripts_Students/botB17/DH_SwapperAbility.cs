@@ -23,7 +23,7 @@ public class DH_SwapperAbility : MonoBehaviour
     {
       Swap();
     }
-    else if (Input.GetKeyDown(KeyCode.Comma))
+    if (Input.GetKeyDown(KeyCode.Comma) && !gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
     {
       Swap();
     }
