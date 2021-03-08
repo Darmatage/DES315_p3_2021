@@ -47,5 +47,16 @@ namespace A09
 
             _lifetime += Time.deltaTime;
         }
+
+        private IEnumerator OnCollisionEnter(Collision other)
+        {
+            var controller = other.gameObject.transform.root.GetComponentInChildren<TransformationController>();
+
+            if (controller != null)
+                yield break;
+
+            //yield return null;
+            Destroy(gameObject);
+        }
     }
 }
