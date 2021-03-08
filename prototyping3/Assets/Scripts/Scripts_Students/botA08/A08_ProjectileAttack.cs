@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class leechAttack : MonoBehaviour
+public class A08_ProjectileAttack : MonoBehaviour
 {
-    public GameObject weaponThrust;
     public float cooldown = 5.0f;
+    public float projectileVelocity = 10.0f;
+    public int damageCost = 3;
+    public GameObject projectile;
 
     private float cooldownTimer = 0;
-    private float thrustAmount = 2f;
-
-    private bool weaponOut = false;
+    private GameHandler gameHandler;
 
     //grab axis from parent object
     public string button1;
@@ -25,16 +25,24 @@ public class leechAttack : MonoBehaviour
         button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
         button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
         button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
+
+        if (GameObject.FindWithTag("GameHandler") != null)
+        {
+            gameHandler = GameObject.FindWithTag("GameHandler").GetComponent<GameHandler>();
+        }
+
     }
 
 
     void Update()
     {
-        if ((Input.GetButtonDown(button1)) && (weaponOut == false) && cooldownTimer <= 0)
+        if ((Input.GetButtonDown(button2)) && cooldownTimer <= 0)
         {
-            weaponThrust.transform.Translate(0, thrustAmount, 0);
-            weaponOut = true;
-            StartCoroutine(WithdrawWeapon());
+            GameObject shot = Instantiate(projectile, this.transform.position, Quaternion.identity);
+
+            shot.GetComponent<Rigidbody>().AddForce(this.transform.forward * projectileVelocity);
+
+            gameHandler.TakeDamage(this.transform.root.tag, damageCost);
 
             cooldownTimer = cooldown;
         }
@@ -42,11 +50,4 @@ public class leechAttack : MonoBehaviour
         cooldownTimer -= Time.deltaTime;
     }
 
-
-    IEnumerator WithdrawWeapon()
-    {
-        yield return new WaitForSeconds(0.1f);
-        weaponThrust.transform.Translate(0, -thrustAmount, 0);
-        weaponOut = false;
-    }
 }
