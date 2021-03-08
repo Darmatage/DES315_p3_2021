@@ -19,7 +19,11 @@ public class DH_SwapperAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
   {
-    if(Input.GetKeyDown(KeyCode.T))
+    if(Input.GetKeyDown(KeyCode.R) && gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
+    {
+      Swap();
+    }
+    else if (Input.GetKeyDown(KeyCode.Comma))
     {
       Swap();
     }
