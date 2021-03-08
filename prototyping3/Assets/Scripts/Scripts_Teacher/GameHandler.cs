@@ -86,6 +86,20 @@ public class GameHandler : MonoBehaviour{
 				Instantiate(player1Prefab, Player1Holder.transform.position, Player1Holder.transform.rotation, Player1Holder.transform);
 				Instantiate(player2Prefab, Player2Holder.transform.position, Player2Holder.transform.rotation, Player2Holder.transform);
 				UpdateStats();
+				
+				GameObject celebratePlayer1 = GameObject.FindWithTag("p1celeb");
+				GameObject celebratePlayer2 = GameObject.FindWithTag("p2celeb");
+				if(winner.Split(' ')[0] == "Player1:"){
+					celebratePlayer1.SetActive(true);
+					celebratePlayer2.SetActive(false);
+				} else if (winner.Split(' ')[0] == "Player2:"){
+					celebratePlayer1.SetActive(false);
+					celebratePlayer2.SetActive(true);
+				} else {
+					celebratePlayer1.SetActive(false);
+					celebratePlayer2.SetActive(false);
+				}
+				
 			} else {Debug.Log("This Scene depends on static variables from an Arena Scene");}
 		}
 
@@ -113,14 +127,14 @@ public class GameHandler : MonoBehaviour{
 	}
 
 	void Update(){
-		if (p1Health <= 0){
+		if ((p1Health <= 0)&&(thisScene.name != "EndScene")){
 			p1Health = 0;
-			winner = "Player2";
+			winner = "Player2: " + p2PlayerChoiceName;
 			StartCoroutine(EndGame());
 		}
-		if (p2Health <= 0){
+		if ((p2Health <= 0)&&(thisScene.name != "EndScene")){
 			p2Health = 0;
-			winner = "Player1";
+			winner = "Player1: " + p1PlayerChoiceName;
 			StartCoroutine(EndGame());
 		}
 
