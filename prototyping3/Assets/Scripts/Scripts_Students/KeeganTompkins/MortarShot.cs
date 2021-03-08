@@ -39,6 +39,8 @@ public class MortarShot : MonoBehaviour
         render.endWidth = LineWidth;
     }
 
+
+
     // Update is called once per frame
     void Update()
     {
