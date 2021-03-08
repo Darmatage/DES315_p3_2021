@@ -199,8 +199,14 @@ public class GameHandler : MonoBehaviour{
 		p1Stemp.text = "P1 Shields: " + p1Shields;
 
 		Text p1Ntemp = p1NameText.GetComponent<Text>();
-		if (player1Prefab != null){	p1Ntemp.text = "" + p1PlayerChoiceName;}
-		else { p1Ntemp.text = ""; }
+		if (isShowcase == false){
+			if (player1Prefab != null){	p1Ntemp.text = "" + p1PlayerChoiceName;}
+				else { p1Ntemp.text = ""; }
+		}
+		else {
+			if (player1Prefab != null){	p1Ntemp.text = "" + player1Prefab.name;}
+			else { p1Ntemp.text = ""; }
+		}
 
 		Text p2Htemp = p2HealthText.GetComponent<Text>();
 		p2Htemp.text = "P2 Health: " + p2Health;
@@ -209,8 +215,15 @@ public class GameHandler : MonoBehaviour{
 		p2Stemp.text = "P2 Shields: " + p2Shields;
 		
 		Text p2Ntemp = p2NameText.GetComponent<Text>();
-		if (player2Prefab != null){	p2Ntemp.text = "" + p2PlayerChoiceName;}
-		else { p2Ntemp.text = ""; }
+		if (isShowcase == false){
+			if (player2Prefab != null){	p2Ntemp.text = "" + p2PlayerChoiceName;}
+				else { p2Ntemp.text = ""; }
+		}
+		else {
+			if (player2Prefab != null){	p2Ntemp.text = "" + player2Prefab.name;}
+			else { p2Ntemp.text = ""; }
+		}
+		
 		
 		Text GTtemp = gameTimerText.GetComponent<Text>();
 		GTtemp.text = "" + gameTime;
