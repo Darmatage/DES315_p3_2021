@@ -55,7 +55,7 @@ public class B05_BladeRush : MonoBehaviour
     public void Attack()
     {
         // begin attack if avaliable
-        if (!b_active)
+        if (!b_active && b05.IsNormal())
         {
             BeginAttack();
         }
