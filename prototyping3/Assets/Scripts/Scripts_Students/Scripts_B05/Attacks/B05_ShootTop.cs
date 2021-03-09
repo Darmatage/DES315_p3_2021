@@ -66,8 +66,9 @@ public class B05_ShootTop : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject new_top = Instantiate(minitop, spawn_point.TransformPoint(spawn_point.localPosition), Quaternion.identity);
+        GameObject new_top = Instantiate(minitop, spawn_point.position, Quaternion.identity);
         new_top.GetComponent<Rigidbody>().AddForce(transform.forward * charge * topSpeed, ForceMode.Impulse);
+        new_top.GetComponent<B05_MiniTop>().SetParent(gameObject);
         ++top_count;
     }
 
