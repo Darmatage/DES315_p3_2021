@@ -11,6 +11,7 @@ public class Bot05_Weapons : MonoBehaviour
     public string button4; // currently boost in player move script
 
     public B05_BladeRush a_bladerush;
+    public B05_ShootTop a_shoottop;
 
     void Start()
     {
@@ -29,6 +30,14 @@ public class Bot05_Weapons : MonoBehaviour
             //weaponOut = true;
             //StartCoroutine(WithdrawWeapon());
             a_bladerush.Attack();
+        }
+        if (Input.GetButtonDown(button2))
+        {
+            a_shoottop.BeginAttack();
+        }
+        if (Input.GetButtonUp(button2))
+        {
+            a_shoottop.EndAttack();
         }
     }
 
