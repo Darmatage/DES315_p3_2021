@@ -30,6 +30,8 @@ public class GameHandler : MonoBehaviour{
 	public static GameObject player2Prefab;
 	public string p1PrefabName;
 	public string p2PrefabName;
+	public string p1PlayerChoiceName;
+	public string p2PlayerChoiceName;
 	
 	//Stats
 	public float playersHealthStart = 20f;
@@ -84,6 +86,20 @@ public class GameHandler : MonoBehaviour{
 				Instantiate(player1Prefab, Player1Holder.transform.position, Player1Holder.transform.rotation, Player1Holder.transform);
 				Instantiate(player2Prefab, Player2Holder.transform.position, Player2Holder.transform.rotation, Player2Holder.transform);
 				UpdateStats();
+				
+				GameObject celebratePlayer1 = GameObject.FindWithTag("p1celeb");
+				GameObject celebratePlayer2 = GameObject.FindWithTag("p2celeb");
+				if(winner.Split(' ')[0] == "Player1:"){
+					celebratePlayer1.SetActive(true);
+					celebratePlayer2.SetActive(false);
+				} else if (winner.Split(' ')[0] == "Player2:"){
+					celebratePlayer1.SetActive(false);
+					celebratePlayer2.SetActive(true);
+				} else {
+					celebratePlayer1.SetActive(false);
+					celebratePlayer2.SetActive(false);
+				}
+				
 			} else {Debug.Log("This Scene depends on static variables from an Arena Scene");}
 		}
 
@@ -111,14 +127,14 @@ public class GameHandler : MonoBehaviour{
 	}
 
 	void Update(){
-		if (p1Health <= 0){
+		if ((p1Health <= 0)&&(thisScene.name != "EndScene")){
 			p1Health = 0;
-			winner = "Player2";
+			winner = "Player2: " + p2PlayerChoiceName;
 			StartCoroutine(EndGame());
 		}
-		if (p2Health <= 0){
+		if ((p2Health <= 0)&&(thisScene.name != "EndScene")){
 			p2Health = 0;
-			winner = "Player1";
+			winner = "Player1: " + p1PlayerChoiceName;
 			StartCoroutine(EndGame());
 		}
 
@@ -183,8 +199,14 @@ public class GameHandler : MonoBehaviour{
 		p1Stemp.text = "P1 Shields: " + p1Shields;
 
 		Text p1Ntemp = p1NameText.GetComponent<Text>();
-		if (player1Prefab != null){	p1Ntemp.text = "" + player1Prefab.name;}
-		else { p1Ntemp.text = ""; }
+		if (isShowcase == false){
+			if (player1Prefab != null){	p1Ntemp.text = "" + p1PlayerChoiceName;}
+				else { p1Ntemp.text = ""; }
+		}
+		else {
+			if (player1Prefab != null){	p1Ntemp.text = "" + player1Prefab.name;}
+			else { p1Ntemp.text = ""; }
+		}
 
 		Text p2Htemp = p2HealthText.GetComponent<Text>();
 		p2Htemp.text = "P2 Health: " + p2Health;
@@ -193,8 +215,15 @@ public class GameHandler : MonoBehaviour{
 		p2Stemp.text = "P2 Shields: " + p2Shields;
 		
 		Text p2Ntemp = p2NameText.GetComponent<Text>();
-		if (player2Prefab != null){	p2Ntemp.text = "" + player2Prefab.name;}
-		else { p2Ntemp.text = ""; }
+		if (isShowcase == false){
+			if (player2Prefab != null){	p2Ntemp.text = "" + p2PlayerChoiceName;}
+				else { p2Ntemp.text = ""; }
+		}
+		else {
+			if (player2Prefab != null){	p2Ntemp.text = "" + player2Prefab.name;}
+			else { p2Ntemp.text = ""; }
+		}
+		
 		
 		Text GTtemp = gameTimerText.GetComponent<Text>();
 		GTtemp.text = "" + gameTime;
