@@ -28,6 +28,8 @@ public class GameHandler : MonoBehaviour{
 	
 	public static GameObject player1Prefab;
 	public static GameObject player2Prefab;
+	public static string p1PrefabNameLast;
+	public static string p2PrefabNameLast;
 	public string p1PrefabName;
 	public string p2PrefabName;
 	public string p1PlayerChoiceName;
@@ -62,6 +64,7 @@ public class GameHandler : MonoBehaviour{
 	Dictionary<string, GameObject> botDictionary;
 	
 	Scene thisScene;
+	public static bool notFirstGame = false; 
 	
 	void Awake (){
 		SetLevel (volumeLevel);
@@ -77,6 +80,10 @@ public class GameHandler : MonoBehaviour{
 		botDictionary = new Dictionary<string, GameObject>();
 		for (int i=0; i < botPrefabs.Length; i++) {
 			botDictionary.Add(botNames[i], botPrefabs[i]);
+		}
+
+		if ((notFirstGame==true)&&(gameObject.GetComponent<GameHandler_LastBots>()!= null)){
+			gameObject.GetComponent<GameHandler_LastBots>().UpdateLastBots(player1Prefab, player2Prefab);
 		}
 
 		// check for endscene
@@ -129,12 +136,17 @@ public class GameHandler : MonoBehaviour{
 	void Update(){
 		if ((p1Health <= 0)&&(thisScene.name != "EndScene")){
 			p1Health = 0;
-			winner = "Player2: " + p2PlayerChoiceName;
+			if (p2PlayerChoiceName != ""){
+				winner = "Player2: " + p2PlayerChoiceName;
+			} else {winner = "Player2: " + p2PrefabNameLast;}
 			StartCoroutine(EndGame());
 		}
 		if ((p2Health <= 0)&&(thisScene.name != "EndScene")){
 			p2Health = 0;
-			winner = "Player1: " + p1PlayerChoiceName;
+			if (p1PlayerChoiceName != ""){
+				winner = "Player1: " + p1PlayerChoiceName;
+			} else {winner = "Player1: " + p1PrefabNameLast;}
+			
 			StartCoroutine(EndGame());
 		}
 
@@ -200,7 +212,13 @@ public class GameHandler : MonoBehaviour{
 
 		Text p1Ntemp = p1NameText.GetComponent<Text>();
 		if (isShowcase == false){
-			if (player1Prefab != null){	p1Ntemp.text = "" + p1PlayerChoiceName;}
+			if (player1Prefab != null){	
+				if (p1PlayerChoiceName != ""){
+					p1Ntemp.text = "" + p1PlayerChoiceName;
+					p1PrefabNameLast = p1PlayerChoiceName;
+				}
+				else {p1Ntemp.text = "" + p1PrefabNameLast;}
+			}
 				else { p1Ntemp.text = ""; }
 		}
 		else {
@@ -216,7 +234,14 @@ public class GameHandler : MonoBehaviour{
 		
 		Text p2Ntemp = p2NameText.GetComponent<Text>();
 		if (isShowcase == false){
-			if (player2Prefab != null){	p2Ntemp.text = "" + p2PlayerChoiceName;}
+			if (player2Prefab != null){	
+				if (p2PlayerChoiceName != ""){
+					p2Ntemp.text = "" + p2PlayerChoiceName;
+					p2PrefabNameLast = p2PlayerChoiceName;
+				}
+				else {p2Ntemp.text = "" + p2PrefabNameLast;}
+				
+			}
 				else { p2Ntemp.text = ""; }
 		}
 		else {
@@ -233,9 +258,9 @@ public class GameHandler : MonoBehaviour{
 	}
 	
 	IEnumerator EndGame(){
+		notFirstGame = true;
 		yield return new WaitForSeconds(0.5f);
-		//Debug.Log("Game Over! \n Winner = " + winner);
-		
+		//Debug.Log("Game Over! \n Winner = " + winner);		
 		if ((thisScene.name != "EndScene")&&(isShowcase == false)&&(thisScene.name != "MainMenu")){
 			SceneManager.LoadScene ("EndScene");
 		}
@@ -286,8 +311,10 @@ public class GameHandler : MonoBehaviour{
 		gameHUD.SetActive(true);
 		pauseMenuUI.SetActive(false);
 			
-		player1Prefab = botDictionary[p1PrefabName];
-		player2Prefab = botDictionary[p2PrefabName];
+		if (p1PrefabName != ""){	
+			player1Prefab = botDictionary[p1PrefabName];
+			player2Prefab = botDictionary[p2PrefabName];
+		}
 		
 		//Instantiate players and cameras, and turn off StartCamera:
 		Instantiate(player1Prefab, Player1Holder.transform.position, Player1Holder.transform.rotation, Player1Holder.transform);
