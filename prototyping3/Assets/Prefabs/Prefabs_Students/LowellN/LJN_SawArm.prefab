@@ -48,9 +48,12 @@ GameObject:
   - component: {fileID: 3910421813458129932}
   - component: {fileID: 4250398147157904323}
   - component: {fileID: 8167875516771961234}
+  - component: {fileID: 8777231290430945789}
+  - component: {fileID: 60943802684793602}
+  - component: {fileID: 7919812908290139633}
   m_Layer: 0
   m_Name: saw
-  m_TagString: Untagged
+  m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,6 +133,53 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!54 &8777231290430945789
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228875030414063313}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &60943802684793602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228875030414063313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1665a3d01f4d85c4dac95fd5ec8c330f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myPlyr: 
+--- !u!114 &7919812908290139633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2228875030414063313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ca4913335a3b745850f156a725a789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  particlesPrefab: {fileID: 5471935480315314342, guid: 4fa6d08fd3be9994daa1ca17f9b6e987,
+    type: 3}
+  SpawnParticlesHere: {x: 0, y: 0, z: 0}
+  isPlayer1Weapon: 0
+  isPlayer2Weapon: 0
 --- !u!1 &2711327402938349042
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +362,7 @@ BoxCollider:
   m_GameObject: {fileID: 4181811649661078614}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}

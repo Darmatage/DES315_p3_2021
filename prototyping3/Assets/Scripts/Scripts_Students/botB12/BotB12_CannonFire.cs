@@ -12,7 +12,12 @@ public class BotB12_CannonFire : MonoBehaviour
     private float cd = 4.0f;
     private float cooldownLeft;
     private float cooldownRight;
-    
+
+    public GameObject[] LeftCannons;
+    public GameObject[] RightCannons;
+
+    private Vector3 firePosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,13 +32,25 @@ public class BotB12_CannonFire : MonoBehaviour
     {
         if (Input.GetButtonDown(leftFire) && cooldownLeft <= 0.0f)
         {
-
+            foreach (var cannon in LeftCannons)
+            {
+                firePosition = cannon.transform.position;
+                firePosition.x = firePosition.x - .4f;
+                GameObject ball = Instantiate(cannonBall, firePosition, Quaternion.identity) as GameObject;
+                ball.GetComponent<Rigidbody>().AddForce(transform.right * -90);
+            }
             cooldownLeft = cd;
         }
         
         if (Input.GetButtonDown(rightFire) && cooldownRight <= 0.0f)
         {
-
+            foreach (var cannon in RightCannons)
+            {
+                firePosition = cannon.transform.position;
+                firePosition.x = firePosition.x + .4f;
+                GameObject ball = Instantiate(cannonBall, firePosition, Quaternion.identity) as GameObject;
+                ball.GetComponent<Rigidbody>().AddForce(transform.right * 90);
+            }
             cooldownRight = cd;
         }
 
