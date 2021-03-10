@@ -317,8 +317,8 @@ GameObject:
   - component: {fileID: 364999052203561223}
   - component: {fileID: 5780095072016173801}
   - component: {fileID: 364899394476821107}
-  - component: {fileID: 4425686969729440562}
   - component: {fileID: 6124305594541508706}
+  - component: {fileID: 1477736819318717912}
   m_Layer: 0
   m_Name: BotA16
   m_TagString: Untagged
@@ -447,6 +447,8 @@ MonoBehaviour:
     m_Bits: 256
   isGrounded: 0
   isTurtled: 0
+  canFlip: 1
+  isGrabbed: 0
   parentName: 
   pVertical: 
   pHorizontal: 
@@ -539,26 +541,6 @@ MonoBehaviour:
   UsedColor: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
   ActiveColor: {r: 0, g: 0.31132078, b: 0.018742692, a: 1}
   CooldownTime: 5
---- !u!114 &4425686969729440562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355330930375697355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4586aaa4e91e1434b8bf0b929d74440b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShootFrom: {fileID: 2041316482055174115}
-  Range: 5
-  LineWidth: 0.05
-  Telemetry: {r: 1, g: 0, b: 0, a: 1}
-  ExplosionPrefab: {fileID: 5365840493991226023, guid: 8bf2780354a272946910057a5b98c59c,
-    type: 3}
-  ShotCooldown: 2
-  render: {fileID: 0}
 --- !u!120 &6124305594541508706
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -656,6 +638,22 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &1477736819318717912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355330930375697355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3eebc1dfb3bdf4abc186cc447bef07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShootFrom: {fileID: 2041316482055174115}
+  BulletSpeed: 20
+  BulletPrefab: {fileID: 5365840493991226023, guid: 501f92f4bf5c84547880e3b54ec9d2fa,
+    type: 3}
 --- !u!1 &1355330930662561729
 GameObject:
   m_ObjectHideFlags: 0
