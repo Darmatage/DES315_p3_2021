@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1355330929262153270}
   - component: {fileID: 1355330929262153269}
   m_Layer: 0
-  m_Name: SampleBot_Art
+  m_Name: Bot_Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,7 +57,7 @@ Transform:
   m_GameObject: {fileID: 1355330929262153267}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.0000001154, y: -0.69014, z: -0.000000085578}
-  m_LocalScale: {x: 7.8724, y: 13.377981, z: 7.5811496}
+  m_LocalScale: {x: 7.5, y: 13.377981, z: 7.5}
   m_Children:
   - {fileID: 2383763849585120350}
   m_Father: {fileID: 1355330930375697356}
@@ -155,10 +155,10 @@ GameObject:
   - component: {fileID: 7107478127326975586}
   - component: {fileID: 1355330930375697357}
   - component: {fileID: 1355330930375697358}
-  - component: {fileID: 1355330930375697359}
   - component: {fileID: 364999052203561223}
   - component: {fileID: 5780095072016173801}
-  - component: {fileID: 7285542615022466734}
+  - component: {fileID: 7587770670330439075}
+  - component: {fileID: 9145086975593501803}
   m_Layer: 0
   m_Name: BotA12
   m_TagString: Untagged
@@ -289,38 +289,6 @@ MonoBehaviour:
   pHorizontal: 
   pJump: 
   button4: 
---- !u!114 &1355330930375697359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355330930375697355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11712de1bbb4c024e9eaff6f3c3d5bff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  compassSides: {fileID: 1029706280859159121}
-  compassVertical: {fileID: 4587639291210960121}
-  knockBackSpeed: 10
-  shieldPowerFront: 7
-  shieldPowerBack: 7
-  shieldPowerLeft: 7
-  shieldPowerRight: 7
-  shieldPowerTop: 7
-  shieldPowerBottom: 7
-  shieldFrontObj: {fileID: 1098726327034351829}
-  shieldBackObj: {fileID: 2186211737314387781}
-  shieldLeftObj: {fileID: 2735579452779107192}
-  shieldRightObj: {fileID: 2072343368729710841}
-  shieldTopObj: {fileID: 3220133571300334769}
-  shieldBottomObj: {fileID: 565303781940079435}
-  dmgParticlesFront: {fileID: 992594538681992222}
-  dmgParticlesBack: {fileID: 4516345222768258679}
-  dmgParticlesLeft: {fileID: 6974817156101819959}
-  dmgParticlesRight: {fileID: 3397723275512725552}
-  dmgParticlesTop: {fileID: 8546135154986991094}
 --- !u!114 &364999052203561223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e173a7401170b4c8b91f0cf261062e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7285542615022466734
+--- !u!114 &7587770670330439075
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -357,7 +325,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1355330930375697355}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67b5dfa20ebefac448d710384853fb07, type: 3}
+  m_Script: {fileID: 11500000, guid: e1ee493a66c78254185381019f296e59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weaponThrust: {fileID: 8160687095547711129}
@@ -365,6 +333,38 @@ MonoBehaviour:
   button2: 
   button3: 
   button4: 
+--- !u!114 &9145086975593501803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355330930375697355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4765ce38843d18a4c8a21880ffce4e8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  compassSides: {fileID: 1029706280859159121}
+  compassVertical: {fileID: 4587639291210960121}
+  knockBackSpeed: 10
+  shieldPowerFront: 7
+  shieldPowerBack: 7
+  shieldPowerLeft: 7
+  shieldPowerRight: 7
+  shieldPowerTop: 7
+  shieldPowerBottom: 7
+  shieldFrontObj: {fileID: 1098726327034351829}
+  shieldBackObj: {fileID: 2186211737314387781}
+  shieldLeftObj: {fileID: 2735579452779107192}
+  shieldRightObj: {fileID: 2072343368729710841}
+  shieldTopObj: {fileID: 3220133571300334769}
+  shieldBottomObj: {fileID: 565303781940079435}
+  dmgParticlesFront: {fileID: 992594538681992222}
+  dmgParticlesBack: {fileID: 4516345222768258679}
+  dmgParticlesLeft: {fileID: 6974817156101819959}
+  dmgParticlesRight: {fileID: 3397723275512725552}
+  dmgParticlesTop: {fileID: 8546135154986991094}
 --- !u!1 &1355330930762081239
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,10 +436,10 @@ GameObject:
   - component: {fileID: 2391277020435102802}
   - component: {fileID: 2814387273355324590}
   - component: {fileID: 388958577201943313}
-  - component: {fileID: 3465525658373309320}
   - component: {fileID: 5894268281807859245}
+  - component: {fileID: 6481673197981398411}
   m_Layer: 0
-  m_Name: SampleWeapon
+  m_Name: Weapon
   m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -452,13 +452,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8160687095547711129}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 1.9, z: 0.5}
+  m_LocalScale: {x: 7, y: 1.9, z: 7}
   m_Children: []
   m_Father: {fileID: 1355330930375697356}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2814387273355324590
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -466,7 +466,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8160687095547711129}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -8545447256379345787, guid: c6ef0865671405348b4cc1b8da205fe7, type: 3}
 --- !u!23 &388958577201943313
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -506,20 +506,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &3465525658373309320
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8160687095547711129}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5894268281807859245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,12 +518,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7ca4913335a3b745850f156a725a789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 5
   particlesPrefab: {fileID: 7916852506792683719, guid: a6746c9ee60a1a44d813bcdbac5cb0ce,
     type: 3}
   SpawnParticlesHere: {x: 0, y: 0, z: 0}
   isPlayer1Weapon: 0
   isPlayer2Weapon: 0
+--- !u!64 &6481673197981398411
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8160687095547711129}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8545447256379345787, guid: c6ef0865671405348b4cc1b8da205fe7, type: 3}
 --- !u!1 &8736863973827815457
 GameObject:
   m_ObjectHideFlags: 0
