@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 1355330930375697359}
   - component: {fileID: 364999052203561223}
   - component: {fileID: 5780095072016173801}
-  - component: {fileID: 7285542615022466734}
+  - component: {fileID: 6479158286085803264}
   m_Layer: 0
   m_Name: BotA17
   m_TagString: Untagged
@@ -282,6 +282,8 @@ MonoBehaviour:
     m_Bits: 256
   isGrounded: 0
   isTurtled: 0
+  canFlip: 1
+  isGrabbed: 0
   parentName: 
   pVertical: 
   pHorizontal: 
@@ -346,7 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e173a7401170b4c8b91f0cf261062e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7285542615022466734
+--- !u!114 &6479158286085803264
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -355,10 +357,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1355330930375697355}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67b5dfa20ebefac448d710384853fb07, type: 3}
+  m_Script: {fileID: 11500000, guid: 94c99ce5131215e459e76f78c2de8fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponThrust: {fileID: 8160687095547711129}
+  missile: {fileID: 4338924665754873621, guid: 44b99a777b889a048bb0b5a035269a7b, type: 3}
   button1: 
   button2: 
   button3: 
@@ -530,8 +532,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8160687095547711129}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 1.9, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0.54}
+  m_LocalScale: {x: 0.74936795, y: 1.7405943, z: 0.74936795}
   m_Children: []
   m_Father: {fileID: 1355330930375697356}
   m_RootOrder: 1
