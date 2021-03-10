@@ -16,6 +16,8 @@ public class LotsaShot : MonoBehaviour
 
     int ShotsLeft = 0;
 
+    public AudioClip ShootSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,9 @@ public class LotsaShot : MonoBehaviour
         bullet.GetComponent<Rigidbody>().velocity = (transform.up * BulletSpeed);
         if (gameObject.transform.root.tag == "Player1") { bullet.GetComponent<HazardDamage>().isPlayer1Weapon = true; }
         if (gameObject.transform.root.tag == "Player2") { bullet.GetComponent<HazardDamage>().isPlayer2Weapon = true; }
+
+        GetComponent<AudioSource>().PlayOneShot(ShootSound);
+
         if (--ShotsLeft > 0)
         {
             yield return new WaitForSeconds(1.0f / ShotsPerFlip);

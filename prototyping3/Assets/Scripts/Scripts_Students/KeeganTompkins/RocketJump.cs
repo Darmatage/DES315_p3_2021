@@ -37,6 +37,11 @@ public class RocketJump : MonoBehaviour
     const int left =  1 << 2;
     const int right = 1 << 3;
 
+    public AudioClip JumpSound;
+
+    public GameObject ExplosionEffect = null;
+    public float ExplosionOffset = -0.2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -122,6 +127,9 @@ public class RocketJump : MonoBehaviour
         // Check for the jump button
         if (Input.GetButtonDown(button1) && JumpVec != new Vector3(0.0f, 0.0f, 0.0f))
         {
+            GetComponent<AudioSource>().PlayOneShot(JumpSound);
+
+
             if (GetComponent<LotsaShot>() != null) GetComponent<LotsaShot>().Flip();
 
             JumpVec += new Vector3(0.0f, 1.0f, 0.0f) * UpStrength;
@@ -129,10 +137,31 @@ public class RocketJump : MonoBehaviour
 
             RigidBod.angularVelocity = AngleVec;
 
-            if (FrontAxis > 0) FrontCooldown = CooldownTime;
-            if (FrontAxis < 0) BackCooldown = CooldownTime;
-            if (SideAxis > 0) RightCooldown = CooldownTime;
-            if (SideAxis < 0) LeftCooldown = CooldownTime;
+            if (FrontAxis > 0)
+            {
+                FrontCooldown = CooldownTime;
+                var Explosion = Instantiate(ExplosionEffect);
+                Explosion.transform.position = FrontIndicator.transform.position - Vector3.up * ExplosionOffset;
+            }
+            else if (FrontAxis < 0)
+            {
+                BackCooldown = CooldownTime;
+                var Explosion = Instantiate(ExplosionEffect);
+                Explosion.transform.position = BackIndicator.transform.position - Vector3.up * ExplosionOffset;
+
+            }
+            if (SideAxis > 0)
+            {
+                RightCooldown = CooldownTime;
+                var Explosion = Instantiate(ExplosionEffect);
+                Explosion.transform.position = RightIndicator.transform.position - Vector3.up * ExplosionOffset;
+            }
+            else if (SideAxis < 0)
+            {
+                LeftCooldown = CooldownTime;
+                var Explosion = Instantiate(ExplosionEffect);
+                Explosion.transform.position = LeftIndicator.transform.position - Vector3.up * ExplosionOffset;
+            }
         }
 
 
