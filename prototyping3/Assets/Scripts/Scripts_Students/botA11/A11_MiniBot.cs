@@ -45,7 +45,7 @@ namespace Amogh
                     GameObject note = Instantiate(notes, transform.position + (transform.up * 4) + transform.right, Quaternion.identity);
                     note.GetComponent<A11_Notes>().SetTrackingTransform(dad);
                     
-                    yield return new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(0.5f);
                 }
 
                 yield return new WaitForSeconds(1f);

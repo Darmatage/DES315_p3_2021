@@ -13,12 +13,20 @@ public class Bot05_Move : MonoBehaviour
     }
     protected STATE cur_state;
 
+    // normal values
     public float moveSpeed = 10;
     public float rotateSpeed = 100;
     public float jumpSpeed = 7f;
     private float flipSpeed = 150f;
     public float boostSpeed = 10f;
 
+    // rush values
+    private float rushSpeed = 20;
+    private float rushRotate = 400;
+    private Vector3 rushDir = Vector3.zero;
+
+    // aim values
+    private float aimRotateMod = 1.5f;
     private Rigidbody rb;
     public Transform groundCheck;
     public Transform turtleCheck;
@@ -72,15 +80,24 @@ public class Bot05_Move : MonoBehaviour
 
         if (isGrabbed == false)
         {
-            if (cur_state == STATE.S_NORMAL)
-                transform.Translate(0, 0, botMove);
-
-            if (cur_state == STATE.S_NORMAL || cur_state == STATE.S_AIMING)
-            transform.Rotate(0, botRotate, 0);
-
-            // attacking blade rush
-            if (cur_state == STATE.S_ATTACKING)
-                transform.Translate(0, 0, 2.0f * moveSpeed * Time.deltaTime);
+            switch (cur_state)
+            {
+                case STATE.S_NORMAL:
+                    transform.Translate(0, 0, botMove);
+                    transform.Rotate(0, botRotate, 0);
+                    break;
+                case STATE.S_ATTACKING:
+                    transform.Translate(transform.InverseTransformDirection(rushDir.x * rushSpeed * Time.deltaTime, 0.0f, rushDir.z * rushSpeed * Time.deltaTime));
+                    transform.Rotate(0, rushRotate * Time.deltaTime, 0);
+                    break;
+                case STATE.S_AIMING:
+                    transform.Rotate(0, botRotate * aimRotateMod, 0);
+                    break;
+                case STATE.S_RECOVERING:
+                    break;
+                default:
+                    break;
+            }
         }
 
         // JUMP
@@ -132,10 +149,21 @@ public class Bot05_Move : MonoBehaviour
     public void SetAttackState()
     {
         cur_state = STATE.S_ATTACKING;
+        rushDir = transform.forward;
     }
 
     public void SetNormalState()
     {
         cur_state = STATE.S_NORMAL;
+    }
+
+    public bool IsRecovering()
+    {
+        return cur_state == STATE.S_RECOVERING;
+    }
+
+    public bool IsNormal()
+    {
+        return cur_state == STATE.S_NORMAL;
     }
 }
