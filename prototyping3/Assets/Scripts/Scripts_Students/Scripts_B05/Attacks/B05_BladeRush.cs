@@ -55,7 +55,7 @@ public class B05_BladeRush : MonoBehaviour
     public void Attack()
     {
         // begin attack if avaliable
-        if (!b_active)
+        if (!b_active && b05.IsNormal())
         {
             BeginAttack();
         }
@@ -69,6 +69,7 @@ public class B05_BladeRush : MonoBehaviour
         timer = 0.0f;
         ani.SetBool("b_attacking", true);
         b05.SetAttackState();
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
     }
 
     private void EndAttack()
@@ -76,6 +77,7 @@ public class B05_BladeRush : MonoBehaviour
         b_attacking = false;
         ani.SetBool("b_attacking", false);
         b05.SetRecoveringState();
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
     }
 
     private void Ready()
