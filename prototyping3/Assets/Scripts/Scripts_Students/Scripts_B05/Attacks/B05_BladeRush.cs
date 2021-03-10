@@ -20,6 +20,8 @@ public class B05_BladeRush : MonoBehaviour
 
     public Animator ani;
 
+    public Bot05_Move b05;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +44,7 @@ public class B05_BladeRush : MonoBehaviour
         }
         if (timer > (t_startup + t_length + t_recovery))
         {
-            // give back control to player
+            b05.SetNormalState(); // give control back to player
         }
         if (timer > t_cooldown)
         {
@@ -53,7 +55,7 @@ public class B05_BladeRush : MonoBehaviour
     public void Attack()
     {
         // begin attack if avaliable
-        if (!b_active)
+        if (!b_active && b05.IsNormal())
         {
             BeginAttack();
         }
@@ -66,12 +68,14 @@ public class B05_BladeRush : MonoBehaviour
         vent.material = mat_used;
         timer = 0.0f;
         ani.SetBool("b_attacking", true);
+        b05.SetAttackState();
     }
 
     private void EndAttack()
     {
         b_attacking = false;
         ani.SetBool("b_attacking", false);
+        b05.SetRecoveringState();
     }
 
     private void Ready()
