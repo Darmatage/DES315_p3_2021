@@ -123,6 +123,7 @@ public class BotDamageMod : MonoBehaviour
 		else
 		{
 			ShieldPower -= AttackDamage;
+			ShieldRegenTimer = ShieldRegenDelay;
 			StartCoroutine(ShieldHitDisplay(ShieldObj));
 			if (ShieldPower <= 0)
 			{
@@ -157,5 +158,14 @@ public class BotDamageMod : MonoBehaviour
 		}
 		else
 			ShieldRegenTimer -= Time.deltaTime;
+	}
+
+	public void ConsumeForAttack()
+    {
+		ShieldPower -= AttackDamage;
+		ShieldRegenTimer = ShieldRegenDelay;
+
+		if (ShieldPower <= 0)
+			ShieldPower = 0;
 	}
 }
