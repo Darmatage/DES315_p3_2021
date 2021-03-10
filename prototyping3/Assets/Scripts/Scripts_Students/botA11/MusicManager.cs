@@ -35,7 +35,10 @@ public class MusicManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (source.isPlaying == false)
+        if (handler == null)
+            handler = FindObjectOfType<GameHandler>();
+        
+        if (source.isPlaying == false || handler.isShowcase)
             Destroy(gameObject);
     }
 
