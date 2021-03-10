@@ -50,12 +50,12 @@ public class DH_TriggerTrapsAbility : MonoBehaviour
 
     if (!onCooldown)
     {
-      if (Input.GetKeyDown(KeyCode.T) && gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
+      if (Input.GetKeyDown(KeyCode.R) && gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
       {
         TriggerTraps();
         StartCooldown();
       }
-      if (Input.GetKeyDown(KeyCode.Period) && !gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
+      if (Input.GetKeyDown(KeyCode.Comma) && !gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
       {
         TriggerTraps();
         StartCooldown();
