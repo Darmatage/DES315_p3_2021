@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class SP_GoopBehavior : MonoBehaviour
 {
-  // Who the goop should not damage
-  public GameObject self;
-
   public float lifetime;
+  public float growthRate;
 
   // Start is called before the first frame update
   void Start()
@@ -25,13 +23,21 @@ public class SP_GoopBehavior : MonoBehaviour
     else
     {
       lifetime -= Time.deltaTime;
-    }
-  }
-  private void OnCollisionEnter(Collision other)
-  {
-    if (other.gameObject != self)
-    {
 
+      float growth = 1.0f + (growthRate - 1.0f) * Time.deltaTime;
+      transform.localScale = new Vector3(transform.localScale.x * growth, transform.localScale.y, transform.localScale.z * growth);
+    }
+
+    for (int i = 0; i < 10; ++i)
+    {
+      if (transform.position.y > 0.3f)
+      {
+        transform.position = new Vector3(transform.position.x, transform.position.y - Time.deltaTime, transform.position.z);
+        if (transform.position.y < 0.3f)
+        {
+          transform.position = new Vector3(transform.position.x, 0.3f, transform.position.z);
+        }
+      }
     }
   }
 }

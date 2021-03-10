@@ -26,12 +26,13 @@ public class SP_GoopSpawner : MonoBehaviour
 
       // goop says trans rights
       Transform goopTrans = goop.GetComponent<Transform>();
-      Transform trans = GetComponent<Transform>();
-      goopTrans.position = new Vector3(trans.position.x, trans.position.y - 0.6f, trans.position.z);
+      goopTrans.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
       SP_GoopBehavior goopBehavior = goop.GetComponent<SP_GoopBehavior>();
-      goopBehavior.self = gameObject;
       goopBehavior.lifetime = goopLifetime;
+
+      HazardDamageTrigger goopHazardDamageTrigger = goop.GetComponent<HazardDamageTrigger>();
+      goopHazardDamageTrigger.player = transform.root.tag;
 
       spawnTimer = spawnFrequency;
     }
