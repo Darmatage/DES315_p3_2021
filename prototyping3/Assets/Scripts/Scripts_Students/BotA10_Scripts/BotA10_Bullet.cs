@@ -15,16 +15,9 @@ namespace Scripts_Students.BotA10_Scripts
             rigidbody1 = GetComponent<Rigidbody>();
         }
 
-        private void Start()
-        {
-            // isPlayer1 = FindObjectOfType<BotA10_Weapon>().isPlayer1;
-            // if (isPlayer1) { GetComponent<HazardDamage>().isPlayer1Weapon = true; }
-            // else { GetComponent<HazardDamage>().isPlayer2Weapon = true; }
-        }
-
         private void OnCollisionEnter(Collision other)
         {
-            Destroy(gameObject, 0.5f);
+            Destroy(gameObject, 0.01f);
         }
         
         public void Setup(Vector3 dir)

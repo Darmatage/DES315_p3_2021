@@ -158,7 +158,6 @@ GameObject:
   - component: {fileID: 364999052203561223}
   - component: {fileID: 5780095072016173801}
   - component: {fileID: 2056469483751843164}
-  - component: {fileID: 5406608458303315620}
   m_Layer: 0
   m_Name: BotA10
   m_TagString: Untagged
@@ -361,26 +360,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 580a090119ffa394f9730559b8ef0687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainGunCooldownTimerMax: 1
+  bulletPrefab: {fileID: 8422104065351264406, guid: ddc0b6c1c0d9a1e488e5d681995b9dbf,
+    type: 3}
+  bulletSpawnPoint: {fileID: 7980869503635937377}
   button1: 
   button2: 
   button3: 
   button4: 
-  isPlayer1: 0
---- !u!114 &5406608458303315620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355330930375697355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c1b848f0ea1fbf4aa575a5bde7375f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 8422104065351264406, guid: ddc0b6c1c0d9a1e488e5d681995b9dbf,
-    type: 3}
-  bulletSpawnPoint: {fileID: 7980869503635937377}
 --- !u!1 &1355330930762081239
 GameObject:
   m_ObjectHideFlags: 0
