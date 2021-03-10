@@ -5,7 +5,7 @@ using UnityEngine;
 public class OK_SonicBoom : MonoBehaviour
 {
 	public GameObject projectilePrefab;
-	public AudioClip sonicBoomSound;
+	//public AudioClip sonicBoomSound;
 	public float Cooldown = 0.5f;
 	public float projectileSpeed;
 	private float timer;
@@ -31,7 +31,8 @@ public class OK_SonicBoom : MonoBehaviour
 		if ((Input.GetButtonDown(button1)) && (timer <= 0))
 		{
 			if (GameObject.FindGameObjectWithTag("camP1") != null)
-				AudioSource.PlayClipAtPoint(sonicBoomSound, GameObject.FindGameObjectWithTag("camP1").transform.position);
+				GetComponent<AudioSource>().Play(); 
+				//AudioSource.PlayClipAtPoint(sonicBoomSound, GameObject.FindGameObjectWithTag("camP1").transform.position);
 
 			timer = Cooldown;
 
