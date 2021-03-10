@@ -8,9 +8,6 @@ public class botA15_Weapons : MonoBehaviour
 	public GameObject wedge;
 	public GameObject hammer;
 
-	private float thrustAmount = 3f;
-
-	private bool weaponOut = false;
 	private bool swingingHammer = false;
 
 	//grab axis from parent object
@@ -29,40 +26,23 @@ public class botA15_Weapons : MonoBehaviour
 
 	void Update()
 	{
-		//if (Input.GetKeyDown(KeyCode.T)){
-		//if ((Input.GetButtonDown(button1)) && (weaponOut == false))
-		//{
-		//	weaponThrust.transform.Translate(0, thrustAmount, 0);
-		//	weaponOut = true;
-		//	StartCoroutine(WithdrawWeapon());
-		//}
-
-		//hammer.GetComponent<Animator>().
-
-
+		 // Hammer hit attack
 		if (Input.GetButtonDown(button1) && swingingHammer == false)
         {
-			Debug.Log("Playing Ani");
+			 // Plays the animation and resets immediately so that it can be played multiple times
 			hammer.GetComponent<Animator>().Play("hammerHitTest2");
 			hammer.GetComponent<Animator>().Play("hammerHitTest2", -1, 0f);
 
 			swingingHammer = true;
 
-			StartCoroutine(swingingDisabled());
+			StartCoroutine(swingingDisabled()); // cooldown / wait for ani to finish
         }
-	}
-
-	IEnumerator WithdrawWeapon()
-	{
-		yield return new WaitForSeconds(0.6f);
-		weaponThrust.transform.Translate(0, -thrustAmount, 0);
-		weaponOut = false;
 	}
 
 	IEnumerator swingingDisabled()
 	{
-		yield return new WaitForSeconds(1.5f);
-		//weaponThrust.transform.Translate(0, -thrustAmount, 0);
+		yield return new WaitForSeconds(1.5f); // wait for animation length until it can be used again
+
 		swingingHammer = false;
 	}
 }
