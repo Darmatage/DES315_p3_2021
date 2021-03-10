@@ -9,6 +9,7 @@ public class botA15_Weapons : MonoBehaviour
 	public GameObject hammer;
 
 	private bool swingingHammer = false;
+	private bool shootingQuills = false;
 
 	//grab axis from parent object
 	public string button1;
@@ -37,12 +38,26 @@ public class botA15_Weapons : MonoBehaviour
 
 			StartCoroutine(swingingDisabled()); // cooldown / wait for ani to finish
         }
-	}
+
+        if (Input.GetButtonDown(button2) && shootingQuills == false)
+        {
+            GetComponent<QuillShoot>().ShootQuills();
+            shootingQuills = true;
+			StartCoroutine(shootingDisabled());
+        }
+    }
 
 	IEnumerator swingingDisabled()
 	{
 		yield return new WaitForSeconds(1.5f); // wait for animation length until it can be used again
 
 		swingingHammer = false;
+	}
+
+	IEnumerator shootingDisabled()
+	{
+		yield return new WaitForSeconds(3.5f); // wait for animation length until it can be used again
+
+		shootingQuills = false;
 	}
 }
