@@ -7,9 +7,14 @@ public class BotBasic_Weapon_DRC : MonoBehaviour{
 
 	//public GameObject weaponThrust;
 	public GameObject missile;
+
+	public GameObject signifier_on;
+	public GameObject signifier_off;
+
 	private float thrustAmount = 3f;
 	
 	private bool weaponOut = false;
+	private float timeOut;
 
 	//grab axis from parent object
 	public string button1;
@@ -46,14 +51,33 @@ public class BotBasic_Weapon_DRC : MonoBehaviour{
 			thisone.GetComponent<Rigidbody>().velocity = place * 15.0f;
 
 			thisone.transform.rotation = transform.rotation;
-			StartCoroutine(WithdrawWeapon());
+			//StartCoroutine(WithdrawWeapon());
+
+			signifier_on.SetActive(false);
+			signifier_off.SetActive(true);
+		}
+		else if(weaponOut == true)
+        {
+			timeOut += Time.deltaTime;
+			if (timeOut > 0.5f && GameObject.Find("Rocket_DRC(Clone)") != null)
+			{
+				Vector3 test = GameObject.Find("Rocket_DRC(Clone)").transform.position - transform.position;
+				if (test.magnitude < 5.0f)
+				{
+					Destroy(GameObject.Find("Rocket_DRC(Clone)"));
+					StartCoroutine(WithdrawWeapon());
+				}
+			}
 		}
     }
 
-	IEnumerator WithdrawWeapon(){
-		yield return new WaitForSeconds(0.6f);
+    IEnumerator WithdrawWeapon(){
+		yield return new WaitForSeconds(0.0f);
 		//weaponThrust.transform.Translate(0,-thrustAmount, 0);
 		weaponOut = false;
+		signifier_on.SetActive(true);
+		signifier_off.SetActive(false);
+		timeOut = 0.0f;
 	}
 
 }
