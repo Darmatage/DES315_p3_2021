@@ -30,12 +30,22 @@ public class BotBasic_Weapon_DRC : MonoBehaviour{
 			//weaponThrust.transform.Translate(0,thrustAmount, 0);
 			weaponOut = true;
 			GameObject thisone = Instantiate(missile);
-			Vector3 origin_dir = GetComponent<Transform>().rotation.eulerAngles;
-			origin_dir.y = 0.0f;
-			origin_dir.Normalize();
-			origin_dir *= 250.0f;
-			thisone.transform.position = transform.position + new Vector3(3.0f, 0.0f, 3.0f);
-			//thisone.GetComponent<Rigidbody>().velocity = origin_dir; //new Vector3(50.0f, 0.0f, 50.0f);
+			float origin_dir = GetComponent<Transform>().rotation.eulerAngles.y;
+
+			if (origin_dir < 0.0f)
+				origin_dir += 180.0f;
+
+			origin_dir *= Mathf.PI / 180.0f;
+
+			Vector3 place = new Vector3(Mathf.Sin(origin_dir), 0.0f, Mathf.Cos(origin_dir));
+
+			place *= 4.0f;
+
+
+			thisone.transform.position = transform.position + place; // new Vector3(3.0f, 0.0f, 3.0f);
+			thisone.GetComponent<Rigidbody>().velocity = place * 15.0f;
+
+			thisone.transform.rotation = transform.rotation;
 			StartCoroutine(WithdrawWeapon());
 		}
     }
