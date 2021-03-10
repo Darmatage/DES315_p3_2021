@@ -32,4 +32,6 @@ public class LJN_Saw_Script : MonoBehaviour
     {
         transform.parent.parent.GetComponent<LJN_Weapon_Script>().SawCanDown = false;
     }
+
+   
 }

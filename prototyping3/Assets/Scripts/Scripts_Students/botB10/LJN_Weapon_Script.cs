@@ -16,7 +16,8 @@ public class LJN_Weapon_Script : MonoBehaviour
     public float GrabSpeed = 5.0f;
     public float SawSpeed = 5.0f;
 
-    private float ArmLerpAmount = 0;
+    private float ArmLerpAmountLeft = 0;
+    private float ArmLerpAmountRight = 0;
     private float SawLerpAmount = 0;
 
     //euler angle for arms
@@ -29,6 +30,8 @@ public class LJN_Weapon_Script : MonoBehaviour
     public Vector3 SawArmEnd;
 
     public bool SawCanDown = true;
+    public bool LeftCanMove = true;
+    public bool RightCanMove = true;
 
     void Start()
     {
@@ -48,16 +51,25 @@ public class LJN_Weapon_Script : MonoBehaviour
         float dt = Time.deltaTime;
         if(Input.GetButton(button1))
         {
-            ArmLerpAmount += dt * GrabSpeed;
+            if(LeftCanMove)
+            ArmLerpAmountLeft += dt * GrabSpeed;
+            if (RightCanMove)
+                ArmLerpAmountRight += dt * GrabSpeed;
 
-            if (ArmLerpAmount > 1.0f) ArmLerpAmount = 1.0f;
+            if (ArmLerpAmountLeft > 1.0f) ArmLerpAmountLeft = 1.0f;
+            if (ArmLerpAmountRight > 1.0f) ArmLerpAmountRight = 1.0f;
 
         }
         else
         {
-            ArmLerpAmount -= dt * GrabSpeed;
+            LeftCanMove = true;
+            RightCanMove = true;
 
-            if (ArmLerpAmount < 0.0f) ArmLerpAmount = 0.0f;
+            ArmLerpAmountLeft -= dt * GrabSpeed;
+            ArmLerpAmountRight -= dt * GrabSpeed;
+
+            if (ArmLerpAmountLeft < 0.0f) ArmLerpAmountLeft = 0.0f;
+            if (ArmLerpAmountRight < 0.0f) ArmLerpAmountRight = 0.0f;
         }
 
         if (Input.GetButton(button2))
@@ -77,8 +89,8 @@ public class LJN_Weapon_Script : MonoBehaviour
         }
 
       
-        LeftGrabArm.transform.localEulerAngles = Vector3.Lerp(LeftGrabArmStart, LeftGrabArmEnd, ArmLerpAmount);
-        RightGrabArm.transform.localEulerAngles = Vector3.Lerp(RightGrabArmStart, RightGrabArmEnd, ArmLerpAmount);
+        LeftGrabArm.transform.localEulerAngles = Vector3.Lerp(LeftGrabArmStart, LeftGrabArmEnd, ArmLerpAmountLeft);
+        RightGrabArm.transform.localEulerAngles = Vector3.Lerp(RightGrabArmStart, RightGrabArmEnd, ArmLerpAmountRight);
         SawArm.transform.localEulerAngles = Vector3.Lerp(SawArmStart, SawArmEnd, SawLerpAmount);
 
         

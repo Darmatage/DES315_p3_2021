@@ -378,6 +378,9 @@ MonoBehaviour:
   LeftGrabArmEnd: {x: 0, y: -45, z: 0}
   RightGrabArmEnd: {x: 0, y: 45, z: 180}
   SawArmEnd: {x: 0, y: 0, z: 0}
+  SawCanDown: 1
+  LeftCanMove: 1
+  RightCanMove: 1
 --- !u!1 &1355330930662561729
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,6 +972,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GrabArmLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976671597300103325, guid: 8dace8828f3cf594a955e98bd32bd030,
+        type: 3}
+      propertyPath: IsLeft
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dace8828f3cf594a955e98bd32bd030, type: 3}
