@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BotAttack : MonoBehaviour
 {
-	public GameObject weaponThrust;
-	private float thrustAmount = 3f;
-
+	public GameObject ShieldOverloadOBJ;
+	Vector3 DefaultScale;
+	Vector3 AttackScale = new Vector3(4.4f, 2.4f, 8.4f);
 	private bool weaponOut = false;
 
 	//grab axis from parent object
@@ -17,6 +17,9 @@ public class BotAttack : MonoBehaviour
 
 	void Start()
 	{
+		DefaultScale = ShieldOverloadOBJ.transform.localScale;
+		ShieldOverloadOBJ.SetActive(false);
+
 		button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
 		button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
 		button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
@@ -28,8 +31,10 @@ public class BotAttack : MonoBehaviour
 		//if (Input.GetKeyDown(KeyCode.T)){
 		if ((Input.GetButtonDown(button1)) && (weaponOut == false))
 		{
-			weaponThrust.transform.Translate(0, thrustAmount, 0);
+			ShieldOverloadOBJ.SetActive(true);
+			ShieldOverloadOBJ.transform.localScale = AttackScale;
 			weaponOut = true;
+			GetComponent<BotDamageMod>().ConsumeForAttack();
 			StartCoroutine(WithdrawWeapon());
 		}
 	}
@@ -37,8 +42,9 @@ public class BotAttack : MonoBehaviour
 	IEnumerator WithdrawWeapon()
 	{
 		yield return new WaitForSeconds(0.6f);
-		weaponThrust.transform.Translate(0, -thrustAmount, 0);
+		ShieldOverloadOBJ.transform.localScale = DefaultScale;
 		weaponOut = false;
+		ShieldOverloadOBJ.SetActive(false);
 	}
 
 }
