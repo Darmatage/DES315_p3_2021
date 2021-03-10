@@ -13,6 +13,8 @@ public class Bot05_Move : MonoBehaviour
     }
     protected STATE cur_state;
 
+    public Transform center_pt;
+
     // normal values
     public float moveSpeed = 10;
     public float rotateSpeed = 100;
@@ -165,5 +167,15 @@ public class Bot05_Move : MonoBehaviour
     public bool IsNormal()
     {
         return cur_state == STATE.S_NORMAL;
+    }
+
+    public bool IsRushing()
+    {
+        return cur_state == STATE.S_ATTACKING;
+    }
+
+    public Transform GetCenter()
+    {
+        return center_pt;
     }
 }
