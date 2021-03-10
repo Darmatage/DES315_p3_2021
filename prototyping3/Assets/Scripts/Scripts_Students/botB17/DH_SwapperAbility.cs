@@ -63,12 +63,12 @@ public class DH_SwapperAbility : MonoBehaviour
 
     if(!onCooldown)
     {
-      if (Input.GetKeyDown(KeyCode.R) && gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
+      if (Input.GetKeyDown(KeyCode.E) && gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
       {
         Swap();
         StartCooldown();
       }
-      if (Input.GetKeyDown(KeyCode.Comma) && !gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
+      if (Input.GetKeyDown(KeyCode.M) && !gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
       {
         Swap();
         StartCooldown();
