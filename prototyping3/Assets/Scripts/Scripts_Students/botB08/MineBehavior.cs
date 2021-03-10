@@ -34,7 +34,11 @@ public class MineBehavior : MonoBehaviour
     //[SerializeField] private GameObject ExplosionObj;
 
     private BoxCollider Collider;
+    
+    [SerializeField] private GameObject particlesPrefab;
 
+    public MineSpawner ParentSpawner;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -93,13 +97,11 @@ public class MineBehavior : MonoBehaviour
         // Life timer after it's been active
         if (lifeTimer >= LifeTime)
         {
-            Explode();
+            GameObject damageParticles = Instantiate (particlesPrefab, transform.position, Quaternion.identity);
+            StartCoroutine(destroyParticles(damageParticles));
             
-            //// Checking if explosion is done
-            //if (!ExplosionObj.GetComponent<ParticleSystem>().isEmitting)
-            //{
-            //    Destroy(gameObject);
-            //}
+            
+            Explode();
         }
         else if (isActive)
         {
@@ -113,19 +115,34 @@ public class MineBehavior : MonoBehaviour
     //private void OnTriggerEnter(Collider other)
     private void OnCollisionEnter(Collision other)
     {
-        if (isActive)// && other.gameObject.transform.root.tag.Contains("Player"))
+        if (other.gameObject.tag.Contains("ground"))
         {
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+        }
+        
+        else if (isActive && other.gameObject.transform.root.tag.Contains("Player"))
+        {
+            float KnockBackStrength = 10f;
+            Vector3 direction = other.transform.position - transform.position;
+            Vector3 velocity = direction.normalized * KnockBackStrength + (Vector3.up * (KnockBackStrength / 3f));
+            direction.y = 3.0f;
+            other.gameObject.GetComponent<Rigidbody>().AddForce(velocity, ForceMode.VelocityChange);
             Explode();
         }
     }
 
     private void Explode()
     {
+        ParentSpawner.IncrementMines();
         MineObj.SetActive(false);
-        //ExplosionObj.SetActive(true);
         isActive = false;
         Collider.enabled = false;
         Destroy(gameObject);
+    }
+
+    IEnumerator destroyParticles(GameObject particles){
+        yield return new WaitForSeconds(0.5f);
+        Destroy(particles);
     }
 }
 
