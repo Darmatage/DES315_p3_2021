@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1798021030799967404}
   - component: {fileID: 8220807929851127653}
   - component: {fileID: 6722916551000791603}
+  - component: {fileID: 6615017502532710343}
   m_Layer: 0
   m_Name: Sawblade 7
   m_TagString: Hazard
@@ -79,6 +80,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14219832175146829}
   m_Mesh: {fileID: 4579454407841743219, guid: 75b428df4cf8e084a9e8d3056cb862e5, type: 3}
+--- !u!65 &6615017502532710343
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14219832175146829}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5538541, y: 0.4614736, z: 0.084295206}
+  m_Center: {x: 0.015889278, y: 0.27712145, z: 0.042147852}
 --- !u!1 &1029706280859159121
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,6 +134,7 @@ GameObject:
   - component: {fileID: 8706217678658316926}
   - component: {fileID: 8009703376706796742}
   - component: {fileID: 8986579001154335464}
+  - component: {fileID: 252533171018905495}
   m_Layer: 0
   m_Name: Sawblade 6
   m_TagString: Hazard
@@ -188,6 +203,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1047859338139227510}
   m_Mesh: {fileID: 4579454407841743219, guid: 75b428df4cf8e084a9e8d3056cb862e5, type: 3}
+--- !u!65 &252533171018905495
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047859338139227510}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5538541, y: 0.4614736, z: 0.084295236}
+  m_Center: {x: 0.015888995, y: 0.2771217, z: 0.042147715}
 --- !u!1 &1175289990117420900
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,9 +239,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1175289990117420900}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6666664, y: 3.3333323, z: 0.6666665}
   m_Children:
   - {fileID: 6018652261106665084}
   - {fileID: 4056975197969724406}
@@ -223,8 +251,8 @@ Transform:
   - {fileID: 3457148230580136167}
   - {fileID: 6498754025311825300}
   - {fileID: 3010175934683761655}
-  m_Father: {fileID: 1355330930375697356}
-  m_RootOrder: 8
+  m_Father: {fileID: 1852687832394072209}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1355330929262153267
 GameObject:
@@ -380,7 +408,6 @@ Transform:
   - {fileID: 6062566957372255346}
   - {fileID: 4370361138325291965}
   - {fileID: 8472109555918993977}
-  - {fileID: 4684879525400766297}
   - {fileID: 5912562682525012516}
   - {fileID: 1852687832394072209}
   m_Father: {fileID: 0}
@@ -484,6 +511,7 @@ MonoBehaviour:
   TopParticles: {fileID: 869345424931871733}
   BottomParticles: {fileID: 1404710989734811159}
   FrontWeapon: {fileID: 8891797462685517668}
+  Beyblade: {fileID: 4131288785723782746}
   button1: 
   button2: 
   button3: 
@@ -5529,6 +5557,7 @@ GameObject:
   - component: {fileID: 2511318840446142009}
   - component: {fileID: 5534901077138024291}
   - component: {fileID: 4013670189518746466}
+  - component: {fileID: 5346036514638640518}
   m_Layer: 0
   m_Name: Sawblade 3
   m_TagString: Hazard
@@ -5597,6 +5626,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1744388684979174915}
   m_Mesh: {fileID: 4579454407841743219, guid: 75b428df4cf8e084a9e8d3056cb862e5, type: 3}
+--- !u!65 &5346036514638640518
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744388684979174915}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5538541, y: 0.4614736, z: 0.08429521}
+  m_Center: {x: 0.015889738, y: 0.277122, z: 0.04214748}
 --- !u!1 &2002168696296077711
 GameObject:
   m_ObjectHideFlags: 0
@@ -5740,7 +5782,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1355330930375697356}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &1612670774994702215
 MeshFilter:
@@ -5800,6 +5842,7 @@ GameObject:
   - component: {fileID: 9156561477250430666}
   - component: {fileID: 544235082199233047}
   - component: {fileID: 391548204059714547}
+  - component: {fileID: 8003832703308232714}
   m_Layer: 0
   m_Name: Sawblade 8
   m_TagString: Hazard
@@ -5868,6 +5911,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2996723584768240987}
   m_Mesh: {fileID: 4579454407841743219, guid: 75b428df4cf8e084a9e8d3056cb862e5, type: 3}
+--- !u!65 &8003832703308232714
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2996723584768240987}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5538541, y: 0.4614736, z: 0.08429529}
+  m_Center: {x: 0.015889633, y: 0.27712175, z: 0.042147696}
 --- !u!1 &3079500174244111314
 GameObject:
   m_ObjectHideFlags: 0
@@ -5992,6 +6048,8 @@ GameObject:
   - component: {fileID: 1797931213318246315}
   - component: {fileID: 4907702022387713628}
   - component: {fileID: 2862032529071173159}
+  - component: {fileID: 6696146224375950155}
+  - component: {fileID: 6883401489099660924}
   m_Layer: 0
   m_Name: Sawblade 2
   m_TagString: Hazard
@@ -6060,6 +6118,32 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3105704601245996485}
   m_Mesh: {fileID: 4579454407841743219, guid: 75b428df4cf8e084a9e8d3056cb862e5, type: 3}
+--- !u!65 &6696146224375950155
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3105704601245996485}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5538541, y: 0.4614736, z: 0.084295236}
+  m_Center: {x: 0.015889712, y: 0.2771217, z: 0.04214736}
+--- !u!65 &6883401489099660924
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3105704601245996485}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.46974036, y: 0.29314232, z: 0.084295236}
+  m_Center: {x: 0.015889712, y: 0.2771217, z: 0.04214736}
 --- !u!1 &3612172241068976052
 GameObject:
   m_ObjectHideFlags: 0
@@ -6071,6 +6155,7 @@ GameObject:
   - component: {fileID: 668942526237262984}
   - component: {fileID: 4608630383204363006}
   - component: {fileID: 7374965059900117983}
+  - component: {fileID: 3688761103300368155}
   m_Layer: 0
   m_Name: Sawblade 9
   m_TagString: Hazard
@@ -6139,6 +6224,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3612172241068976052}
   m_Mesh: {fileID: 4579454407841743219, guid: 75b428df4cf8e084a9e8d3056cb862e5, type: 3}
+--- !u!65 &3688761103300368155
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3612172241068976052}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5538541, y: 0.4614736, z: 0.08429523}
+  m_Center: {x: 0.015889656, y: 0.27712193, z: 0.0421476}
 --- !u!1 &4131288785723782746
 GameObject:
   m_ObjectHideFlags: 0
@@ -6169,9 +6267,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 0.3}
   m_Children:
+  - {fileID: 4684879525400766297}
   - {fileID: 6151994263131393712}
   m_Father: {fileID: 1355330930375697356}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 180}
 --- !u!33 &1298688927892756110
 MeshFilter:
@@ -6244,6 +6343,7 @@ GameObject:
   - component: {fileID: 2153452935245544513}
   - component: {fileID: 6818456754739131586}
   - component: {fileID: 4801221550122003290}
+  - component: {fileID: 6573020647122235408}
   m_Layer: 0
   m_Name: Sawblade 5
   m_TagString: Hazard
@@ -6312,6 +6412,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4371014543920824883}
   m_Mesh: {fileID: 4579454407841743219, guid: 75b428df4cf8e084a9e8d3056cb862e5, type: 3}
+--- !u!65 &6573020647122235408
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4371014543920824883}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5538541, y: 0.4614736, z: 0.08429523}
+  m_Center: {x: 0.015889037, y: 0.27712196, z: 0.0421478}
 --- !u!1 &4587639291210960121
 GameObject:
   m_ObjectHideFlags: 0
@@ -6353,6 +6466,7 @@ GameObject:
   - component: {fileID: 1847741708587942945}
   - component: {fileID: 2151947616679936620}
   - component: {fileID: 2137386436780400446}
+  - component: {fileID: 3987996867328700261}
   m_Layer: 0
   m_Name: SawBlade
   m_TagString: Hazard
@@ -6421,6 +6535,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5186682987420759036}
   m_Mesh: {fileID: 4579454407841743219, guid: 75b428df4cf8e084a9e8d3056cb862e5, type: 3}
+--- !u!65 &3987996867328700261
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5186682987420759036}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5538541, y: 0.4614736, z: 0.084295176}
+  m_Center: {x: 0.0158894, y: 0.2771217, z: 0.042147223}
 --- !u!1 &5194383591018481174
 GameObject:
   m_ObjectHideFlags: 0
@@ -6658,6 +6785,7 @@ GameObject:
   - component: {fileID: 7063467567789565557}
   - component: {fileID: 5304408206535269599}
   - component: {fileID: 3198588245271289457}
+  - component: {fileID: 2272955625414736536}
   m_Layer: 0
   m_Name: Sawblade 12
   m_TagString: Hazard
@@ -6726,6 +6854,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6406521753661818448}
   m_Mesh: {fileID: 4579454407841743219, guid: 75b428df4cf8e084a9e8d3056cb862e5, type: 3}
+--- !u!65 &2272955625414736536
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6406521753661818448}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5538541, y: 0.4614736, z: 0.084295236}
+  m_Center: {x: 0.015889121, y: 0.27712187, z: 0.042147253}
 --- !u!1 &7182990004721987184
 GameObject:
   m_ObjectHideFlags: 0
@@ -6851,7 +6992,7 @@ GameObject:
   - component: {fileID: 6930078900689789071}
   m_Layer: 0
   m_Name: Sawblade parent
-  m_TagString: Untagged
+  m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6880,7 +7021,7 @@ Transform:
   - {fileID: 6716346739110548264}
   - {fileID: 7063467567789565557}
   m_Father: {fileID: 1852687832394072209}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6930078900689789071
 MonoBehaviour:
@@ -6910,6 +7051,7 @@ GameObject:
   - component: {fileID: 6716346739110548264}
   - component: {fileID: 2970033946455376353}
   - component: {fileID: 15465268010899238}
+  - component: {fileID: 54987167315477061}
   m_Layer: 0
   m_Name: Sawblade 11
   m_TagString: Hazard
@@ -6978,6 +7120,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8744167124239800865}
   m_Mesh: {fileID: 4579454407841743219, guid: 75b428df4cf8e084a9e8d3056cb862e5, type: 3}
+--- !u!65 &54987167315477061
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8744167124239800865}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5538541, y: 0.4614736, z: 0.08429533}
+  m_Center: {x: 0.015889315, y: 0.27712205, z: 0.042147223}
 --- !u!1 &8795516355511649305
 GameObject:
   m_ObjectHideFlags: 0
@@ -6989,6 +7144,7 @@ GameObject:
   - component: {fileID: 10281302864449791}
   - component: {fileID: 1154783588742532947}
   - component: {fileID: 3398442817781869521}
+  - component: {fileID: 144768674785193269}
   m_Layer: 0
   m_Name: Sawblade 10
   m_TagString: Hazard
@@ -7057,6 +7213,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8795516355511649305}
   m_Mesh: {fileID: 4579454407841743219, guid: 75b428df4cf8e084a9e8d3056cb862e5, type: 3}
+--- !u!65 &144768674785193269
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8795516355511649305}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5538541, y: 0.4614736, z: 0.08429537}
+  m_Center: {x: 0.015889438, y: 0.2771222, z: 0.04214751}
 --- !u!1 &8849350524235445018
 GameObject:
   m_ObjectHideFlags: 0
@@ -7294,6 +7463,7 @@ GameObject:
   - component: {fileID: 5006571969874043473}
   - component: {fileID: 4645525552185595541}
   - component: {fileID: 4297041870143422165}
+  - component: {fileID: 6533480033875045806}
   m_Layer: 0
   m_Name: Sawblade 4
   m_TagString: Hazard
@@ -7362,6 +7532,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9173017136171325492}
   m_Mesh: {fileID: 4579454407841743219, guid: 75b428df4cf8e084a9e8d3056cb862e5, type: 3}
+--- !u!65 &6533480033875045806
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9173017136171325492}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5538541, y: 0.4614736, z: 0.08429542}
+  m_Center: {x: 0.05794687, y: 0.36128685, z: 0.04214761}
 --- !u!1001 &5803694250597182345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7471,15 +7654,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee6e25bc562364d47aff7bb71dcb8e3d, type: 3}
---- !u!4 &4370361138325291965 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7794738539331020852, guid: ee6e25bc562364d47aff7bb71dcb8e3d,
-    type: 3}
-  m_PrefabInstance: {fileID: 5803694250597182345}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &869345424931871733 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6672738316732772476, guid: ee6e25bc562364d47aff7bb71dcb8e3d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5803694250597182345}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4370361138325291965 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7794738539331020852, guid: ee6e25bc562364d47aff7bb71dcb8e3d,
     type: 3}
   m_PrefabInstance: {fileID: 5803694250597182345}
   m_PrefabAsset: {fileID: 0}
@@ -7557,15 +7740,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3e087180369bf546a0c2e3c1f0deadb, type: 3}
---- !u!1 &6185332259477427191 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 912184762114709900, guid: d3e087180369bf546a0c2e3c1f0deadb,
-    type: 3}
-  m_PrefabInstance: {fileID: 6448606965264648827}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8472109555918993977 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3237233946400649282, guid: d3e087180369bf546a0c2e3c1f0deadb,
+    type: 3}
+  m_PrefabInstance: {fileID: 6448606965264648827}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6185332259477427191 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 912184762114709900, guid: d3e087180369bf546a0c2e3c1f0deadb,
     type: 3}
   m_PrefabInstance: {fileID: 6448606965264648827}
   m_PrefabAsset: {fileID: 0}
@@ -7809,9 +7992,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3ce26a275528f54aa8e326dfe9c7f23, type: 3}
---- !u!4 &6062566957372255346 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 845545793724153531, guid: f3ce26a275528f54aa8e326dfe9c7f23,
+--- !u!1 &1272380851363758406 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5634298116992308111, guid: f3ce26a275528f54aa8e326dfe9c7f23,
     type: 3}
   m_PrefabInstance: {fileID: 6888655772930101961}
   m_PrefabAsset: {fileID: 0}
@@ -7821,9 +8004,9 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6888655772930101961}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1272380851363758406 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5634298116992308111, guid: f3ce26a275528f54aa8e326dfe9c7f23,
+--- !u!4 &6062566957372255346 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 845545793724153531, guid: f3ce26a275528f54aa8e326dfe9c7f23,
     type: 3}
   m_PrefabInstance: {fileID: 6888655772930101961}
   m_PrefabAsset: {fileID: 0}
