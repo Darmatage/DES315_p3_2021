@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HazardDamageTrigger : MonoBehaviour
 {
+	public string player;
+
 	public float damage = 1f;
 	private GameHandler gameHandler;
 
@@ -26,11 +28,20 @@ public class HazardDamageTrigger : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		//make particles
-		GameObject damageParticles = Instantiate(particlesPrefab, SpawnParticlesHere, other.transform.rotation);
-		StartCoroutine(destroyParticles(damageParticles));
-		//}
-
+		string target = other.gameObject.transform.root.tag;
+		if (gameHandler != null && target != player)
+		{
+			if (target == "Player1")
+			{
+				gameHandler.TakeDamage("Player1", 1.0f);
+				GameObject.Destroy(gameObject);
+			}
+			if (target == "Player2")
+			{
+				gameHandler.TakeDamage("Player2", 1.0f);
+				GameObject.Destroy(gameObject);
+			}
+		}
 	}
 
 	IEnumerator destroyParticles(GameObject particles)

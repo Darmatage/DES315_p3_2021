@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class Bot05_Move : MonoBehaviour
 {
-    protected enum STATE
+    public enum STATE
     {
-        S_RECOVERING, // bot cannot move, is in recovery phase of attack
-        S_AIMING,     // bot can only turn in place in order to aim
-        S_ATTACKING,  // bot cannot be player controlled
-        S_NORMAL      // bot can be player controlled
+        RECOVERING, // bot cannot move, is in recovery phase of attack
+        AIMING,     // bot can only turn in place in order to aim
+        ATTACKING,  // bot cannot be player controlled, rushes forward
+        ATTRACTING, // bot cannot be player controlled, stays in place
+        REPELING,   // bot cannot be player controlled, stays in place
+        NORMAL      // bot can be player controlled
     }
     protected STATE cur_state;
+
+    public Transform center_pt;
 
     // normal values
     public float moveSpeed = 10;
@@ -65,12 +69,7 @@ public class Bot05_Move : MonoBehaviour
         pJump = gameObject.transform.parent.GetComponent<playerParent>().jumpInput;
         button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
 
-        cur_state = STATE.S_NORMAL;
-
-        // pVertical = "p1Vertical";
-        // pHorizontal = "p1Horizontal";
-        // pJump = "p1Jump";
-        // button4 = "p1Fire4";
+        cur_state = STATE.NORMAL;
     }
 
     void Update()
@@ -82,18 +81,22 @@ public class Bot05_Move : MonoBehaviour
         {
             switch (cur_state)
             {
-                case STATE.S_NORMAL:
+                case STATE.NORMAL:
                     transform.Translate(0, 0, botMove);
                     transform.Rotate(0, botRotate, 0);
                     break;
-                case STATE.S_ATTACKING:
+                case STATE.ATTACKING:
                     transform.Translate(transform.InverseTransformDirection(rushDir.x * rushSpeed * Time.deltaTime, 0.0f, rushDir.z * rushSpeed * Time.deltaTime));
                     transform.Rotate(0, rushRotate * Time.deltaTime, 0);
                     break;
-                case STATE.S_AIMING:
+                case STATE.AIMING:
                     transform.Rotate(0, botRotate * aimRotateMod, 0);
                     break;
-                case STATE.S_RECOVERING:
+                case STATE.ATTRACTING:
+                    break;
+                case STATE.REPELING:
+                    break;
+                case STATE.RECOVERING:
                     break;
                 default:
                     break;
@@ -136,34 +139,21 @@ public class Bot05_Move : MonoBehaviour
         // }
     }
 
-    public void SetAimingState()
+    public void SetState(STATE state)
     {
-        cur_state = STATE.S_AIMING;
+        cur_state = state;
+
+        if (state == STATE.ATTACKING)
+            rushDir = transform.forward;
     }
 
-    public void SetRecoveringState()
+    public bool IsState(STATE state)
     {
-        cur_state = STATE.S_RECOVERING;
+        return cur_state == state;
     }
 
-    public void SetAttackState()
+    public Transform GetCenter()
     {
-        cur_state = STATE.S_ATTACKING;
-        rushDir = transform.forward;
-    }
-
-    public void SetNormalState()
-    {
-        cur_state = STATE.S_NORMAL;
-    }
-
-    public bool IsRecovering()
-    {
-        return cur_state == STATE.S_RECOVERING;
-    }
-
-    public bool IsNormal()
-    {
-        return cur_state == STATE.S_NORMAL;
+        return center_pt;
     }
 }

@@ -8,6 +8,7 @@ public class BotAttack : MonoBehaviour
 	Vector3 DefaultScale;
 	Vector3 AttackScale = new Vector3(4.4f, 2.4f, 8.4f);
 	private bool weaponOut = false;
+	
 
 	//grab axis from parent object
 	public string button1;
@@ -46,5 +47,10 @@ public class BotAttack : MonoBehaviour
 		weaponOut = false;
 		ShieldOverloadOBJ.SetActive(false);
 	}
+
+	void PlaySoundTest()
+    {
+		GetComponent<AudioSource>().Play();//attach audio clip to the source
+    }
 
 }

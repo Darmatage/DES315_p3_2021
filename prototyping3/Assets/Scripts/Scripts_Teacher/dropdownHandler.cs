@@ -32,7 +32,7 @@ public class dropdownHandler : MonoBehaviour{
 		items1.Add("BotA03 Jiwon Jung");
 		items1.Add("BotA04 Akshat Madan");
 		items1.Add("BotA05 Alora Newbury");
-		items1.Add("BotA06 Ryan Garvin");
+		items1.Add("BotA06 Ryan Garvan");
 		items1.Add("BotA07 Matthew Klingman");
 		items1.Add("BotA08 Lorenzo DeMaine");
 		items1.Add("BotA09 Mark Culp");
@@ -59,7 +59,7 @@ public class dropdownHandler : MonoBehaviour{
 		items1.Add("BotB10 Lowell Novitch");
 		items1.Add("BotB11");
 		items1.Add("BotB12 Jacob Presley");
-		items1.Add("BotB13 Skylar Powers");
+		items1.Add("BotB13 Skyler Powers");
 		items1.Add("BotB14 Dieter Voegels");
 		items1.Add("BotB15 Jacob Wymer");
 		items1.Add("BotB16 Chase Graves");
@@ -83,7 +83,7 @@ public class dropdownHandler : MonoBehaviour{
 		items2.Add("BotB10 Lowell Novitch");
 		items2.Add("BotB11");
 		items2.Add("BotB12 Jacob Presley");
-		items2.Add("BotB13 Skylar Powers");
+		items2.Add("BotB13 Skyler Powers");
 		items2.Add("BotB14 Dieter Voegels");
 		items2.Add("BotB15 Jacob Wymer");
 		items2.Add("BotB16 Chase Graves");
@@ -96,7 +96,7 @@ public class dropdownHandler : MonoBehaviour{
 		items2.Add("BotA03 Jiwon Jung");
 		items2.Add("BotA04 Akshat Madan");
 		items2.Add("BotA05 Alora Newbury");
-		items2.Add("BotA06 Ryan Garvin");
+		items2.Add("BotA06 Ryan Garvan");
 		items2.Add("BotA07 Matthew Klingman");
 		items2.Add("BotA08 Lorenzo DeMaine");
 		items2.Add("BotA09 Mark Culp");

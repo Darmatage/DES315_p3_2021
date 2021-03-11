@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 
 public class GameHandler : MonoBehaviour{
 
@@ -11,7 +12,7 @@ public class GameHandler : MonoBehaviour{
 	public GameObject playerMenuUI;
 	public GameObject gameHUD;
 	public GameObject pauseMenuUI;
-	public static bool GameisPaused = false;
+	public bool GameisPaused = false;
 	public GameObject fightButton;
 	public AudioMixer mixer;
     public static float volumeLevel = 1.0f;
@@ -64,7 +65,9 @@ public class GameHandler : MonoBehaviour{
 	Dictionary<string, GameObject> botDictionary;
 	
 	Scene thisScene;
-	public static bool notFirstGame = false; 
+	public static bool notFirstGame = false;
+
+	public static UnityAction onBattleStart;
 	
 	void Awake (){
 		SetLevel (volumeLevel);
@@ -310,6 +313,9 @@ public class GameHandler : MonoBehaviour{
 		playerMenuUI.SetActive(false);
 		gameHUD.SetActive(true);
 		pauseMenuUI.SetActive(false);
+		
+		if (onBattleStart != null)
+			onBattleStart.Invoke();
 			
 		if (p1PrefabName != ""){	
 			player1Prefab = botDictionary[p1PrefabName];

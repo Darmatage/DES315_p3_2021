@@ -78,8 +78,8 @@ GameObject:
   - component: {fileID: 1355330930375697359}
   - component: {fileID: 3195662371365355034}
   - component: {fileID: 2068642586320478456}
-  - component: {fileID: 6139740885554281159}
   - component: {fileID: 3285595525049246146}
+  - component: {fileID: 8725235000412257293}
   m_Layer: 0
   m_Name: BotB17
   m_TagString: Untagged
@@ -120,8 +120,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1.2, z: 4}
-  m_Center: {x: 0, y: -0.05, z: 0}
+  m_Size: {x: 2, y: 1.2, z: 2.4178677}
+  m_Center: {x: 0, y: -0.050000012, z: 0.012708962}
 --- !u!65 &3648416720296770018
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -133,8 +133,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 1.5, z: 4.1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.5, y: 1.5, z: 2.9598393}
+  m_Center: {x: 0, y: 0, z: 0.008681595}
 --- !u!54 &1355330930375697357
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -268,23 +268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e173a7401170b4c8b91f0cf261062e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6139740885554281159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355330930375697355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67b5dfa20ebefac448d710384853fb07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponThrust: {fileID: 0}
-  button1: 
-  button2: 
-  button3: 
-  button4: 
 --- !u!114 &3285595525049246146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,6 +280,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93532439b5cceee49a60add040f5328d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  redArrowOn: {fileID: 2100000, guid: a05aaab6d9e17f94ba147a0c1e9a5c6a, type: 2}
+  redArrowOff: {fileID: 2100000, guid: ce1dc869c48e3924eb259059c1250a01, type: 2}
+  greenArrowOn: {fileID: 2100000, guid: 2ddfe28b5b0b063449179d5ba2a33af7, type: 2}
+  greenArrowOff: {fileID: 2100000, guid: 8f74011025ca1644282b6f33300f5710, type: 2}
+  cooldownTime: 3
+  flarePrefab: {fileID: 3443851444915259385, guid: 6fd626d006cf7834a9b93622f58a6075,
+    type: 3}
+  spikePrefab: {fileID: 3653557207296190757, guid: ecc3eb2188c39534faa381fa9fcf32a9,
+    type: 3}
+--- !u!114 &8725235000412257293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355330930375697355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 026eeadf35d536d438fc66ecaef62f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  antennaOn: {fileID: 2100000, guid: 89145837aff629d4a89e0a0f3392327f, type: 2}
+  antennaOff: {fileID: 2100000, guid: f25efa402cc6a28438ef1c1be0590873, type: 2}
+  cooldownTime: 3
 --- !u!1 &1355330930762081239
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,6 +596,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: switch4-r00
+      objectReference: {fileID: 0}
+    - target: {fileID: 6815699091824808463, guid: 5b4b1a3415ec77f41b1737616dcf5b9c,
+        type: 3}
+      propertyPath: m_Name
+      value: switch4-r00_arrow_002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b4b1a3415ec77f41b1737616dcf5b9c, type: 3}
