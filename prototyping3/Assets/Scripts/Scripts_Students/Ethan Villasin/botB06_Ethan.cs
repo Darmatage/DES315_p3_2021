@@ -31,11 +31,14 @@ public class botB06_Ethan : MonoBehaviour
     //Weapon Vars
     public GameObject FrontWeapon;
     //public GameObject[] Weapons; //Weapon Ordering Front, FrontLeft, Left, BackLeft, Back, BackRight, Right, FrontRight
-    private float thrustAmount = 1f;
+    private float thrustAmount = 1.8f;
 
     private bool weaponOut = false;
 
     float spinCD = 0;
+    bool Spin = false;
+    float spinTimer = 0;
+    //private Vector3 weaponScale = new Vector3(0.45f, 1, .45f);
 
     //grab axis from parent object
     public string button1;
@@ -94,30 +97,31 @@ public class botB06_Ethan : MonoBehaviour
         }
         if ((Input.GetButtonDown(button2)) && (weaponOut == false))
         {
-            //Weapons[1].transform.Translate(0, thrustAmount, 0); //Front
-            //Weapons[3].transform.Translate(0, thrustAmount, 0); //Left
-            //Weapons[5].transform.Translate(0, -thrustAmount, 0); //Back
-            //Weapons[7].transform.Translate(0, -thrustAmount, 0); //Right
+            //dash
+            rb.AddForce(new Vector3(),ForceMode.Impulse);
             weaponOut = true;
             StartCoroutine(WithdrawWeapon("Diagonal"));
         }
-        if ((Input.GetButtonDown(button2)) && (weaponOut == false) && spinCD <= 0)
+        if ((Input.GetButtonDown(button3)) && (weaponOut == false) && spinCD <= 0)
         {
-            //Spin move
-            //Weapons[0].transform.Translate(0, thrustAmount, 0); //Front
-            //Weapons[2].transform.Translate(0, thrustAmount, 0); //Left
-            //Weapons[4].transform.Translate(0, -thrustAmount, 0); //Back
-            //Weapons[6].transform.Translate(0, -thrustAmount, 0); //Right
-
-            //Weapons[1].transform.Translate(0, thrustAmount, 0); //Front
-            //Weapons[3].transform.Translate(0, thrustAmount, 0); //Left
-            //Weapons[5].transform.Translate(0, -thrustAmount, 0); //Back
-            //Weapons[7].transform.Translate(0, -thrustAmount, 0); //Right
-
             spinCD = 5f;
+            Spin = true;
         }
         if (spinCD > 0)
             spinCD -= Time.deltaTime;
+        if(Spin && spinTimer > 0)
+        {
+            spinTimer = 5;
+            transform.Rotate(new Vector3(0,1,0));
+        }
+        if(spinTimer > 0)
+        {
+            spinTimer -= Time.deltaTime;
+        }
+        else
+        {
+            Spin = false;
+        }
     }
 
     IEnumerator WithdrawWeapon(string direction)
