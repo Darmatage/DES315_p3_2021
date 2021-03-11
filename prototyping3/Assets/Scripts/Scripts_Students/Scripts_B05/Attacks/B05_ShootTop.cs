@@ -11,7 +11,7 @@ public class B05_ShootTop : MonoBehaviour
     private float t_cooldown = 1.0f; // time before another top can be shot out
 
     private int top_count = 0;
-    private int top_max = 50;
+    private int top_max = 5;
 
     private float charge;               // 0.0f - no charge    1.0f - full charge
     private float chargeSpeed = 0.5f;
@@ -29,6 +29,10 @@ public class B05_ShootTop : MonoBehaviour
 
     public Bot05_Move b05;
 
+    public MeshRenderer[] ammo;
+    public Material mat_ammo_on;
+    public Material mat_ammo_off;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +43,11 @@ public class B05_ShootTop : MonoBehaviour
         arrow_sprite.color = start_color;
         arrow_sprite.enabled = false;
         top_count = 0;
+
+        for(int i = 0; i < 5; ++i)
+        {
+            ammo[i].material = mat_ammo_on;
+        }
     }
 
     // Update is called once per frame
@@ -70,14 +79,15 @@ public class B05_ShootTop : MonoBehaviour
         new_top.GetComponent<Rigidbody>().AddForce(transform.forward * charge * topSpeed, ForceMode.Impulse);
         new_top.GetComponent<B05_MiniTop>().SetParent(gameObject);
         ++top_count;
+        ammo[5 - top_count].material = mat_ammo_off;
     }
 
     public void BeginAttack()
     {
-        if (b_aiming || b_cooling || !b05.IsNormal() || top_count == top_max) return;
+        if (b_aiming || b_cooling || !b05.IsState(Bot05_Move.STATE.NORMAL) || top_count == top_max) return;
 
         b_aiming = true;
-        b05.SetAimingState();
+        b05.SetState(Bot05_Move.STATE.AIMING);
         charge = 0.0f;
         arrow_trans.localPosition = start_pos;
         arrow_trans.localScale = start_scale;
@@ -90,7 +100,7 @@ public class B05_ShootTop : MonoBehaviour
         if (!b_aiming || b_cooling || top_count == top_max) return;
 
         b_aiming = false;
-        b05.SetNormalState();
+        b05.SetState(Bot05_Move.STATE.NORMAL);
         arrow_sprite.enabled = false;
         Shoot();
         BeginCool();
