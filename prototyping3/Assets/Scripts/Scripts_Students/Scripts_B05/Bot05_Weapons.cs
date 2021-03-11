@@ -11,6 +11,8 @@ public class Bot05_Weapons : MonoBehaviour
     public string button4; // currently boost in player move script
 
     public B05_BladeRush a_bladerush;
+    public B05_ShootTop a_shoottop;
+    public B05_MagneticForce a_magforce;
 
     void Start()
     {
@@ -22,22 +24,36 @@ public class Bot05_Weapons : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.T)){
         if (Input.GetButtonDown(button1))
         {
-            //weaponThrust.transform.Translate(0, thrustAmount, 0);
-            //weaponOut = true;
-            //StartCoroutine(WithdrawWeapon());
             a_bladerush.Attack();
         }
-    }
 
-    /*
-    IEnumerator WithdrawWeapon()
-    {
-        yield return new WaitForSeconds(0.6f);
-        weaponThrust.transform.Translate(0, -thrustAmount, 0);
-        weaponOut = false;
+        if (Input.GetButtonDown(button2))
+        {
+            a_shoottop.BeginAttack();
+        }
+        if (Input.GetButtonUp(button2))
+        {
+            a_shoottop.EndAttack();
+        }
+
+        if (Input.GetButtonDown(button3))
+        {
+            a_magforce.BeginAttract();
+        }
+        if (Input.GetButtonUp(button3))
+        {
+            a_magforce.EndAttract();
+        }
+
+        if (Input.GetButtonDown(button4))
+        {
+            a_magforce.BeginRepel();
+        }
+        if (Input.GetButtonUp(button4))
+        {
+            a_magforce.EndRepel();
+        }
     }
-    */
 }

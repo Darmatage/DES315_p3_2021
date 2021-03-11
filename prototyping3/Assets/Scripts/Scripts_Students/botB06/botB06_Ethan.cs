@@ -7,7 +7,7 @@ public class botB06_Ethan : MonoBehaviour
     //vars pulled from teacher
     public GameObject compassSides;
     public GameObject compassVertical;
-    private float sidelimit = 3.0f;
+    private float sidelimit = 1.0f;
     private float attackDamage;
     public float knockBackSpeed = 10f;
 
@@ -24,12 +24,13 @@ public class botB06_Ethan : MonoBehaviour
     private bool notMyWeapon = true;
 
     //Shields
-    public GameObject TopShield, BottomShield, LeftShield, RightShield, BackShield;
+    public GameObject TopShield, BottomShield;//, LeftShield, RightShield, BackShield;
     //particles
-    public GameObject TopParticles, BottomParticles, LeftParticles, RightParticles, BackParticles;
+    public GameObject TopParticles, BottomParticles;//, LeftParticles, RightParticles, BackParticles;
 
     //Weapon Vars
-    public GameObject[] Weapons; //Weapon Ordering Front, FrontLeft, Left, BackLeft, Back, BackRight, Right, FrontRight
+    public GameObject FrontWeapon;
+    //public GameObject[] Weapons; //Weapon Ordering Front, FrontLeft, Left, BackLeft, Back, BackRight, Right, FrontRight
     private float thrustAmount = 1f;
 
     private bool weaponOut = false;
@@ -61,15 +62,15 @@ public class botB06_Ethan : MonoBehaviour
 
         TopShield.SetActive(false);
         BottomShield.SetActive(false);
-		LeftShield.SetActive(false);
-		RightShield.SetActive(false);
-		BackShield.SetActive(false);
+		//LeftShield.SetActive(false);
+		//RightShield.SetActive(false);
+		//BackShield.SetActive(false);
 
         TopParticles.SetActive(false);
         BottomParticles.SetActive(false);
-		LeftParticles.SetActive(false);
-		RightParticles.SetActive(false);
-		BackParticles.SetActive(false);
+		//LeftParticles.SetActive(false);
+		//RightParticles.SetActive(false);
+		//BackParticles.SetActive(false);
 
         //weapon buttons
         button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
@@ -83,34 +84,35 @@ public class botB06_Ethan : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.T)){
         if ((Input.GetButtonDown(button1)) && (weaponOut == false))
         {
-            Weapons[0].transform.Translate(0, thrustAmount, 0); //Front
-            Weapons[2].transform.Translate(0, thrustAmount, 0); //Left
-            Weapons[4].transform.Translate(0, -thrustAmount, 0); //Back
-            Weapons[6].transform.Translate(0, -thrustAmount, 0); //Right
+            FrontWeapon.transform.Translate(0, thrustAmount, 0);
+            //Weapons[0].transform.Translate(0, thrustAmount, 0); //Front
+            //Weapons[2].transform.Translate(0, thrustAmount, 0); //Left
+            //Weapons[4].transform.Translate(0, -thrustAmount, 0); //Back
+            //Weapons[6].transform.Translate(0, -thrustAmount, 0); //Right
             weaponOut = true;
-            StartCoroutine(WithdrawWeapon("F+S"));
+            StartCoroutine(WithdrawWeapon("front"));
         }
         if ((Input.GetButtonDown(button2)) && (weaponOut == false))
         {
-            Weapons[1].transform.Translate(0, thrustAmount, 0); //Front
-            Weapons[3].transform.Translate(0, thrustAmount, 0); //Left
-            Weapons[5].transform.Translate(0, -thrustAmount, 0); //Back
-            Weapons[7].transform.Translate(0, -thrustAmount, 0); //Right
+            //Weapons[1].transform.Translate(0, thrustAmount, 0); //Front
+            //Weapons[3].transform.Translate(0, thrustAmount, 0); //Left
+            //Weapons[5].transform.Translate(0, -thrustAmount, 0); //Back
+            //Weapons[7].transform.Translate(0, -thrustAmount, 0); //Right
             weaponOut = true;
             StartCoroutine(WithdrawWeapon("Diagonal"));
         }
         if ((Input.GetButtonDown(button2)) && (weaponOut == false) && spinCD <= 0)
         {
             //Spin move
-            Weapons[0].transform.Translate(0, thrustAmount, 0); //Front
-            Weapons[2].transform.Translate(0, thrustAmount, 0); //Left
-            Weapons[4].transform.Translate(0, -thrustAmount, 0); //Back
-            Weapons[6].transform.Translate(0, -thrustAmount, 0); //Right
+            //Weapons[0].transform.Translate(0, thrustAmount, 0); //Front
+            //Weapons[2].transform.Translate(0, thrustAmount, 0); //Left
+            //Weapons[4].transform.Translate(0, -thrustAmount, 0); //Back
+            //Weapons[6].transform.Translate(0, -thrustAmount, 0); //Right
 
-            Weapons[1].transform.Translate(0, thrustAmount, 0); //Front
-            Weapons[3].transform.Translate(0, thrustAmount, 0); //Left
-            Weapons[5].transform.Translate(0, -thrustAmount, 0); //Back
-            Weapons[7].transform.Translate(0, -thrustAmount, 0); //Right
+            //Weapons[1].transform.Translate(0, thrustAmount, 0); //Front
+            //Weapons[3].transform.Translate(0, thrustAmount, 0); //Left
+            //Weapons[5].transform.Translate(0, -thrustAmount, 0); //Back
+            //Weapons[7].transform.Translate(0, -thrustAmount, 0); //Right
 
             spinCD = 5f;
         }
@@ -124,19 +126,20 @@ public class botB06_Ethan : MonoBehaviour
             yield return new WaitForSeconds(0.6f);
 
 
-        if (direction == "F+S")
+        if (direction == "front")
         {
-            Weapons[0].transform.Translate(0, -thrustAmount, 0); //Front
-            Weapons[2].transform.Translate(0, -thrustAmount, 0); //Left
-            Weapons[4].transform.Translate(0, thrustAmount, 0); //Back
-            Weapons[6].transform.Translate(0, thrustAmount, 0); //Right
+            FrontWeapon.transform.Translate(0, -thrustAmount, 0);
+            //Weapons[0].transform.Translate(0, -thrustAmount, 0); //Front
+            //Weapons[2].transform.Translate(0, -thrustAmount, 0); //Left
+            //Weapons[4].transform.Translate(0, thrustAmount, 0); //Back
+            //Weapons[6].transform.Translate(0, thrustAmount, 0); //Right
         }
         if(direction == "Diagonal")
         {
-            Weapons[1].transform.Translate(0, -thrustAmount, 0); //Front
-            Weapons[3].transform.Translate(0, -thrustAmount, 0); //Left
-            Weapons[5].transform.Translate(0, thrustAmount, 0); //Back
-            Weapons[7].transform.Translate(0, thrustAmount, 0); //Right
+            //Weapons[1].transform.Translate(0, -thrustAmount, 0); //Front
+            //Weapons[3].transform.Translate(0, -thrustAmount, 0); //Left
+            //Weapons[5].transform.Translate(0, thrustAmount, 0); //Back
+            //Weapons[7].transform.Translate(0, thrustAmount, 0); //Right
         }
         weaponOut = false;
     }
@@ -163,25 +166,25 @@ public class botB06_Ethan : MonoBehaviour
             {
                 rb.AddForce(transform.forward * knockBackSpeed * -1, ForceMode.Impulse);
                 //Debug.Log("HitBack " + Vector3.Dot(transform.forward, directionFore));
-                if (shieldPowerBack <= 0)
-                {
-                    BackParticles.SetActive(true);
-                    //string playerDamaged = gameObject.tag; //remove for final;
-                    //gameHandler.TakeDamage(playerDamaged, attackDamage); //remove for final;
+                //if (shieldPowerBack <= 0)
+                //{
+                //    BackParticles.SetActive(true);
+                //    //string playerDamaged = gameObject.tag; //remove for final;
+                //    //gameHandler.TakeDamage(playerDamaged, attackDamage); //remove for final;
                     gameHandler.TakeDamage(thisPlayer, attackDamage);  //use in final (slotted players)
-                }
-                else
-                {
-                    shieldPowerBack -= attackDamage;
-                    StartCoroutine(ShieldHitDisplay(BackShield));
-                    if (shieldPowerBack <= 0)
-                    {
-                        shieldPowerBack = 0;
-                        //string playerDamaged = gameObject.tag; //remove for final;
-                        //gameHandler.PlayerShields(playerDamaged, "Back"); //remove for final;
-                        gameHandler.PlayerShields(thisPlayer, "Back");  //use in final (slotted players)
-                    }
-                }
+                //}
+                //else
+                //{
+                //    shieldPowerBack -= attackDamage;
+                //    StartCoroutine(ShieldHitDisplay(BackShield));
+                //    if (shieldPowerBack <= 0)
+                //    {
+                //        shieldPowerBack = 0;
+                //        //string playerDamaged = gameObject.tag; //remove for final;
+                //        //gameHandler.PlayerShields(playerDamaged, "Back"); //remove for final;
+                //        gameHandler.PlayerShields(thisPlayer, "Back");  //use in final (slotted players)
+                //    }
+                //}
             }
 
             if (Vector3.Dot(transform.forward, directionFore) > sidelimit)
@@ -194,7 +197,7 @@ public class botB06_Ethan : MonoBehaviour
                 //	//string playerDamaged = gameObject.tag; //remove for final;
                 //	//Debug.Log("I hit the core of " + playerDamaged + "\n for damage = " + attackDamage); // remove in final
                 //	//gameHandler.TakeDamage(playerDamaged, attackDamage); //remove for final;
-                //	gameHandler.TakeDamage(thisPlayer, attackDamage); // use in final (slotted players)
+                	gameHandler.TakeDamage(thisPlayer, attackDamage); // use in final (slotted players)
                 //}
                 //else
                 //{
@@ -214,52 +217,52 @@ public class botB06_Ethan : MonoBehaviour
             {
                 rb.AddForce(transform.right * knockBackSpeed, ForceMode.Impulse);
                 //Debug.Log("HitRight " + Vector3.Dot (compassSides.transform.forward, directionSides));
-                if (shieldPowerRight <= 0)
-                {
-                    RightParticles.SetActive(true);
-                    //string playerDamaged = gameObject.tag; //remove for final;
-                    //Debug.Log("I hit the core of " + playerDamaged + "\n for damage = " + attackDamage); // remove in final
-                    //gameHandler.TakeDamage(playerDamaged, attackDamage); //remove for final;
+                //if (shieldPowerRight <= 0)
+                //{
+                //    RightParticles.SetActive(true);
+                //    //string playerDamaged = gameObject.tag; //remove for final;
+                //    //Debug.Log("I hit the core of " + playerDamaged + "\n for damage = " + attackDamage); // remove in final
+                //    //gameHandler.TakeDamage(playerDamaged, attackDamage); //remove for final;
                     gameHandler.TakeDamage(thisPlayer, attackDamage); // use in final (slotted players)
-                }
-                else
-                {
-                    shieldPowerRight -= attackDamage;
-                    StartCoroutine(ShieldHitDisplay(RightShield));
-                    if (shieldPowerRight <= 0)
-                    {
-                        shieldPowerRight = 0;
-                        //string playerDamaged = gameObject.tag; //remove for final;
-                        //gameHandler.PlayerShields(playerDamaged, "Right"); //remove for final;
-                        gameHandler.PlayerShields(thisPlayer, "Right");  //use in final (slotted players)
-                    }
-                }
+                //}
+                //else
+                //{
+                //    shieldPowerRight -= attackDamage;
+                //    StartCoroutine(ShieldHitDisplay(RightShield));
+                //    if (shieldPowerRight <= 0)
+                //    {
+                //        shieldPowerRight = 0;
+                //        //string playerDamaged = gameObject.tag; //remove for final;
+                //        //gameHandler.PlayerShields(playerDamaged, "Right"); //remove for final;
+                //        gameHandler.PlayerShields(thisPlayer, "Right");  //use in final (slotted players)
+                //    }
+                //}
             }
 
             if (Vector3.Dot(compassSides.transform.forward, directionSides) < (-sidelimit))
             {
                 rb.AddForce(transform.right * knockBackSpeed * -1, ForceMode.Impulse);
                 //Debug.Log("HitLeft " + Vector3.Dot (compassSides.transform.forward, directionSides));
-                if (shieldPowerLeft <= 0)
-                {
-                    LeftParticles.SetActive(true);
-                    //string playerDamaged = gameObject.tag; //remove for final;
-                    //Debug.Log("I hit the core of " + playerDamaged + "\n for damage = " + attackDamage); // remove in final
-                    //gameHandler.TakeDamage(playerDamaged, attackDamage); //remove for final;
+                //if (shieldPowerLeft <= 0)
+                //{
+                //    LeftParticles.SetActive(true);
+                //    //string playerDamaged = gameObject.tag; //remove for final;
+                //    //Debug.Log("I hit the core of " + playerDamaged + "\n for damage = " + attackDamage); // remove in final
+                //    //gameHandler.TakeDamage(playerDamaged, attackDamage); //remove for final;
                     gameHandler.TakeDamage(thisPlayer, attackDamage); // use in final (slotted players)
-                }
-                else
-                {
-                    shieldPowerLeft -= attackDamage;
-                    StartCoroutine(ShieldHitDisplay(LeftShield));
-                    if (shieldPowerLeft <= 0)
-                    {
-                        shieldPowerLeft = 0;
-                        //string playerDamaged = gameObject.tag; //remove for final;
-                        //gameHandler.PlayerShields(playerDamaged, "Left"); //remove for final;
-                        gameHandler.PlayerShields(thisPlayer, "Left");  //use in final (slotted players)
-                    }
-                }
+                //}
+                //else
+                //{
+                //    shieldPowerLeft -= attackDamage;
+                //    StartCoroutine(ShieldHitDisplay(LeftShield));
+                //    if (shieldPowerLeft <= 0)
+                //    {
+                //        shieldPowerLeft = 0;
+                //        //string playerDamaged = gameObject.tag; //remove for final;
+                //        //gameHandler.PlayerShields(playerDamaged, "Left"); //remove for final;
+                //        gameHandler.PlayerShields(thisPlayer, "Left");  //use in final (slotted players)
+                //    }
+                //}
             }
 
             if (Vector3.Dot(compassVertical.transform.forward, directionVert) > sidelimit)
@@ -294,7 +297,7 @@ public class botB06_Ethan : MonoBehaviour
                 //Debug.Log("HitBottom " + Vector3.Dot (compassVertical.transform.forward, directionVert));
                 if (shieldPowerBottom <= 0)
                 {
-                    //dmgParticlesBottom.SetActive(true);
+                    BottomParticles.SetActive(true);
                     //string playerDamaged = gameObject.tag; //remove for final;
                     //Debug.Log("I hit the core of " + playerDamaged + "\n for damage = " + attackDamage); // remove in final
                     //gameHandler.TakeDamage(playerDamaged, attackDamage); //remove for final;
