@@ -35,6 +35,7 @@ public class Weapons_ChaseG : MonoBehaviour
 			gameObject.GetComponentInParent<Rigidbody>().velocity = thrust;
 			weaponStomp.transform.Translate(0, -thrustAmount, 0);
 			weaponOut = true;
+			weaponStomp.tag = "Hazard";
 			StartCoroutine(WithdrawWeapon());
 		}
 	}
@@ -44,5 +45,6 @@ public class Weapons_ChaseG : MonoBehaviour
 		yield return new WaitForSeconds(0.6f);
 		weaponStomp.transform.Translate(0, thrustAmount, 0);
 		weaponOut = false;
+		weaponStomp.tag = "Untagged";
 	}
 }
