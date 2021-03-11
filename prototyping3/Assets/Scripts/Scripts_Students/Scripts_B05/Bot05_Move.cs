@@ -142,6 +142,9 @@ public class Bot05_Move : MonoBehaviour
     public void SetState(STATE state)
     {
         cur_state = state;
+
+        if (state == STATE.ATTACKING)
+            rushDir = transform.forward;
     }
 
     public bool IsState(STATE state)
