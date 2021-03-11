@@ -6,6 +6,23 @@
     <e p="C:\Users\jacpb\Desktop\j.presley\Junior\Spring\DES315\PROJECT3\PROJECT3_GIT\DES315_p3_2021\prototyping3" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="Media" t="Include">
+          <e p="Media_Students" t="Include">
+            <e p="botA06" t="Include">
+              <e p="botA06_shader.shader" t="Include" />
+              <e p="botA06_shader2.shader" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Prefabs" t="Include">
+          <e p="Prefabs_Students" t="Include">
+            <e p="Oussama" t="Include">
+              <e p="OK_particles.cs" t="Include" />
+              <e p="OK_Projectile.cs" t="Include" />
+              <e p="OK_SonicBoom.cs" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="Scripts" t="Include">
           <e p="Scripts_Students" t="Include">
             <e p="AaronJohnson" t="Include">
@@ -13,6 +30,9 @@
               <e p="BotDamageMod.cs" t="Include" />
               <e p="ShieldCollisionIgnorer.cs" t="Include" />
               <e p="ShieldRegeneration.cs" t="Include" />
+            </e>
+            <e p="AdamDoolittle" t="Include">
+              <e p="Jetpack.cs" t="Include" />
             </e>
             <e p="AustinStead" t="Include">
               <e p="BotB04_DamageHandler.cs" t="Include" />
@@ -36,12 +56,17 @@
               <e p="ExtendableBotPart.cs" t="Include" />
               <e p="TransformationController.cs" t="Include" />
             </e>
+            <e p="BotA10_Scripts" t="Include">
+              <e p="BotA10_Bullet.cs" t="Include" />
+              <e p="BotA10_Weapon.cs" t="Include" />
+            </e>
             <e p="botA11" t="Include">
               <e p="A11_AttacksManager.cs" t="Include" />
               <e p="A11_Heal.cs" t="Include" />
               <e p="A11_IAttack.cs" t="Include" />
               <e p="A11_MiniBot.cs" t="Include" />
               <e p="A11_Notes.cs" t="Include" />
+              <e p="MusicManager.cs" t="Include" />
             </e>
             <e p="botA15" t="Include">
               <e p="botA15_Weapons.cs" t="Include" />
@@ -65,6 +90,17 @@
                 <e p="botB01_RocketHoming.cs" t="Include" />
               </e>
             </e>
+            <e p="botB02" t="Include">
+              <e p="B02Stabilize.cs" t="Include" />
+              <e p="BotB02_Damage.cs" t="Include" />
+              <e p="BotB02_Move.cs" t="Include" />
+              <e p="BotB02_Weapon.cs" t="Include" />
+            </e>
+            <e p="botB03" t="Include">
+              <e p="B03_Attack.cs" t="Include" />
+              <e p="B03_Bullet.cs" t="Include" />
+              <e p="B03_Status.cs" t="Include" />
+            </e>
             <e p="botB06" t="Include">
               <e p="botB06_Ethan.cs" t="Include" />
             </e>
@@ -81,8 +117,19 @@
               <e p="BotB12_CannonBall.cs" t="Include" />
               <e p="BotB12_CannonFire.cs" t="Include" />
             </e>
+            <e p="botB15" t="Include">
+              <e p="JWymerClaw.cs" t="Include" />
+            </e>
+            <e p="botB16" t="Include">
+              <e p="Weapons_ChaseG.cs" t="Include" />
+            </e>
             <e p="botB17" t="Include">
+              <e p="DH_FlareButton.cs" t="Include" />
+              <e p="DH_FlareTrap.cs" t="Include" />
+              <e p="DH_SpikeButton.cs" t="Include" />
+              <e p="DH_SpikeHazard.cs" t="Include" />
               <e p="DH_SwapperAbility.cs" t="Include" />
+              <e p="DH_TriggerTrapsAbility.cs" t="Include" />
             </e>
             <e p="botB18" t="Include">
               <e p="QB_ControlInfo.cs" t="Include" />
@@ -93,6 +140,12 @@
               <e p="ArmRotation.cs" t="Include" />
               <e p="BuzzBlade_rotation.cs" t="Include" />
               <e p="Magnet.cs" t="Include" />
+            </e>
+            <e p="DevinCavness" t="Include">
+              <e p="BotBasic_Weapon_DRC.cs" t="Include" />
+            </e>
+            <e p="KeanuCendejas" t="Include">
+              <e p="BotA14_AttackScript.cs" t="Include" />
             </e>
             <e p="KeeganTompkins" t="Include">
               <e p="DestroyOnCollide.cs" t="Include" />
@@ -107,13 +160,17 @@
               <e p="Mars_Weapon.cs" t="Include" />
             </e>
             <e p="RyanGarvan" t="Include">
+              <e p="BotSplincher_DamageBox.cs" t="Include" />
+              <e p="BotSplincher_Move.cs" t="Include" />
               <e p="BotSplincher_Teleport.cs" t="Include" />
             </e>
             <e p="Scripts_B05" t="Include">
               <e p="Attacks" t="Include">
                 <e p="B05_BladeRush.cs" t="Include" />
+                <e p="B05_MagneticForce.cs" t="Include" />
                 <e p="B05_ShootTop.cs" t="Include" />
               </e>
+              <e p="B05_Camera.cs" t="Include" />
               <e p="B05_MiniTop.cs" t="Include" />
               <e p="Bot05_Move.cs" t="Include" />
               <e p="Bot05_Weapons.cs" t="Include" />
@@ -122,6 +179,10 @@
               <e p="HazardDamageTrigger.cs" t="Include" />
               <e p="SP_GoopBehavior.cs" t="Include" />
               <e p="SP_GoopSpawner.cs" t="Include" />
+            </e>
+            <e p="ZacBrown" t="Include">
+              <e p="ZMB_AcidPool.cs" t="Include" />
+              <e p="ZMB_WeaponManager.cs" t="Include" />
             </e>
           </e>
           <e p="Scripts_Teacher" t="Include">
