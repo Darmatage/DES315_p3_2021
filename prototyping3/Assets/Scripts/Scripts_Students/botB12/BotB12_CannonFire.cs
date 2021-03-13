@@ -20,6 +20,8 @@ public class BotB12_CannonFire : MonoBehaviour
 
     private Vector3 firePosition;
 
+    private AudioSource audioData;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,7 @@ public class BotB12_CannonFire : MonoBehaviour
         rightFire = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
         cooldownLeft = cd;
         cooldownRight = cd;
+        audioData = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -40,6 +43,7 @@ public class BotB12_CannonFire : MonoBehaviour
                 firePosition.x = firePosition.x - .4f;
                 GameObject ball = Instantiate(cannonBall, firePosition, Quaternion.identity) as GameObject;
                 ball.GetComponent<Rigidbody>().AddForce(transform.right * -90);
+                audioData.Play();
             }
             foreach (var cannon in LeftCannons)
             {
@@ -57,6 +61,7 @@ public class BotB12_CannonFire : MonoBehaviour
                 firePosition.x = firePosition.x + .4f;
                 GameObject ball = Instantiate(cannonBall, firePosition, Quaternion.identity) as GameObject;
                 ball.GetComponent<Rigidbody>().AddForce(transform.right * 90);
+                audioData.Play();
             }
             foreach (var cannon in RightCannons)
             {
