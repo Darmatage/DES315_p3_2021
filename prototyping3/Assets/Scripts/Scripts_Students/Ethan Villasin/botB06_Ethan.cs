@@ -31,11 +31,16 @@ public class botB06_Ethan : MonoBehaviour
     //Weapon Vars
     public GameObject FrontWeapon;
     //public GameObject[] Weapons; //Weapon Ordering Front, FrontLeft, Left, BackLeft, Back, BackRight, Right, FrontRight
-    private float thrustAmount = 1f;
+    private float thrustAmount = 1.8f;
 
     private bool weaponOut = false;
 
+    public GameObject Beyblade;
+    Quaternion origRotation;
     float spinCD = 0;
+    int Spin = 0;
+    float spinTimer = 0;
+    //private Vector3 weaponScale = new Vector3(0.45f, 1, .45f);
 
     //grab axis from parent object
     public string button1;
@@ -77,6 +82,8 @@ public class botB06_Ethan : MonoBehaviour
         button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
         button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
         button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
+
+        origRotation = Beyblade.transform.localRotation;
     }
 
     void Update()
@@ -85,62 +92,42 @@ public class botB06_Ethan : MonoBehaviour
         if ((Input.GetButtonDown(button1)) && (weaponOut == false))
         {
             FrontWeapon.transform.Translate(0, thrustAmount, 0);
-            //Weapons[0].transform.Translate(0, thrustAmount, 0); //Front
-            //Weapons[2].transform.Translate(0, thrustAmount, 0); //Left
-            //Weapons[4].transform.Translate(0, -thrustAmount, 0); //Back
-            //Weapons[6].transform.Translate(0, -thrustAmount, 0); //Right
             weaponOut = true;
-            StartCoroutine(WithdrawWeapon("front"));
+            StartCoroutine(WithdrawWeapon());
         }
         if ((Input.GetButtonDown(button2)) && (weaponOut == false))
         {
-            //Weapons[1].transform.Translate(0, thrustAmount, 0); //Front
-            //Weapons[3].transform.Translate(0, thrustAmount, 0); //Left
-            //Weapons[5].transform.Translate(0, -thrustAmount, 0); //Back
-            //Weapons[7].transform.Translate(0, -thrustAmount, 0); //Right
+            //dash
+            rb.AddForce(new Vector3(),ForceMode.Impulse);
             weaponOut = true;
-            StartCoroutine(WithdrawWeapon("Diagonal"));
+            StartCoroutine(WithdrawWeapon());
         }
-        if ((Input.GetButtonDown(button2)) && (weaponOut == false) && spinCD <= 0)
+        if ((Input.GetButtonDown(button3))  && Spin == 0)
         {
-            //Spin move
-            //Weapons[0].transform.Translate(0, thrustAmount, 0); //Front
-            //Weapons[2].transform.Translate(0, thrustAmount, 0); //Left
-            //Weapons[4].transform.Translate(0, -thrustAmount, 0); //Back
-            //Weapons[6].transform.Translate(0, -thrustAmount, 0); //Right
-
-            //Weapons[1].transform.Translate(0, thrustAmount, 0); //Front
-            //Weapons[3].transform.Translate(0, thrustAmount, 0); //Left
-            //Weapons[5].transform.Translate(0, -thrustAmount, 0); //Back
-            //Weapons[7].transform.Translate(0, -thrustAmount, 0); //Right
-
-            spinCD = 5f;
+            Spin = 1;
         }
-        if (spinCD > 0)
-            spinCD -= Time.deltaTime;
+        if(Spin == 1 && spinTimer <= 0)
+        {
+            spinTimer = 0.5f;
+            Spin = 2;
+        }
+        if(spinTimer > 0 && Spin == 2)
+        {
+            Beyblade.transform.Rotate(new Vector3(0, 0, 20));
+            spinTimer -= Time.deltaTime;
+        }
+        else if(Spin == 2 && spinTimer <= 0)
+        {
+            Beyblade.transform.localRotation = origRotation;
+            Spin = 0;
+        }
     }
 
-    IEnumerator WithdrawWeapon(string direction)
+    IEnumerator WithdrawWeapon()
     {
-        if(direction != "Spin")
-            yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.6f);
 
-
-        if (direction == "front")
-        {
-            FrontWeapon.transform.Translate(0, -thrustAmount, 0);
-            //Weapons[0].transform.Translate(0, -thrustAmount, 0); //Front
-            //Weapons[2].transform.Translate(0, -thrustAmount, 0); //Left
-            //Weapons[4].transform.Translate(0, thrustAmount, 0); //Back
-            //Weapons[6].transform.Translate(0, thrustAmount, 0); //Right
-        }
-        if(direction == "Diagonal")
-        {
-            //Weapons[1].transform.Translate(0, -thrustAmount, 0); //Front
-            //Weapons[3].transform.Translate(0, -thrustAmount, 0); //Left
-            //Weapons[5].transform.Translate(0, thrustAmount, 0); //Back
-            //Weapons[7].transform.Translate(0, thrustAmount, 0); //Right
-        }
+        FrontWeapon.transform.Translate(0, -thrustAmount, 0);
         weaponOut = false;
     }
 
