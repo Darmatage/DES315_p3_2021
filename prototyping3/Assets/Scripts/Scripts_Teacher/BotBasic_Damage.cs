@@ -5,7 +5,7 @@ using UnityEngine;
 public class BotBasic_Damage : MonoBehaviour{
 	public GameObject compassSides;
 	public GameObject compassVertical;
-	private float sidelimit = 3.0f;
+	public float sidelimit = 0.1f;
 	private float attackDamage;
 	public float knockBackSpeed = 10f;
 
@@ -68,9 +68,9 @@ public class BotBasic_Damage : MonoBehaviour{
 		if ((other.gameObject.tag == "Hazard")&&(notMyWeapon == true)){
 			attackDamage = other.gameObject.GetComponent<HazardDamage>().damage;
 
-			Vector3 directionFore = other.transform.position - transform.position;
-			Vector3 directionSides = other.transform.position - compassSides.transform.position;
-			Vector3 directionVert = other.transform.position - compassVertical.transform.position;
+			Vector3 directionFore = (other.transform.position - transform.position).normalized;
+			Vector3 directionSides = (other.transform.position - compassSides.transform.position).normalized;
+			Vector3 directionVert = (other.transform.position - compassVertical.transform.position).normalized;
 
 			if (Vector3.Dot (transform.forward, directionFore) < (-sidelimit)) {
 				rb.AddForce(transform.forward * knockBackSpeed * -1, ForceMode.Impulse);
@@ -93,7 +93,7 @@ public class BotBasic_Damage : MonoBehaviour{
 				}
 			}
 
-			if (Vector3.Dot (transform.forward, directionFore) > sidelimit) {
+			else if (Vector3.Dot (transform.forward, directionFore) > sidelimit) {
 				rb.AddForce(transform.forward * knockBackSpeed, ForceMode.Impulse);
 				//Debug.Log("HitFront "+ Vector3.Dot (transform.forward, directionFore));
 				if (shieldPowerFront <= 0){
@@ -115,7 +115,7 @@ public class BotBasic_Damage : MonoBehaviour{
 				}
 			} 
 
-			if (Vector3.Dot (compassSides.transform.forward, directionSides) > sidelimit) {
+			else if (Vector3.Dot (compassSides.transform.forward, directionSides) > sidelimit) {
 				rb.AddForce(transform.right * knockBackSpeed, ForceMode.Impulse);
 				//Debug.Log("HitRight " + Vector3.Dot (compassSides.transform.forward, directionSides));
 				if (shieldPowerRight <= 0){
@@ -137,7 +137,7 @@ public class BotBasic_Damage : MonoBehaviour{
 				}
 			}
 
-			if (Vector3.Dot (compassSides.transform.forward, directionSides) < (-sidelimit)) {
+			else if (Vector3.Dot (compassSides.transform.forward, directionSides) < (-sidelimit)) {
 				rb.AddForce(transform.right * knockBackSpeed * -1, ForceMode.Impulse);
 				//Debug.Log("HitLeft " + Vector3.Dot (compassSides.transform.forward, directionSides));
 				if (shieldPowerLeft <= 0){
@@ -159,7 +159,7 @@ public class BotBasic_Damage : MonoBehaviour{
 				}
 			}
 
-			if (Vector3.Dot (compassVertical.transform.forward, directionVert) > sidelimit) {
+			else if (Vector3.Dot (compassVertical.transform.forward, directionVert) > sidelimit) {
 				rb.AddForce(transform.up * knockBackSpeed, ForceMode.Impulse);
 				//Debug.Log("HitTop " + Vector3.Dot (compassVertical.transform.forward, directionVert));
 				if (shieldPowerTop <= 0){
@@ -181,7 +181,7 @@ public class BotBasic_Damage : MonoBehaviour{
 				}
 			}
 
-			if (Vector3.Dot (compassVertical.transform.forward, directionVert) < (-sidelimit)) {
+			else if (Vector3.Dot (compassVertical.transform.forward, directionVert) < (-sidelimit)) {
 				rb.AddForce(transform.up * knockBackSpeed * -1, ForceMode.Impulse);
 				//Debug.Log("HitBottom " + Vector3.Dot (compassVertical.transform.forward, directionVert));
 				if (shieldPowerBottom <= 0){

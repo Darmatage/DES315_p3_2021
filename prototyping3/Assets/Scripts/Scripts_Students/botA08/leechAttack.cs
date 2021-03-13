@@ -8,7 +8,7 @@ public class leechAttack : MonoBehaviour
     public float cooldown = 5.0f;
 
     private float cooldownTimer = 0;
-    private float thrustAmount = 1f;
+    private float thrustAmount = 2f;
 
     private bool weaponOut = false;
 
@@ -45,7 +45,7 @@ public class leechAttack : MonoBehaviour
 
     IEnumerator WithdrawWeapon()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         weaponThrust.transform.Translate(0, -thrustAmount, 0);
         weaponOut = false;
     }
