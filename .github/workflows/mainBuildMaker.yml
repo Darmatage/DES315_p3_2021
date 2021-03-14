@@ -1,0 +1,73 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build and upload WebGL artifact
+
+on:
+  push:
+    branches: [ main ]
+env:
+ UNITY_LICENSE : ${{secrets.UNITY_LICENSE_2019}}
+ 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    name : Make a webGL build
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout main branch
+        uses : actions/checkout@v2
+        
+    #  Store library in cache
+      - uses: actions/cache@v2
+        with:
+          path: ./prototyping3/Library
+          key: LibFiles
+
+      - name: Unity - Builder
+        uses: game-ci/unity-builder@v2.0-alpha-6
+        with:
+          allowDirtyBuild: true # TODO - investigate
+          projectPath: prototyping3/
+          unityVersion: 2019.4.10f1
+          targetPlatform: WebGL
+          buildsPath: .
+          buildName: WebBuild
+          customImage: 'amoghsubhedar/unity-webgl-editor:latest' # using a custom docker image because the default ones for this unity version don't have ffmpeg
+      
+      - name: Show git status
+        run : git status
+    
+      - uses: actions/upload-artifact@v2
+        with:
+          name: WebBuild
+          path: WebGL/
+          retention-days: 1
+      
+  commit_build:
+    name : Push build on the builds branch
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout builds branch
+        uses : actions/checkout@v2
+        with :
+          ref: builds
+      
+      - name: Download artifact from previous job
+        uses: actions/download-artifact@v2
+        with:
+          name: WebBuild
+      
+      - name: Show git status
+        run : git add . && git status
+
+      - name: Deploy WebGL build on github pages
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Deploy web build
+          file_pattern: WebBuild/Build/* WebBuild/TemplateData/*
+           # Optional: Skip internal call to `git fetch`
+          skip_fetch: true

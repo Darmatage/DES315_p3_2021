@@ -171,9 +171,9 @@ public class GameHandler : MonoBehaviour{
 			winner = "Time's up! \nNo winner. \nP1 Health = " + p1Health + " \nP2 Health = " + p2Health;
 			StartCoroutine(EndGame());
 		}
-		else if (gameTimer >= 1f){
+		else if ((gameTimer >= 1f)&&(thisScene.name != "EndScene")){
 			gameTime -= 1;
-			UpdateStats();
+		    UpdateStats();
 			gameTimer = 0;
 		}
 	}
