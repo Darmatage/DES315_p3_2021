@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using UnityEngine;
 
 namespace Scripts_Students.BotA10_Scripts
@@ -11,6 +11,8 @@ namespace Scripts_Students.BotA10_Scripts
         
         [SerializeField] private Transform bulletPrefab = default;
         [SerializeField] private Transform bulletSpawnPoint = default;
+        [SerializeField] private GameObject rightFlameThrower = default;
+        [SerializeField] private GameObject leftFlameThrower = default;
         
         //grab axis from parent object
         public string button1;
@@ -40,15 +42,24 @@ namespace Scripts_Students.BotA10_Scripts
                 ShootMainGun();
                 _mainGunCooldownTimer = mainGunCooldownTimerMax;
             }
-            //flamethrowers
+            // right flamethrower
             if (Input.GetButtonDown(button2))
             {
-                // do thing
+                rightFlameThrower.SetActive(true);
             }
+            if (Input.GetButtonUp(button2))
+            {
+                rightFlameThrower.SetActive(false);
+            }
+            // left flamethrower
             if (Input.GetButtonDown(button3))
             {                                
-                // do thing                  
-            }                                
+                leftFlameThrower.SetActive(true);
+            }
+            if (Input.GetButtonUp(button3))
+            {
+                leftFlameThrower.SetActive(false);
+            }                                  
         }
 
 
