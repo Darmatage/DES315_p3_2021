@@ -5,6 +5,8 @@ using UnityEngine;
 public class JWymerClaw : MonoBehaviour
 {
     public float speed = 2f;
+
+    public GameObject claw;
     
     Vector3 startingPos;
 
@@ -18,18 +20,20 @@ public class JWymerClaw : MonoBehaviour
 
     ClawState state = ClawState.RETRACTED;
 
+    public string button2;
    
 
     // Start is called before the first frame update
     void Start()
     {
-        startingPos = transform.localPosition;
+        startingPos = claw.transform.localPosition;
+        button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetButton(button2))
 		{
             state = ClawState.EXTENDING;
 		}
@@ -38,7 +42,7 @@ public class JWymerClaw : MonoBehaviour
             state = ClawState.RETRACTING;
 		}
         
-        Vector3 position = transform.localPosition;
+        Vector3 position = claw.transform.localPosition;
 
         switch (state)
 		{
@@ -65,12 +69,12 @@ public class JWymerClaw : MonoBehaviour
                 break;
         }
 
-        transform.localPosition = position;
+        claw.transform.localPosition = position;
     }
 
     private bool IsInFrontOfStart()
 	{
-        Vector3 diff = transform.localPosition - startingPos;
+        Vector3 diff = claw.transform.localPosition - startingPos;
 
         return (diff.z > 0);
 	}
