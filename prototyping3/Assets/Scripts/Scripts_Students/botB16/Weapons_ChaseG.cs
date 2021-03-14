@@ -42,6 +42,9 @@ public class Weapons_ChaseG : MonoBehaviour
 	public ParticleSystem BoosterFR_down;
 	public ParticleSystem BoosterBR_down;
 
+	public GameObject AudioSourceUp;
+	public GameObject AudioSourceDown;
+
 	void Start()
 	{
 		button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
@@ -72,6 +75,8 @@ public class Weapons_ChaseG : MonoBehaviour
 			BoosterFR_down.Play();
 			BoosterBR_down.Play();
 
+			AudioSourceUp.GetComponent<AudioSource>().Play();
+
 			//StartCoroutine(WithdrawWeapon());
 		}
 
@@ -91,7 +96,6 @@ public class Weapons_ChaseG : MonoBehaviour
 			}
 			else
 			{
-
 				weaponStomp.transform.localPosition = (Vector3.Lerp(startPos, endPos, lerpItr));
 				lerpItr += Time.deltaTime * 10;
 				if (lerpItr > 1.0f)
@@ -105,6 +109,8 @@ public class Weapons_ChaseG : MonoBehaviour
 					BoosterBL_up.Play();
 					BoosterFR_up.Play();
 					BoosterBR_up.Play();
+
+					AudioSourceDown.GetComponent<AudioSource>().Play();
 
 					Booster1.GetComponent<MeshRenderer>().material = NotReadyMaterial;
 					Booster2.GetComponent<MeshRenderer>().material = NotReadyMaterial;
