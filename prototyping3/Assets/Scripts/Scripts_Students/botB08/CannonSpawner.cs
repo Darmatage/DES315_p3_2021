@@ -19,12 +19,16 @@ public class CannonSpawner : MonoBehaviour
     [SerializeField] private GameObject CannonPrefab;
     
     private bool CannonAvailable = true;
+
+    private AudioSource AudioSrc;
+    [SerializeField] private AudioClip CannonAudio;
     
     // Start is called before the first frame update
     void Start()
     {
         button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
         CannonIndicator.material.color = CannonReadyColor;
+        AudioSrc = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,6 +38,7 @@ public class CannonSpawner : MonoBehaviour
         {
             GameObject cannon = Instantiate(CannonPrefab, CannonSpawnPoint.position, Quaternion.identity);
             cannon.GetComponent<CannonBehavior>().Target = CannonTarget.position;
+            AudioSrc.PlayOneShot(CannonAudio);
             
             CannonAvailable = false;
             cooldownTimer = 0f;
