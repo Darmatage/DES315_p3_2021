@@ -168,4 +168,10 @@ public class BotDamageMod : MonoBehaviour
 		if (ShieldPower <= 0)
 			ShieldPower = 0;
 	}
+
+	void OnCollisionEnter(Collision collision)
+	{
+		//if (collision.gameObject.layer.ToString() == "ground")
+			GetComponent<AudioSource>().Play();
+	}
 }
