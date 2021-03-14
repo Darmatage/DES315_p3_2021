@@ -7,7 +7,7 @@ public class botB01_RocketLauncher : MonoBehaviour, botB01_IAttack
     private float cooldownTimer = 0.0f;
 
     private botB01_Weapons scrWeapons;
-    private int index = 3;
+    private int index = 2;
     private botB01_AttackState currentState;
 
     public GameObject RocketPrefab;
