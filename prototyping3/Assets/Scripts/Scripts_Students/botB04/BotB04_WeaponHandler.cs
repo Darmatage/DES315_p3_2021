@@ -50,5 +50,13 @@ namespace BotB04.Controller
 			weaponOut = false;
 		}
 
+
+
+		void Attack()
+        {
+
+        }
+
+
 	}
 }
