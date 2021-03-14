@@ -13,7 +13,8 @@ namespace Scripts_Students.BotA10_Scripts
         [SerializeField] private Transform bulletSpawnPoint = default;
         [SerializeField] private GameObject rightFlameThrower = default;
         [SerializeField] private GameObject leftFlameThrower = default;
-        
+
+        private AudioSource _audioSource;
         //grab axis from parent object
         public string button1;
         public string button2;
@@ -28,7 +29,7 @@ namespace Scripts_Students.BotA10_Scripts
             button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
             button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
             button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
-
+            _audioSource = GetComponent<AudioSource>();
             _mainGunCooldownTimer = mainGunCooldownTimerMax;
         }
 
@@ -68,7 +69,7 @@ namespace Scripts_Students.BotA10_Scripts
             // instantiate the bullet
             var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
             bullet.GetComponent<BotA10_Bullet>().Setup(transform.forward);
-            
+            _audioSource.Play();
             // set team for bullet
             if (gameObject.transform.root.tag == "Player1") { bullet.GetComponent<HazardDamage>().isPlayer1Weapon = true; }
             else { bullet.GetComponent<HazardDamage>().isPlayer2Weapon = true; }
