@@ -159,7 +159,7 @@ public class BotDamageMod : MonoBehaviour
 		if (ShieldRegenTimer <= 0)
 		{
 			ShieldPower += ShieldRegenSpeed;
-			ShieldRegenTimer = 0.5f;
+			ShieldRegenTimer = 1f;
 			if (ShieldPower >= ShieldMaxPower)
 			{
 				ShieldPower = ShieldMaxPower;
