@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Jetpack : MonoBehaviour
 {
+    public GameObject JetBooster1;
+    public GameObject JetBooster2;
+
     public string button1;
     public string button2;
     public string button3;
@@ -11,6 +14,7 @@ public class Jetpack : MonoBehaviour
 
     bool isFacingUp = false;
     bool canFly = true;
+    bool isParticlePlaying = false;
 
     float fuel = 2.0f;
 
@@ -41,10 +45,19 @@ public class Jetpack : MonoBehaviour
                     transform.Rotate(-90, 0, 0);
                     isFacingUp = true;
                 }
+                if (isParticlePlaying == false)
+                {
+                    JetBooster1.GetComponent<ParticleSystem>().Play();
+                    JetBooster2.GetComponent<ParticleSystem>().Play();
+                    isParticlePlaying = true;
+                }
             }
             if(fuel <= 0.0f)
             {
                 canFly = false;
+                JetBooster1.GetComponent<ParticleSystem>().Stop();
+                JetBooster2.GetComponent<ParticleSystem>().Stop();
+                isParticlePlaying = false;
             }
         }
         if(Input.GetButtonUp(button2))
