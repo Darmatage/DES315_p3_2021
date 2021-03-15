@@ -10,6 +10,7 @@ public class botB01_CameraOverride : MonoBehaviour
         if (cam != null)
         {
             cam.offsetCamera += Vector3.up * Shift;
+            cam.alsoFollowRotation = true;
         }
     }
 }
