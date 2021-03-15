@@ -37,8 +37,8 @@ public class Mars_Damage : MonoBehaviour{
 	public GameObject dmgParticlesTop;
     //public GameObject dmgParticlesBottom;
 
-    public GameObject cube;
-    private Renderer rend;
+    //public GameObject cube;
+    //private Renderer rend;
     public Material materialShieldOn;
     public Material materialShieldOff;
 
@@ -48,7 +48,7 @@ public class Mars_Damage : MonoBehaviour{
 	private bool notMyWeapon = true;
 
     void Start(){
-        rend = cube.GetComponent<Renderer>();
+        //rend = cube.GetComponent<Renderer>();
 
         if (gameObject.GetComponent<Rigidbody>() != null){
             rb = gameObject.GetComponent<Rigidbody>();
@@ -101,7 +101,7 @@ public class Mars_Damage : MonoBehaviour{
                 shieldPowerTop = 0;
                 shieldPowerBottom = 0;
 
-                rend.material = materialShieldOff;
+                //rend.material = materialShieldOff;
             }
             else
             {
@@ -112,7 +112,7 @@ public class Mars_Damage : MonoBehaviour{
                 shieldPowerTop = savedPowerTop;
                 shieldPowerBottom = savedPowerBottom;
 
-                rend.material = materialShieldOn;
+                //rend.material = materialShieldOn;
             }
         }
 
