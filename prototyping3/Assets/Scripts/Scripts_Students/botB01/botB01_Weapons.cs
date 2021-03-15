@@ -9,23 +9,23 @@ public class botB01_Weapons : MonoBehaviour
     private botB01_PushBack       scrPushBack;
     private botB01_EarthQuake     scrEarthQuake;
     private botB01_RocketLauncher scrRocketLauncher;
-    private botB01_DeployLaser    scrDeployLaser;
 
     private BotBasic_Move scrMove;
 
+    public AudioSource Success;
+    public AudioSource Failure;
+    
     void Start()
     {
         var actionScript = gameObject.transform.parent.GetComponent<playerParent>();
         buttons = new[] { actionScript.action1Input, 
                           actionScript.action2Input, 
-                          actionScript.action3Input, 
-                          actionScript.action4Input };
-        buttonStatuses = new bool[4];
+                          actionScript.action3Input, };
+        buttonStatuses = new bool[3];
         
         scrPushBack       = GetComponentInChildren<botB01_PushBack>();
         scrEarthQuake     = GetComponentInChildren<botB01_EarthQuake>();
         scrRocketLauncher = GetComponentInChildren<botB01_RocketLauncher>();
-        scrDeployLaser    = GetComponentInChildren<botB01_DeployLaser>();
 
         scrMove = GetComponent<BotBasic_Move>();
     }
@@ -37,11 +37,20 @@ public class botB01_Weapons : MonoBehaviour
 
         else
         {
+            bool attacked = false;
             for (int i = 0; i < buttons.Length; i++)
             {
                 if (Input.GetButtonDown(buttons[i]) && !buttonStatuses[i])
+                {
                     Attack(i);
+                    attacked = true;
+                }
             }
+
+            if (attacked)
+                Success.Play();
+            else
+                Failure.Play();
         }
     }
 
@@ -58,9 +67,6 @@ public class botB01_Weapons : MonoBehaviour
                 scrEarthQuake.Attack();
                 break;
             case 2:
-                scrDeployLaser.Attack();
-                break;
-            case 3:
                 scrRocketLauncher.Attack();
                 break;
             default:
@@ -104,10 +110,6 @@ public class botB01_Weapons : MonoBehaviour
                     scrEarthQuake.Cancel();
                 break;
             case 2:
-                if (buttonStatuses[index])
-                    scrDeployLaser.Cancel();
-                break;
-            case 3:
                 if (buttonStatuses[index])
                     scrRocketLauncher.Cancel();
                 break;
