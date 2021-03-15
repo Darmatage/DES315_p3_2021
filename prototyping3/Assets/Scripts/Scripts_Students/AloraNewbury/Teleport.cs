@@ -47,7 +47,7 @@ public class Teleport : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space) && cooldown <= 0.0f)
+        if (Input.GetKeyDown(KeyCode.Y) && cooldown <= 0.0f)
         {
             is_Teleporting = true;
             Begin.Play();
