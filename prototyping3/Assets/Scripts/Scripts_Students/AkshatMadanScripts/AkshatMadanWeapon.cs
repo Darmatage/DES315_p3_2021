@@ -8,8 +8,12 @@ public class AkshatMadanWeapon : MonoBehaviour
 	private float thrustAmount = 2f;
 	private float rotateAmt = 0f;
 	private bool weaponOut = false;
+	private bool moveDone = false;
 
 	//grab axis from parent object
+	public AudioSource audioSource;
+	public AudioSource ignitionAudio;
+	//public AudioSource MoveAudio;
 	public string button1;
 	public string button2;
 	public string button3;
@@ -25,6 +29,11 @@ public class AkshatMadanWeapon : MonoBehaviour
 
 	void Update()
 	{
+		//if (ignitionAudio.isPlaying == false && !moveDone)
+		//{
+		//	MoveAudio.Play();
+		//	moveDone = true;
+		//}
 		//if (Input.GetKeyDown(KeyCode.T)){
 		if ((Input.GetButtonDown(button1)) && (weaponOut == false))
 		{
@@ -67,6 +76,7 @@ public class AkshatMadanWeapon : MonoBehaviour
 
 	IEnumerator WithdrawWeapon()
 	{
+		audioSource.Play();
 		yield return new WaitForSeconds(0.6f);
 		weaponThrust.transform.Translate(0, -thrustAmount, 0);
 		weaponThrust.transform.Rotate(0, 0, -rotateAmt);

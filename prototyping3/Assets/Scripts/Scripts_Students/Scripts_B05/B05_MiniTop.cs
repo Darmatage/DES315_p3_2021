@@ -12,6 +12,7 @@ public class B05_MiniTop : MonoBehaviour
     private bool b_justhit;
 
     private float magSpeed = 5.0f;
+    private float blastSpeed = 25.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -70,5 +71,17 @@ public class B05_MiniTop : MonoBehaviour
         Vector3 dir = position - transform.position;
         dir.Normalize();
         transform.localPosition -= dir * magSpeed * Time.deltaTime;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public void BlastAway(Vector3 position)
+    {
+        Vector3 dir = position - transform.position;
+        dir.Normalize();
+        gameObject.GetComponent<Rigidbody>().AddForce(-dir * blastSpeed, ForceMode.Impulse);
     }
 }

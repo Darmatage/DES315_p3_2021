@@ -38,6 +38,8 @@ public class MineBehavior : MonoBehaviour
     [SerializeField] private GameObject particlesPrefab;
 
     public MineSpawner ParentSpawner;
+
+    private AudioSource BeepAudioSource;
     
     // Start is called before the first frame update
     void Start()
@@ -45,6 +47,7 @@ public class MineBehavior : MonoBehaviour
         Rend.material = InactiveColor;
         Collider = GetComponent<BoxCollider>();
         Collider.enabled = false;
+        BeepAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -77,6 +80,9 @@ public class MineBehavior : MonoBehaviour
                     // Start active blinking
                     blinkHoldTimer += Time.deltaTime;
                     Rend.material = BlinkColor;
+
+                    BeepAudioSource.Play();
+
                     //isBlinking = true;
                 }
             }
