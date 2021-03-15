@@ -10,6 +10,7 @@ public class Jetpack : MonoBehaviour
     public string button4;
 
     bool isFacingUp = false;
+    bool canFly = true;
 
     float fuel = 2.0f;
 
@@ -30,7 +31,7 @@ public class Jetpack : MonoBehaviour
 
         if(Input.GetButton(button2))
         {
-            if (fuel != 0.0f)
+            if (canFly == true)
             {
                 rb.AddForce(rb.centerOfMass + new Vector3(0f, botController.jumpSpeed * 10, 0f), ForceMode.Force);
                 fuel -= Time.deltaTime;
@@ -41,16 +42,21 @@ public class Jetpack : MonoBehaviour
                     isFacingUp = true;
                 }
             }
+            if(fuel <= 0.0f)
+            {
+                canFly = false;
+            }
         }
         if(Input.GetButtonUp(button2))
         {
             isFacingUp = false;
             transform.Rotate(90, 0, 0);
-            if(fuel == 0.0f && fuel != 2.0f)
-            {
-                fuel += Time.deltaTime;
-            }
         }
-        
+        if(botController.isGrounded == true && fuel <= 2.0f)
+        {
+            Debug.Log(fuel);
+            fuel += Time.deltaTime;
+            canFly = true;
+        }
     }
 }
