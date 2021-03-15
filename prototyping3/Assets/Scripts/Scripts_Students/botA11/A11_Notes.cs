@@ -42,7 +42,7 @@ namespace Amogh
 
         private void SetAgentDestination()
         {
-            agent.Warp(Vector3.MoveTowards(transform.position, targetPos, 1f));
+            agent.Warp(Vector3.Lerp(transform.position, targetPos, 0.2f));
             
             //agent.SetDestination(dad.position);
         }
