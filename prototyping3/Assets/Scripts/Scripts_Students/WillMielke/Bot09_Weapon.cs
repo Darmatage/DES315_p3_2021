@@ -7,11 +7,13 @@ public class Bot09_Weapon : MonoBehaviour
     public GameObject weaponRake;
     public BoxCollider spikes;
     public float weaponDownTime;
-    public float weaponRotateTime;
+    public float weaponRotateDownTime;
+    public float weaponRotateUpTime;
     public AudioSource audioThing;
     public float rotation, rotatdown, rotatreset;
     public ParticleSystem wowy;
     private bool SwingDown, SwingUp;
+    public WeaponRotate saws;
 
     //grab axis from parent object
     public string button1;
@@ -29,6 +31,7 @@ public class Bot09_Weapon : MonoBehaviour
         SwingDown = SwingUp = false;
         rotation = 0f;
         spikes.enabled = false;
+        saws.rotate = false;
     }
 
     // Update is called once per frame
@@ -39,26 +42,28 @@ public class Bot09_Weapon : MonoBehaviour
         {
             SwingDown = true;
             spikes.enabled = true;
+            saws.rotate = true;
 
         }
 
         if (SwingDown && rotation < rotatdown)
         {
-            weaponRake.transform.Rotate(Vector3.right * weaponRotateTime);
-            rotation += weaponRotateTime;
+            weaponRake.transform.Rotate(Vector3.right * weaponRotateDownTime * Time.deltaTime);
+            rotation += weaponRotateDownTime * Time.deltaTime;
             if (rotation > rotatdown)
             {
                 spikes.enabled = false;
                 audioThing.Play();
                 wowy.Play();
+                saws.rotate = false;
                 StartCoroutine(WithdrawWeapon());
             }
         }
 
         if(SwingUp && rotation > rotatreset)
         {
-            weaponRake.transform.Rotate(-(Vector3.right * weaponRotateTime));
-            rotation -= weaponRotateTime; 
+            weaponRake.transform.Rotate(-(Vector3.right * weaponRotateUpTime * Time.deltaTime));
+            rotation -= weaponRotateUpTime * Time.deltaTime; 
             if (rotation < rotatreset)
             {
                 // rotation = 0f;
