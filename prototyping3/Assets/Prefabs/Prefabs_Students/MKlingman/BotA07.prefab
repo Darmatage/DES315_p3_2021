@@ -251,7 +251,6 @@ GameObject:
   - component: {fileID: 1355330930375697359}
   - component: {fileID: 364999052203561223}
   - component: {fileID: 5780095072016173801}
-  - component: {fileID: 7285542615022466734}
   - component: {fileID: 9142379395369738829}
   m_Layer: 0
   m_Name: BotA07
@@ -443,23 +442,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e173a7401170b4c8b91f0cf261062e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7285542615022466734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355330930375697355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67b5dfa20ebefac448d710384853fb07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponThrust: {fileID: 8160687095547711129}
-  button1: 
-  button2: 
-  button3: 
-  button4: 
 --- !u!114 &9142379395369738829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,8 +460,9 @@ MonoBehaviour:
   shieldBack: {fileID: 2186211737314387781}
   shieldLeft: {fileID: 2735579452779107192}
   shieldRight: {fileID: 2072343368729710841}
-  shieldSlamDuration: 0
-  shieldSlamDistance: 0
+  shieldSlamDuration: 0.6
+  shieldSlamDistance: 3
+  shieldSlamCooldown: 1
   button1: 
   button2: 
   button3: 

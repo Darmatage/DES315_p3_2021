@@ -17,6 +17,7 @@ public class A07_Base : MonoBehaviour
     [Header("Attacks")] 
     [SerializeField] private float shieldSlamDuration = 1.0f;
     [SerializeField] private float shieldSlamDistance = 5.0f;
+    [SerializeField] private float shieldSlamCooldown = 1.0f;
     
     //grab axis from parent object
     public string button1;
@@ -26,7 +27,10 @@ public class A07_Base : MonoBehaviour
 
     private bool _shieldsOut;
 
-    void Start(){
+    void Start()
+    {
+        parentObj = gameObject.transform.parent.GetComponent<playerParent>();
+        
         button1 = parentObj.action1Input;
         button2 = parentObj.action2Input;
         button3 = parentObj.action3Input;
@@ -52,24 +56,33 @@ public class A07_Base : MonoBehaviour
     IEnumerator ExtendShields()
     {
         float elapsed = 0f;
-        if (damageHandler.shieldPowerFront > 0f && !shieldFront.activeSelf)
-            shieldFront.SetActive(true);
-        if (damageHandler.shieldPowerBack > 0f && !shieldBack.activeSelf)
-            shieldBack.SetActive(true);
-        if (damageHandler.shieldPowerLeft > 0f && !shieldLeft.activeSelf)
-            shieldLeft.SetActive(true);
-        if (damageHandler.shieldPowerRight > 0f && !shieldRight.activeSelf)
-            shieldRight.SetActive(true);
+        var opfront = shieldFront.transform.localPosition;
+        var opback  =  shieldBack.transform.localPosition;
+        var opleft  =  shieldLeft.transform.localPosition;
+        var opright = shieldRight.transform.localPosition;
 
         while (elapsed < shieldSlamDuration)
         {
             elapsed += Time.deltaTime;
             
-            
+            if (shieldFront.activeSelf)
+                shieldFront.transform.localPosition += Vector3.forward * (shieldSlamDistance * (Time.deltaTime / shieldSlamDuration));
+            if (shieldBack.activeSelf)
+                shieldBack.transform.localPosition += Vector3.back * (shieldSlamDistance * (Time.deltaTime / shieldSlamDuration));
+            if (shieldLeft.activeSelf)
+                shieldLeft.transform.localPosition += Vector3.left * (shieldSlamDistance * (Time.deltaTime / shieldSlamDuration));
+            if (shieldRight.activeSelf)
+                shieldRight.transform.localPosition += Vector3.right * (shieldSlamDistance * (Time.deltaTime / shieldSlamDuration));
             
             yield return null;
         }
+        // Reset shields back to the player
+        shieldFront.transform.localPosition = opfront;
+         shieldBack.transform.localPosition  = opback;
+         shieldLeft.transform.localPosition  = opleft;
+        shieldRight.transform.localPosition  = opright;
         
+        yield return new WaitForSeconds(shieldSlamCooldown);
         _shieldsOut = false;
     }
 }
