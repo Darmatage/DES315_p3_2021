@@ -100,17 +100,13 @@ public class Mars_Weapon : MonoBehaviour{
                 westPiece.transform.localPosition = wStartPos;
             }
         }
-
-        //if (Input.GetKeyDown(KeyCode.T)){
+        
         if (Input.GetButtonDown(button1) && (weaponOut == false) && (cooldown <= 0f))
         {
             audioSource.Play();
 
-            var x = weaponThrust.transform.localScale.x * 2;
-            var y = weaponThrust.transform.localScale.y;
-            var z = weaponThrust.transform.localScale.z * 2;
-
-            weaponThrust.transform.localScale = new Vector3(x, y, z);
+            weaponThrust.transform.localScale = new Vector3(14f, 3.8f, 14f);
+            weaponThrust.GetComponent<HazardDamage>().damage = 5;
 
             weaponOut = true;
             cooldown = 3f;
@@ -120,11 +116,8 @@ public class Mars_Weapon : MonoBehaviour{
 
 	IEnumerator WithdrawWeapon(){
 		yield return new WaitForSeconds(0.6f);
-        var x = weaponThrust.transform.localScale.x / 2;
-        var y = weaponThrust.transform.localScale.y;
-        var z = weaponThrust.transform.localScale.z / 2;
-
-        weaponThrust.transform.localScale = new Vector3(x, y, z);
+        weaponThrust.transform.localScale = new Vector3();
+        weaponThrust.GetComponent<HazardDamage>().damage = 0;
         weaponOut = false;
 	}
 
