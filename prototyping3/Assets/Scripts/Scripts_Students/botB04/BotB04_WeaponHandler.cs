@@ -44,25 +44,25 @@ namespace BotB04.Controller
 
 		void Update()
 		{
-            if ((Input.GetButtonDown(button1)) && (weaponOut == false))
-            {
-                weaponThrust.transform.Translate(0, thrustAmount, 0);
-                weaponOut = true;
-                StartCoroutine(WithdrawWeapon());
-            }
-
-
-            //if (Input.GetButtonDown(button1))
+            //if ((Input.GetButtonDown(button1)) && (weaponOut == false))
             //{
-            //	currWeapon.RequestFire();
-
-            //	SwitchWeapon();
+            //    weaponThrust.transform.Translate(0, thrustAmount, 0);
+            //    weaponOut = true;
+            //    StartCoroutine(WithdrawWeapon());
             //}
+
+
+            if (Input.GetButtonDown(button1))
+            {
+            	currWeapon.RequestFire();
+
+            	SwitchWeapon();
+            }
 
 
         }
 
-		private void SwitchWeapon()
+        private void SwitchWeapon()
         {
 			if (currWeapon == LeftWeapon)
 				currWeapon = RightWeapon;

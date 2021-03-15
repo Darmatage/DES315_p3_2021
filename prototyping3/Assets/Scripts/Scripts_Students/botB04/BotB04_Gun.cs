@@ -12,11 +12,13 @@ namespace BotB04.Controller
 
         public void Fire()
         {
-            GameObject.Instantiate(bullet, bulletSpawn.transform);
-            bullet.transform.parent = null;
+            GameObject asd = GameObject.Instantiate(bullet, bulletSpawn.transform.position, bulletSpawn.transform.rotation);
+
+            HazardDamage hazardAttr = asd.GetComponent<HazardDamage>();
+
+            if (gameObject.transform.root.tag == "Player1") { hazardAttr.isPlayer1Weapon = true; }
+            if (gameObject.transform.root.tag == "Player2") { hazardAttr.isPlayer2Weapon = true; }
+
         }
-
-
-
     }
 }
