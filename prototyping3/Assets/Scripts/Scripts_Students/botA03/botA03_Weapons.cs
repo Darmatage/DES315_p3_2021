@@ -15,6 +15,7 @@ public class botA03_Weapons : MonoBehaviour
 
     private float currentDashTime = 0.0f;
     private float dashCoolTime = 3.0f;
+    private float smokeCoolTime = 0.0f;
 
     private bool tankOut = false;
     private bool weaponOut = false;
@@ -68,11 +69,13 @@ public class botA03_Weapons : MonoBehaviour
         {
             shellActive = true;
             smokeShell.SetActive(true);
+            smokeCoolTime = 10.0f;
         }
         else if ((Input.GetButtonDown(button3)) && shellActive == true)
         {
             shellActive = false;
             smokeShell.SetActive(false);
+            smokeCoolTime = 0.0f;
         }
 
         TimeManagement();
@@ -111,6 +114,17 @@ public class botA03_Weapons : MonoBehaviour
         {
             dashCoolTime = 3.0f;
             dashCoolOn = false;
+        }
+
+        if (smokeCoolTime > 0.0f)
+        {
+            smokeCoolTime -= Time.deltaTime;
+        }
+        else
+        {
+            smokeShell.SetActive(false);
+            shellActive = false;
+            smokeCoolTime = 0.0f;
         }
     }
 }
