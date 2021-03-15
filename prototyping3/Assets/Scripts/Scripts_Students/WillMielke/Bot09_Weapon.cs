@@ -38,15 +38,15 @@ public class Bot09_Weapon : MonoBehaviour
     void Update()
     {
         //if (Input.GetKeyDown(KeyCode.T)){
-        if ((Input.GetButtonDown(button1)) && (SwingDown == false) && (SwingUp == false))
+        if ((Input.GetButtonDown(button1)) && (SwingDown == false) && (SwingUp == false) && saws.curRotSpeed < 50.0f)
         {
             SwingDown = true;
             spikes.enabled = true;
-            saws.rotate = true;
+            saws.StartSaws();
 
         }
 
-        if (SwingDown && rotation < rotatdown)
+        if (SwingDown && rotation < rotatdown && saws.curRotSpeed > 600.0f)
         {
             weaponRake.transform.Rotate(Vector3.right * weaponRotateDownTime * Time.deltaTime);
             rotation += weaponRotateDownTime * Time.deltaTime;
@@ -55,7 +55,7 @@ public class Bot09_Weapon : MonoBehaviour
                 spikes.enabled = false;
                 audioThing.Play();
                 wowy.Play();
-                saws.rotate = false;
+                saws.SlowDownSaws();
                 StartCoroutine(WithdrawWeapon());
             }
         }
