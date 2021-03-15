@@ -304,6 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   compassSides: {fileID: 1029706280859159121}
   compassVertical: {fileID: 4587639291210960121}
+  sidelimit: 0.1
   knockBackSpeed: 10
   shieldPowerFront: 2
   shieldPowerBack: 2
@@ -628,7 +629,7 @@ PrefabInstance:
     - target: {fileID: 2303490008151070641, guid: ce3a25ac63eb2a546b6dac540c10142d,
         type: 3}
       propertyPath: damage
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4147504092403899154, guid: ce3a25ac63eb2a546b6dac540c10142d,
         type: 3}
@@ -704,6 +705,11 @@ PrefabInstance:
         type: 3}
       propertyPath: lengthInSec
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7913259413915263777, guid: ce3a25ac63eb2a546b6dac540c10142d,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce3a25ac63eb2a546b6dac540c10142d, type: 3}
