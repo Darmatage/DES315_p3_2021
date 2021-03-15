@@ -40,17 +40,18 @@ public class botB01_Weapons : MonoBehaviour
             bool attacked = false;
             for (int i = 0; i < buttons.Length; i++)
             {
-                if (Input.GetButtonDown(buttons[i]) && !buttonStatuses[i])
+                if (Input.GetButtonDown(buttons[i]))
                 {
-                    Attack(i);
-                    attacked = true;
+                    if (!buttonStatuses[i])
+                    {
+                        Attack(i);
+                        attacked = true;
+                        Success.Play();
+                    }
+                    else
+                        Failure.Play();
                 }
             }
-
-            if (attacked)
-                Success.Play();
-            else
-                Failure.Play();
         }
     }
 
