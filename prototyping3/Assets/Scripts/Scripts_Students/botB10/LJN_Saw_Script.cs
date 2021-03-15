@@ -14,7 +14,6 @@ public class LJN_Saw_Script : MonoBehaviour
     void Start()
     {
         myPlyr = gameObject.transform.root.tag;
-        Debug.Log(transform.parent.parent.name);
     }
 
     // Update is called once per frame

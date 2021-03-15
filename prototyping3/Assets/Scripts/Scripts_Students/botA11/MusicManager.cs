@@ -44,8 +44,11 @@ public class MusicManager : MonoBehaviour
 
     private void StopMusicAndDestroy()
     {
-        source.Stop();
         Destroy(gameObject);
     }
-    
+
+    private void OnDestroy()
+    {
+        GameHandler.onBattleStart -= StopMusicAndDestroy;
+    }
 }

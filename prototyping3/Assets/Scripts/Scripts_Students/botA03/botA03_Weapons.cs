@@ -8,6 +8,7 @@ public class botA03_Weapons : MonoBehaviour
 
     public GameObject weaponThrust;
     public GameObject turtleShip;
+    public GameObject smokeShell;
 
     private float rushAmount = 2f;
     private float thrustAmount = 3f;
@@ -18,6 +19,7 @@ public class botA03_Weapons : MonoBehaviour
     private bool tankOut = false;
     private bool weaponOut = false;
     private bool dashCoolOn = false;
+    private bool shellActive = false;
 
     private AudioSource source;
 
@@ -34,6 +36,8 @@ public class botA03_Weapons : MonoBehaviour
         button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
 
         source = GetComponent<AudioSource>();
+        
+        smokeShell.SetActive(false);
     }
 
     void Update(){
@@ -60,7 +64,35 @@ public class botA03_Weapons : MonoBehaviour
             weaponOut = true;
             StartCoroutine(WithdrawWeapon());
         }
+        else if ((Input.GetButtonDown(button3)) && shellActive == false)
+        {
+            shellActive = true;
+            smokeShell.SetActive(true);
+        }
+        else if ((Input.GetButtonDown(button3)) && shellActive == true)
+        {
+            shellActive = false;
+            smokeShell.SetActive(false);
+        }
 
+        TimeManagement();
+    }
+
+    IEnumerator horizontalWDShip()
+    {
+        yield return new WaitForSeconds(0.6f);
+        turtleShip.transform.Translate(0,-rushAmount, 0);
+        tankOut = false;
+    }
+    
+    IEnumerator WithdrawWeapon(){
+        yield return new WaitForSeconds(0.6f);
+        weaponThrust.transform.Translate(0,-thrustAmount, 0);
+        weaponOut = false;
+    }
+
+    void TimeManagement()
+    {
         if (currentDashTime > 0.0f)
         {
             currentDashTime -= Time.deltaTime;
@@ -80,18 +112,5 @@ public class botA03_Weapons : MonoBehaviour
             dashCoolTime = 3.0f;
             dashCoolOn = false;
         }
-    }
-
-    IEnumerator horizontalWDShip()
-    {
-        yield return new WaitForSeconds(0.6f);
-        turtleShip.transform.Translate(0,-rushAmount, 0);
-        tankOut = false;
-    }
-    
-    IEnumerator WithdrawWeapon(){
-        yield return new WaitForSeconds(0.6f);
-        weaponThrust.transform.Translate(0,-thrustAmount, 0);
-        weaponOut = false;
     }
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class A08_Projectile : MonoBehaviour
 {
+
+    public GameObject destroyParticle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,11 +22,14 @@ public class A08_Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+       
+       if ((other.transform.root.tag == "Player1" && this.transform.GetChild(0).GetComponent<HazardDamage>().isPlayer2Weapon) ||
+           (other.transform.root.tag == "Player2" && this.transform.GetChild(0).GetComponent<HazardDamage>().isPlayer1Weapon))
+       {
+            Instantiate(destroyParticle, this.transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+       }
 
-        if (other.transform.root.tag != this.transform.root.tag &&
-            other.transform.root.tag != "Untagged")
-        {
-            //Destroy(this.gameObject);
-        }
+        
     }
 }

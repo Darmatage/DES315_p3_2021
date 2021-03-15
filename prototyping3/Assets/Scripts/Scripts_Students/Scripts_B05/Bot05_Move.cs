@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class Bot05_Move : MonoBehaviour
 {
-    protected enum STATE
+    public enum STATE
     {
-        S_RECOVERING, // bot cannot move, is in recovery phase of attack
-        S_AIMING,     // bot can only turn in place in order to aim
-        S_ATTACKING,  // bot cannot be player controlled
-        S_NORMAL      // bot can be player controlled
+        RECOVERING, // bot cannot move, is in recovery phase of attack
+        AIMING,     // bot can only turn in place in order to aim
+        ATTACKING,  // bot cannot be player controlled, rushes forward
+        ATTRACTING, // bot cannot be player controlled, stays in place
+        REPELING,   // bot cannot be player controlled, stays in place
+        JUMPING,    // bot can only rotate
+        NORMAL      // bot can be player controlled
     }
     protected STATE cur_state;
+
+    public Transform center_pt;
 
     // normal values
     public float moveSpeed = 10;
     public float rotateSpeed = 100;
-    public float jumpSpeed = 7f;
+    public float jumpSpeed = 33.0f;//7f;
     private float flipSpeed = 150f;
     public float boostSpeed = 10f;
 
@@ -26,7 +31,7 @@ public class Bot05_Move : MonoBehaviour
     private Vector3 rushDir = Vector3.zero;
 
     // aim values
-    private float aimRotateMod = 1.5f;
+    private float aimRotateMod = 1.1f;
     private Rigidbody rb;
     public Transform groundCheck;
     public Transform turtleCheck;
@@ -50,7 +55,9 @@ public class Bot05_Move : MonoBehaviour
     public string pJump;
     public string button4; // right bumper or [y] or [/] keys, to test on boost
 
+    public B05_GroundPound a_pound;
 
+    public B05_Camera cam;
 
     void Start()
     {
@@ -65,12 +72,7 @@ public class Bot05_Move : MonoBehaviour
         pJump = gameObject.transform.parent.GetComponent<playerParent>().jumpInput;
         button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
 
-        cur_state = STATE.S_NORMAL;
-
-        // pVertical = "p1Vertical";
-        // pHorizontal = "p1Horizontal";
-        // pJump = "p1Jump";
-        // button4 = "p1Fire4";
+        cur_state = STATE.NORMAL;
     }
 
     void Update()
@@ -82,18 +84,25 @@ public class Bot05_Move : MonoBehaviour
         {
             switch (cur_state)
             {
-                case STATE.S_NORMAL:
+                case STATE.NORMAL:
                     transform.Translate(0, 0, botMove);
                     transform.Rotate(0, botRotate, 0);
                     break;
-                case STATE.S_ATTACKING:
+                case STATE.ATTACKING:
                     transform.Translate(transform.InverseTransformDirection(rushDir.x * rushSpeed * Time.deltaTime, 0.0f, rushDir.z * rushSpeed * Time.deltaTime));
                     transform.Rotate(0, rushRotate * Time.deltaTime, 0);
                     break;
-                case STATE.S_AIMING:
+                case STATE.AIMING:
                     transform.Rotate(0, botRotate * aimRotateMod, 0);
                     break;
-                case STATE.S_RECOVERING:
+                case STATE.ATTRACTING:
+                    break;
+                case STATE.REPELING:
+                    break;
+                case STATE.RECOVERING:
+                    break;
+                case STATE.JUMPING:
+                    transform.Rotate(0, botRotate * aimRotateMod, 0);
                     break;
                 default:
                     break;
@@ -108,6 +117,10 @@ public class Bot05_Move : MonoBehaviour
             if (isGrounded == true)
             {
                 rb.AddForce(rb.centerOfMass + new Vector3(0f, jumpSpeed * 10, 0f), ForceMode.Impulse);
+                if (IsState(STATE.NORMAL))
+                {
+                    a_pound.Activate();
+                }
             }
 
             //flip cooldown logic
@@ -136,34 +149,23 @@ public class Bot05_Move : MonoBehaviour
         // }
     }
 
-    public void SetAimingState()
+    public void SetState(STATE state)
     {
-        cur_state = STATE.S_AIMING;
+        cur_state = state;
+
+        cam.SetPos((int)state);
+
+        if (state == STATE.ATTACKING)
+            rushDir = transform.forward;
     }
 
-    public void SetRecoveringState()
+    public bool IsState(STATE state)
     {
-        cur_state = STATE.S_RECOVERING;
+        return cur_state == state;
     }
 
-    public void SetAttackState()
+    public Transform GetCenter()
     {
-        cur_state = STATE.S_ATTACKING;
-        rushDir = transform.forward;
-    }
-
-    public void SetNormalState()
-    {
-        cur_state = STATE.S_NORMAL;
-    }
-
-    public bool IsRecovering()
-    {
-        return cur_state == STATE.S_RECOVERING;
-    }
-
-    public bool IsNormal()
-    {
-        return cur_state == STATE.S_NORMAL;
+        return center_pt;
     }
 }

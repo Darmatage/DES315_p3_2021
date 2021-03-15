@@ -25,9 +25,9 @@ namespace Amogh
             attacks = new[]
             {
                 GetComponent<A11_Heal>().GetComponent<A11_IAttack>(),
+                GetComponent<A11_ChargeAttack>(),
                 null,
-                null,
-                null
+                null,GetComponent<A11_JukeBox>()
             };
 
         }

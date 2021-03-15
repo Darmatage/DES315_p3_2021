@@ -13,6 +13,9 @@ public class DH_TriggerTrapsAbility : MonoBehaviour
   float cooldownTimer = 0.0f;
   bool onCooldown = false;
 
+  public GameObject wirelessParticle;
+  public float ParticleTravelTime = 1.0f;
+
   Transform switcha;
 
   // Start is called before the first frame update
@@ -50,12 +53,12 @@ public class DH_TriggerTrapsAbility : MonoBehaviour
 
     if (!onCooldown)
     {
-      if (Input.GetKeyDown(KeyCode.T) && gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
+      if (Input.GetKeyDown(KeyCode.R) && gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
       {
         TriggerTraps();
         StartCooldown();
       }
-      if (Input.GetKeyDown(KeyCode.Period) && !gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
+      if (Input.GetKeyDown(KeyCode.Comma) && !gameObject.transform.root.GetComponent<playerParent>().isPlayer1)
       {
         TriggerTraps();
         StartCooldown();
@@ -78,7 +81,12 @@ public class DH_TriggerTrapsAbility : MonoBehaviour
       {
         obj.GetComponent<DH_SpikeButton>().PressButton();
       }
+
+      GameObject particles = Instantiate(wirelessParticle, transform.position, Quaternion.identity);
+      particles.GetComponent<DH_MoveToDestination>().MoveToInTime(obj.transform.position, 0.2f);
     }
+
+    GetComponents<AudioSource>()[1].Play();
   }
 
   public void StartCooldown()

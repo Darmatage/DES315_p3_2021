@@ -18,7 +18,10 @@ public class ShieldCollisionIgnorer : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "ground")
+        if (collision.gameObject.layer.ToString() == "ground")
+        {
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+            
+        }
     }
 }

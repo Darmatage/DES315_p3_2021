@@ -9,14 +9,18 @@ public class BotB12_CannonFire : MonoBehaviour
 
     public GameObject cannonBall;
 
-    private float cd = 4.0f;
+    private float cd = 2.5f;
     private float cooldownLeft;
     private float cooldownRight;
 
+    public GameObject[] LeftCannonsSpots;
+    public GameObject[] RightCannonsSpots;
     public GameObject[] LeftCannons;
     public GameObject[] RightCannons;
 
     private Vector3 firePosition;
+
+    private AudioSource audioData;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +29,7 @@ public class BotB12_CannonFire : MonoBehaviour
         rightFire = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
         cooldownLeft = cd;
         cooldownRight = cd;
+        audioData = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -32,24 +37,36 @@ public class BotB12_CannonFire : MonoBehaviour
     {
         if (Input.GetButtonDown(leftFire) && cooldownLeft <= 0.0f)
         {
-            foreach (var cannon in LeftCannons)
+            foreach (var cannonSpot in LeftCannonsSpots)
             {
-                firePosition = cannon.transform.position;
+                firePosition = cannonSpot.transform.position;
                 firePosition.x = firePosition.x - .4f;
                 GameObject ball = Instantiate(cannonBall, firePosition, Quaternion.identity) as GameObject;
                 ball.GetComponent<Rigidbody>().AddForce(transform.right * -90);
+                audioData.Play();
+            }
+            foreach (var cannon in LeftCannons)
+            {
+                cannon.GetComponent<Animation>().Play();
+                cannon.GetComponentInChildren<ParticleSystem>().Play();
             }
             cooldownLeft = cd;
         }
         
         if (Input.GetButtonDown(rightFire) && cooldownRight <= 0.0f)
         {
-            foreach (var cannon in RightCannons)
+            foreach (var cannonSpot in RightCannonsSpots)
             {
-                firePosition = cannon.transform.position;
+                firePosition = cannonSpot.transform.position;
                 firePosition.x = firePosition.x + .4f;
                 GameObject ball = Instantiate(cannonBall, firePosition, Quaternion.identity) as GameObject;
                 ball.GetComponent<Rigidbody>().AddForce(transform.right * 90);
+                audioData.Play();
+            }
+            foreach (var cannon in RightCannons)
+            {
+                cannon.GetComponent<Animation>().Play();
+                cannon.GetComponentInChildren<ParticleSystem>().Play();
             }
             cooldownRight = cd;
         }

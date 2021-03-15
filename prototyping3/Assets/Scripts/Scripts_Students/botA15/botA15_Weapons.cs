@@ -7,9 +7,13 @@ public class botA15_Weapons : MonoBehaviour
 	public GameObject weaponThrust;
 	public GameObject wedge;
 	public GameObject hammer;
+	public AudioClip hammerHitSound;
+	public AudioClip quillReleaseSound;
 
 	private bool swingingHammer = false;
 	private bool shootingQuills = false;
+	private AudioSource audioSource;
+
 
 	//grab axis from parent object
 	public string button1;
@@ -23,6 +27,8 @@ public class botA15_Weapons : MonoBehaviour
 		button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
 		button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
 		button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
+
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	void Update()
@@ -35,7 +41,7 @@ public class botA15_Weapons : MonoBehaviour
 			hammer.GetComponent<Animator>().Play("hammerHitTest2", -1, 0f);
 
 			swingingHammer = true;
-
+			StartCoroutine(playHammerSound());
 			StartCoroutine(swingingDisabled()); // cooldown / wait for ani to finish
         }
 
@@ -43,6 +49,7 @@ public class botA15_Weapons : MonoBehaviour
         {
             GetComponent<QuillShoot>().ShootQuills();
             shootingQuills = true;
+			audioSource.PlayOneShot(quillReleaseSound);
 			StartCoroutine(shootingDisabled());
         }
     }
@@ -60,4 +67,10 @@ public class botA15_Weapons : MonoBehaviour
 
 		shootingQuills = false;
 	}
+
+	IEnumerator playHammerSound()
+    {
+		yield return new WaitForSeconds(.10f);
+		audioSource.PlayOneShot(hammerHitSound);
+    }
 }

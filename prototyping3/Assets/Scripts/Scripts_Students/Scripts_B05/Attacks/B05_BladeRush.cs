@@ -6,6 +6,7 @@ public class B05_BladeRush : MonoBehaviour
 {
     private bool b_active = false;    // false when attack can be activated
     private bool b_attacking = false; // true when attacking
+    private bool b_setnormal = false;
 
     private float timer = 0.0f;     // keeps track of attack start time
     public float t_startup = 0.0f;  // holds no revalance right now
@@ -27,6 +28,7 @@ public class B05_BladeRush : MonoBehaviour
     {
         b_active = false;
         b_attacking = false;
+        b_setnormal = false;
         timer = 0.0f;
         vent.material = mat_able;
     }
@@ -42,9 +44,10 @@ public class B05_BladeRush : MonoBehaviour
         {
             EndAttack();
         }
-        if (timer > (t_startup + t_length + t_recovery))
+        if (timer > (t_startup + t_length + t_recovery) && !b_setnormal)
         {
-            b05.SetNormalState(); // give control back to player
+            b05.SetState(Bot05_Move.STATE.NORMAL); // give control back to player
+            b_setnormal = true;
         }
         if (timer > t_cooldown)
         {
@@ -55,7 +58,7 @@ public class B05_BladeRush : MonoBehaviour
     public void Attack()
     {
         // begin attack if avaliable
-        if (!b_active && b05.IsNormal())
+        if (!b_active && b05.IsState(Bot05_Move.STATE.NORMAL))
         {
             BeginAttack();
         }
@@ -65,17 +68,20 @@ public class B05_BladeRush : MonoBehaviour
     {
         b_active = true;
         b_attacking = true;
+        b_setnormal = false;
         vent.material = mat_used;
         timer = 0.0f;
         ani.SetBool("b_attacking", true);
-        b05.SetAttackState();
+        b05.SetState(Bot05_Move.STATE.ATTACKING);
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
     }
 
     private void EndAttack()
     {
         b_attacking = false;
         ani.SetBool("b_attacking", false);
-        b05.SetRecoveringState();
+        b05.SetState(Bot05_Move.STATE.RECOVERING);
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
     }
 
     private void Ready()
