@@ -49,6 +49,8 @@ public class botB06_Ethan : MonoBehaviour
     public string button4; // currently boost in player move script
 
 
+    private AudioSource audioSrc;
+
 
     // Start is called before the first frame update
     void Start()
@@ -84,6 +86,8 @@ public class botB06_Ethan : MonoBehaviour
         button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
 
         origRotation = Beyblade.transform.localRotation;
+
+        audioSrc = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -91,7 +95,7 @@ public class botB06_Ethan : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.T)){
         if ((Input.GetButtonDown(button1)) && (weaponOut == false))
         {
-            FrontWeapon.transform.Translate(0, thrustAmount, 0);
+            FrontWeapon.transform.Translate(0, -thrustAmount, 0);
             weaponOut = true;
             StartCoroutine(WithdrawWeapon());
         }
@@ -100,11 +104,12 @@ public class botB06_Ethan : MonoBehaviour
             //dash
             rb.AddForce(new Vector3(),ForceMode.Impulse);
             weaponOut = true;
-            StartCoroutine(WithdrawWeapon());
+            //StartCoroutine(WithdrawWeapon());
         }
         if ((Input.GetButtonDown(button3))  && Spin == 0)
         {
             Spin = 1;
+            audioSrc.PlayOneShot(audioSrc.clip);
         }
         if(Spin == 1 && spinTimer <= 0)
         {
@@ -127,7 +132,7 @@ public class botB06_Ethan : MonoBehaviour
     {
         yield return new WaitForSeconds(0.6f);
 
-        FrontWeapon.transform.Translate(0, -thrustAmount, 0);
+        FrontWeapon.transform.Translate(0, thrustAmount, 0);
         weaponOut = false;
     }
 
