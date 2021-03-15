@@ -14,6 +14,8 @@ public class Bot09_Weapon : MonoBehaviour
     public ParticleSystem wowy;
     private bool SwingDown, SwingUp;
     public WeaponRotate saws;
+    public Material idleMat, attackMat;
+    public MeshRenderer[] changeColorObj;
 
     //grab axis from parent object
     public string button1;
@@ -32,6 +34,11 @@ public class Bot09_Weapon : MonoBehaviour
         rotation = 0f;
         spikes.enabled = false;
         saws.rotate = false;
+        foreach(MeshRenderer mesh in changeColorObj)
+        {
+            mesh.material = idleMat;
+        }
+
     }
 
     // Update is called once per frame
@@ -42,6 +49,10 @@ public class Bot09_Weapon : MonoBehaviour
         {
             SwingDown = true;
             spikes.enabled = true;
+            foreach (MeshRenderer mesh in changeColorObj)
+            {
+                mesh.material = attackMat;
+            }
             saws.StartSaws();
 
         }
@@ -52,10 +63,8 @@ public class Bot09_Weapon : MonoBehaviour
             rotation += weaponRotateDownTime * Time.deltaTime;
             if (rotation > rotatdown)
             {
-                spikes.enabled = false;
                 audioThing.Play();
                 wowy.Play();
-                saws.SlowDownSaws();
                 StartCoroutine(WithdrawWeapon());
             }
         }
@@ -78,8 +87,14 @@ public class Bot09_Weapon : MonoBehaviour
     IEnumerator WithdrawWeapon()
     {
         yield return new WaitForSeconds(weaponDownTime);
+        foreach (MeshRenderer mesh in changeColorObj)
+        {
+            mesh.material = idleMat;
+        }
         SwingDown = false;
         SwingUp = true;
+        spikes.enabled = false;
+        saws.SlowDownSaws();
     }
 
 }
