@@ -20,28 +20,56 @@ namespace BotB04.Controller
 		string button4; // currently boost in player move script
 
 
-		public GameObject leftWeapon;
-		public GameObject rightWeapon;
+		public BotB04_ShieldWeapon LeftWeapon;
+		public BotB04_ShieldWeapon RightWeapon;
+
+		private BotB04_ShieldWeapon currWeapon;
 
 
 		void Start()
 		{
+			LeftWeapon.Initialize();
+			RightWeapon.Initialize();
+
 			button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
 			button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
 			button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
 			button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
+
+			BotB04_DamageHandler damageHandler = gameObject.GetComponent<BotB04_DamageHandler>();
+			LeftWeapon.shieldStats = damageHandler.shieldRuntime.left;
+			RightWeapon.shieldStats = damageHandler.shieldRuntime.right;
+			currWeapon = LeftWeapon;
 		}
 
 		void Update()
 		{
-			//if (Input.GetKeyDown(KeyCode.T)){
-			if ((Input.GetButtonDown(button1)) && (weaponOut == false))
-			{
-				weaponThrust.transform.Translate(0, thrustAmount, 0);
-				weaponOut = true;
-				StartCoroutine(WithdrawWeapon());
-			}
-		}
+            if ((Input.GetButtonDown(button1)) && (weaponOut == false))
+            {
+                weaponThrust.transform.Translate(0, thrustAmount, 0);
+                weaponOut = true;
+                StartCoroutine(WithdrawWeapon());
+            }
+
+
+            //if (Input.GetButtonDown(button1))
+            //{
+            //	currWeapon.RequestFire();
+
+            //	SwitchWeapon();
+            //}
+
+
+        }
+
+		private void SwitchWeapon()
+        {
+			if (currWeapon == LeftWeapon)
+				currWeapon = RightWeapon;
+			else
+				currWeapon = LeftWeapon;
+        }
+
 
 		IEnumerator WithdrawWeapon()
 		{
@@ -49,14 +77,5 @@ namespace BotB04.Controller
 			weaponThrust.transform.Translate(0, -thrustAmount, 0);
 			weaponOut = false;
 		}
-
-
-
-		void Attack()
-        {
-
-        }
-
-
 	}
 }
