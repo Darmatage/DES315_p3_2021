@@ -57,6 +57,8 @@ public class Bot05_Move : MonoBehaviour
 
     public B05_GroundPound a_pound;
 
+    public B05_Camera cam;
+
     void Start()
     {
         if (gameObject.GetComponent<Rigidbody>() != null)
@@ -150,6 +152,8 @@ public class Bot05_Move : MonoBehaviour
     public void SetState(STATE state)
     {
         cur_state = state;
+
+        cam.SetPos((int)state);
 
         if (state == STATE.ATTACKING)
             rushDir = transform.forward;
