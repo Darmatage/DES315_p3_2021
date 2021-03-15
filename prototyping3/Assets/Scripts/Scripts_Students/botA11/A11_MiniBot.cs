@@ -11,9 +11,8 @@ namespace Amogh
         private NavMeshAgent agent;
 
         [SerializeField] private float radius;
-        [SerializeField] private float health;
 
-        [SerializeField] private GameObject notes;
+        [SerializeField] private GameObject[] notes;
         
         [SerializeField] private AudioClip healsSong;
         private AudioSource source;
@@ -35,6 +34,9 @@ namespace Amogh
             rb = GetComponent<Rigidbody>();
             
             StartCoroutine(SpawnNotes());
+            
+            // Self destruct
+            //Destroy(gameObject, 10f);
         }
 
         // Update is called once per frame
@@ -43,13 +45,14 @@ namespace Amogh
             
         }
 
+
         IEnumerator SpawnNotes()
         {
             while (true)
             {
                 for (int i = 0; i < 2; ++i)
                 {
-                    GameObject note = Instantiate(notes, transform.position + (transform.up * 4) + transform.right, Quaternion.identity);
+                    GameObject note = Instantiate(notes[Random.Range(0,2)], transform.position + (transform.up * 4) + transform.right, Quaternion.identity);
                     note.GetComponent<A11_Notes>().SetTrackingTransform(dad);
                     
                     yield return new WaitForSeconds(0.5f);
@@ -58,6 +61,7 @@ namespace Amogh
                 yield return new WaitForSeconds(1f);
             }
         }
+        
         
         public void SetTrackingTransform(Transform t)
         {

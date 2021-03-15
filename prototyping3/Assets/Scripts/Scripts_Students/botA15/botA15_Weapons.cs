@@ -8,10 +8,12 @@ public class botA15_Weapons : MonoBehaviour
 	public GameObject wedge;
 	public GameObject hammer;
 	public AudioClip hammerHitSound;
+	public AudioClip quillReleaseSound;
 
 	private bool swingingHammer = false;
 	private bool shootingQuills = false;
 	private AudioSource audioSource;
+
 
 	//grab axis from parent object
 	public string button1;
@@ -47,6 +49,7 @@ public class botA15_Weapons : MonoBehaviour
         {
             GetComponent<QuillShoot>().ShootQuills();
             shootingQuills = true;
+			audioSource.PlayOneShot(quillReleaseSound);
 			StartCoroutine(shootingDisabled());
         }
     }
