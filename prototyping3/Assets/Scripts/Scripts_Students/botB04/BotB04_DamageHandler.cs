@@ -5,6 +5,20 @@ using UnityEngine;
 
 namespace BotB04.Controller
 {
+	public class RechargableShield
+	{
+		public float power;
+		public float delay;
+		public bool recharging;
+
+		public RechargableShield(float power)
+		{
+			this.power = power;
+			delay = 0;
+			recharging = false;
+		}
+	}
+
 	public class BotB04_DamageHandler : MonoBehaviour
 	{
 		public GameObject compassSides;
@@ -27,45 +41,31 @@ namespace BotB04.Controller
 			public float PowerBottomMax = 5f;
 		}
 		[SerializeField]
-		public ShieldData ShieldBaseStats;
+        public ShieldData ShieldBaseStats;
 
-		[System.Serializable]
-		public class ShieldRuntimeData
-		{
-			public float powerFront;
-			public float powerBack;
-			public float powerLeft;
-			public float powerRight;
-			public float powerTop;
-			public float powerBottom;
 
-			public float delayFront;
-			public float delayBack;
-			public float delayLeft;
-			public float delayRight;
-			public float delayTop;
-			public float delayBottom;
+        public class ShieldRuntimeData
+        {
+            public float front;
+            public float back;
+            public RechargableShield left;
+            public RechargableShield right;
+            public float top;
+            public float bottom;
 
-			public ShieldRuntimeData(ShieldData ShieldBaseStats)
+            public ShieldRuntimeData(ShieldData ShieldBaseStats)
             {
-				powerFront  = ShieldBaseStats.PowerFrontMax;
-				powerBack   = ShieldBaseStats.PowerBackMax;
-				powerLeft   = ShieldBaseStats.PowerLeftMax;
-				powerRight  = ShieldBaseStats.PowerRightMax;
-				powerTop    = ShieldBaseStats.PowerTopMax;
-				powerBottom = ShieldBaseStats.PowerBottomMax;
+                front = ShieldBaseStats.PowerFrontMax;
+                back = ShieldBaseStats.PowerBackMax;
+				left = new RechargableShield(ShieldBaseStats.PowerLeftMax);
+                right = new RechargableShield(ShieldBaseStats.PowerRightMax);
+                top = ShieldBaseStats.PowerTopMax;
+                bottom = ShieldBaseStats.PowerBottomMax;
+            }
 
-				delayFront  = 0;
-				delayBack   = 0;
-				delayLeft   = 0;
-				delayRight  = 0;
-				delayTop    = 0;
-				delayBottom = 0;
-			}
+        }
+        public ShieldRuntimeData shieldRuntime;
 
-		}
-		[SerializeField]
-		public ShieldRuntimeData shieldRuntime;
 
 		[System.Serializable]
         public class ShieldReferenceStorage
@@ -104,8 +104,9 @@ namespace BotB04.Controller
 		[SerializeField]
 		private Color shieldDownColor;
 
-		void Start()
-		{
+
+        private void Awake()
+        {
 			if (gameObject.GetComponent<Rigidbody>() != null)
 			{
 				rb = gameObject.GetComponent<Rigidbody>();
@@ -130,31 +131,22 @@ namespace BotB04.Controller
 			DamageParticleReferences.dmgParticlesLeft.SetActive(false);
 			DamageParticleReferences.dmgParticlesRight.SetActive(false);
 			DamageParticleReferences.dmgParticlesTop.SetActive(false);
-
-
 		}
 
         private void Update()
         {
-			//RepairShield(ref shieldRuntime.powerFront,  ShieldBaseStats.PowerFrontMax,  ref shieldRuntime.delayFront, DamageParticleReferences.dmgParticlesFront, ShieldReferences.shieldFrontObj);
-			//RepairShield(ref shieldRuntime.powerBack,   ShieldBaseStats.PowerBackMax,   ref shieldRuntime.delayBack, DamageParticleReferences.dmgParticlesBack, ShieldReferences.shieldBackObj);
-			RepairShield(ref shieldRuntime.powerLeft,   ShieldBaseStats.PowerLeftMax,   ref shieldRuntime.delayLeft, DamageParticleReferences.dmgParticlesLeft, ShieldReferences.shieldLeftObj);
-			RepairShield(ref shieldRuntime.powerRight,  ShieldBaseStats.PowerRightMax,  ref shieldRuntime.delayRight, DamageParticleReferences.dmgParticlesRight, ShieldReferences.shieldRightObj);
-			//RepairShield(ref shieldRuntime.powerTop,    ShieldBaseStats.PowerTopMax,    ref shieldRuntime.delayTop, DamageParticleReferences.dmgParticlesTop, ShieldReferences.shieldTopObj);
-			//RepairShield(ref shieldRuntime.powerBottom, ShieldBaseStats.PowerBottomMax, ref shieldRuntime.delayBottom, null, ShieldReferences.shieldBottomObj);
+			RepairShield(shieldRuntime.left,  ShieldBaseStats.PowerLeftMax,  DamageParticleReferences.dmgParticlesLeft,  ShieldReferences.shieldLeftObj);
+			RepairShield(shieldRuntime.right, ShieldBaseStats.PowerRightMax, DamageParticleReferences.dmgParticlesRight, ShieldReferences.shieldRightObj);
 		}
 
-		private void RepairShield(ref float shieldHealth, float shieldMax, ref float delay, GameObject damageParticles, GameObject shieldObj)
+		private void RepairShield(RechargableShield shield, float shieldMax, GameObject damageParticles, GameObject shieldObj)
         {
-			delay -= Time.deltaTime;
-			if(delay <= 0)
+			shield.delay -= Time.deltaTime;
+			if(shield.delay <= 0)
             {
-				shieldHealth = Mathf.Min(shieldHealth + ShieldBaseStats.RechargeRate * Time.deltaTime, shieldMax);
+				shield.power = Mathf.Min(shield.power + ShieldBaseStats.RechargeRate * Time.deltaTime, shieldMax);
 				if(damageParticles != null)
 					damageParticles.SetActive(false);
-
-				
-
 			}
 
 
@@ -168,7 +160,7 @@ namespace BotB04.Controller
 			else
 				shieldRenderer.material.color = new Color(255f / 255f, 0 / 255f, 0 / 255f);
 
-			shieldRenderer.material.color = new Color(shieldRenderer.material.color.r, shieldRenderer.material.color.g, shieldRenderer.material.color.b, shieldHealth / shieldMax);
+			shieldRenderer.material.color = new Color(shieldRenderer.material.color.r, shieldRenderer.material.color.g, shieldRenderer.material.color.b, shield.power / shieldMax);
 		}
 
 
@@ -193,11 +185,11 @@ namespace BotB04.Controller
 				//Hit Back!!!
 				if (Vector3.Dot(transform.forward, directionFore) < (-sidelimit))
 				{
-					shieldRuntime.delayBack = ShieldBaseStats.RechargeDelay;
+					//shieldRuntime.delayBack = ShieldBaseStats.RechargeDelay;
 
 					rb.AddForce(transform.forward * knockBackSpeed * -1, ForceMode.Impulse);
 					//Debug.Log("HitBack " + Vector3.Dot (transform.forward, directionFore));
-					if (shieldRuntime.powerBack <= 0)
+					if (shieldRuntime.back <= 0)
 					{
 						DamageParticleReferences.dmgParticlesBack.SetActive(true);
 						//string playerDamaged = gameObject.tag; //remove for final;
@@ -206,11 +198,11 @@ namespace BotB04.Controller
 					}
 					else
 					{
-						shieldRuntime.powerBack -= attackDamage;
+						shieldRuntime.back -= attackDamage;
 						StartCoroutine(ShieldHitDisplay(ShieldReferences.shieldBackObj));
-						if (shieldRuntime.powerBack <= 0)
+						if (shieldRuntime.back <= 0)
 						{
-							shieldRuntime.powerBack = 0;
+							shieldRuntime.back = 0;
 							//string playerDamaged = gameObject.tag; //remove for final;
 							//gameHandler.PlayerShields(playerDamaged, "Back"); //remove for final;
 							gameHandler.PlayerShields(thisPlayer, "Back");  //use in final (slotted players)
@@ -221,11 +213,11 @@ namespace BotB04.Controller
 				//Hit Front!!!
 				if (Vector3.Dot(transform.forward, directionFore) > sidelimit)
 				{
-					shieldRuntime.delayFront = ShieldBaseStats.RechargeDelay;
+					//shieldRuntime.delayFront = ShieldBaseStats.RechargeDelay;
 
 					rb.AddForce(transform.forward * knockBackSpeed, ForceMode.Impulse);
 					//Debug.Log("HitFront "+ Vector3.Dot (transform.forward, directionFore));
-					if (shieldRuntime.powerFront <= 0)
+					if (shieldRuntime.front <= 0)
 					{
 						DamageParticleReferences.dmgParticlesFront.SetActive(true);
 						//string playerDamaged = gameObject.tag; //remove for final;
@@ -235,11 +227,11 @@ namespace BotB04.Controller
 					}
 					else
 					{
-						shieldRuntime.powerFront -= attackDamage;
+						shieldRuntime.front -= attackDamage;
 						StartCoroutine(ShieldHitDisplay(ShieldReferences.shieldFrontObj));
-						if (shieldRuntime.powerFront <= 0)
+						if (shieldRuntime.front <= 0)
 						{
-							shieldRuntime.powerFront = 0;
+							shieldRuntime.front = 0;
 							//string playerDamaged = gameObject.tag; //remove for final;
 							//gameHandler.PlayerShields(playerDamaged, "Front"); //remove for final;
 							gameHandler.PlayerShields(thisPlayer, "Front");  //use in final (slotted players)
@@ -250,11 +242,11 @@ namespace BotB04.Controller
 				//Hit right!!!
 				if (Vector3.Dot(compassSides.transform.forward, directionSides) > sidelimit)
 				{
-					shieldRuntime.delayRight = ShieldBaseStats.RechargeDelay;
+					shieldRuntime.right.delay = ShieldBaseStats.RechargeDelay;
 
 					rb.AddForce(transform.right * knockBackSpeed, ForceMode.Impulse);
 					//Debug.Log("HitRight " + Vector3.Dot (compassSides.transform.forward, directionSides));
-					if (shieldRuntime.powerRight <= 0)
+					if (shieldRuntime.right.power <= 0)
 					{
 						DamageParticleReferences.dmgParticlesRight.SetActive(true);
 						//string playerDamaged = gameObject.tag; //remove for final;
@@ -264,11 +256,11 @@ namespace BotB04.Controller
 					}
 					else
 					{
-						shieldRuntime.powerRight -= attackDamage;
+						shieldRuntime.right.power -= attackDamage;
 						StartCoroutine(ShieldHitDisplay(ShieldReferences.shieldRightObj));
-						if (shieldRuntime.powerRight <= 0)
+						if (shieldRuntime.right.power <= 0)
 						{
-							shieldRuntime.powerRight = 0;
+							shieldRuntime.right.power = 0;
 							//string playerDamaged = gameObject.tag; //remove for final;
 							//gameHandler.PlayerShields(playerDamaged, "Right"); //remove for final;
 							gameHandler.PlayerShields(thisPlayer, "Right");  //use in final (slotted players)
@@ -279,11 +271,11 @@ namespace BotB04.Controller
 				//Hit left!!!
 				if (Vector3.Dot(compassSides.transform.forward, directionSides) < (-sidelimit))
 				{
-					shieldRuntime.delayLeft = ShieldBaseStats.RechargeDelay;
+					shieldRuntime.left.delay = ShieldBaseStats.RechargeDelay;
 
 					rb.AddForce(transform.right * knockBackSpeed * -1, ForceMode.Impulse);
 					//Debug.Log("HitLeft " + Vector3.Dot (compassSides.transform.forward, directionSides));
-					if (shieldRuntime.powerLeft <= 0)
+					if (shieldRuntime.left.power <= 0)
 					{
 						DamageParticleReferences.dmgParticlesLeft.SetActive(true);
 						//string playerDamaged = gameObject.tag; //remove for final;
@@ -293,11 +285,11 @@ namespace BotB04.Controller
 					}
 					else
 					{
-						shieldRuntime.powerLeft -= attackDamage;
+						shieldRuntime.left.power -= attackDamage;
 						StartCoroutine(ShieldHitDisplay(ShieldReferences.shieldLeftObj));
-						if (shieldRuntime.powerLeft <= 0)
+						if (shieldRuntime.left.power <= 0)
 						{
-							shieldRuntime.powerLeft = 0;
+							shieldRuntime.left.power = 0;
 							//string playerDamaged = gameObject.tag; //remove for final;
 							//gameHandler.PlayerShields(playerDamaged, "Left"); //remove for final;
 							gameHandler.PlayerShields(thisPlayer, "Left");  //use in final (slotted players)
@@ -308,22 +300,22 @@ namespace BotB04.Controller
 				//Hit top!!!
 				if (Vector3.Dot(compassVertical.transform.forward, directionVert) > sidelimit)
 				{
-					shieldRuntime.delayTop = ShieldBaseStats.RechargeDelay;
+					//shieldRuntime.delayTop = ShieldBaseStats.RechargeDelay;
 					
 					rb.AddForce(transform.up * knockBackSpeed, ForceMode.Impulse);
 					//Debug.Log("HitTop " + Vector3.Dot (compassVertical.transform.forward, directionVert));
-					if (shieldRuntime.powerTop <= 0)
+					if (shieldRuntime.top <= 0)
 					{
 						DamageParticleReferences.dmgParticlesTop.SetActive(true);
 						gameHandler.TakeDamage(thisPlayer, attackDamage); // use in final (slotted players)
 					}
 					else
 					{
-						shieldRuntime.powerTop -= attackDamage;
+						shieldRuntime.top -= attackDamage;
 						StartCoroutine(ShieldHitDisplay(ShieldReferences.shieldTopObj));
-						if (shieldRuntime.powerTop <= 0)
+						if (shieldRuntime.top <= 0)
 						{
-							shieldRuntime.powerTop = 0;
+							shieldRuntime.top = 0;
 							gameHandler.PlayerShields(thisPlayer, "Top");  //use in final (slotted players)
 						}
 					}
@@ -332,11 +324,11 @@ namespace BotB04.Controller
 				//Hit bottom!!!
 				if (Vector3.Dot(compassVertical.transform.forward, directionVert) < (-sidelimit))
 				{
-					shieldRuntime.delayBottom = ShieldBaseStats.RechargeDelay;
+					//shieldRuntime.delayBottom = ShieldBaseStats.RechargeDelay;
 
 					rb.AddForce(transform.up * knockBackSpeed * -1, ForceMode.Impulse);
 					//Debug.Log("HitBottom " + Vector3.Dot (compassVertical.transform.forward, directionVert));
-					if (shieldRuntime.powerBottom <= 0)
+					if (shieldRuntime.bottom <= 0)
 					{
 						//dmgParticlesBottom.SetActive(true);
 						gameHandler.TakeDamage(thisPlayer, attackDamage);
@@ -344,10 +336,10 @@ namespace BotB04.Controller
 					
 					else
 					{
-						shieldRuntime.powerBottom -= attackDamage;
-						if (shieldRuntime.powerBottom <= 0)
+						shieldRuntime.bottom -= attackDamage;
+						if (shieldRuntime.bottom <= 0)
 						{
-							shieldRuntime.powerBottom = 0;
+							shieldRuntime.bottom = 0;
 							gameHandler.PlayerShields(thisPlayer, "Bottom");
 						}
 					}

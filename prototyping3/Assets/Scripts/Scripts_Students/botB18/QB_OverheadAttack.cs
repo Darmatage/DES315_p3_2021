@@ -10,6 +10,9 @@ public class QB_OverheadAttack : MonoBehaviour
 
     public string attackKey;
 
+    public AudioSource aud;
+    public AudioClip[] ImpactSounds;
+
 
     private float attackTimer = 0.0f;
     private float retractionTimer = 0.0f;
@@ -17,11 +20,12 @@ public class QB_OverheadAttack : MonoBehaviour
     private bool isDown = false;
     private bool isAttacking = false;
     private bool canAttack = true;
+    private System.Random random;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        random = new System.Random();
     }
 
     // Update is called once per frame
@@ -33,10 +37,6 @@ public class QB_OverheadAttack : MonoBehaviour
 
             if(retractionTimer <= 0.0f)
             {
-                //Vector3 rot = new Vector3(-56.0f, 0.0f);
-                //rot.x = -56.0f;
-                //transform.localRotation = Quaternion.Euler(rot);
-
                 Vector3 rot = new Vector3(-angularVelocity * Time.deltaTime, 0.0f);
                 rot.x += transform.localRotation.eulerAngles.x;
                 transform.localRotation = Quaternion.Euler(rot);
@@ -51,13 +51,6 @@ public class QB_OverheadAttack : MonoBehaviour
         }
         else if(Input.GetButtonDown(attackKey) && canAttack)
         {
-            //Vector3 rot = new Vector3(72.0f, 0.0f);
-            //rot.x = 72.0f;
-            //transform.localRotation = Quaternion.Euler(rot);
-
-            //retractionTimer = retractionCooldown;
-            //attackTimer = attackCooldown;
-            //isDown = true;
             isAttacking = true;
             canAttack = false;
         }
@@ -77,24 +70,7 @@ public class QB_OverheadAttack : MonoBehaviour
             Vector3 rot = new Vector3(angularVelocity * Time.deltaTime, 0.0f);
             rot.x += transform.localRotation.eulerAngles.x;
             transform.localRotation = Quaternion.Euler(rot);
-
-            //if(rot.x >= 72.0f && rot.x < (360.0f - 56.0f))
-            //{
-            //    isAttacking = false;
-            //    isDown = true;
-            //    attackTimer = attackCooldown;
-            //    retractionTimer = retractionCooldown;
-            //}
         }
-        //else
-        //{
-        //    Vector3 rot = transform.localEulerAngles;
-        //    if(rot.x >= -56.0f)
-        //    {
-        //        rot.x -= angularVelocity * Time.deltaTime;
-        //        transform.localRotation = Quaternion.Euler(rot);
-        //    }
-        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -103,5 +79,7 @@ public class QB_OverheadAttack : MonoBehaviour
         isDown = true;
         attackTimer = attackCooldown;
         retractionTimer = retractionCooldown;
+
+        aud.PlayOneShot(ImpactSounds[random.Next(0, ImpactSounds.Length - 1)]);
     }
 }
