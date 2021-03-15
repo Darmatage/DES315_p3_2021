@@ -77,12 +77,14 @@ public class JWymerClaw : MonoBehaviour
 
                 timer -= Time.deltaTime;
 
-                if (timer < 0.0f)
+                if (timer < 0.0f || grabber.state == JWymerGrabber.State.GRABBING)
 				{
                     state = ClawState.RETRACTING;
 
                     audio.clip = retractSFX;
                     audio.Play();
+
+                    grabber.Deactivate();
 				}
 
                 break;
