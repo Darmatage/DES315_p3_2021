@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class ZMB_WeaponManager : MonoBehaviour
 {
-
     public string SprayInput;
     public string AcidPoolInput;
 
@@ -23,6 +22,9 @@ public class ZMB_WeaponManager : MonoBehaviour
     private bool ability1 = false;
     private bool ability2 = false;
 
+    private GameObject hp1;
+    private GameObject hp2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,10 +39,20 @@ public class ZMB_WeaponManager : MonoBehaviour
         cv.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
         cv.transform.position = transform.position + new Vector3(0, 1, 0);
         cv.transform.localScale *= 0.01f;
-        cv.GetComponent<Canvas>().worldCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        cv.GetComponent<Canvas>().worldCamera = Camera.main;
 
         AcidMeter = Instantiate(AcidBar, cv.transform.position, Quaternion.identity, cv.transform);
         AcidMeter.GetComponent<Text>().text = (Mathf.Round(Acid * 10.0f) / 10.0f).ToString();
+        
+        //Assign Damage script to bots
+        GameObject.Find("PLAYER1_SLOT").transform.GetChild(0).gameObject.AddComponent<ZMB_Damage>();
+        GameObject.Find("PLAYER2_SLOT").transform.GetChild(0).gameObject.AddComponent<ZMB_Damage>();
+        
+        //Get Health
+        GameHandler gm = GameObject.Find("GameHandler").GetComponent<GameHandler>();
+
+        hp1 = gm.p1HealthText;
+        hp2 = gm.p2HealthText;
     }
 
     // Update is called once per frame
