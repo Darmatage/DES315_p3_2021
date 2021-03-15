@@ -16,7 +16,7 @@ public class A13_Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(transform.forward * speed * Time.deltaTime);
+        //transform.Translate(transform.forward * speed * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)

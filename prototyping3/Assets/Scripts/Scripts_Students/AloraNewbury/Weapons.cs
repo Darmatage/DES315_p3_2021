@@ -61,7 +61,7 @@ public class Weapons : MonoBehaviour
 		if (weaponOut)
 		{ 
 			yield return new WaitForSeconds(0.6f);
-			weaponThrust.transform.Translate(0, -1.0f, 0);
+			weaponThrust.transform.Translate(0, -thrustAmount, 0);
 			//weaponThrust.transform.lo
 			weaponOut = false;
 		}

@@ -12,12 +12,26 @@ public class Teleport : MonoBehaviour
     public ParticleSystem particle;
     public bool is_Teleporting;
     public float cooldown;
+    public string button4; // currently boost in player move script
+
+
 
 
     Vector3 GetBehindlocation(float distance_behind)
     {
 
-        if (GameObject.FindGameObjectWithTag("Player2"))
+        if (GameObject.FindGameObjectWithTag("Player2").transform.GetChild(0).CompareTag("A05"))
+        {
+            Transform child = GameObject.FindGameObjectWithTag("Player1").transform.GetChild(0);
+
+            if (child)
+            {
+
+                return child.transform.position - (child.transform.forward * distance_behind);
+            }
+        }
+
+        if (GameObject.FindGameObjectWithTag("Player1").transform.GetChild(0).CompareTag("A05"))
         {
             Transform child = GameObject.FindGameObjectWithTag("Player2").transform.GetChild(0);
 
@@ -28,7 +42,6 @@ public class Teleport : MonoBehaviour
             }
         }
 
-       
 
         return player.transform.position - (player.transform.forward * distance_behind);
 
@@ -38,6 +51,8 @@ public class Teleport : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
+
         cooldown = 0.0f;
         is_Teleporting = false;
 
@@ -47,7 +62,7 @@ public class Teleport : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Y) && cooldown <= 0.0f)
+        if (Input.GetButtonDown(button4) && cooldown <= 0.0f)
         {
             is_Teleporting = true;
             Begin.Play();
