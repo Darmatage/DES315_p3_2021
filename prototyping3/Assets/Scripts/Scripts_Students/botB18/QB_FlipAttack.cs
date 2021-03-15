@@ -28,26 +28,8 @@ public class QB_FlipAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (isUp)
-        //{
-        //    retractionTimer -= Time.deltaTime;
-        //
-        //    if (retractionTimer <= 0.0f)
-        //    {
-        //        Vector3 rot = new Vector3();
-        //        transform.localRotation = Quaternion.Euler(rot);
-        //
-        //        isUp = false;
-        //        retractionTimer = 0.0f;
-        //    }
-        //}
         if (Input.GetButtonDown(attackKey) && canAttack)
         {
-            //Vector3 rot = new Vector3(-25.0f, 0.0f);
-            //transform.localRotation = Quaternion.Euler(rot);
-
-            //retractionTimer = retractionCooldown;
-            //isUp = true;
             canAttack = false;
             attackTimer = attackCooldown;
 
