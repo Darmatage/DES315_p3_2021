@@ -275,9 +275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aab929fe774a0084c8ae87aafe02faf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 12
   rotateSpeed: 100
-  jumpSpeed: 7
+  jumpSpeed: 5
   boostSpeed: 10
   groundCheck: {fileID: 1355330930762081256}
   turtleCheck: {fileID: 1355330929556144337}
@@ -307,13 +307,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   compassSides: {fileID: 1029706280859159121}
   compassVertical: {fileID: 4587639291210960121}
+  sidelimit: 0.1
   knockBackSpeed: 10
   shieldPowerFront: 5
   shieldPowerBack: 5
-  shieldPowerLeft: 5
-  shieldPowerRight: 5
-  shieldPowerTop: 5
-  shieldPowerBottom: 5
+  shieldPowerLeft: 3
+  shieldPowerRight: 3
+  shieldPowerTop: 2
+  shieldPowerBottom: 2
   shieldFrontObj: {fileID: 5842800509108774881}
   shieldBackObj: {fileID: 4646661635187871857}
   shieldLeftObj: {fileID: 8925011698669544524}
