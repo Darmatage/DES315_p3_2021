@@ -40,6 +40,12 @@ public class JWymerGrabber : MonoBehaviour
             state = State.ACTIVE;
 	}
 
+    public void Deactivate()
+	{
+        if (state == State.ACTIVE)
+            state = State.INACTIVE;
+	}
+
     public void Release()
     {
         if (state == State.GRABBING)

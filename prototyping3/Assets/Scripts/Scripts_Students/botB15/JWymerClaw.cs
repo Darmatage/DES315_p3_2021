@@ -34,6 +34,11 @@ public class JWymerClaw : MonoBehaviour
 
     public string button2, button3, button4;
 
+    public AudioSource audio;
+    public AudioClip extendSFX;
+    public AudioClip retractSFX;
+    public AudioClip cooloffSFX;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +62,9 @@ public class JWymerClaw : MonoBehaviour
                     state = ClawState.EXTENDING;
                     timer = extendTime;
                     grabber.Activate();
+
+                    audio.clip = extendSFX;
+                    audio.Play();
                 }
 
                 break;
@@ -69,9 +77,14 @@ public class JWymerClaw : MonoBehaviour
 
                 timer -= Time.deltaTime;
 
-                if (timer < 0.0f)
+                if (timer < 0.0f || grabber.state == JWymerGrabber.State.GRABBING)
 				{
                     state = ClawState.RETRACTING;
+
+                    audio.clip = retractSFX;
+                    audio.Play();
+
+                    grabber.Deactivate();
 				}
 
                 break;
@@ -90,6 +103,8 @@ public class JWymerClaw : MonoBehaviour
                     grabber.Release();
                     state = ClawState.COOLDOWN;
                     timer = cooldownTime;
+
+                    audio.Stop();
 				}
 
                 break;
@@ -103,6 +118,9 @@ public class JWymerClaw : MonoBehaviour
                 if (timer <= 0.0f)
 				{
                     state = ClawState.RETRACTED;
+
+                    audio.clip = cooloffSFX;
+                    audio.Play();
 				}
 
                 break;
