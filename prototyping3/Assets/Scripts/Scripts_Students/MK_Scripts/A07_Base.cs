@@ -15,9 +15,13 @@ public class A07_Base : MonoBehaviour
     [SerializeField] private GameObject shieldRight;
 
     [Header("Attacks")] 
-    [SerializeField] private float shieldSlamDuration = 1.0f;
-    [SerializeField] private float shieldSlamDistance = 5.0f;
-    [SerializeField] private float shieldSlamCooldown = 1.0f;
+    [SerializeField] private float shieldSlamDuration   = 1.0f;
+    [SerializeField] private float shieldSlamDistance   = 5.0f;
+    [SerializeField] private float shieldSlamCooldown   = 1.0f;
+    [SerializeField] private float shieldHazardDuration = 1.0f;
+    [SerializeField] private float shieldHazardCooldown = 1.0f;
+    [SerializeField] private Material shieldDefaultMat;
+    [SerializeField] private Material shieldHazardMat;
     
     //grab axis from parent object
     public string button1;
@@ -26,6 +30,7 @@ public class A07_Base : MonoBehaviour
     public string button4; // currently boost in player move script
 
     private bool _shieldsOut;
+    private bool _shieldsHazardous;
 
     void Start()
     {
@@ -35,6 +40,21 @@ public class A07_Base : MonoBehaviour
         button2 = parentObj.action2Input;
         button3 = parentObj.action3Input;
         button4 = parentObj.action4Input;
+
+        if (parentObj.isPlayer1)
+        {
+            shieldFront.GetComponent<HazardDamage>().isPlayer1Weapon = true;
+            shieldBack.GetComponent<HazardDamage>().isPlayer1Weapon = true;
+            shieldLeft.GetComponent<HazardDamage>().isPlayer1Weapon = true;
+            shieldRight.GetComponent<HazardDamage>().isPlayer1Weapon = true;
+        }
+        else
+        {
+            shieldFront.GetComponent<HazardDamage>().isPlayer2Weapon = true;
+            shieldBack.GetComponent<HazardDamage>().isPlayer2Weapon = true;
+            shieldLeft.GetComponent<HazardDamage>().isPlayer2Weapon = true;
+            shieldRight.GetComponent<HazardDamage>().isPlayer2Weapon = true;
+        }
     }
     private void Update()
     {
@@ -51,6 +71,11 @@ public class A07_Base : MonoBehaviour
         if ((Input.GetButtonDown(button1))&&(_shieldsOut==false)){
             _shieldsOut = true;
             StartCoroutine(ExtendShields());
+        }
+        
+        if ((Input.GetButtonDown(button2))&&(_shieldsHazardous==false)){
+            _shieldsHazardous = true;
+            StartCoroutine(HazardShields());
         }
     }
     IEnumerator ExtendShields()
@@ -85,4 +110,30 @@ public class A07_Base : MonoBehaviour
         yield return new WaitForSeconds(shieldSlamCooldown);
         _shieldsOut = false;
     }
+
+    IEnumerator HazardShields()
+    {
+        shieldFront.tag = "Hazard";
+        shieldBack.tag = "Hazard";
+        shieldLeft.tag = "Hazard";
+        shieldRight.tag = "Hazard";
+
+        shieldFront.GetComponent<MeshRenderer>().material = shieldHazardMat;
+        shieldBack.GetComponent<MeshRenderer>().material  = shieldHazardMat;
+        shieldLeft.GetComponent<MeshRenderer>().material  = shieldHazardMat;
+        shieldRight.GetComponent<MeshRenderer>().material = shieldHazardMat;
+
+        yield return new WaitForSeconds(shieldHazardDuration);
+        // Reset back to non-hazard values.
+        shieldFront.GetComponent<MeshRenderer>().material = shieldDefaultMat;
+        shieldBack.GetComponent<MeshRenderer>().material  = shieldDefaultMat;
+        shieldLeft.GetComponent<MeshRenderer>().material  = shieldDefaultMat;
+        shieldRight.GetComponent<MeshRenderer>().material = shieldDefaultMat;
+        shieldFront.tag = "Untagged";
+        
+        // Wait for cooldown of ability
+        yield return new WaitForSeconds(shieldHazardCooldown);
+        _shieldsHazardous = false;
+    }
+    
 }
