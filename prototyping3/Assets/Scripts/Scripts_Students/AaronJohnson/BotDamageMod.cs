@@ -24,7 +24,6 @@ public class BotDamageMod : MonoBehaviour
 	private GameHandler gameHandler;
 	private string thisPlayer;
 	private bool notMyWeapon = true;
-
 	void Start()
 	{
 		ShieldMaxPower = ShieldPower;
@@ -44,10 +43,21 @@ public class BotDamageMod : MonoBehaviour
 		DMGParticles.SetActive(false);
 	}
 
+    private void Update()
+    {
+
+		if (gameObject.transform.parent.tag == "Player1")
+			gameHandler.p1Shields = ShieldPower;  //use in final (slotted players)
+
+		else if (gameObject.transform.parent.tag == "Player2")
+			gameHandler.p2Shields = ShieldPower;  //use in final (slotted players)
+	}
+
     private void FixedUpdate()
     {
 		if(ShieldPower < ShieldMaxPower)
 			ShieldRegen();
+
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -130,7 +140,6 @@ public class BotDamageMod : MonoBehaviour
 				ShieldPower = 0;
 				//string playerDamaged = gameObject.tag; //remove for final;
 				//gameHandler.PlayerShields(playerDamaged, "Back"); //remove for final;
-				gameHandler.PlayerShields(thisPlayer, "Energy");  //use in final (slotted players)
 			}
 		}
 	}
@@ -150,6 +159,7 @@ public class BotDamageMod : MonoBehaviour
 		if (ShieldRegenTimer <= 0)
 		{
 			ShieldPower += ShieldRegenSpeed;
+			ShieldRegenTimer = 0.5f;
 			if (ShieldPower >= ShieldMaxPower)
 			{
 				ShieldPower = ShieldMaxPower;
@@ -162,7 +172,7 @@ public class BotDamageMod : MonoBehaviour
 
 	public void ConsumeForAttack()
     {
-		ShieldPower -= AttackDamage;
+		ShieldPower -= 3;
 		ShieldRegenTimer = ShieldRegenDelay;
 
 		if (ShieldPower <= 0)
