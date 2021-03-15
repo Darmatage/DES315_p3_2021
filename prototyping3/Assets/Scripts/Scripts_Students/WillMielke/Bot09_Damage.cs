@@ -22,19 +22,15 @@ public class Bot09_Damage : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
+        if(other.gameObject.CompareTag("Hazard") || other.gameObject.CompareTag("B09"))
         Debug.Log("whho[ps");
         SpawnParticlesHere = other.contacts[0].point;
         //make particles
         GameObject damageParticles = Instantiate(particlesPrefab, SpawnParticlesHere, other.transform.rotation);
         damageParticles.GetComponent<ParticleSystem>().Play();
         damagesound.Play();
-        StartCoroutine(destroyParticles(damageParticles));
     }
 
-    IEnumerator destroyParticles(GameObject particles)
-    {
-        yield return new WaitForSeconds(0.5f);
-        Destroy(particles);
-    }
+
 
 }
