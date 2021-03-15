@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class HazardDamageTrigger : MonoBehaviour
 {
-	public string player;
+	private string enemy;
+	private SP_GoopBehavior goop;
 
 	public float damage = 1f;
 	private GameHandler gameHandler;
+	private AudioSource audioSource;
 
 	public GameObject particlesPrefab;
 	public Vector3 SpawnParticlesHere;
@@ -22,29 +24,40 @@ public class HazardDamageTrigger : MonoBehaviour
 			gameHandler = GameObject.FindWithTag("GameHandler").GetComponent<GameHandler>();
 		}
 
-		if (gameObject.transform.root.tag == "Player1") { isPlayer1Weapon = true; }
-		if (gameObject.transform.root.tag == "Player2") { isPlayer2Weapon = true; }
+		audioSource = GetComponent<AudioSource>();
+		goop = GetComponent<SP_GoopBehavior>();
+
+		if (goop.player == "Player1") { isPlayer1Weapon = true; enemy = "Player2"; }
+		if (goop.player == "Player2") { isPlayer2Weapon = true; enemy = "Player1"; }
 	}
 
 	void OnTriggerEnter(Collider other)
 	{
 		string target = other.gameObject.transform.root.tag;
-		if (gameHandler != null && target != player)
+		if (gameHandler != null && target == enemy && damage > 0f)
 		{
+			if (audioSource != null)
+			{
+				audioSource.Play();
+			}
 			if (target == "Player1")
 			{
-				gameHandler.TakeDamage("Player1", 1.0f);
-				GameObject.Destroy(gameObject);
+				gameHandler.TakeDamage("Player1", damage);
 			}
 			if (target == "Player2")
 			{
-				gameHandler.TakeDamage("Player2", 1.0f);
-				GameObject.Destroy(gameObject);
+				gameHandler.TakeDamage("Player2", damage);
 			}
+			if (goop != null)
+			{
+				goop.spawner.resetTimer = false;
+				goop.spawner.ResetTimer();
+			}
+			//GameObject.Destroy(gameObject);
 		}
 	}
 
-	IEnumerator destroyParticles(GameObject particles)
+		IEnumerator destroyParticles(GameObject particles)
 	{
 		yield return new WaitForSeconds(0.5f);
 		Destroy(particles);

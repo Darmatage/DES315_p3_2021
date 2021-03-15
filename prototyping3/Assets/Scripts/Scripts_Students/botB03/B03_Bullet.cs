@@ -17,7 +17,7 @@ public class B03_Bullet : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rigid.MovePosition(transform.position + 10.0f * transform.forward * Time.fixedDeltaTime);
+        rigid.MovePosition(transform.position + 15.0f * transform.forward * Time.fixedDeltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -25,9 +25,8 @@ public class B03_Bullet : MonoBehaviour
         if (collision.gameObject.transform.root.name == target)
         {
             parent.ActivateMagnetize();
+            Destroy(gameObject);
         }
-
-        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,8 +34,7 @@ public class B03_Bullet : MonoBehaviour
         if (other.transform.root.name == target)
         {
             parent.ActivateMagnetize();
+            Destroy(gameObject);
         }
-
-        Destroy(gameObject);
     }
 }

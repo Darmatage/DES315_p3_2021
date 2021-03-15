@@ -89,6 +89,8 @@ public class DH_SwapperAbility : MonoBehaviour
     Vector3 otherPos = other.transform.position;
     other.transform.position = transform.position;
     transform.position = otherPos;
+
+    GetComponents<AudioSource>()[0].Play();
   }
 
   public void StartCooldown()
