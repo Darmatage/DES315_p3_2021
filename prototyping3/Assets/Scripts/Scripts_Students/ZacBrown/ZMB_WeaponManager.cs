@@ -45,8 +45,19 @@ public class ZMB_WeaponManager : MonoBehaviour
         AcidMeter.GetComponent<Text>().text = (Mathf.Round(Acid * 10.0f) / 10.0f).ToString();
         
         //Assign Damage script to bots
-        GameObject.Find("PLAYER1_SLOT").transform.GetChild(0).gameObject.AddComponent<ZMB_Damage>();
-        GameObject.Find("PLAYER2_SLOT").transform.GetChild(0).gameObject.AddComponent<ZMB_Damage>();
+        GameObject player = GameObject.Find("PLAYER1_SLOT");
+
+        if (player != null)
+        {
+            player.transform.GetChild(0).gameObject.AddComponent<ZMB_Damage>();
+        }
+
+        player = GameObject.Find("PLAYER2_SLOT");
+
+        if (player != null)
+        {
+            player.transform.GetChild(0).gameObject.AddComponent<ZMB_Damage>();
+        }
         
         //Get Health
         GameHandler gm = GameObject.Find("GameHandler").GetComponent<GameHandler>();
