@@ -10,6 +10,8 @@ public class B05_GroundPound : MonoBehaviour
 
     public SpriteRenderer circle;
 
+    public AudioSource pound;
+
     private bool b_active;
     private bool b_offground;
     private bool b_downward;
@@ -77,6 +79,7 @@ public class B05_GroundPound : MonoBehaviour
             b_cooling = true;
             timer = 0.0f;
             circle.enabled = true;
+            pound.Play();
         }
     }
 
