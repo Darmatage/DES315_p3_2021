@@ -4,17 +4,27 @@ using UnityEngine;
 
 public class Jetpack : MonoBehaviour
 {
-    float speed = 6.0f;
-    float gravity = 20.0f;
+    public GameObject JetBooster1;
+    public GameObject JetBooster2;
 
-    Vector3 moveDirection = Vector3.zero;
+    public string button1;
+    public string button2;
+    public string button3;
+    public string button4;
 
-    ConstantForce force;
+    bool isFacingUp = false;
+    bool canFly = true;
+    bool isParticlePlaying = false;
+
+    float fuel = 2.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
+        button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
+        button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
+        button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
     }
 
     // Update is called once per frame
@@ -23,12 +33,43 @@ public class Jetpack : MonoBehaviour
         var botController = GetComponent<BotBasic_Move>();
         var rb = GetComponent<Rigidbody>();
 
-        if(Input.GetKey(KeyCode.R))
+        if(Input.GetButton(button2))
         {
-            //moveDirection.y = botController.jumpSpeed;
-            rb.AddForce(rb.centerOfMass + new Vector3(0f, botController.jumpSpeed * 10, 0f), ForceMode.Force);
-            //rb.AddForce(rb.centerOfMass + new Vector3(0f, force.relativeForce.y * 10, 0f));
+            if (canFly == true)
+            {
+                rb.AddForce(rb.centerOfMass + new Vector3(0f, botController.jumpSpeed * 10, 0f), ForceMode.Force);
+                fuel -= Time.deltaTime;
+                Debug.Log(fuel);
+                if (isFacingUp == false)
+                {
+                    transform.Rotate(-90, 0, 0);
+                    isFacingUp = true;
+                }
+                if (isParticlePlaying == false)
+                {
+                    JetBooster1.GetComponent<ParticleSystem>().Play();
+                    JetBooster2.GetComponent<ParticleSystem>().Play();
+                    isParticlePlaying = true;
+                }
+            }
+            if(fuel <= 0.0f)
+            {
+                canFly = false;
+                JetBooster1.GetComponent<ParticleSystem>().Stop();
+                JetBooster2.GetComponent<ParticleSystem>().Stop();
+                isParticlePlaying = false;
+            }
         }
-
+        if(Input.GetButtonUp(button2))
+        {
+            isFacingUp = false;
+            transform.Rotate(90, 0, 0);
+        }
+        if(botController.isGrounded == true && fuel <= 2.0f)
+        {
+            Debug.Log(fuel);
+            fuel += Time.deltaTime;
+            canFly = true;
+        }
     }
 }
