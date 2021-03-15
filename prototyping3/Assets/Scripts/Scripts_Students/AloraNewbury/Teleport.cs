@@ -16,9 +16,22 @@ public class Teleport : MonoBehaviour
 
     Vector3 GetBehindlocation(float distance_behind)
     {
-        Transform child = GameObject.FindGameObjectWithTag("Player2").transform.GetChild(0);
 
-        return child.transform.position - (child.transform.forward * distance_behind);
+        if (GameObject.FindGameObjectWithTag("Player2"))
+        {
+            Transform child = GameObject.FindGameObjectWithTag("Player2").transform.GetChild(0);
+
+            if (child)
+            {
+
+                return child.transform.position - (child.transform.forward * distance_behind);
+            }
+        }
+
+       
+
+        return player.transform.position - (player.transform.forward * distance_behind);
+
     }
 
 
