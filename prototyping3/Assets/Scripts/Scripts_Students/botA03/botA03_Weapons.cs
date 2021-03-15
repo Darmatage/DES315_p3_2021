@@ -44,7 +44,7 @@ public class botA03_Weapons : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.T)){
         if ((Input.GetButtonDown(button1)) && (tankOut == false) && (dashCoolOn == false))
         {
-            currentDashTime = 1.0f;
+            currentDashTime = 0.5f;
             dashCoolTime = 3.0f;
             dashCoolOn = true;
             //turtleShip.transform.Translate(0,0, rushAmount);
@@ -96,7 +96,7 @@ public class botA03_Weapons : MonoBehaviour
         if (currentDashTime > 0.0f)
         {
             currentDashTime -= Time.deltaTime;
-            turtleShip.transform.Translate(0,0, 5 * rushAmount * Time.deltaTime);
+            turtleShip.transform.Translate(0,0, 15 * rushAmount * Time.deltaTime);
         }
         else
         {
