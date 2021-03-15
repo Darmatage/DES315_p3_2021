@@ -11,6 +11,7 @@ public class Bot05_Move : MonoBehaviour
         ATTACKING,  // bot cannot be player controlled, rushes forward
         ATTRACTING, // bot cannot be player controlled, stays in place
         REPELING,   // bot cannot be player controlled, stays in place
+        JUMPING,    // bot can only rotate
         NORMAL      // bot can be player controlled
     }
     protected STATE cur_state;
@@ -20,7 +21,7 @@ public class Bot05_Move : MonoBehaviour
     // normal values
     public float moveSpeed = 10;
     public float rotateSpeed = 100;
-    public float jumpSpeed = 7f;
+    public float jumpSpeed = 33.0f;//7f;
     private float flipSpeed = 150f;
     public float boostSpeed = 10f;
 
@@ -30,7 +31,7 @@ public class Bot05_Move : MonoBehaviour
     private Vector3 rushDir = Vector3.zero;
 
     // aim values
-    private float aimRotateMod = 1.5f;
+    private float aimRotateMod = 1.1f;
     private Rigidbody rb;
     public Transform groundCheck;
     public Transform turtleCheck;
@@ -54,7 +55,9 @@ public class Bot05_Move : MonoBehaviour
     public string pJump;
     public string button4; // right bumper or [y] or [/] keys, to test on boost
 
+    public B05_GroundPound a_pound;
 
+    public B05_Camera cam;
 
     void Start()
     {
@@ -98,6 +101,9 @@ public class Bot05_Move : MonoBehaviour
                     break;
                 case STATE.RECOVERING:
                     break;
+                case STATE.JUMPING:
+                    transform.Rotate(0, botRotate * aimRotateMod, 0);
+                    break;
                 default:
                     break;
             }
@@ -111,6 +117,10 @@ public class Bot05_Move : MonoBehaviour
             if (isGrounded == true)
             {
                 rb.AddForce(rb.centerOfMass + new Vector3(0f, jumpSpeed * 10, 0f), ForceMode.Impulse);
+                if (IsState(STATE.NORMAL))
+                {
+                    a_pound.Activate();
+                }
             }
 
             //flip cooldown logic
@@ -142,6 +152,8 @@ public class Bot05_Move : MonoBehaviour
     public void SetState(STATE state)
     {
         cur_state = state;
+
+        cam.SetPos((int)state);
 
         if (state == STATE.ATTACKING)
             rushDir = transform.forward;

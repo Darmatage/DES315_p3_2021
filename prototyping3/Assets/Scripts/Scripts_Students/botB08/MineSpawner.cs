@@ -20,11 +20,15 @@ public class MineSpawner : MonoBehaviour
 
     [SerializeField] private List<GameObject> MineList;
     
-    
+    private AudioSource AudioSrc;
+    [SerializeField] private AudioClip MineGainAudio;
+    [SerializeField] private AudioClip MineDropAudio;
+
     // Start is called before the first frame update
     void Start()
     {
         button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
+        AudioSrc = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -33,6 +37,7 @@ public class MineSpawner : MonoBehaviour
         //if (!isCoolingDown && (Input.GetButtonDown(button1)))
         if (currMines > 0 && (Input.GetButtonDown(button1)))
         {
+            AudioSrc.PlayOneShot(MineDropAudio, 1f);
             GameObject mine = Instantiate(MinePrefab, SpawnPoint.position, Quaternion.identity);
             mine.GetComponent<MineBehavior>().ParentSpawner = this;
             DecrementMines();
@@ -59,6 +64,7 @@ public class MineSpawner : MonoBehaviour
 
     public void IncrementMines()
     {
+        AudioSrc.PlayOneShot(MineGainAudio, 1f);
         MineList[currMines].SetActive(true);
         ++currMines;
     }
