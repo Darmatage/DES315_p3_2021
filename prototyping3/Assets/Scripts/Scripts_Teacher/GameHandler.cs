@@ -12,7 +12,7 @@ public class GameHandler : MonoBehaviour{
 	public GameObject playerMenuUI;
 	public GameObject gameHUD;
 	public GameObject pauseMenuUI;
-	public static bool GameisPaused = false;
+	public bool GameisPaused = false;
 	public GameObject fightButton;
 	public AudioMixer mixer;
     public static float volumeLevel = 1.0f;
@@ -171,9 +171,9 @@ public class GameHandler : MonoBehaviour{
 			winner = "Time's up! \nNo winner. \nP1 Health = " + p1Health + " \nP2 Health = " + p2Health;
 			StartCoroutine(EndGame());
 		}
-		else if (gameTimer >= 1f){
+		else if ((gameTimer >= 1f)&&(thisScene.name != "EndScene")){
 			gameTime -= 1;
-			UpdateStats();
+		    UpdateStats();
 			gameTimer = 0;
 		}
 	}

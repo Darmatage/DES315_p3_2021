@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7325180043540733893}
   - component: {fileID: 5810190821769807151}
+  - component: {fileID: 192811158274250339}
   - component: {fileID: 8009908201862620069}
   - component: {fileID: 3059171817657002172}
   - component: {fileID: 8222722573477027888}
@@ -52,6 +53,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
   target: 
+--- !u!114 &192811158274250339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4314465618369531115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ca4913335a3b745850f156a725a789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 2
+  particlesPrefab: {fileID: 1846187734407276916, guid: 097c826ecf860a845bde3789d26f5b70,
+    type: 3}
+  SpawnParticlesHere: {x: 0, y: 0, z: 0}
+  isPlayer1Weapon: 0
+  isPlayer2Weapon: 0
 --- !u!33 &8009908201862620069
 MeshFilter:
   m_ObjectHideFlags: 0

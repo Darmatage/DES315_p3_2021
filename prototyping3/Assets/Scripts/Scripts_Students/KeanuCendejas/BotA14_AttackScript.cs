@@ -8,8 +8,8 @@ public class BotA14_AttackScript : MonoBehaviour
 
 	public GameObject weaponThrust;
 	private float thrustAmount = 3f;
-	float chargeTime = 4f;
-	private float chargeTimeCounter = 0;
+	public float chargeTime = 0f;
+	public float chargeTimeCounter = 0;
 
 	private bool weaponOut = false;
 
@@ -21,7 +21,7 @@ public class BotA14_AttackScript : MonoBehaviour
 
 	void Start()
 	{
-
+		weaponThrust.SetActive(false);
 		button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
 		button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
 		button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
@@ -30,6 +30,7 @@ public class BotA14_AttackScript : MonoBehaviour
 
 	void Update()
 	{
+
 		//if (Input.GetKeyDown(KeyCode.T)){
 		if ((Input.GetButton(button1)) && (weaponOut == false))
 		{
@@ -39,19 +40,24 @@ public class BotA14_AttackScript : MonoBehaviour
 
 		if(chargeTimeCounter >= chargeTime)
         {
+			AudioSource a = gameObject.GetComponent<AudioSource>();
+			a.Play();
+
 			chargeTimeCounter = 0;
 
-			weaponThrust.transform.Translate(0, thrustAmount, 0);
+			weaponThrust.SetActive(true);
+	
 			weaponOut = true;
+
 			StartCoroutine(WithdrawWeapon());
 		}
 	}
 
 	IEnumerator WithdrawWeapon()
 	{
-		yield return new WaitForSeconds(0.6f);
-		weaponThrust.transform.Translate(0, -thrustAmount, 0);
+		yield return new WaitForSeconds(0.7f);
 		weaponOut = false;
+		weaponThrust.SetActive(false);
 	}
 
 }
