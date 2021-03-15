@@ -116,7 +116,8 @@ public class botB01_RocketHoming : MonoBehaviour
         float dam = Damage;
         if (scrDam.shieldPowerTop <= 0)
         {
-            rb.AddForce(dir * Knockback, ForceMode.Impulse);
+            if (rb != null)
+                rb.AddForce(dir * Knockback, ForceMode.Impulse);
             scrLauncher.scrHandler.TakeDamage(obj.root.tag, Damage);
             scrDam.dmgParticlesTop.SetActive(true);
         }
