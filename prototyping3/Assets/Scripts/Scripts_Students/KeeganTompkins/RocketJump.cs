@@ -42,6 +42,12 @@ public class RocketJump : MonoBehaviour
     public GameObject ExplosionEffect = null;
     public float ExplosionOffset = -0.2f;
 
+    bool Jumping = false;
+    bool Falling = false;
+
+    public float ExtraGravity = 1.0f;
+    public float PushDown = 2.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -112,6 +118,31 @@ public class RocketJump : MonoBehaviour
 
         Vector3 JumpVec = new Vector3(0.0f, 0.0f, 0.0f);
 
+        if (Jumping)
+        {
+            RigidBod.velocity -= new Vector3(0.0f, Time.deltaTime * ExtraGravity, 0.0f);
+            
+            if (RigidBod.velocity.y < 0.0f)
+            {
+                RigidBod.AddForce(new Vector3(0.0f, -PushDown, 0.0f));
+                Falling = true;
+            }
+        }
+
+        if (Falling)
+        {
+            Vector3 newRot = transform.rotation.eulerAngles;
+            newRot.x = 0.0f;
+            newRot.z = 0.0f;
+
+            transform.rotation = Quaternion.Euler(newRot);
+
+            if (GetComponent<BotBasic_Move>().isGrounded)
+            {
+                Falling = false;
+            }
+        }
+
         if (FrontAvailable || BackAvailable)
             JumpVec += SideStrength * FrontAxis * transform.forward;
         if (LeftAvailable || RightAvailable)
@@ -119,8 +150,8 @@ public class RocketJump : MonoBehaviour
 
         Vector3 AngleVec = new Vector3(0.0f, 0.0f, 0.0f);
 
-        AngleVec += -SideAxis  * SpinSpeed * transform.forward;
-        AngleVec += FrontAxis * SpinSpeed * transform.right;
+        AngleVec += -SideAxis * transform.forward;
+        AngleVec += FrontAxis * transform.right;
 
         UpdateColors(FrontAxis, SideAxis);
 
@@ -129,13 +160,14 @@ public class RocketJump : MonoBehaviour
         {
             GetComponent<AudioSource>().PlayOneShot(JumpSound);
 
+            Jumping = true;
 
             if (GetComponent<LotsaShot>() != null) GetComponent<LotsaShot>().Flip();
 
             JumpVec += new Vector3(0.0f, 1.0f, 0.0f) * UpStrength;
             RigidBod.AddForce(JumpVec, ForceMode.Impulse);
 
-            RigidBod.angularVelocity = AngleVec;
+            RigidBod.angularVelocity = AngleVec * SpinSpeed;
 
             if (FrontAxis > 0)
             {
