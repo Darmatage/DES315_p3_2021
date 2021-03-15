@@ -12,8 +12,10 @@ public class B03_Attack : MonoBehaviour
 	public GameObject explosion;
 	public ParticleSystem magnetParticles;
 	public HazardDamage hitbox;
+	public B03_HitboxOff hitboxOff;
 	public AnimationCurve throwHeightCurve;
 	public AnimationCurve throwTiltCurve;
+	public AudioSource explosionSFX;
 
 	// arena and enemy
 	private GameHandler gameHandler;
@@ -41,7 +43,8 @@ public class B03_Attack : MonoBehaviour
 	private bool magnetized;
 	private Vector3 startingPos;
 	private float throwHeight = 15.0f;
-	private float cooldown;
+	private float throwCooldown;
+	private float projectileCooldown;
 
 	void Start()
 	{
@@ -57,8 +60,20 @@ public class B03_Attack : MonoBehaviour
 		// retrieve enemy components and handler
 		GameObject handlerObj = GameObject.FindGameObjectWithTag("GameHandler");
 		string slotName = null;
-		if (handlerObj != null) slotName = button1.Equals("p2Fire1") ? "PLAYER1_SLOT" : "PLAYER2_SLOT";
-		if (button1.Equals("p2Fire1")) hitbox.isPlayer2Weapon = true; else hitbox.isPlayer1Weapon = true;
+
+		// determine player slot
+		if (handlerObj != null)
+			slotName = button1.Equals("p2Fire1") ? "PLAYER1_SLOT" : "PLAYER2_SLOT";
+		else
+			return;
+
+		// assign hitbox
+		if (button1.Equals("p2Fire1"))
+			hitbox.isPlayer2Weapon = true;
+		else
+			hitbox.isPlayer1Weapon = true;
+
+		// retrieve opponent data
 		GameObject slotObj = GameObject.Find(slotName);
 		GameObject enemyObj = null;
 		if (slotObj != null) enemyObj = slotObj.transform.GetChild(0).gameObject;
@@ -67,6 +82,7 @@ public class B03_Attack : MonoBehaviour
 			enemyRigid = enemyObj.GetComponent<Rigidbody>();
 			enemyMove = enemyObj.GetComponent<BotBasic_Move>();
 			enemyDamage = enemyObj.GetComponent<BotBasic_Damage>();
+			hitboxOff.target = enemyObj.transform.root.name;
 		}
 	}
 
@@ -83,11 +99,11 @@ public class B03_Attack : MonoBehaviour
         }
 
 		// update action cooldown
-		cooldown -= Time.deltaTime;
-		if (cooldown > 0.0f) return;
+		throwCooldown -= Time.deltaTime;
+		projectileCooldown -= Time.deltaTime;
 
 		// attack 1 = grapple
-		if (Input.GetButtonDown(button1) && action == Action.NONE)
+		if (Input.GetButtonDown(button1) && action == Action.NONE && throwCooldown <= 0.0f)
 		{
 			action = Action.GRAPPLE;
 			angle = clawDegreeMin;
@@ -95,7 +111,7 @@ public class B03_Attack : MonoBehaviour
 		}
 
 		// attack 2 = projectile
-		if (Input.GetButtonDown(button2) && action == Action.NONE)
+		if (Input.GetButtonDown(button2) && action == Action.NONE && projectileCooldown <= 0.0f)
         {
 			// create explosion
 			GameObject obj = Instantiate(projectile, transform.position + transform.forward * 4.0f, transform.rotation);
@@ -103,7 +119,15 @@ public class B03_Attack : MonoBehaviour
 			bullet.target = enemyRigid.transform.root.name;
 			bullet.parent = this;
 
-			cooldown = 1.0f;
+			// assign hitbox
+			HazardDamage hazard = obj.GetComponent<HazardDamage>();
+			if (button1.Equals("p2Fire1"))
+				hazard.isPlayer2Weapon = true;
+			else
+				hazard.isPlayer1Weapon = true;
+
+			Destroy(obj, 2.0f);
+			projectileCooldown = 3.0f;
 		}
 	}
 
@@ -133,7 +157,7 @@ public class B03_Attack : MonoBehaviour
 			// open claw
 			if (angle < clawDegreeMax)
 			{
-				angle += 250.0f * Time.fixedDeltaTime;
+				angle += 360.0f * Time.fixedDeltaTime;
 				clawLeft.transform.localRotation = Quaternion.Euler(0.0f, angle, 0.0f);
 				clawRight.transform.localRotation = Quaternion.Euler(0.0f, -angle, 0.0f);
 			}
@@ -151,7 +175,7 @@ public class B03_Attack : MonoBehaviour
 		else if (phase == 1)
         {
 			timer += Time.fixedDeltaTime;
-			Vector3 grappleOffset = transform.position + transform.forward * 5.0f;
+			Vector3 grappleOffset = hitbox.transform.position;
 
 			// move the enemy to grabbing range if magnetized
 			if (magnetized)
@@ -160,11 +184,11 @@ public class B03_Attack : MonoBehaviour
 				if ((grappleOffset - enemyRigid.transform.position).magnitude < 0.1f)
 					enemyRigid.MovePosition(grappleOffset);
 				else // move towards position otherwise
-					enemyRigid.MovePosition(enemyRigid.transform.position + 5.0f * (grappleOffset - enemyRigid.transform.position).normalized * Time.fixedDeltaTime);
+					enemyRigid.MovePosition(enemyRigid.transform.position + 10.0f * (grappleOffset - enemyRigid.transform.position).normalized * Time.fixedDeltaTime);
 			}
 
 			// start throw if enemy makes contact within range
-			Collider[] hits = Physics.OverlapSphere(grappleOffset, 2.0f);
+			Collider[] hits = Physics.OverlapSphere(grappleOffset, 1.0f);
 			// determine if any of the collisions belong to the enemy, begin grab if so
 			foreach (var hit in hits)
             {
@@ -195,7 +219,7 @@ public class B03_Attack : MonoBehaviour
 			// close claw
 			if (angle > clawDegreeMin)
 			{
-				angle -= 150.0f * Time.fixedDeltaTime;
+				angle -= 45.0f * Time.fixedDeltaTime;
 				clawLeft.transform.localRotation = Quaternion.Euler(0.0f, angle, 0.0f);
 				clawRight.transform.localRotation = Quaternion.Euler(0.0f, -angle, 0.0f);
 			}
@@ -208,7 +232,7 @@ public class B03_Attack : MonoBehaviour
 				phase = 3;
 
 				action = Action.NONE;
-				cooldown = 1.0f;
+				throwCooldown = 0.5f;
 			}
 		}
 	}
@@ -267,7 +291,7 @@ public class B03_Attack : MonoBehaviour
 				// deactivate hitbox
 				hitbox.gameObject.SetActive(false);
 				rigid.drag = 0.0f;
-				cooldown = 1.0f;
+				throwCooldown = 2.0f;
 			}
 		}
 	}
@@ -277,8 +301,15 @@ public class B03_Attack : MonoBehaviour
 		// launch both player and enemy
 		rigid.isKinematic = false;
 		enemyMove.isGrabbed = false;
-		rigid.velocity = transform.up * -15.0f;
-		enemyRigid.velocity = transform.up * 15.0f;
+
+		Vector3 launchDir = transform.up;
+		launchDir.y = 0.0f;
+		launchDir.Normalize();
+		launchDir *= 20.0f;
+
+		rigid.velocity = -launchDir;
+		rigid.angularVelocity = new Vector3(20.0f, 0.0f, 0.0f);
+		enemyRigid.velocity = launchDir;
 		rigid.drag = 10.0f; // so this bot doesn't go flying off
 
 		// activate hitbox
@@ -287,6 +318,7 @@ public class B03_Attack : MonoBehaviour
 		// create explosion
 		GameObject explodeObj = Instantiate(explosion, transform.position + transform.forward * 5.0f, Quaternion.identity);
 		Destroy(explodeObj, 2.0f);
+		explosionSFX.Play();
 	}
 
 	public void ActivateMagnetize()
