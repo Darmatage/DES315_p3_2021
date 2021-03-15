@@ -9,13 +9,16 @@ public class Bot09_Weapon : MonoBehaviour
     public float weaponDownTime;
     public float weaponRotateDownTime;
     public float weaponRotateUpTime;
-    public AudioSource audioThing;
+    public AudioSource audioDamage, audioWinding, audioloop;
+    public AudioClip windUp, windDown;
     public float rotation, rotatdown, rotatreset;
     public ParticleSystem wowy;
     private bool SwingDown, SwingUp;
     public WeaponRotate saws;
     public Material idleMat, attackMat;
     public MeshRenderer[] changeColorObj;
+
+    private bool once;
 
     //grab axis from parent object
     public string button1;
@@ -26,6 +29,7 @@ public class Bot09_Weapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        once = true;
         button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
         button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
         button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
@@ -54,6 +58,10 @@ public class Bot09_Weapon : MonoBehaviour
                 mesh.material = attackMat;
             }
             saws.StartSaws();
+            audioWinding.clip = windUp;
+            audioWinding.volume = 0.25f;
+            audioWinding.Play();
+            audioloop.PlayDelayed(audioWinding.clip.length);
 
         }
 
@@ -61,9 +69,9 @@ public class Bot09_Weapon : MonoBehaviour
         {
             weaponRake.transform.Rotate(Vector3.right * weaponRotateDownTime * Time.deltaTime);
             rotation += weaponRotateDownTime * Time.deltaTime;
-            if (rotation > rotatdown)
+            if (rotation > rotatdown && once)
             {
-                audioThing.Play();
+                once = false;
                 wowy.Play();
                 StartCoroutine(WithdrawWeapon());
             }
@@ -91,10 +99,16 @@ public class Bot09_Weapon : MonoBehaviour
         {
             mesh.material = idleMat;
         }
+        once = true;
         SwingDown = false;
         SwingUp = true;
         spikes.enabled = false;
         saws.SlowDownSaws();
+        audioWinding.Pause();
+        audioloop.Pause();
+        audioWinding.volume = 1.0f;
+        audioWinding.clip = windDown;
+        audioWinding.Play();
     }
 
 }
