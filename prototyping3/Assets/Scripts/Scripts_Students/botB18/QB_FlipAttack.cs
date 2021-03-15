@@ -5,14 +5,17 @@ using UnityEngine;
 public class QB_FlipAttack : MonoBehaviour
 {
     public float attackCooldown;
-    //public float retractionCooldown;
+    public float retractionCooldown;
 
     public string attackKey;
 
+    public AudioSource aud;
+    public AudioClip sound;
+
     //public MeshCollider collider;
-    
+
     private float attackTimer = 0.0f;
-    //private float retractionTimer = 0.0f;
+    private float retractionTimer = 0.0f;
 
     //private bool isUp = false;
     private bool canAttack = true;
@@ -38,6 +41,11 @@ public class QB_FlipAttack : MonoBehaviour
                 ((GameObject)obj).GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 10.0f);
                 ((GameObject)obj).GetComponent<Rigidbody>().angularVelocity = new Vector3(Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10));
             }
+
+            transform.localRotation = Quaternion.Euler(-30.0f, 0.0f, 0.0f);
+            //isUp = true;
+            retractionTimer = retractionCooldown;
+            aud.PlayOneShot(sound);
         }
 
         if (attackTimer > 0.0f)
@@ -47,6 +55,18 @@ public class QB_FlipAttack : MonoBehaviour
             {
                 canAttack = true;
                 attackTimer = 0.0f;
+            }
+        }
+
+        if (retractionTimer > 0.0f)
+        {
+            retractionTimer -= Time.deltaTime;
+
+            if(retractionTimer <= 0.0f)
+            {
+                //isUp = false;
+                transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+                retractionTimer = 0.0f;
             }
         }
     }
