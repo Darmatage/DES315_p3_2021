@@ -40,7 +40,17 @@ public class A08_ProjectileAttack : MonoBehaviour
         {
             GameObject shot = Instantiate(projectile, this.transform.position, Quaternion.identity);
 
+            if (this.transform.root.tag == "Player1")
+            { 
+                shot.transform.GetChild(0).GetComponent<HazardDamage>().isPlayer1Weapon = true;
+            }
+            else
+            { 
+                shot.transform.GetChild(0).GetComponent<HazardDamage>().isPlayer2Weapon = true;
+            }
+
             shot.GetComponent<Rigidbody>().AddForce(this.transform.forward * projectileVelocity);
+            shot.GetComponent<Rigidbody>().AddTorque(transform.up * 1000);
 
             gameHandler.TakeDamage(this.transform.root.tag, damageCost);
 
