@@ -93,6 +93,10 @@ public class ZMB_WeaponManager : MonoBehaviour
             GameObject pool = Instantiate(AcidPool, transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
             pool.transform.localScale = new Vector3(pool.transform.localScale.x * Acid, pool.transform.localScale.y,
                 pool.transform.localScale.z * Acid);
+
+            ParticleSystem ps = pool.GetComponentInChildren<ParticleSystem>();
+            ParticleSystem.ShapeModule shape = ps.shape;
+            shape.radius *= Acid;
             Destroy(pool, 5.0f);
 
             //Reset Acid level
