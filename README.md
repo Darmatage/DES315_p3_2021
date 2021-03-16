@@ -2,7 +2,7 @@
 Bot Battle game for Prototyping Strategically Unbalanced Bots
 
 
-Link to the Game Build (updates witrh every committ-- thnak you, Amogh!): 
+Link to the Game Build (updates with every commit to Main-- thank you, Amogh!): 
 https://darmatage.github.io/DES315_p3_2021/
 
 
