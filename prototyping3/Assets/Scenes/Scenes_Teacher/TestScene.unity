@@ -294,6 +294,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  particlesPrefab: {fileID: 0}
+  SpawnParticlesHere: {x: 0, y: 0, z: 0}
+  isPlayer1Weapon: 0
+  isPlayer2Weapon: 0
 --- !u!54 &529221098
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -804,7 +808,6 @@ MonoBehaviour:
   moveSpeed: 10
   rotateSpeed: 100
   jumpSpeed: 7
-  flipSpeed: 30
   boostSpeed: 10
   groundCheck: {fileID: 1188863202}
   turtleCheck: {fileID: 1786500098}
@@ -813,6 +816,13 @@ MonoBehaviour:
     m_Bits: 256
   isGrounded: 0
   isTurtled: 0
+  canFlip: 1
+  isGrabbed: 0
+  parentName: 
+  pVertical: 
+  pHorizontal: 
+  pJump: 
+  button4: 
 --- !u!114 &1143651074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -827,12 +837,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   compassSides: {fileID: 1017116351}
   compassVertical: {fileID: 929937773}
+  sidelimit: 0.1
+  knockBackSpeed: 10
   shieldPowerFront: 5
   shieldPowerBack: 5
   shieldPowerLeft: 5
   shieldPowerRight: 5
   shieldPowerTop: 5
   shieldPowerBottom: 5
+  shieldFrontObj: {fileID: 0}
+  shieldBackObj: {fileID: 0}
+  shieldLeftObj: {fileID: 0}
+  shieldRightObj: {fileID: 0}
+  shieldTopObj: {fileID: 0}
+  shieldBottomObj: {fileID: 0}
+  dmgParticlesFront: {fileID: 0}
+  dmgParticlesBack: {fileID: 0}
+  dmgParticlesLeft: {fileID: 0}
+  dmgParticlesRight: {fileID: 0}
+  dmgParticlesTop: {fileID: 0}
 --- !u!54 &1143651075
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1082,6 +1105,90 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1524940776
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.007879148
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2043927002633154154, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.9274072
+      objectReference: {fileID: 0}
+    - target: {fileID: -2043927002633154154, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.3740534
+      objectReference: {fileID: 0}
+    - target: {fileID: -2043927002633154154, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -136.068
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7ab00af83f0894144b0826828fb6b292,
+        type: 3}
+      propertyPath: m_Name
+      value: decoChainsaw
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7ab00af83f0894144b0826828fb6b292, type: 3}
 --- !u!1 &1577709443
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,12 +1502,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   compassSides: {fileID: 0}
   compassVertical: {fileID: 0}
+  sidelimit: 0.1
+  knockBackSpeed: 10
   shieldPowerFront: 5
   shieldPowerBack: 5
   shieldPowerLeft: 5
   shieldPowerRight: 5
   shieldPowerTop: 5
   shieldPowerBottom: 5
+  shieldFrontObj: {fileID: 0}
+  shieldBackObj: {fileID: 0}
+  shieldLeftObj: {fileID: 0}
+  shieldRightObj: {fileID: 0}
+  shieldTopObj: {fileID: 0}
+  shieldBottomObj: {fileID: 0}
+  dmgParticlesFront: {fileID: 0}
+  dmgParticlesBack: {fileID: 0}
+  dmgParticlesLeft: {fileID: 0}
+  dmgParticlesRight: {fileID: 0}
+  dmgParticlesTop: {fileID: 0}
 --- !u!65 &2018744806
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1475,7 +1595,6 @@ MonoBehaviour:
   moveSpeed: 10
   rotateSpeed: 100
   jumpSpeed: 7
-  flipSpeed: 30
   boostSpeed: 10
   groundCheck: {fileID: 73378147}
   turtleCheck: {fileID: 392101067}
@@ -1484,6 +1603,13 @@ MonoBehaviour:
     m_Bits: 256
   isGrounded: 0
   isTurtled: 0
+  canFlip: 1
+  isGrabbed: 0
+  parentName: 
+  pVertical: 
+  pHorizontal: 
+  pJump: 
+  button4: 
 --- !u!1 &2067043071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,12 +1687,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   compassSides: {fileID: 0}
   compassVertical: {fileID: 0}
+  sidelimit: 0.1
+  knockBackSpeed: 10
   shieldPowerFront: 5
   shieldPowerBack: 5
   shieldPowerLeft: 5
   shieldPowerRight: 5
   shieldPowerTop: 5
   shieldPowerBottom: 5
+  shieldFrontObj: {fileID: 0}
+  shieldBackObj: {fileID: 0}
+  shieldLeftObj: {fileID: 0}
+  shieldRightObj: {fileID: 0}
+  shieldTopObj: {fileID: 0}
+  shieldBottomObj: {fileID: 0}
+  dmgParticlesFront: {fileID: 0}
+  dmgParticlesBack: {fileID: 0}
+  dmgParticlesLeft: {fileID: 0}
+  dmgParticlesRight: {fileID: 0}
+  dmgParticlesTop: {fileID: 0}
 --- !u!114 &2190583524736814357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1582,7 +1721,6 @@ MonoBehaviour:
   moveSpeed: 10
   rotateSpeed: 100
   jumpSpeed: 7
-  flipSpeed: 50
   boostSpeed: 10
   groundCheck: {fileID: 2190583524854730035}
   turtleCheck: {fileID: 2190583526060797450}
@@ -1591,6 +1729,13 @@ MonoBehaviour:
     m_Bits: 256
   isGrounded: 0
   isTurtled: 0
+  canFlip: 1
+  isGrabbed: 0
+  parentName: 
+  pVertical: 
+  pHorizontal: 
+  pJump: 
+  button4: 
 --- !u!54 &2190583524736814358
 Rigidbody:
   m_ObjectHideFlags: 0

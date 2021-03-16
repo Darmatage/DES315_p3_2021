@@ -73,7 +73,8 @@ public class Backflip_A13 : MonoBehaviour
 
 		if ((Input.GetButtonDown(button1)) && bulletcooldown <= 0.0f && !gameObject.GetComponent<BotBasic_Move>().isGrabbed) 
 		{
-			GameObject bull = Instantiate(bullet, transform.position, transform.rotation);
+			GameObject bull = Instantiate(bullet, transform.position + transform.forward * 3.5f, transform.rotation);
+			bull.GetComponent<Rigidbody>().velocity = transform.forward * 100;
 			bull.GetComponent<A13_Bullet>().playertag = gameObject.tag;
 			bulletcooldown = bullettimer;
 		}
