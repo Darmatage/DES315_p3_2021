@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Amogh;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace Amogh
@@ -12,13 +8,14 @@ namespace Amogh
         public GameObject boomShurikenPrefab;
         public GameObject bassChild;
 
-        public float force = 0.5f;
+        public float force = 10f;
         public float AttackCooldownTimer = 5f;
-
+        
         private float timer = 10f;
+        private ParticleSystem boomChildParticles;
         void Start()
         {
-
+            boomChildParticles = bassChild.GetComponentInChildren<ParticleSystem>();
         }
         
 
@@ -30,11 +27,12 @@ namespace Amogh
         
         IEnumerator SpawnBass(AudioSource shurikenClip)
         {
+            boomChildParticles.Play();
 
             // Total time is 8 seconds
             // Start only after ~4 seconds is done (charge up sound)
             yield return new WaitForSeconds(4 - 1.3f);
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < 7; ++i)
             {
                 GameObject shuriken = Instantiate(boomShurikenPrefab,
                     bassChild.transform.position + bassChild.transform.forward, Quaternion.identity);
@@ -42,22 +40,27 @@ namespace Amogh
                 var rb = shuriken.GetComponent<Rigidbody>();
                 
                 rb.velocity = bassChild.transform.forward * force;
-
-                yield return new WaitForSeconds(1f);
+                
+                Destroy(shuriken, 3f);
+                yield return new WaitForSeconds(0.6f);
             }
             
+            boomChildParticles.Stop();
+            
             // Wait until sound clip is done
-            while (shurikenClip.isPlaying)
-            {
-                yield return new WaitForFixedUpdate();
-            }
+            //while (shurikenClip.isPlaying)
+            //{
+                //yield return new WaitForFixedUpdate();
+            //}
 
             bassChild.SetActive(false);
+            
+            timer = 0;
         }
         
         public void ButtonDown()
         {
-            if (timer < AttackCooldownTimer)
+            if (bassChild.activeSelf || (timer < AttackCooldownTimer))
                 return;
             
             // Start charging up sound clip
@@ -67,8 +70,7 @@ namespace Amogh
             shurikenClip.Play();
 
             StartCoroutine(SpawnBass(shurikenClip));
-
-            timer = 0;
+            
         }
         
         public void ButtonHeld()

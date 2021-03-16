@@ -47,10 +47,4 @@ public class BotAttack : MonoBehaviour
 		weaponOut = false;
 		ShieldOverloadOBJ.SetActive(false);
 	}
-
-	void PlaySoundTest()
-    {
-		GetComponent<AudioSource>().Play();//attach audio clip to the source
-    }
-
 }

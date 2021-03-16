@@ -36,7 +36,7 @@ namespace Amogh
             StartCoroutine(SpawnNotes());
             
             // Self destruct
-            //Destroy(gameObject, 10f);
+            Destroy(gameObject, 15f);
         }
 
         // Update is called once per frame

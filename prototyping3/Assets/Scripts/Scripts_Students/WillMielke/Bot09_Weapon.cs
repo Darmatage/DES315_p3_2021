@@ -7,11 +7,18 @@ public class Bot09_Weapon : MonoBehaviour
     public GameObject weaponRake;
     public BoxCollider spikes;
     public float weaponDownTime;
-    public float weaponRotateTime;
-    public AudioSource audioThing;
+    public float weaponRotateDownTime;
+    public float weaponRotateUpTime;
+    public AudioSource audioDamage, audioWinding, audioloop;
+    public AudioClip windUp, windDown;
     public float rotation, rotatdown, rotatreset;
     public ParticleSystem wowy;
     private bool SwingDown, SwingUp;
+    public WeaponRotate saws;
+    public Material idleMat, attackMat;
+    public MeshRenderer[] changeColorObj;
+
+    private bool once;
 
     //grab axis from parent object
     public string button1;
@@ -22,6 +29,7 @@ public class Bot09_Weapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        once = true;
         button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
         button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
         button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
@@ -29,27 +37,41 @@ public class Bot09_Weapon : MonoBehaviour
         SwingDown = SwingUp = false;
         rotation = 0f;
         spikes.enabled = false;
+        saws.rotate = false;
+        foreach(MeshRenderer mesh in changeColorObj)
+        {
+            mesh.material = idleMat;
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
         //if (Input.GetKeyDown(KeyCode.T)){
-        if ((Input.GetButtonDown(button1)) && (SwingDown == false) && (SwingUp == false))
+        if ((Input.GetButtonDown(button1)) && (SwingDown == false) && (SwingUp == false) && saws.curRotSpeed < 50.0f)
         {
             SwingDown = true;
             spikes.enabled = true;
+            foreach (MeshRenderer mesh in changeColorObj)
+            {
+                mesh.material = attackMat;
+            }
+            saws.StartSaws();
+            audioWinding.clip = windUp;
+            audioWinding.volume = 0.25f;
+            audioWinding.Play();
+            audioloop.PlayDelayed(audioWinding.clip.length);
 
         }
 
-        if (SwingDown && rotation < rotatdown)
+        if (SwingDown && rotation < rotatdown && saws.curRotSpeed > 600.0f)
         {
-            weaponRake.transform.Rotate(Vector3.right * weaponRotateTime);
-            rotation += weaponRotateTime;
-            if (rotation > rotatdown)
+            weaponRake.transform.Rotate(Vector3.right * weaponRotateDownTime * Time.deltaTime);
+            rotation += weaponRotateDownTime * Time.deltaTime;
+            if (rotation > rotatdown && once)
             {
-                spikes.enabled = false;
-                audioThing.Play();
+                once = false;
                 wowy.Play();
                 StartCoroutine(WithdrawWeapon());
             }
@@ -57,8 +79,8 @@ public class Bot09_Weapon : MonoBehaviour
 
         if(SwingUp && rotation > rotatreset)
         {
-            weaponRake.transform.Rotate(-(Vector3.right * weaponRotateTime));
-            rotation -= weaponRotateTime; 
+            weaponRake.transform.Rotate(-(Vector3.right * weaponRotateUpTime * Time.deltaTime));
+            rotation -= weaponRotateUpTime * Time.deltaTime; 
             if (rotation < rotatreset)
             {
                 // rotation = 0f;
@@ -73,8 +95,20 @@ public class Bot09_Weapon : MonoBehaviour
     IEnumerator WithdrawWeapon()
     {
         yield return new WaitForSeconds(weaponDownTime);
+        foreach (MeshRenderer mesh in changeColorObj)
+        {
+            mesh.material = idleMat;
+        }
+        once = true;
         SwingDown = false;
         SwingUp = true;
+        spikes.enabled = false;
+        saws.SlowDownSaws();
+        audioWinding.Pause();
+        audioloop.Pause();
+        audioWinding.volume = 1.0f;
+        audioWinding.clip = windDown;
+        audioWinding.Play();
     }
 
 }
