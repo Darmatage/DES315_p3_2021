@@ -16,7 +16,7 @@ public class CannonBehavior : MonoBehaviour
     void Start()
     {
         StartPos = transform.position;
-        GetComponent<Rigidbody>().AddForce(Target - transform.position, ForceMode.Impulse);
+        GetComponent<Rigidbody>().AddForce((Target - transform.position) * Speed, ForceMode.Impulse);
     }
 
     private void Update()
