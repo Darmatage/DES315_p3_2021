@@ -11,13 +11,19 @@ public class Charge : MonoBehaviour
   public float chargeSpeed = 10.0f;
 
   bool charge = false;
+  string chargeButton;
   float chargeTimer = 0.0f;
   float damageTimer = 0.0f;
+
+  private void Start()
+  {
+    chargeButton = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
+  }
 
   // Update is called once per frame
   void Update()
   {
-    if (Input.GetKeyDown(KeyCode.M) == true && chargeTimer <= 0)
+    if (Input.GetButtonDown(chargeButton) == true && chargeTimer <= 0)
     {
       charge = true;
     }
