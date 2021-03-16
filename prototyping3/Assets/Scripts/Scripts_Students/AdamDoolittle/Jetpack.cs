@@ -16,7 +16,8 @@ public class Jetpack : MonoBehaviour
     bool canFly = true;
     bool isParticlePlaying = false;
 
-    float fuel = 2.0f;
+    public float fuel = 2.0f;
+    public float rocketSpeed = 10.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +38,7 @@ public class Jetpack : MonoBehaviour
         {
             if (canFly == true)
             {
-                rb.AddForce(rb.centerOfMass + new Vector3(0f, botController.jumpSpeed * 10, 0f), ForceMode.Force);
+                rb.AddForce(rb.centerOfMass + new Vector3(0f, botController.jumpSpeed * rocketSpeed, 0f), ForceMode.Force);
                 fuel -= Time.deltaTime;
                 Debug.Log(fuel);
                 if (isFacingUp == false)
