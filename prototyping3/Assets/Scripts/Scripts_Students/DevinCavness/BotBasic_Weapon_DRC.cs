@@ -68,7 +68,17 @@ public class BotBasic_Weapon_DRC : MonoBehaviour{
 					Destroy(GameObject.Find("Rocket_DRC(Clone)"));
 					StartCoroutine(WithdrawWeapon());
 				}
+				else
+                {
+					GetComponent<LineRenderer>().SetPosition(0, transform.position);
+					GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("Rocket_DRC(Clone)").transform.position);
+                }
 			}
+		}
+		if(weaponOut == false)
+        {
+			GetComponent<LineRenderer>().SetPosition(0, transform.position);
+			GetComponent<LineRenderer>().SetPosition(1, transform.position);
 		}
     }
 
