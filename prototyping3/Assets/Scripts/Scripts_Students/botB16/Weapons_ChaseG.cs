@@ -62,7 +62,7 @@ public class Weapons_ChaseG : MonoBehaviour
 		{
 			CDtimer = 0;
 
-			Vector3 thrust = gameObject.GetComponentInParent<Transform>().up * 12;
+			Vector3 thrust = gameObject.GetComponentInParent<Transform>().up * 15;
 			gameObject.GetComponentInParent<Rigidbody>().velocity = thrust;
 
 			//weaponStomp.transform.Translate(0, -thrustAmount, 0);

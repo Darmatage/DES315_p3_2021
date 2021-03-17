@@ -10,6 +10,8 @@ public class BotA14_AttackScript : MonoBehaviour
 	private float thrustAmount = 3f;
 	public float chargeTime = 0f;
 	public float chargeTimeCounter = 0;
+	public AudioSource source2;
+	private Rigidbody RB; 
 
 	private bool weaponOut = false;
 
@@ -26,17 +28,32 @@ public class BotA14_AttackScript : MonoBehaviour
 		button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
 		button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
 		button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
+
+		RB = gameObject.GetComponent<Rigidbody>();
 	}
 
 	void Update()
 	{
+
+
 
 		//if (Input.GetKeyDown(KeyCode.T)){
 		if ((Input.GetButton(button1)) && (weaponOut == false))
 		{
 			chargeTimeCounter += Time.deltaTime;
 			Debug.Log(chargeTimeCounter);
+			
+			if(!source2.isPlaying)
+            {
+				source2.Play();
+			}
 		}
+		else
+        {
+			source2.Stop();
+        }
+
+		
 
 		if(chargeTimeCounter >= chargeTime)
         {
@@ -49,13 +66,15 @@ public class BotA14_AttackScript : MonoBehaviour
 	
 			weaponOut = true;
 
+			RB.AddForce(-transform.forward * 200, ForceMode.Impulse);
+
 			StartCoroutine(WithdrawWeapon());
 		}
 	}
 
 	IEnumerator WithdrawWeapon()
 	{
-		yield return new WaitForSeconds(0.7f);
+		yield return new WaitForSeconds(0.5f);
 		weaponOut = false;
 		weaponThrust.SetActive(false);
 	}

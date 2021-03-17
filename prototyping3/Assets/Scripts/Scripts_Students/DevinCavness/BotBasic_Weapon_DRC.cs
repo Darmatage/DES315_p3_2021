@@ -46,6 +46,7 @@ public class BotBasic_Weapon_DRC : MonoBehaviour{
 
 			place *= 4.0f;
 
+			GetComponent<AudioSource>().Play();
 
 			thisone.transform.position = transform.position + place; // new Vector3(3.0f, 0.0f, 3.0f);
 			thisone.GetComponent<Rigidbody>().velocity = place * 15.0f;

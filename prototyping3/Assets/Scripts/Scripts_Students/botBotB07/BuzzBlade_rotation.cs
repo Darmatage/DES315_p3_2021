@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuzzBlade_rotation : MonoBehaviour
 {
-    float speed = 300;
+    float speed = 100;
 
     void Update()
     {
