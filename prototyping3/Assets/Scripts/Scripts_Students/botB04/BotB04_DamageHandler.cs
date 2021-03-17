@@ -62,7 +62,7 @@ namespace BotB04.Controller
 	{
 		public GameObject compassSides;
 		public GameObject compassVertical;
-		private float sidelimit = 3.0f;
+		private float sidelimit = .1f;
 		private float attackDamage;
 		public float knockBackSpeed = 10f;
 
@@ -230,9 +230,9 @@ namespace BotB04.Controller
 			{
 				attackDamage = other.gameObject.GetComponent<HazardDamage>().damage;
 
-				Vector3 directionFore = other.transform.position - transform.position;
-				Vector3 directionSides = other.transform.position - compassSides.transform.position;
-				Vector3 directionVert = other.transform.position - compassVertical.transform.position;
+				Vector3 directionFore = (other.transform.position - transform.position).normalized;
+				Vector3 directionSides = (other.transform.position - compassSides.transform.position).normalized;
+				Vector3 directionVert = (other.transform.position - compassVertical.transform.position).normalized;
 
 				//Hit Back!!!
 				if (Vector3.Dot(transform.forward, directionFore) < (-sidelimit))
