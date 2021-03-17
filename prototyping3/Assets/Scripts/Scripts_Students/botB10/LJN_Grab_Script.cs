@@ -19,7 +19,7 @@ public class LJN_Grab_Script : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter");
+       // Debug.Log("Enter");
         if (IsLeft)
         {
             transform.parent.parent.GetComponent<LJN_Weapon_Script>().LeftCanMove = false;
@@ -34,7 +34,7 @@ public class LJN_Grab_Script : MonoBehaviour
         {
             if (other.gameObject.GetComponent<BotBasic_Move>() != null && other.gameObject.name != transform.parent.parent.name)
             {
-                Debug.Log("grabbed");
+               // Debug.Log("grabbed");
                 var othermove = other.gameObject.GetComponent<BotBasic_Move>();
                 othermove.isGrabbed = true;
             }

@@ -114,8 +114,8 @@ public class A07_Base : MonoBehaviour
     IEnumerator HazardShields()
     {
         shieldFront.tag = "Hazard";
-        shieldBack.tag = "Hazard";
-        shieldLeft.tag = "Hazard";
+        shieldBack.tag  = "Hazard";
+        shieldLeft.tag  = "Hazard";
         shieldRight.tag = "Hazard";
 
         shieldFront.GetComponent<MeshRenderer>().material = shieldHazardMat;
@@ -130,6 +130,9 @@ public class A07_Base : MonoBehaviour
         shieldLeft.GetComponent<MeshRenderer>().material  = shieldDefaultMat;
         shieldRight.GetComponent<MeshRenderer>().material = shieldDefaultMat;
         shieldFront.tag = "Untagged";
+        shieldBack.tag  = "Untagged";
+        shieldLeft.tag  = "Untagged";
+        shieldRight.tag = "Untagged";
         
         // Wait for cooldown of ability
         yield return new WaitForSeconds(shieldHazardCooldown);
