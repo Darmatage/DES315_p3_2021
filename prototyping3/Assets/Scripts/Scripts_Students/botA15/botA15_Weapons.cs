@@ -9,10 +9,20 @@ public class botA15_Weapons : MonoBehaviour
 	public GameObject hammer;
 	public AudioClip hammerHitSound;
 	public AudioClip quillReleaseSound;
+	public GameObject Piston;
 
 	private bool swingingHammer = false;
 	private bool shootingQuills = false;
 	private AudioSource audioSource;
+	private MeshRenderer meshRend;
+	private Color originalColor;
+
+	public static float strobeDelay = .15f;
+	float strobeDelayTimer = strobeDelay;
+	bool toggle = false;
+	float detonateTimer = 2.5f; // in seconds
+
+
 
 
 	//grab axis from parent object
@@ -29,6 +39,8 @@ public class botA15_Weapons : MonoBehaviour
 		button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
 
 		audioSource = GetComponent<AudioSource>();
+		meshRend = Piston.GetComponent<MeshRenderer>();
+		originalColor = meshRend.material.color;
 	}
 
 	void Update()
@@ -49,9 +61,24 @@ public class botA15_Weapons : MonoBehaviour
         {
             GetComponent<QuillShoot>().ShootQuills();
             shootingQuills = true;
+			
 			audioSource.PlayOneShot(quillReleaseSound);
 			StartCoroutine(shootingDisabled());
+
+			
         }
+
+		if(shootingQuills)
+        {
+			if (detonateTimer >= 0)
+			{
+				Debug.Log("I am in the first if statement");
+				Strobe();
+				detonateTimer -= Time.deltaTime;
+			}
+			else
+				detonateTimer = 2.5f;
+		}
     }
 
 	IEnumerator swingingDisabled()
@@ -63,9 +90,10 @@ public class botA15_Weapons : MonoBehaviour
 
 	IEnumerator shootingDisabled()
 	{
-		yield return new WaitForSeconds(3.5f); // wait for animation length until it can be used again
+		yield return new WaitForSeconds(2.5f); 
 
 		shootingQuills = false;
+		meshRend.material.SetColor("_Color", originalColor);
 	}
 
 	IEnumerator playHammerSound()
@@ -73,4 +101,26 @@ public class botA15_Weapons : MonoBehaviour
 		yield return new WaitForSeconds(.10f);
 		audioSource.PlayOneShot(hammerHitSound);
     }
+
+	private void Strobe()
+    {
+		Debug.Log("I get in here");
+		if (strobeDelayTimer <= 0f)
+		{
+			Debug.Log("I should be flashing right now");
+			strobeDelayTimer = strobeDelay;
+
+			toggle = !toggle;
+
+			if (toggle)
+				meshRend.material.SetColor("_Color", Color.red);
+			else
+				meshRend.material.SetColor("_Color", originalColor);
+		}
+		else
+        {
+			Debug.Log("Loop loop");
+			strobeDelayTimer -= Time.deltaTime;
+        }
+	}
 }
