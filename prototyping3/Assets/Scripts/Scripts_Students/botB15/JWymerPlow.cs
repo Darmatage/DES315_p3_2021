@@ -27,6 +27,7 @@ public class JWymerPlow : MonoBehaviour
     void Start()
     {
         button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
+        plow.GetComponent<HazardDamage>().damage = 0;
     }
 
     // Update is called once per frame
@@ -42,7 +43,9 @@ public class JWymerPlow : MonoBehaviour
 				{
                     state = State.RISING;
                     timer = upTime;
-				}
+
+                    plow.GetComponent<HazardDamage>().damage = 5;
+                }
 
                 ;
 
@@ -56,7 +59,9 @@ public class JWymerPlow : MonoBehaviour
 				{
                     state = State.FALLING;
                     timer += downTime;
-				}
+
+                    plow.GetComponent<HazardDamage>().damage = 0;
+                }
 
                 angle = Mathf.Lerp(maxAngle, 0, timer / upTime);
 

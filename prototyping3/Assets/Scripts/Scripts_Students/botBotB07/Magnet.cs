@@ -84,7 +84,8 @@ public class Magnet : MonoBehaviour
         {
             TurnOnMagnet = false;
             timer = Cooldown;
-
+            if (newslider)
+                GameObject.Destroy(newslider);
             otherboi.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             otherboi.gameObject.GetComponent<BotBasic_Move>().isGrabbed = false;
             otherboi.gameObject.GetComponent<Transform>().parent = OtherObjectRoot.transform;
@@ -93,11 +94,18 @@ public class Magnet : MonoBehaviour
         }
 
 
+        if(!otherboi)
+        {
+            if (newslider)
+                GameObject.Destroy(newslider);
+        }
+
     }
 
     private void BrakContact()
     {
-
+        if(newslider)
+            GameObject.Destroy(newslider);
         otherboi.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         otherboi.gameObject.GetComponent<BotBasic_Move>().isGrabbed = false;
         otherboi.transform.parent = OtherObjectRoot.transform;
