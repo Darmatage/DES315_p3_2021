@@ -72,7 +72,7 @@ public class botA15_Weapons : MonoBehaviour
         {
 			if (detonateTimer >= 0)
 			{
-				Debug.Log("I am in the first if statement");
+				//Debug.Log("I am in the first if statement");
 				Strobe();
 				detonateTimer -= Time.deltaTime;
 			}
@@ -104,10 +104,10 @@ public class botA15_Weapons : MonoBehaviour
 
 	private void Strobe()
     {
-		Debug.Log("I get in here");
+		//Debug.Log("I get in here");
 		if (strobeDelayTimer <= 0f)
 		{
-			Debug.Log("I should be flashing right now");
+			//Debug.Log("I should be flashing right now");
 			strobeDelayTimer = strobeDelay;
 
 			toggle = !toggle;
@@ -119,7 +119,7 @@ public class botA15_Weapons : MonoBehaviour
 		}
 		else
         {
-			Debug.Log("Loop loop");
+			//Debug.Log("Loop loop");
 			strobeDelayTimer -= Time.deltaTime;
         }
 	}
