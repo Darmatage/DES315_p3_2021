@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7351052496857316200}
   - component: {fileID: 6647368865234392458}
-  - component: {fileID: 3574920172500156409}
   - component: {fileID: 4558431502961824026}
   m_Layer: 0
   m_Name: SplincherDamageTrigger
-  m_TagString: Hazard
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,29 +40,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8420525753543978986}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3574920172500156409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8420525753543978986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7ca4913335a3b745850f156a725a789, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  particlesPrefab: {fileID: 7916852506792683719, guid: a6746c9ee60a1a44d813bcdbac5cb0ce,
-    type: 3}
-  SpawnParticlesHere: {x: 0, y: 0, z: 0}
-  isPlayer1Weapon: 0
-  isPlayer2Weapon: 0
 --- !u!114 &4558431502961824026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,4 +57,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 054e43fbc43299e4aa41a9468fdc5b17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_startPos: {x: 0, y: 0, z: 0}
   m_targetPos: {x: 0, y: 0, z: 0}
