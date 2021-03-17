@@ -56,7 +56,7 @@ public class BotSplincher_Teleport : MonoBehaviour
 
             if (GetInsideWall(targetPos))
             {
-                m_cursor.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0);
+                m_cursor.GetComponent<SpriteRenderer>().color = new Color(0.75f, 0, 0);
             }
             else if (GetInsideEnemy(targetPos) != null && Time.time * 4 - Mathf.Floor(Time.time * 4) < 0.5f)
             {
@@ -64,7 +64,7 @@ public class BotSplincher_Teleport : MonoBehaviour
             }
             else
             {
-                m_cursor.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
+                m_cursor.GetComponent<SpriteRenderer>().color = new Color(0.75f, 0, 1);
             }
         }
 
@@ -75,6 +75,7 @@ public class BotSplincher_Teleport : MonoBehaviour
                 Destroy(m_cursor);
                 m_botMove.isCursorOut = false;
                 m_cursorOut = false;
+                m_cameraFollow.playerObj = transform;
 
                 if (!GetInsideWall(targetPos))
                 {
@@ -103,7 +104,6 @@ public class BotSplincher_Teleport : MonoBehaviour
                     m_audioSourceTeleport.Play();
 
                     StartCoroutine(BecomeCorporeal());
-                    m_cameraFollow.playerObj = transform;
 
                     if (enemy != null)
                     {
@@ -213,7 +213,7 @@ public class BotSplincher_Teleport : MonoBehaviour
         Vector3 knockback = (targetPos - startPos).normalized * speed * 100;
         knockback.y = 0;
         enemy.GetComponent<Rigidbody>().AddForce(knockback);
-        GetComponent<Rigidbody>().AddForce(-knockback / 2);
+        GetComponent<Rigidbody>().AddForce(-knockback);
         BotBasic_Damage targetDamage = enemy.GetComponent<BotBasic_Damage>();
 
         if (targetDamage.shieldPowerBottom <= 0 || targetDamage.shieldPowerFront <= 0 || targetDamage.shieldPowerTop <= 0 || targetDamage.shieldPowerBottom <= 0 || targetDamage.shieldPowerLeft <= 0 || targetDamage.shieldPowerRight <= 0)
