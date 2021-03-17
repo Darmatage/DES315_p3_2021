@@ -27,8 +27,8 @@ public class BotB12_CannonFire : MonoBehaviour
     {
         leftFire = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
         rightFire = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
-        cooldownLeft = cd;
-        cooldownRight = cd;
+        cooldownLeft = 0.0f;
+        cooldownRight = 0.0f;
         audioData = GetComponent<AudioSource>();
     }
 
@@ -40,7 +40,6 @@ public class BotB12_CannonFire : MonoBehaviour
             foreach (var cannonSpot in LeftCannonsSpots)
             {
                 firePosition = cannonSpot.transform.position;
-                firePosition.x = firePosition.x - .4f;
                 GameObject ball = Instantiate(cannonBall, firePosition, Quaternion.identity) as GameObject;
                 ball.GetComponent<Rigidbody>().AddForce(transform.right * -90);
                 audioData.Play();
@@ -58,7 +57,6 @@ public class BotB12_CannonFire : MonoBehaviour
             foreach (var cannonSpot in RightCannonsSpots)
             {
                 firePosition = cannonSpot.transform.position;
-                firePosition.x = firePosition.x + .4f;
                 GameObject ball = Instantiate(cannonBall, firePosition, Quaternion.identity) as GameObject;
                 ball.GetComponent<Rigidbody>().AddForce(transform.right * 90);
                 audioData.Play();
