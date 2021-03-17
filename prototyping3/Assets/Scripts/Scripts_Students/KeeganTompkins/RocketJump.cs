@@ -170,7 +170,6 @@ public class RocketJump : MonoBehaviour
 
         if (Jumping)
         {
-            Debug.Log("Jumping");
             RigidBod.velocity -= new Vector3(0.0f, Time.deltaTime * ExtraGravity, 0.0f);
 
             RigidBod.angularVelocity = RotVec;
@@ -183,7 +182,6 @@ public class RocketJump : MonoBehaviour
         }
         else if (Falling)
         {
-            Debug.Log("Falling");
 
 
             Vector3 newRot = transform.rotation.eulerAngles;
@@ -199,8 +197,6 @@ public class RocketJump : MonoBehaviour
                 Falling = false;
             }
         }
-        else
-            Debug.Log("Other");
 
         if (FrontAvailable || BackAvailable)
             JumpVec += SideStrength * FrontAxis * transform.forward;
