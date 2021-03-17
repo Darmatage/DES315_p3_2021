@@ -51,6 +51,9 @@ public class ZMB_Damage : MonoBehaviour
 	    thisPlayer = gameObject.transform.root.tag;
 
 	    ds = GetComponent<BotBasic_Damage>();
+
+	    if (ds == null)
+		    return;
 	    
 	    compassSides = ds.compassSides;
 	    compassVertical = ds.compassVertical;
@@ -112,6 +115,10 @@ public class ZMB_Damage : MonoBehaviour
 			attackDamage = other.gameObject.GetComponent<HazardDamage>().damage;
 
 			Vector3 directionFore = (other.transform.position - transform.position).normalized;
+
+			if (ds == null)
+				return;
+			
 			Vector3 directionSides = (other.transform.position - compassSides.transform.position).normalized;
 			Vector3 directionVert = (other.transform.position - compassVertical.transform.position).normalized;
 
