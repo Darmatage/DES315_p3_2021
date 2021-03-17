@@ -172,7 +172,7 @@ public class BotDamageMod : MonoBehaviour
 
 	public void ConsumeForAttack()
     {
-		ShieldPower -= 3;
+		ShieldPower -= 1;
 		ShieldRegenTimer = ShieldRegenDelay;
 
 		if (ShieldPower <= 0)
