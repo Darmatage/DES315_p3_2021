@@ -5,9 +5,11 @@ using UnityEngine;
 public class BotBasic_Damage : MonoBehaviour{
 	public GameObject compassSides;
 	public GameObject compassVertical;
-	public float sidelimit = 0.1f;
+	public float sidelimit = 0.75f;
 	private float attackDamage;
 	public float knockBackSpeed = 10f;
+
+	public bool forceSideLimit_p75 = true;
 
 	public float shieldPowerFront = 5f;
 	public float shieldPowerBack = 5f;
@@ -56,6 +58,11 @@ public class BotBasic_Damage : MonoBehaviour{
 		dmgParticlesLeft.SetActive(false);
 		dmgParticlesRight.SetActive(false);
 		dmgParticlesTop.SetActive(false);
+		
+		if (forceSideLimit_p75 == true){
+			sidelimit = 0.75f;
+			}
+		
     }
 
 	private void OnTriggerEnter (Collider other) {
@@ -70,7 +77,7 @@ public class BotBasic_Damage : MonoBehaviour{
 
 			Vector3 directionFore = (other.transform.position - transform.position).normalized;
 			Vector3 directionSides = (other.transform.position - compassSides.transform.position).normalized;
-			Vector3 directionVert = (other.transform.position - compassVertical.transform.position).normalized;
+			Vector3 directionVert = (compassVertical.transform.position - other.transform.position).normalized;
 
 			if (Vector3.Dot (transform.forward, directionFore) < (-sidelimit)) {
 				rb.AddForce(transform.forward * knockBackSpeed * -1, ForceMode.Impulse);
