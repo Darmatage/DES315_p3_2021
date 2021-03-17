@@ -8,10 +8,6 @@ namespace BotB04.Controller
 	{
 		//NOTE: This script goes on the main playerBot Game Object, and the weapon goes in the public GO slot
 
-		public GameObject weaponThrust;
-		private float thrustAmount = 3f;
-
-		private bool weaponOut = false;
 
 		//grab axis from parent object
 		string button1;
@@ -25,6 +21,12 @@ namespace BotB04.Controller
 
 		private BotB04_ShieldWeapon currWeapon;
 
+		public float CooldownTime = .5f;
+		private float cooldown;
+
+		public float recoilStrength = 10;
+		public float recoilDuration = 1;
+		private float recoilClock;
 
 		void Start()
 		{
@@ -40,27 +42,39 @@ namespace BotB04.Controller
 			LeftWeapon.shieldStats = damageHandler.shieldRuntime.left;
 			RightWeapon.shieldStats = damageHandler.shieldRuntime.right;
 			currWeapon = LeftWeapon;
+
+			cooldown = 0;
+			recoilClock = 0;
 		}
 
 		void Update()
 		{
-            //if ((Input.GetButtonDown(button1)) && (weaponOut == false))
-            //{
-            //    weaponThrust.transform.Translate(0, thrustAmount, 0);
-            //    weaponOut = true;
-            //    StartCoroutine(WithdrawWeapon());
-            //}
+			//if ((Input.GetButtonDown(button1)) && (weaponOut == false))
+			//{
+			//    weaponThrust.transform.Translate(0, thrustAmount, 0);
+			//    weaponOut = true;
+			//    StartCoroutine(WithdrawWeapon());
+			//}
+			cooldown -= Time.deltaTime;
+			recoilClock -= Time.deltaTime;
 
-
-            if (Input.GetButtonDown(button1))
+            if (Input.GetButton(button1) && cooldown <= 0)
             {
-            	currWeapon.RequestFire();
+				if (currWeapon.RequestFire())
+                {
+					recoilClock = recoilDuration;
+                }
+					
+				cooldown = CooldownTime;
+				SwitchWeapon();
+			}
 
-            	SwitchWeapon();
-            }
+			if(recoilClock > 0)
+            {
+				transform.Translate(0, 0, -1 * recoilStrength * (recoilClock / recoilDuration) * Time.deltaTime);
+			}
 
-
-        }
+		}
 
         private void SwitchWeapon()
         {
@@ -69,13 +83,5 @@ namespace BotB04.Controller
 			else
 				currWeapon = LeftWeapon;
         }
-
-
-		IEnumerator WithdrawWeapon()
-		{
-			yield return new WaitForSeconds(0.6f);
-			weaponThrust.transform.Translate(0, -thrustAmount, 0);
-			weaponOut = false;
-		}
 	}
 }
