@@ -406,7 +406,7 @@ MonoBehaviour:
     type: 3}
   bassChild: {fileID: 7967989742413057364}
   force: 20
-  AttackCooldownTimer: 5
+  AttackCooldownTimer: 3
 --- !u!82 &8786481866125539211
 AudioSource:
   m_ObjectHideFlags: 0
@@ -420,7 +420,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -521,6 +521,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3b979e69bc69b224997e56b7aef2c2cd, type: 3}
   - {fileID: 8300000, guid: 193f04600968b034599a20177bb28fd8, type: 3}
   source: {fileID: 8786481866125539211}
+  discoBall: {fileID: 0}
 --- !u!1001 &1324626088151411416
 PrefabInstance:
   m_ObjectHideFlags: 0
