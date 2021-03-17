@@ -26,12 +26,12 @@ public class BotSplincher_DamageBox : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collision other)
     {
         if (other.transform.root.tag == "Player1" || other.transform.root.tag == "Player2")
         {
-            gameObject.layer = 17;
-            other.gameObject.GetComponent<Rigidbody>().AddForce((m_targetPos - m_startPos).normalized * speed * 100);
+            
+
             StartCoroutine(DestroySelf());
         }
     }
@@ -40,5 +40,12 @@ public class BotSplincher_DamageBox : MonoBehaviour
     {
         yield return new WaitForSeconds(0.6f);
         Destroy(gameObject);
+    }
+
+    IEnumerator ShieldHitDisplay(GameObject shieldObj)
+    {
+        shieldObj.SetActive(true);
+        yield return new WaitForSeconds(0.4f);
+        shieldObj.SetActive(false);
     }
 }

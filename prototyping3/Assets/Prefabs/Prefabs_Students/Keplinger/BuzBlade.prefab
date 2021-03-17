@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 119585383323334523}
   - component: {fileID: 4946707403080354959}
   - component: {fileID: 8897576472377532615}
-  - component: {fileID: 7853399889996164070}
-  - component: {fileID: 1639395272739726552}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Hazard
@@ -81,36 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7853399889996164070
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2564760006642521423}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.05, y: 2, z: 1.05}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1639395272739726552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2564760006642521423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7ca4913335a3b745850f156a725a789, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  particlesPrefab: {fileID: 0}
-  SpawnParticlesHere: {x: 0, y: 0, z: 0}
-  isPlayer1Weapon: 0
-  isPlayer2Weapon: 0
 --- !u!1 &4609373935686861368
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,8 +90,6 @@ GameObject:
   - component: {fileID: 1052724184045421179}
   - component: {fileID: 4747854953533546815}
   - component: {fileID: 4366602620404210453}
-  - component: {fileID: 8341150084835703300}
-  - component: {fileID: 6614194719715558095}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Hazard
@@ -192,36 +158,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8341150084835703300
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4609373935686861368}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.05, y: 2, z: 1.05}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6614194719715558095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4609373935686861368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7ca4913335a3b745850f156a725a789, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  particlesPrefab: {fileID: 0}
-  SpawnParticlesHere: {x: 0, y: 0, z: 0}
-  isPlayer1Weapon: 0
-  isPlayer2Weapon: 0
 --- !u!1 &6319159894387957896
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,8 +169,6 @@ GameObject:
   - component: {fileID: 259478761548073839}
   - component: {fileID: 5355571860398092108}
   - component: {fileID: 3871572305100361025}
-  - component: {fileID: 9192369212686928828}
-  - component: {fileID: 8235580379296518372}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Hazard
@@ -303,36 +237,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &9192369212686928828
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6319159894387957896}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.05, y: 2, z: 1.05}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8235580379296518372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6319159894387957896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7ca4913335a3b745850f156a725a789, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  particlesPrefab: {fileID: 0}
-  SpawnParticlesHere: {x: 0, y: 0, z: 0}
-  isPlayer1Weapon: 0
-  isPlayer2Weapon: 0
 --- !u!1 &8560377547569849514
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,6 +249,8 @@ GameObject:
   - component: {fileID: 4955704794798352914}
   - component: {fileID: 7002307324204282578}
   - component: {fileID: 6894165491031446220}
+  - component: {fileID: 9087785780152388637}
+  - component: {fileID: 1491594444439429506}
   m_Layer: 0
   m_Name: BuzBlade
   m_TagString: Hazard
@@ -429,6 +335,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91fa5600d6c9b0241bb6d332fd2ab66b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9087785780152388637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8560377547569849514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ca4913335a3b745850f156a725a789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  particlesPrefab: {fileID: 0}
+  SpawnParticlesHere: {x: 0, y: 0, z: 0}
+  isPlayer1Weapon: 0
+  isPlayer2Weapon: 0
+--- !u!65 &1491594444439429506
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8560377547569849514}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 2, z: 1.0000002}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8727042123018444172
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,8 +376,6 @@ GameObject:
   - component: {fileID: 2592830364628995355}
   - component: {fileID: 3376526523179680516}
   - component: {fileID: 6287335413531218572}
-  - component: {fileID: 6876502461407522897}
-  - component: {fileID: 1235459205508870736}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Hazard
@@ -510,33 +444,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &6876502461407522897
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8727042123018444172}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.05, y: 2, z: 1.05}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1235459205508870736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8727042123018444172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7ca4913335a3b745850f156a725a789, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  particlesPrefab: {fileID: 0}
-  SpawnParticlesHere: {x: 0, y: 0, z: 0}
-  isPlayer1Weapon: 0
-  isPlayer2Weapon: 0

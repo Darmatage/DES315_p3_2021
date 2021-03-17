@@ -11,16 +11,11 @@ namespace Amogh
         private NavMeshAgent agent;
 
         [SerializeField] private float radius;
-        [SerializeField] private float health;
 
-        [SerializeField] private GameObject notes;
+        [SerializeField] private GameObject[] notes;
         
         [SerializeField] private AudioClip healsSong;
         private AudioSource source;
-
-        private GameObject ground;
-        private Rigidbody rb;
-        private bool grounded;
         
         void Start()
         {
@@ -31,10 +26,10 @@ namespace Amogh
             source.pitch = 1f;
             source.Play();
 
-            ground = GameObject.Find("Ground");
-            rb = GetComponent<Rigidbody>();
-            
             StartCoroutine(SpawnNotes());
+            
+            // Self destruct
+            Destroy(gameObject, 20f);
         }
 
         // Update is called once per frame
@@ -43,13 +38,14 @@ namespace Amogh
             
         }
 
+
         IEnumerator SpawnNotes()
         {
             while (true)
             {
                 for (int i = 0; i < 2; ++i)
                 {
-                    GameObject note = Instantiate(notes, transform.position + (transform.up * 4) + transform.right, Quaternion.identity);
+                    GameObject note = Instantiate(notes[Random.Range(0,2)], transform.position + (transform.up * 4) + transform.right, Quaternion.identity);
                     note.GetComponent<A11_Notes>().SetTrackingTransform(dad);
                     
                     yield return new WaitForSeconds(0.5f);
@@ -58,6 +54,7 @@ namespace Amogh
                 yield return new WaitForSeconds(1f);
             }
         }
+        
         
         public void SetTrackingTransform(Transform t)
         {
@@ -70,18 +67,7 @@ namespace Amogh
         {
             Vector3 randomPos = Random.insideUnitSphere * radius + dad.position;
             
-            grounded = false;
-            if (agent.enabled)
-            {
-                agent.SetDestination(randomPos);
-                agent.updatePosition = false;
-                agent.updateRotation = false;
-                agent.isStopped = true;
-            }
-            
-            rb.isKinematic = false;
-            rb.useGravity = true;
-            rb.AddRelativeForce(new Vector3(0, 20f, 0), ForceMode.Impulse);
+            agent.SetDestination(randomPos);
         }
 
         private void ChangePitch()
@@ -97,21 +83,7 @@ namespace Amogh
                 Destroy(gameObject, 0.5f);
                 dad.gameObject.GetComponent<A11_Heal>().MiniBotDeath();
             }
-            else if (other.gameObject.Equals(ground))
-            {
-                if (grounded == false)
-                {
-                    if (agent.enabled)
-                    {
-                        agent.updatePosition = true;
-                        agent.updateRotation = true;
-                        agent.isStopped = false;
-                    }
-                    rb.isKinematic = true;
-                    rb.useGravity = false;
-                    grounded = true;
-                }
-            }
+            
         }
     }
 }

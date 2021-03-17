@@ -32,6 +32,10 @@ public class B05_MagneticForce : MonoBehaviour
             for (int i = 0; i < tops.Length; ++i)
                 tops[i].MoveAway(b05.GetCenter().position);
         }
+        else
+        {
+            circles.SetActive(false);
+        }
     }
 
     public void BeginRepel()

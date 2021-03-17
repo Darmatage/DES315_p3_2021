@@ -17,12 +17,17 @@ public class botB01_RocketHoming : MonoBehaviour
 
     [Range(0, 10)] public float Damage;
     
-
     private Collider col;
-
     public botB01_RocketLauncher scrLauncher;
-
     public botB01_AttackState state;
+
+    private LineRenderer line;
+    private Material lineMat;
+    public Transform tip;
+
+    private AudioSource beeper;
+    [Range(0, 5)] public float BeepTime;
+    private float beepTimer = 0;
     
     // Start is called before the first frame update
     private void Start()
@@ -32,6 +37,12 @@ public class botB01_RocketHoming : MonoBehaviour
         
         state = botB01_AttackState.stage_0;
         velocity = Vector3.up + Random.insideUnitSphere * 0.1f;
+
+        line = GetComponent<LineRenderer>();
+        lineMat = line.material;
+        line.enabled = false;
+
+        beeper = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -49,6 +60,7 @@ public class botB01_RocketHoming : MonoBehaviour
             {
                 col.enabled = true;
                 state = botB01_AttackState.stage_1;
+                line.enabled = true;
             }
         }
         else if (state == botB01_AttackState.stage_1)
@@ -56,6 +68,27 @@ public class botB01_RocketHoming : MonoBehaviour
             Vector3 acceleration = (Target.position - transform.position).normalized * Time.deltaTime;
             velocity = (velocity + acceleration * AngularSpeed).normalized;
             transform.LookAt(transform.position + velocity);
+            
+            line.SetPosition(0, tip.position);
+            line.SetPosition(1, Target.position);
+
+            Color c = Color.red;
+            foreach (RaycastHit hit in Physics.RaycastAll(tip.position, Target.position - tip.position))
+            {
+                if (hit.transform.root.CompareTag(scrLauncher.transform.root.tag))
+                {
+                    c = Color.green;
+                    break;
+                }
+            }
+            lineMat.color = c;
+
+            beepTimer += Time.deltaTime;
+            if (beepTimer > BeepTime)
+            {
+                beepTimer = 0.0f;
+                beeper.Play();
+            }
         }
 
         transform.position += velocity * (Speed * Time.deltaTime);
@@ -83,7 +116,8 @@ public class botB01_RocketHoming : MonoBehaviour
         float dam = Damage;
         if (scrDam.shieldPowerTop <= 0)
         {
-            rb.AddForce(dir * Knockback, ForceMode.Impulse);
+            if (rb != null)
+                rb.AddForce(dir * Knockback, ForceMode.Impulse);
             scrLauncher.scrHandler.TakeDamage(obj.root.tag, Damage);
             scrDam.dmgParticlesTop.SetActive(true);
         }
@@ -95,7 +129,8 @@ public class botB01_RocketHoming : MonoBehaviour
                 scrDam.shieldPowerTop = 0;
                 scrLauncher.scrHandler.PlayerShields(obj.root.tag, "Top");
             }
-            scrLauncher.HitShield(scrLauncher.scrDamage.shieldTopObj);
+            if (scrLauncher.scrDamage.shieldTopObj != null)
+                scrLauncher.HitShield(scrLauncher.scrDamage.shieldTopObj);
 
             rb.AddForce(dir * Knockback / 2.0f, ForceMode.Impulse);
         }

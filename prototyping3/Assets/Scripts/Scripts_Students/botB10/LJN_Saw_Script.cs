@@ -11,10 +11,11 @@ public class LJN_Saw_Script : MonoBehaviour
     public float hitTime = 0.1f;
     private float internalhit = 0;
     private bool toggl = true;
+
     void Start()
     {
         myPlyr = gameObject.transform.root.tag;
-        Debug.Log(transform.parent.parent.name);
+       
     }
 
     // Update is called once per frame

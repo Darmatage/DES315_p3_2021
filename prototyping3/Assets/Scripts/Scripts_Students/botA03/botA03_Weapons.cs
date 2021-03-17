@@ -8,16 +8,19 @@ public class botA03_Weapons : MonoBehaviour
 
     public GameObject weaponThrust;
     public GameObject turtleShip;
+    public GameObject smokeShell;
 
     private float rushAmount = 2f;
     private float thrustAmount = 3f;
 
     private float currentDashTime = 0.0f;
     private float dashCoolTime = 3.0f;
+    private float smokeCoolTime = 0.0f;
 
     private bool tankOut = false;
     private bool weaponOut = false;
     private bool dashCoolOn = false;
+    private bool shellActive = false;
 
     private AudioSource source;
 
@@ -34,13 +37,15 @@ public class botA03_Weapons : MonoBehaviour
         button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
 
         source = GetComponent<AudioSource>();
+        
+        smokeShell.SetActive(false);
     }
 
     void Update(){
         //if (Input.GetKeyDown(KeyCode.T)){
         if ((Input.GetButtonDown(button1)) && (tankOut == false) && (dashCoolOn == false))
         {
-            currentDashTime = 1.0f;
+            currentDashTime = 0.5f;
             dashCoolTime = 3.0f;
             dashCoolOn = true;
             //turtleShip.transform.Translate(0,0, rushAmount);
@@ -60,11 +65,41 @@ public class botA03_Weapons : MonoBehaviour
             weaponOut = true;
             StartCoroutine(WithdrawWeapon());
         }
+        else if ((Input.GetButtonDown(button3)) && shellActive == false)
+        {
+            shellActive = true;
+            smokeShell.SetActive(true);
+            smokeCoolTime = 10.0f;
+        }
+        else if ((Input.GetButtonDown(button3)) && shellActive == true)
+        {
+            shellActive = false;
+            smokeShell.SetActive(false);
+            smokeCoolTime = 0.0f;
+        }
 
+        TimeManagement();
+    }
+
+    IEnumerator horizontalWDShip()
+    {
+        yield return new WaitForSeconds(0.6f);
+        turtleShip.transform.Translate(0,-rushAmount, 0);
+        tankOut = false;
+    }
+    
+    IEnumerator WithdrawWeapon(){
+        yield return new WaitForSeconds(0.6f);
+        weaponThrust.transform.Translate(0,-thrustAmount, 0);
+        weaponOut = false;
+    }
+
+    void TimeManagement()
+    {
         if (currentDashTime > 0.0f)
         {
             currentDashTime -= Time.deltaTime;
-            turtleShip.transform.Translate(0,0, 5 * rushAmount * Time.deltaTime);
+            turtleShip.transform.Translate(0,0, 15 * rushAmount * Time.deltaTime);
         }
         else
         {
@@ -80,18 +115,16 @@ public class botA03_Weapons : MonoBehaviour
             dashCoolTime = 3.0f;
             dashCoolOn = false;
         }
-    }
 
-    IEnumerator horizontalWDShip()
-    {
-        yield return new WaitForSeconds(0.6f);
-        turtleShip.transform.Translate(0,-rushAmount, 0);
-        tankOut = false;
-    }
-    
-    IEnumerator WithdrawWeapon(){
-        yield return new WaitForSeconds(0.6f);
-        weaponThrust.transform.Translate(0,-thrustAmount, 0);
-        weaponOut = false;
+        if (smokeCoolTime > 0.0f)
+        {
+            smokeCoolTime -= Time.deltaTime;
+        }
+        else
+        {
+            smokeShell.SetActive(false);
+            shellActive = false;
+            smokeCoolTime = 0.0f;
+        }
     }
 }

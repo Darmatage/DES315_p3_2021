@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-
 namespace Amogh
 {
     public class A11_Notes : MonoBehaviour
@@ -25,7 +24,7 @@ namespace Amogh
         {
             agent = GetComponent<NavMeshAgent>();
             agent.updateRotation = false;
-            //agent.updatePosition = false;
+            agent.enabled = false;
 
             if (handler == null)
             {
@@ -41,10 +40,27 @@ namespace Amogh
 
         }
 
+        IEnumerator MoveNote()
+        {
+            Vector3 pos;
+
+            while (true)
+            {
+                pos = Vector3.Lerp(transform.position, targetPos, 0.2f);
+                pos.y += Random.Range(-1f, 1f);
+
+                transform.position = pos;
+                
+                yield return new WaitForSeconds(0.25f);
+                //yield return new WaitForFixedUpdate();
+            }
+            
+        }
+
         private void SetAgentDestination()
         {
-            agent.Warp(Vector3.MoveTowards(transform.position, targetPos, 1f));
-            
+            transform.position = Vector3.Lerp(transform.position, targetPos, 0.2f);
+
             //agent.SetDestination(dad.position);
         }
         
@@ -56,7 +72,7 @@ namespace Amogh
         
         private void Spin()
         {
-            transform.Rotate(Vector3.up, 10f);
+            transform.Rotate(Vector3.up, 5f);
         }
         
         public void SetTrackingTransform(Transform t)
@@ -64,7 +80,8 @@ namespace Amogh
             dad = t;
             targetPos = dad.position;
             
-            InvokeRepeating(nameof(SetAgentDestination), 0.9f, 0.5f);
+            //InvokeRepeating(nameof(SetAgentDestination), 0.9f, 0.5f);
+            StartCoroutine(MoveNote());
             InvokeRepeating(nameof(SetTargetWithinSphere), 0.5f, 1.0f);
         }
 
