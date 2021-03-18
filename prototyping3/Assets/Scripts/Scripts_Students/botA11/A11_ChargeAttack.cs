@@ -78,7 +78,6 @@ namespace Amogh
                 //yield return new WaitForFixedUpdate();
             //}
             
-            timer = 0;
             shurikenClip.Stop();
             boomChildParticles.Stop();
             bassAnimator.SetBool("Charging", false);
@@ -101,7 +100,7 @@ namespace Amogh
             bassAnimator.SetBool("Charging", true);
             
             StartCoroutine(SpawnBass(shurikenClip));
-            
+            timer = 0;
         }
         
         public void ButtonHeld()
