@@ -9,7 +9,7 @@ public class BotB12_CannonFire : MonoBehaviour
 
     public GameObject cannonBall;
 
-    private float cd = 2.5f;
+    private float cd = 2f;
     private float cooldownLeft;
     private float cooldownRight;
 

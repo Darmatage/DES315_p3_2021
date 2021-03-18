@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -97,6 +98,16 @@ public class ZMB_WeaponManager : MonoBehaviour
             ParticleSystem ps = pool.GetComponentInChildren<ParticleSystem>();
             ParticleSystem.ShapeModule shape = ps.shape;
             shape.radius *= Acid;
+
+            if (gameObject.transform.root.tag == "Player1")
+            {
+                pool.transform.GetChild(0).GetComponent<HazardDamage>().isPlayer1Weapon = true;
+            }
+            else if (gameObject.transform.root.tag == "Player2")
+            {
+                pool.transform.GetChild(0).GetComponent<HazardDamage>().isPlayer2Weapon = true;
+            }
+            
             Destroy(pool, 5.0f);
 
             //Reset Acid level
@@ -104,6 +115,8 @@ public class ZMB_WeaponManager : MonoBehaviour
         }
 
         UpdateAcid();
+
+        AcidMeter.transform.rotation = transform.root.GetChild(1).rotation;
     }
 
     private void UpdateAcid()
