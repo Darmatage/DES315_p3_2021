@@ -313,6 +313,7 @@ public class B03_Attack : MonoBehaviour
 		rigid.drag = 10.0f; // so this bot doesn't go flying off
 
 		// activate hitbox
+		hitboxOff.hitFlag = false;
 		hitbox.gameObject.SetActive(true);
 
 		// create explosion

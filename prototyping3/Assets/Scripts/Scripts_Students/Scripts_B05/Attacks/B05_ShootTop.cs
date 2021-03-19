@@ -78,6 +78,18 @@ public class B05_ShootTop : MonoBehaviour
         GameObject new_top = Instantiate(minitop, spawn_point.position, Quaternion.identity);
         new_top.GetComponent<Rigidbody>().AddForce(transform.forward * charge * topSpeed, ForceMode.Impulse);
         new_top.GetComponent<B05_MiniTop>().SetParent(gameObject);
+        new_top.tag = gameObject.transform.root.tag;
+        if (new_top.tag == "Player1")
+        {
+            new_top.GetComponentInChildren<HazardDamage>().gameObject.layer = 16;
+            new_top.GetComponent<B05_MiniTop>().ball.material = new_top.GetComponent<B05_MiniTop>().eye1;
+        }
+        else if (new_top.tag == "Player2")
+        {
+            new_top.GetComponentInChildren<HazardDamage>().gameObject.layer = 19;
+            new_top.GetComponent<B05_MiniTop>().ball.material = new_top.GetComponent<B05_MiniTop>().eye2;
+        }
+        
         ++top_count;
         ammo[5 - top_count].material = mat_ammo_off;
     }

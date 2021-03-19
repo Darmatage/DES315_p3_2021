@@ -27,7 +27,7 @@ namespace Amogh
                 GetComponent<A11_Heal>().GetComponent<A11_IAttack>(),
                 GetComponent<A11_ChargeAttack>(),
                 null,
-                null,GetComponent<A11_JukeBox>()
+                null//GetComponent<A11_JukeBox>()
             };
 
         }

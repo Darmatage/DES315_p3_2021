@@ -27,14 +27,14 @@ public class RocketJump : MonoBehaviour
 
     public float CooldownTime = 5.0f;
 
-    float LeftCooldown  = 0.0f;
+    float LeftCooldown = 0.0f;
     float RightCooldown = 0.0f;
     float FrontCooldown = 0.0f;
-    float BackCooldown  = 0.0f;
+    float BackCooldown = 0.0f;
 
     const int front = 1;
-    const int back =  1 << 1;
-    const int left =  1 << 2;
+    const int back = 1 << 1;
+    const int left = 1 << 2;
     const int right = 1 << 3;
 
     public AudioClip JumpSound;
@@ -48,6 +48,8 @@ public class RocketJump : MonoBehaviour
     public float ExtraGravity = 1.0f;
     public float PushDown = 2.0f;
 
+    public Vector3 RotVec;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,7 +59,7 @@ public class RocketJump : MonoBehaviour
         RigidBod = GetComponent<Rigidbody>();
     }
 
-    int GetSides (float ForwardAxis, float SideAxis)
+    int GetSides(float ForwardAxis, float SideAxis)
     {
         int retVal = 0;
         if (ForwardAxis > 0)
@@ -86,17 +88,56 @@ public class RocketJump : MonoBehaviour
         LeftIndicator.GetComponent<Renderer>().material.SetColor("_Color", ActiveColor);
         FrontIndicator.GetComponent<Renderer>().material.SetColor("_Color", ActiveColor);
         BackIndicator.GetComponent<Renderer>().material.SetColor("_Color", ActiveColor);
+        FrontIndicator.GetComponentInChildren<TextMesh>().GetComponent<MeshRenderer>().enabled = false;
+        BackIndicator.GetComponentInChildren<TextMesh>().GetComponent<MeshRenderer>().enabled = false;
+        LeftIndicator.GetComponentInChildren<TextMesh>().GetComponent<MeshRenderer>().enabled = false;
+        RightIndicator.GetComponentInChildren<TextMesh>().GetComponent<MeshRenderer>().enabled = false;
 
         int BitField = GetSides(ForwardAxis, SideAxis);
-        if ((BitField & front) != 0) FrontIndicator.GetComponent<Renderer>().material.SetColor("_Color", SelectedColor);
-        if ((BitField & back) != 0) BackIndicator.GetComponent<Renderer>().material.SetColor("_Color", SelectedColor);
-        if ((BitField & left) != 0) LeftIndicator.GetComponent<Renderer>().material.SetColor("_Color", SelectedColor);
-        if ((BitField & right) != 0) RightIndicator.GetComponent<Renderer>().material.SetColor("_Color", SelectedColor);
+        if ((BitField & front) != 0)
+        {
+            FrontIndicator.GetComponentInChildren<TextMesh>().text = "Button 1";
+            FrontIndicator.GetComponentInChildren<TextMesh>().GetComponent<MeshRenderer>().enabled = true;
+            FrontIndicator.GetComponent<Renderer>().material.SetColor("_Color", SelectedColor);
+        }
+        if ((BitField & back) != 0)
+        {
+            BackIndicator.GetComponentInChildren<TextMesh>().text = "Button 1";
+            BackIndicator.GetComponentInChildren<TextMesh>().GetComponent<MeshRenderer>().enabled = true;
+            BackIndicator.GetComponent<Renderer>().material.SetColor("_Color", SelectedColor);
+        }
+        if ((BitField & left) != 0) {
+            LeftIndicator.GetComponentInChildren<TextMesh>().text = "Button 1";
+            LeftIndicator.GetComponentInChildren<TextMesh>().GetComponent<MeshRenderer>().enabled = true;
+            LeftIndicator.GetComponent<Renderer>().material.SetColor("_Color", SelectedColor);
+        }
+        if ((BitField & right) != 0) {
+            RightIndicator.GetComponentInChildren<TextMesh>().text = "Button 1";
+            RightIndicator.GetComponentInChildren<TextMesh>().GetComponent<MeshRenderer>().enabled = true;
+            RightIndicator.GetComponent<Renderer>().material.SetColor("_Color", SelectedColor);
+        }
 
-        if (FrontCooldown > 0.0f) FrontIndicator.GetComponent<Renderer>().material.SetColor("_Color", Color.Lerp(ActiveColor, UsedColor, 0.5f + 0.5f * Mathf.Pow((FrontCooldown / CooldownTime), 2.0f)));
-        if (BackCooldown > 0.0f) BackIndicator.GetComponent<Renderer>().material.SetColor("_Color",   Color.Lerp(ActiveColor, UsedColor, 0.5f + 0.5f * Mathf.Pow((BackCooldown / CooldownTime), 2.0f)));
-        if (LeftCooldown > 0.0f) LeftIndicator.GetComponent<Renderer>().material.SetColor("_Color",   Color.Lerp(ActiveColor, UsedColor, 0.5f + 0.5f * Mathf.Pow((LeftCooldown / CooldownTime), 2.0f)));
-        if (RightCooldown > 0.0f) RightIndicator.GetComponent<Renderer>().material.SetColor("_Color", Color.Lerp(ActiveColor, UsedColor, 0.5f + 0.5f * Mathf.Pow((RightCooldown / CooldownTime), 2.0f)));
+        if (FrontCooldown > 0.0f)
+        {
+            FrontIndicator.GetComponentInChildren<TextMesh>().GetComponent<MeshRenderer>().enabled = true;
+            FrontIndicator.GetComponentInChildren<TextMesh>().text = System.Math.Round(FrontCooldown, 2).ToString();
+            FrontIndicator.GetComponent<Renderer>().material.SetColor("_Color", Color.Lerp(ActiveColor, UsedColor, 0.5f + 0.25f * Mathf.Pow((FrontCooldown / CooldownTime), 2.0f)));
+        }
+        if (BackCooldown > 0.0f) {
+            BackIndicator.GetComponentInChildren<TextMesh>().GetComponent<MeshRenderer>().enabled = true;
+            BackIndicator.GetComponentInChildren<TextMesh>().text = System.Math.Round(BackCooldown, 2).ToString();
+            BackIndicator.GetComponent<Renderer>().material.SetColor("_Color",   Color.Lerp(ActiveColor, UsedColor, 0.5f + 0.25f * Mathf.Pow((BackCooldown / CooldownTime), 2.0f)));
+        }
+        if (LeftCooldown > 0.0f) {
+            LeftIndicator.GetComponentInChildren<TextMesh>().GetComponent<MeshRenderer>().enabled = true;
+            LeftIndicator.GetComponentInChildren<TextMesh>().text = System.Math.Round(LeftCooldown, 2).ToString();
+            LeftIndicator.GetComponent<Renderer>().material.SetColor("_Color",   Color.Lerp(ActiveColor, UsedColor, 0.5f + 0.25f * Mathf.Pow((LeftCooldown / CooldownTime), 2.0f)));
+        }
+        if (RightCooldown > 0.0f){
+            RightIndicator.GetComponentInChildren<TextMesh>().GetComponent<MeshRenderer>().enabled = true;
+            RightIndicator.GetComponentInChildren<TextMesh>().text = System.Math.Round(RightCooldown, 2).ToString();
+            RightIndicator.GetComponent<Renderer>().material.SetColor("_Color", Color.Lerp(ActiveColor, UsedColor, 0.5f + 0.25f * Mathf.Pow((RightCooldown / CooldownTime), 2.0f)));
+        }
     }
         // Update is called once per frame
         void Update()
@@ -118,26 +159,40 @@ public class RocketJump : MonoBehaviour
 
         Vector3 JumpVec = new Vector3(0.0f, 0.0f, 0.0f);
 
+        if (Jumping || Falling)
+        {
+            GetComponent<BotBasic_Move>().enabled = false;
+        }
+        else
+        {
+            GetComponent<BotBasic_Move>().enabled = true;
+        }
+
         if (Jumping)
         {
             RigidBod.velocity -= new Vector3(0.0f, Time.deltaTime * ExtraGravity, 0.0f);
-            
+
+            RigidBod.angularVelocity = RotVec;
+
             if (RigidBod.velocity.y < 0.0f)
             {
-                RigidBod.AddForce(new Vector3(0.0f, -PushDown, 0.0f));
                 Falling = true;
+                Jumping = false;
             }
         }
-
-        if (Falling)
+        else if (Falling)
         {
+
+
             Vector3 newRot = transform.rotation.eulerAngles;
             newRot.x = 0.0f;
             newRot.z = 0.0f;
 
             transform.rotation = Quaternion.Euler(newRot);
+            RigidBod.velocity -= new Vector3(0.0f, PushDown * Time.deltaTime, 0.0f);
 
-            if (GetComponent<BotBasic_Move>().isGrounded)
+            var a = GetComponent<BotBasic_Move>();
+            if (a && Physics.CheckSphere(a.groundCheck.position, 0.4f, a.groundLayer))
             {
                 Falling = false;
             }
@@ -161,13 +216,17 @@ public class RocketJump : MonoBehaviour
             GetComponent<AudioSource>().PlayOneShot(JumpSound);
 
             Jumping = true;
+            Falling = false;
+            RigidBod.velocity = Vector3.zero;
+
+            transform.position += new Vector3(0.0f, 0.1f, 0.0f);
 
             if (GetComponent<LotsaShot>() != null) GetComponent<LotsaShot>().Flip();
 
             JumpVec += new Vector3(0.0f, 1.0f, 0.0f) * UpStrength;
-            RigidBod.AddForce(JumpVec, ForceMode.Impulse);
+            RigidBod.velocity = JumpVec;
 
-            RigidBod.angularVelocity = AngleVec * SpinSpeed;
+            RotVec = AngleVec * SpinSpeed;
 
             if (FrontAxis > 0)
             {
@@ -195,9 +254,5 @@ public class RocketJump : MonoBehaviour
                 Explosion.transform.position = LeftIndicator.transform.position - Vector3.up * ExplosionOffset;
             }
         }
-
-
-
-        Debug.Log(JumpVec);
     }
 }

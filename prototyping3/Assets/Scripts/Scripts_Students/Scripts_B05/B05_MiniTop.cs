@@ -11,8 +11,12 @@ public class B05_MiniTop : MonoBehaviour
     private float timer;
     private bool b_justhit;
 
-    private float magSpeed = 5.0f;
+    private float magSpeed = 7.0f;
     private float blastSpeed = 25.0f;
+
+    public Material eye1;
+    public Material eye2;
+    public MeshRenderer ball;
 
     // Start is called before the first frame update
     void Start()

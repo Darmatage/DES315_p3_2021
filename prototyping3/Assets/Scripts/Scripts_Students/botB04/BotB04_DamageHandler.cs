@@ -8,22 +8,61 @@ namespace BotB04.Controller
 	public class RechargableShield
 	{
 		public float power;
+		public float maxPower;
 		public float delay;
 		public bool recharging;
 
-		public RechargableShield(float power)
+		public GameObject shieldRef;
+		private AudioSource audioSource;
+
+		private AudioClip readyClip;
+		private AudioClip brokenClip;
+		public RechargableShield(float power, GameObject shield)
 		{
 			this.power = power;
+			this.maxPower = power;
+			shieldRef = shield;
+			audioSource = shieldRef.GetComponent<AudioSource>();
+
 			delay = 0;
 			recharging = false;
 		}
+
+
+		public void SetAudioClips(AudioClip ready, AudioClip broken)
+        {
+			readyClip = ready;
+			brokenClip = broken;
+        }
+
+		public void Heal(float amount)
+        {
+			power = Mathf.Min(power + amount, maxPower);
+			if (recharging && power == maxPower)
+            {
+				audioSource.PlayOneShot(readyClip);
+				recharging = false;
+			}
+		}
+
+		public void Damage(float amount)
+        {
+			power = Mathf.Max(0, power - amount);
+			if(!recharging && power == 0)
+            {
+				audioSource.PlayOneShot(brokenClip);
+				//audioSource.Play();
+				recharging = true;
+            }
+        }
+
 	}
 
 	public class BotB04_DamageHandler : MonoBehaviour
 	{
 		public GameObject compassSides;
 		public GameObject compassVertical;
-		private float sidelimit = 3.0f;
+		private float sidelimit = .1f;
 		private float attackDamage;
 		public float knockBackSpeed = 10f;
 
@@ -53,12 +92,12 @@ namespace BotB04.Controller
             public float top;
             public float bottom;
 
-            public ShieldRuntimeData(ShieldData ShieldBaseStats)
+            public ShieldRuntimeData(ShieldData ShieldBaseStats, GameObject leftShield, GameObject rightShield)
             {
                 front = ShieldBaseStats.PowerFrontMax;
                 back = ShieldBaseStats.PowerBackMax;
-				left = new RechargableShield(ShieldBaseStats.PowerLeftMax);
-                right = new RechargableShield(ShieldBaseStats.PowerRightMax);
+				left = new RechargableShield(ShieldBaseStats.PowerLeftMax, leftShield);
+                right = new RechargableShield(ShieldBaseStats.PowerRightMax, rightShield);
                 top = ShieldBaseStats.PowerTopMax;
                 bottom = ShieldBaseStats.PowerBottomMax;
             }
@@ -104,8 +143,13 @@ namespace BotB04.Controller
 		[SerializeField]
 		private Color shieldDownColor;
 
+		[SerializeField]
+		private AudioClip shieldRepairedAudio;
+		[SerializeField]
+		private AudioClip shieldBrokenAudio;
 
-        private void Awake()
+
+		private void Awake()
         {
 			if (gameObject.GetComponent<Rigidbody>() != null)
 			{
@@ -124,7 +168,10 @@ namespace BotB04.Controller
 			ShieldReferences.shieldTopObj.SetActive(false);
 			ShieldReferences.shieldBottomObj.SetActive(false);
 
-			shieldRuntime = new ShieldRuntimeData(ShieldBaseStats);
+			shieldRuntime = new ShieldRuntimeData(ShieldBaseStats, ShieldReferences.shieldLeftObj, ShieldReferences.shieldRightObj);
+			shieldRuntime.left.SetAudioClips(shieldRepairedAudio, shieldBrokenAudio);
+			shieldRuntime.right.SetAudioClips(shieldRepairedAudio, shieldBrokenAudio);
+
 
 			DamageParticleReferences.dmgParticlesFront.SetActive(false);
 			DamageParticleReferences.dmgParticlesBack.SetActive(false);
@@ -135,37 +182,42 @@ namespace BotB04.Controller
 
         private void Update()
         {
-			RepairShield(shieldRuntime.left,  ShieldBaseStats.PowerLeftMax,  DamageParticleReferences.dmgParticlesLeft,  ShieldReferences.shieldLeftObj);
-			RepairShield(shieldRuntime.right, ShieldBaseStats.PowerRightMax, DamageParticleReferences.dmgParticlesRight, ShieldReferences.shieldRightObj);
+			RepairShield(shieldRuntime.left,  DamageParticleReferences.dmgParticlesLeft);
+			RepairShield(shieldRuntime.right, DamageParticleReferences.dmgParticlesRight);
 		}
 
-		private void RepairShield(RechargableShield shield, float shieldMax, GameObject damageParticles, GameObject shieldObj)
+		private void RepairShield(RechargableShield shield, GameObject damageParticles)
         {
+			shield.shieldRef.SetActive(true);
+
 			shield.delay -= Time.deltaTime;
 			if(shield.delay <= 0)
             {
-				shield.power = Mathf.Min(shield.power + ShieldBaseStats.RechargeRate * Time.deltaTime, shieldMax);
+				shield.Heal(ShieldBaseStats.RechargeRate * Time.deltaTime);
+
 				if(damageParticles != null)
 					damageParticles.SetActive(false);
 			}
 
 
-			shieldObj.SetActive(true);
-			Renderer shieldRenderer = shieldObj.GetComponent<Renderer>();
-
-			if (shieldObj == ShieldReferences.shieldLeftObj)
-				shieldRenderer.material.color = shieldReadyColor;
-			else if (shieldObj == ShieldReferences.shieldRightObj)
-				shieldRenderer.material.color = shieldReadyColor;
+			Renderer shieldRenderer = shield.shieldRef.GetComponent<Renderer>();
+			if(shield.recharging)
+				shieldRenderer.material.color = shieldDownColor;
 			else
-				shieldRenderer.material.color = new Color(255f / 255f, 0 / 255f, 0 / 255f);
+				shieldRenderer.material.color = shieldReadyColor;
+			shieldRenderer.material.color = new Color(shieldRenderer.material.color.r, shieldRenderer.material.color.g, shieldRenderer.material.color.b, shield.power / shield.maxPower);
 
-			shieldRenderer.material.color = new Color(shieldRenderer.material.color.r, shieldRenderer.material.color.g, shieldRenderer.material.color.b, shield.power / shieldMax);
+			if (shield.power > 0)
+				shieldRenderer.enabled = true;
+			else
+				shieldRenderer.enabled = false;
+
+
 		}
 
 
 
-        private void OnTriggerEnter(Collider other)
+		private void OnTriggerEnter(Collider other)
 		{
 			if (other.gameObject.tag == "Hazard")
 			{
@@ -178,9 +230,9 @@ namespace BotB04.Controller
 			{
 				attackDamage = other.gameObject.GetComponent<HazardDamage>().damage;
 
-				Vector3 directionFore = other.transform.position - transform.position;
-				Vector3 directionSides = other.transform.position - compassSides.transform.position;
-				Vector3 directionVert = other.transform.position - compassVertical.transform.position;
+				Vector3 directionFore = (other.transform.position - transform.position).normalized;
+				Vector3 directionSides = (other.transform.position - compassSides.transform.position).normalized;
+				Vector3 directionVert = (other.transform.position - compassVertical.transform.position).normalized;
 
 				//Hit Back!!!
 				if (Vector3.Dot(transform.forward, directionFore) < (-sidelimit))
@@ -256,8 +308,8 @@ namespace BotB04.Controller
 					}
 					else
 					{
-						shieldRuntime.right.power -= attackDamage;
-						StartCoroutine(ShieldHitDisplay(ShieldReferences.shieldRightObj));
+						shieldRuntime.right.Damage(attackDamage);
+						//StartCoroutine(ShieldHitDisplay(ShieldReferences.shieldRightObj));
 						if (shieldRuntime.right.power <= 0)
 						{
 							shieldRuntime.right.power = 0;
@@ -285,8 +337,9 @@ namespace BotB04.Controller
 					}
 					else
 					{
-						shieldRuntime.left.power -= attackDamage;
-						StartCoroutine(ShieldHitDisplay(ShieldReferences.shieldLeftObj));
+						shieldRuntime.left.Damage(attackDamage);
+
+						//StartCoroutine(ShieldHitDisplay(ShieldReferences.shieldLeftObj));
 						if (shieldRuntime.left.power <= 0)
 						{
 							shieldRuntime.left.power = 0;
@@ -349,14 +402,14 @@ namespace BotB04.Controller
 
 		IEnumerator ShieldHitDisplay(GameObject shieldObj)
 		{
-			//shieldObj.SetActive(true);
-			//Renderer shieldRenderer = shieldObj.GetComponent<Renderer> ();
-			//shieldRenderer.material.color = new Color(255,200,0,1f);
-			//yield return new WaitForSeconds(0.4f);
-			////shieldRenderer.material.color = new Color(255,200,0,0f);
-			//shieldObj.SetActive(false);
+            shieldObj.SetActive(true);
+            Renderer shieldRenderer = shieldObj.GetComponent<Renderer>();
+            shieldRenderer.material.color = new Color(255, 200, 0, 1f);
+            yield return new WaitForSeconds(0.4f);
+            //shieldRenderer.material.color = new Color(255,200,0,0f);
+            shieldObj.SetActive(false);
 
-			yield return null;
+            yield return null;
 		}
 
 
