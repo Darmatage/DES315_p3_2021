@@ -386,7 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7ca4913335a3b745850f156a725a789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 1
   particlesPrefab: {fileID: 7246120000014656734, guid: 740a2aebec573654ab0fea34ed35ef72,
     type: 3}
   SpawnParticlesHere: {x: 0, y: 0, z: 0}
@@ -837,6 +837,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00847313ddcd51741a2c586ec0958378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eye1: {fileID: 2100000, guid: 8801d15886a654a4abacd32286f0407c, type: 2}
+  eye2: {fileID: 2100000, guid: 491274f3c8cf2f249b57ee364fd7396d, type: 2}
+  ball: {fileID: 8623735448342058697}
 --- !u!65 &6877686377353730035
 BoxCollider:
   m_ObjectHideFlags: 0
