@@ -37,9 +37,11 @@ public class botB06_Ethan : MonoBehaviour
 
     public GameObject Beyblade;
     Quaternion origRotation;
-    float spinCD = 0;
     int Spin = 0;
     float spinTimer = 0;
+    float dashspeed = 200;
+    float spinCD = 3, dashCD = 5, spincooldown, dashcooldown;
+    int spinCount = 5;
     //private Vector3 weaponScale = new Vector3(0.45f, 1, .45f);
 
     //grab axis from parent object
@@ -48,6 +50,8 @@ public class botB06_Ethan : MonoBehaviour
     public string button3;
     public string button4; // currently boost in player move script
 
+    public GameObject[] spincounters;
+    public GameObject dashcounter;
 
     private AudioSource audioSrc;
 
@@ -64,6 +68,15 @@ public class botB06_Ethan : MonoBehaviour
         {
             gameHandler = GameObject.FindWithTag("GameHandler").GetComponent<GameHandler>();
             print("Found the GameHandler");
+        }
+
+        if(spincounters.Length == 0)
+        {
+            spincounters = GameObject.FindGameObjectsWithTag("spincounter");
+        }
+        if(!dashcounter)
+        {
+            dashcounter = GameObject.FindGameObjectWithTag("dashcounter");
         }
         thisPlayer = gameObject.transform.root.tag;
 
@@ -88,28 +101,51 @@ public class botB06_Ethan : MonoBehaviour
         origRotation = Beyblade.transform.localRotation;
 
         audioSrc = GetComponent<AudioSource>();
+        audioSrc.volume = .2f;
     }
 
     void Update()
     {
         //if (Input.GetKeyDown(KeyCode.T)){
-        if ((Input.GetButtonDown(button1)) && (weaponOut == false))
-        {
-            FrontWeapon.transform.Translate(0, -thrustAmount, 0);
-            weaponOut = true;
-            StartCoroutine(WithdrawWeapon());
-        }
-        if ((Input.GetButtonDown(button2)) && (weaponOut == false))
-        {
-            //dash
-            rb.AddForce(new Vector3(),ForceMode.Impulse);
-            weaponOut = true;
-            //StartCoroutine(WithdrawWeapon());
-        }
-        if ((Input.GetButtonDown(button3))  && Spin == 0)
+        if ((Input.GetButtonDown(button1)) && Spin == 0 && spinCount > 0)
         {
             Spin = 1;
             audioSrc.PlayOneShot(audioSrc.clip);
+            spinCount--;
+            spincooldown = spinCD;
+            spincounters[spinCount].SetActive(false);
+        }
+        if ((Input.GetButtonDown(button2)) && dashcooldown <= 0)
+        {
+            //dash
+            rb.AddForce(transform.forward * dashspeed, ForceMode.Impulse);
+            dashcooldown = dashCD;
+            dashcounter.SetActive(false);
+            //StartCoroutine(WithdrawWeapon());
+        }
+
+
+        if(spincooldown > 0)
+        {
+            spincooldown -= Time.deltaTime;
+        }
+        if(dashcooldown > 0)
+        {
+            dashcooldown -= Time.deltaTime;
+        }
+        if(spinCount < 5 && spincooldown <= 0)
+        {
+            if (spinCount != 5)
+                spincooldown = spinCD;
+            else
+                spincooldown = 0;
+            spinCount++;
+            spincounters[spinCount - 1].SetActive(true);
+        }
+        if(dashcooldown <= 0)
+        {
+            dashcooldown = 0;
+            dashcounter.SetActive(true);
         }
         if(Spin == 1 && spinTimer <= 0)
         {

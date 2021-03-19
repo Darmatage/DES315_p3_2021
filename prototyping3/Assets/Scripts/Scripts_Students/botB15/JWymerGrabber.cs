@@ -15,7 +15,8 @@ public class JWymerGrabber : MonoBehaviour
 
     private GameObject grabbedObject = null;
     private BotBasic_Move basics;
-    private Transform prevParent;
+
+    public Transform tracker;
 
     //public Color[] stateColors = new Color[3];
     
@@ -31,7 +32,11 @@ public class JWymerGrabber : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (grabbedObject)
+		{
+            grabbedObject.transform.position = tracker.position;
+            grabbedObject.transform.rotation = tracker.rotation;
+		}
     }
 
     public void Activate()
@@ -50,12 +55,10 @@ public class JWymerGrabber : MonoBehaviour
     {
         if (state == State.GRABBING)
         {
-            grabbedObject.transform.SetParent(prevParent, true);
             basics.isGrabbed = false;
 
             grabbedObject = null;
             basics = null;
-            prevParent = null;
         }
 
         state = State.INACTIVE;
@@ -72,11 +75,12 @@ public class JWymerGrabber : MonoBehaviour
             if (basics)
 			{
                 grabbedObject = otherObj;
-                prevParent = otherObj.transform.parent;
-                grabbedObject.transform.SetParent(transform, true);
 
                 basics.isGrabbed = true;
                 state = State.GRABBING;
+
+                tracker.position = grabbedObject.transform.position;
+                tracker.rotation = grabbedObject.transform.rotation;
 			}
         }
 	}

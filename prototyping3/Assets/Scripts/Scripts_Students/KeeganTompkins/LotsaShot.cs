@@ -12,9 +12,11 @@ public class LotsaShot : MonoBehaviour
 
     string button2;
 
-    int ShotsPerFlip = 10;
+    public int ShotsPerFlip = 10;
 
     int ShotsLeft = 0;
+
+    public float Fliptime = 0.8f;
 
     public AudioClip ShootSound;
 
@@ -41,7 +43,7 @@ public class LotsaShot : MonoBehaviour
 
         if (--ShotsLeft > 0)
         {
-            yield return new WaitForSeconds(1.0f / ShotsPerFlip);
+            yield return new WaitForSeconds(Fliptime / ShotsPerFlip);
             StartCoroutine(Shoot());
         }
     }

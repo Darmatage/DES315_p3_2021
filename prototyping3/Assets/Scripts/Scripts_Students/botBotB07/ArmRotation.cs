@@ -11,7 +11,7 @@ public class ArmRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && RaiseArm == false)
+        if (Input.GetButtonDown(transform.root.gameObject.GetComponent<playerParent>().action2Input) && RaiseArm == false)
         {
             RaiseArm = true;
         }

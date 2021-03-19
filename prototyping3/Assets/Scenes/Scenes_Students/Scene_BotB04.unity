@@ -1878,6 +1878,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1429546620}
     m_Modifications:
+    - target: {fileID: 1266840986, guid: 8f22a117b2714f04da77d4cd83a2c50d, type: 3}
+      propertyPath: CooldownTime
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 1355330930375697355, guid: 8f22a117b2714f04da77d4cd83a2c50d,
         type: 3}
       propertyPath: m_Name
@@ -1937,6 +1941,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5626917529015918606, guid: 8f22a117b2714f04da77d4cd83a2c50d,
+        type: 3}
+      propertyPath: rotateSpeed
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5626917529015918606, guid: 8f22a117b2714f04da77d4cd83a2c50d,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f22a117b2714f04da77d4cd83a2c50d, type: 3}

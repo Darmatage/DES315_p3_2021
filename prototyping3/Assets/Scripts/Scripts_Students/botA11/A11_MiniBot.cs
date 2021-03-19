@@ -16,10 +16,6 @@ namespace Amogh
         
         [SerializeField] private AudioClip healsSong;
         private AudioSource source;
-
-        private GameObject ground;
-        private Rigidbody rb;
-        private bool grounded;
         
         void Start()
         {
@@ -30,13 +26,10 @@ namespace Amogh
             source.pitch = 1f;
             source.Play();
 
-            ground = GameObject.Find("Ground");
-            rb = GetComponent<Rigidbody>();
-            
             StartCoroutine(SpawnNotes());
             
             // Self destruct
-            //Destroy(gameObject, 10f);
+            Destroy(gameObject, 20f);
         }
 
         // Update is called once per frame
@@ -74,18 +67,7 @@ namespace Amogh
         {
             Vector3 randomPos = Random.insideUnitSphere * radius + dad.position;
             
-            grounded = false;
-            if (agent.enabled)
-            {
-                agent.SetDestination(randomPos);
-                agent.updatePosition = false;
-                agent.updateRotation = false;
-                agent.isStopped = true;
-            }
-            
-            rb.isKinematic = false;
-            rb.useGravity = true;
-            rb.AddRelativeForce(new Vector3(0, 20f, 0), ForceMode.Impulse);
+            agent.SetDestination(randomPos);
         }
 
         private void ChangePitch()
@@ -101,21 +83,7 @@ namespace Amogh
                 Destroy(gameObject, 0.5f);
                 dad.gameObject.GetComponent<A11_Heal>().MiniBotDeath();
             }
-            else if (other.gameObject.Equals(ground))
-            {
-                if (grounded == false)
-                {
-                    if (agent.enabled)
-                    {
-                        agent.updatePosition = true;
-                        agent.updateRotation = true;
-                        agent.isStopped = false;
-                    }
-                    rb.isKinematic = true;
-                    rb.useGravity = false;
-                    grounded = true;
-                }
-            }
+            
         }
     }
 }

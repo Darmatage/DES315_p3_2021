@@ -17,15 +17,17 @@ namespace BotB04.Controller
             weapon = weaponRef.GetComponent<BotB04_Gun>();
         }
 
-        public void RequestFire()
+        public bool RequestFire()
         {
             //If shields are recharging, can't fire
-            if(shieldStats.recharging)
+            if(shieldStats.power <= 0 || shieldStats.recharging)
             {
-                return;
+                weapon.Blank();
+                return false;
             }
 
             weapon.Fire();
+            return true;
         }
 
     }
