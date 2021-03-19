@@ -80,6 +80,7 @@ public class A07_Base : MonoBehaviour
     }
     IEnumerator ExtendShields()
     {
+        gameObject.GetComponent<AudioSource>().Play();
         float elapsed = 0f;
         var opfront = shieldFront.transform.localPosition;
         var opback  =  shieldBack.transform.localPosition;
