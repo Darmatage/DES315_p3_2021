@@ -4970,7 +4970,6 @@ GameObject:
   - component: {fileID: 1355330930375697359}
   - component: {fileID: 364999052203561223}
   - component: {fileID: 5780095072016173801}
-  - component: {fileID: 7285542615022466734}
   - component: {fileID: 2225174154151788689}
   - component: {fileID: 2327173775478083664}
   m_Layer: 0
@@ -5165,23 +5164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e173a7401170b4c8b91f0cf261062e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7285542615022466734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355330930375697355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67b5dfa20ebefac448d710384853fb07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponThrust: {fileID: 8160687095547711129}
-  button1: 
-  button2: 
-  button3: 
-  button4: 
 --- !u!114 &2225174154151788689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5200,6 +5182,8 @@ MonoBehaviour:
   button2: 
   button3: 
   button4: 
+  fuel: 2
+  rocketSpeed: 10
 --- !u!114 &2327173775478083664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5216,6 +5200,10 @@ MonoBehaviour:
   button2: 
   button3: 
   button4: 
+  shockwave: {fileID: 7022949507574956818, guid: 33eecd6d03ae0434191c7649b30ad640,
+    type: 3}
+  frontShield: {fileID: 1098726327034351829}
+  shockwaveEndPos: {x: 0, y: 0, z: 0}
 --- !u!1 &1355330930662561729
 GameObject:
   m_ObjectHideFlags: 0
