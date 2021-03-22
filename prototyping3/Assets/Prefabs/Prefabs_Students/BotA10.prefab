@@ -10025,9 +10025,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aab929fe774a0084c8ae87aafe02faf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  rotateSpeed: 100
-  jumpSpeed: 7
+  moveSpeed: 6
+  rotateSpeed: 50
+  jumpSpeed: 1
   boostSpeed: 10
   groundCheck: {fileID: 1355330930762081256}
   turtleCheck: {fileID: 1355330929556144337}
@@ -10059,12 +10059,13 @@ MonoBehaviour:
   compassVertical: {fileID: 4587639291210960121}
   sidelimit: 0.1
   knockBackSpeed: 10
-  shieldPowerFront: 5
-  shieldPowerBack: 5
-  shieldPowerLeft: 5
-  shieldPowerRight: 5
-  shieldPowerTop: 5
-  shieldPowerBottom: 5
+  forceSideLimit_p75: 1
+  shieldPowerFront: 9
+  shieldPowerBack: 2
+  shieldPowerLeft: 8
+  shieldPowerRight: 8
+  shieldPowerTop: 4
+  shieldPowerBottom: 1
   shieldFrontObj: {fileID: 1098726327034351829}
   shieldBackObj: {fileID: 2186211737314387781}
   shieldLeftObj: {fileID: 2735579452779107192}
@@ -10115,7 +10116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 580a090119ffa394f9730559b8ef0687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainGunCooldownTimerMax: 2
+  mainGunCooldownTimerMax: 3
   bulletPrefab: {fileID: 8422104065351264406, guid: ddc0b6c1c0d9a1e488e5d681995b9dbf,
     type: 3}
   bulletSpawnPoint: {fileID: 7980869503635937377}
