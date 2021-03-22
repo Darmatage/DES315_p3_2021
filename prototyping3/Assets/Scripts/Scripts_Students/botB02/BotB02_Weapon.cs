@@ -7,6 +7,7 @@ public class BotB02_Weapon : MonoBehaviour{
 
     public GameObject FrontWeapon;
     public GameObject BackWeapon;
+    public AudioSource SoundEffect;
 	//private float thrustAmount = 3f;
 	
 	private bool frontWeaponOut = false;
@@ -32,12 +33,14 @@ public class BotB02_Weapon : MonoBehaviour{
 		//if (Input.GetKeyDown(KeyCode.T)){
 		if ((Input.GetButtonDown(button1))&&(frontWeaponOut==false)){
             FrontWeapon.SetActive(true);
+            SoundEffect.PlayOneShot(SoundEffect.clip);
             frontWeaponOut = true;
 			StartCoroutine(WithdrawFrontWeapon());
         }
         if ((Input.GetButtonDown(button2)) && (backWeaponOut == false))
         {
             BackWeapon.SetActive(true);
+            SoundEffect.PlayOneShot(SoundEffect.clip);
             backWeaponOut = true;
             StartCoroutine(WithdrawBackWeapon());
         }
