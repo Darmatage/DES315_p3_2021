@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace A09
@@ -8,9 +9,16 @@ namespace A09
         [SerializeField] private Vector3 projectileSpawnOffset;
         [SerializeField] private BotProjectile projectilePrefab;
         [SerializeField] private float cooldown;
+        [SerializeField] private AudioSource audio;
         
         private bool _onCooldown = false;
-        
+
+        private void OnValidate()
+        {
+            if (!audio)
+                audio = GetComponent<AudioSource>();
+        }
+
         public void Fire()
         {
             if (_onCooldown)
@@ -20,6 +28,7 @@ namespace A09
                 Quaternion.Euler(transform.eulerAngles + new Vector3(0, 90, 0)));
 
             projectileInstance.SetTeam(gameObject.transform.root.tag == "Player1");
+            audio.Play();
             
             StartCoroutine(DoCooldown());
         }
