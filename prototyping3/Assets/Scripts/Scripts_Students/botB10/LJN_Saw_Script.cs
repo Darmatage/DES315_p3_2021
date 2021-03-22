@@ -11,11 +11,11 @@ public class LJN_Saw_Script : MonoBehaviour
     public float hitTime = 0.1f;
     private float internalhit = 0;
     private bool toggl = true;
-
+    private AudioSource source;
     void Start()
     {
         myPlyr = gameObject.transform.root.tag;
-       
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -32,7 +32,12 @@ public class LJN_Saw_Script : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         transform.parent.parent.GetComponent<LJN_Weapon_Script>().SawCanDown = false;
+
+        if(source != null)
+        {
+            source.Play();
+        }
     }
 
-   
+
 }
