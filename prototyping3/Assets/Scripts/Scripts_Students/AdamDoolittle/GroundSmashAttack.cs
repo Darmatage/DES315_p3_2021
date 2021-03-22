@@ -10,11 +10,12 @@ public class GroundSmashAttack : MonoBehaviour
     public string button4;
 
     bool isPointedDown = false;
+    bool isCollidingWithFloor = false;
 
-    public GameObject shockwave;
-    public GameObject frontShield;
+    //public GameObject shockwave;
+    //public GameObject frontShield;
 
-    public Vector3 shockwaveEndPos;
+    //public Vector3 shockwaveEndPos;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,7 @@ public class GroundSmashAttack : MonoBehaviour
         button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
         button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
 
-        shockwaveEndPos = new Vector3(shockwave.transform.position.x + 10, shockwave.transform.position.y, shockwave.transform.position.z + 10);
+        //shockwaveEndPos = new Vector3(shockwave.transform.position.x + 10, shockwave.transform.position.y, shockwave.transform.position.z + 10);
     }
 
     // Update is called once per frame
@@ -44,15 +45,6 @@ public class GroundSmashAttack : MonoBehaviour
         if(botController.isGrounded == true)
         {
             isPointedDown = false;
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.layer == 8 && collision.gameObject == frontShield)
-        {
-            Instantiate(shockwave, transform.position, Quaternion.identity);
-            Vector3.Lerp(transform.position, shockwaveEndPos, 2.0f);
         }
     }
 }
