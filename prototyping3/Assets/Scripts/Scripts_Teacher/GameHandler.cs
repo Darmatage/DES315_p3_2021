@@ -26,6 +26,8 @@ public class GameHandler : MonoBehaviour{
 	public GameObject cam1Prefab;
 	public GameObject cam2Prefab;
 	public GameObject camStart;
+	public GameObject camTopPrefab;
+	public Transform camTopHolder;
 	
 	public static GameObject player1Prefab;
 	public static GameObject player2Prefab;
@@ -323,11 +325,15 @@ public class GameHandler : MonoBehaviour{
 		}
 		
 		//Instantiate players and cameras, and turn off StartCamera:
-		Instantiate(player1Prefab, Player1Holder.transform.position, Player1Holder.transform.rotation, Player1Holder.transform);
-		Instantiate(player2Prefab, Player2Holder.transform.position, Player2Holder.transform.rotation, Player2Holder.transform);
+		GameObject Player1 = Instantiate(player1Prefab, Player1Holder.transform.position, Player1Holder.transform.rotation, Player1Holder.transform);
+		GameObject Player2 = Instantiate(player2Prefab, Player2Holder.transform.position, Player2Holder.transform.rotation, Player2Holder.transform);
 		Instantiate(cam1Prefab, Player1Holder.transform.position, Player1Holder.transform.rotation, Player1Holder.transform);
 		Instantiate(cam2Prefab, Player2Holder.transform.position, Player2Holder.transform.rotation, Player2Holder.transform);
 		camStart.SetActive(false);
+		
+		GameObject camTop = Instantiate(camTopPrefab, camTopHolder.position, camTopHolder.rotation);
+		camTop.GetComponent<CameraTopDown>().loadPlayers(Player1, Player2);
+		
 	}
 	
 	public void SetLevel (float sliderValue){
