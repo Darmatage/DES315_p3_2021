@@ -16,7 +16,8 @@ public class Jetpack : MonoBehaviour
     bool canFly = true;
     bool isParticlePlaying = false;
 
-    float fuel = 2.0f;
+    public float fuel = 2.0f;
+    public float rocketSpeed = 10.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -33,13 +34,13 @@ public class Jetpack : MonoBehaviour
         var botController = GetComponent<BotBasic_Move>();
         var rb = GetComponent<Rigidbody>();
 
-        if(Input.GetButton(button2))
+        if(Input.GetButton(button1))
         {
             if (canFly == true)
             {
-                rb.AddForce(rb.centerOfMass + new Vector3(0f, botController.jumpSpeed * 10, 0f), ForceMode.Force);
+                rb.AddForce(rb.centerOfMass + new Vector3(0f, botController.jumpSpeed * rocketSpeed, 0f), ForceMode.Force);
                 fuel -= Time.deltaTime;
-                Debug.Log(fuel);
+                //Debug.Log(fuel);
                 if (isFacingUp == false)
                 {
                     transform.Rotate(-90, 0, 0);
@@ -60,14 +61,14 @@ public class Jetpack : MonoBehaviour
                 isParticlePlaying = false;
             }
         }
-        if(Input.GetButtonUp(button2))
+        if(Input.GetButtonUp(button1))
         {
             isFacingUp = false;
-            transform.Rotate(90, 0, 0);
+            //transform.Rotate(90, 0, 0);
         }
         if(botController.isGrounded == true && fuel <= 2.0f)
         {
-            Debug.Log(fuel);
+            //Debug.Log(fuel);
             fuel += Time.deltaTime;
             canFly = true;
         }
