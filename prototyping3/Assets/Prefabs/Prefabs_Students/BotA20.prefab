@@ -5201,7 +5201,6 @@ MonoBehaviour:
   button2: 
   button3: 
   button4: 
-  frontShield: {fileID: 1098726327034351829}
 --- !u!1 &1355330930662561729
 GameObject:
   m_ObjectHideFlags: 0
@@ -5354,8 +5353,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 0.33119297}
+  m_Center: {x: 0, y: 0, z: -0.3344035}
 --- !u!114 &2570598892229840011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5368,9 +5367,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ef1f8082d532243b36b687a5db03e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shockwave: {fileID: 7022949507574956818, guid: 33eecd6d03ae0434191c7649b30ad640,
+  shockwave: {fileID: 4111615730738940329, guid: 9c64919d93d9c16468c95634e1d341d5,
     type: 3}
-  shockwaveEndPos: {x: 0, y: 0, z: 0}
+  targetScale: {x: 0, y: 0, z: 0}
+  speed: 0.5
+  botController: {fileID: 0}
 --- !u!1 &4587639291210960121
 GameObject:
   m_ObjectHideFlags: 0
@@ -5420,7 +5421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2391277020435102802
 Transform:
   m_ObjectHideFlags: 0
