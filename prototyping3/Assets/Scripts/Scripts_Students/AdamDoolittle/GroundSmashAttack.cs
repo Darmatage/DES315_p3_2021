@@ -38,7 +38,7 @@ public class GroundSmashAttack : MonoBehaviour
             rb.AddForce(rb.centerOfMass - new Vector3(0, botController.boostSpeed * 50, 0), ForceMode.Impulse);
             if(isPointedDown == false)
             {
-                transform.Rotate(90, 0, 0);
+                transform.Rotate(180, 0, 0);
                 isPointedDown = true;
             }
         }

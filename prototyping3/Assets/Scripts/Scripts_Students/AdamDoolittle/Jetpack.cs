@@ -64,7 +64,7 @@ public class Jetpack : MonoBehaviour
         if(Input.GetButtonUp(button1))
         {
             isFacingUp = false;
-            transform.Rotate(90, 0, 0);
+            //transform.Rotate(90, 0, 0);
         }
         if(botController.isGrounded == true && fuel <= 2.0f)
         {

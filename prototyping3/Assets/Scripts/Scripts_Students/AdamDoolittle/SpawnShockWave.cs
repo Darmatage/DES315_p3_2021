@@ -11,7 +11,7 @@ public class SpawnShockWave : MonoBehaviour
 
     public Vector3 targetScale;
 
-    float aliveTimer = 5.0f;
+    float aliveTimer = 3.0f;
     public float speed = 3.0f;
 
     public bool canGrow = false;
@@ -57,6 +57,8 @@ public class SpawnShockWave : MonoBehaviour
         {
             Debug.Log("I hit the ground!");
             newShock = Instantiate(shockwave, transform.position, Quaternion.identity);
+            if (gameObject.transform.root.tag == "Player1") { newShock.GetComponent<HazardDamage>().isPlayer1Weapon = true; }
+            if (gameObject.transform.root.tag == "Player2") { newShock.GetComponent<HazardDamage>().isPlayer2Weapon = true; }
             //newShock.transform.localScale = Vector3.Lerp(shockwaveStartPos, shockwaveEndPos, 2.0f);
             canGrow = true;
             StartCoroutine(DestroyShock(newShock));
