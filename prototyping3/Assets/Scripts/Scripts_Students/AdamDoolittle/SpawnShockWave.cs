@@ -11,8 +11,9 @@ public class SpawnShockWave : MonoBehaviour
 
     public Vector3 targetScale;
 
-    float aliveTimer = 3.0f;
+    float aliveTimer = 5.0f;
     public float speed = 3.0f;
+    float shockWaveCooldown = 0.0f;
 
     public bool canGrow = false;
 
@@ -32,6 +33,8 @@ public class SpawnShockWave : MonoBehaviour
         if (canGrow == true)
         {
             newShock.transform.localScale = Vector3.Lerp(newShock.transform.localScale, targetScale, Time.deltaTime * speed);
+            shockWaveCooldown++;
+            Debug.Log(shockWaveCooldown);
         }
     }
 
@@ -53,7 +56,7 @@ public class SpawnShockWave : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 8)
+        if (other.gameObject.layer == 8 && shockWaveCooldown == 0.0f)
         {
             Debug.Log("I hit the ground!");
             newShock = Instantiate(shockwave, transform.position, Quaternion.identity);
@@ -76,5 +79,6 @@ public class SpawnShockWave : MonoBehaviour
         yield return new WaitForSeconds(aliveTimer);
         canGrow = false;
         Destroy(thisShock);
+        shockWaveCooldown = 0.0f;
     }
 }
