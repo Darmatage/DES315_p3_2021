@@ -12,7 +12,7 @@ public class SpawnShockWave : MonoBehaviour
     public Vector3 targetScale;
 
     float aliveTimer = 5.0f;
-    public float speed = 2f;
+    public float speed = 3.0f;
 
     public bool canGrow = false;
 
@@ -29,27 +29,27 @@ public class SpawnShockWave : MonoBehaviour
 
     private void Update()
     {
-        if(canGrow == true)
+        if (canGrow == true)
         {
-            newShock.transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * speed);
+            newShock.transform.localScale = Vector3.Lerp(newShock.transform.localScale, targetScale, Time.deltaTime * speed);
         }
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
-        //var botController = GetComponent<BotBasic_Move>();
+    //void FixedUpdate()
+    //{
+    //    //var botController = GetComponent<BotBasic_Move>();
 
-        if((botController.isGrounded == true) && (aliveTimer <= 3.0f))
-        {
-            aliveTimer += Time.deltaTime;
-            Debug.Log(aliveTimer);
-            if(aliveTimer <= 0)
-            {
-                aliveTimer = 0;
-            }
-        }
-    }
+    //    if((botController.isGrounded == true) && (aliveTimer <= 3.0f))
+    //    {
+    //        aliveTimer += Time.deltaTime;
+    //        Debug.Log(aliveTimer);
+    //        if(aliveTimer <= 0)
+    //        {
+    //            aliveTimer = 0;
+    //        }
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
