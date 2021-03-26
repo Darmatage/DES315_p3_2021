@@ -7,10 +7,12 @@ public class BotB02_Weapon : MonoBehaviour{
 
     public GameObject FrontWeapon;
     public GameObject BackWeapon;
+    public GameObject BottomSmoke;
     public AudioSource SoundEffect;
-	//private float thrustAmount = 3f;
-	
-	private bool frontWeaponOut = false;
+    public AudioSource WoopSoundEffect;
+    private float thrustAmount = 2.0f;
+
+    private bool frontWeaponOut = false;
 	private bool backWeaponOut = false;
     private bool emergencyEject = true;
     private Rigidbody rb;
@@ -27,26 +29,32 @@ public class BotB02_Weapon : MonoBehaviour{
 		button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
 		button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
 		button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
+
+        BottomSmoke.SetActive(false);
     }
 
     void Update(){
 		//if (Input.GetKeyDown(KeyCode.T)){
-		if ((Input.GetButtonDown(button1))&&(frontWeaponOut==false)){
-            FrontWeapon.SetActive(true);
+		if ((Input.GetButtonDown(button1))&&(frontWeaponOut==false))
+        {
+            FrontWeapon.transform.localScale = new Vector3(1, 1, 1);
+            FrontWeapon.transform.Translate(0, thrustAmount, 0);
             SoundEffect.PlayOneShot(SoundEffect.clip);
             frontWeaponOut = true;
 			StartCoroutine(WithdrawFrontWeapon());
         }
         if ((Input.GetButtonDown(button2)) && (backWeaponOut == false))
         {
-            BackWeapon.SetActive(true);
+            BackWeapon.transform.localScale = new Vector3(1, 1, 1);
+            BackWeapon.transform.Translate(0, thrustAmount, 0);
             SoundEffect.PlayOneShot(SoundEffect.clip);
             backWeaponOut = true;
             StartCoroutine(WithdrawBackWeapon());
         }
         if(Input.GetButtonDown(button3) && (emergencyEject == true))
         {
-            rb.AddForce(rb.centerOfMass + new Vector3(Random.Range(0, 200), Random.Range(140, 200), Random.Range(0, 200)), ForceMode.Impulse);
+            rb.AddForce(rb.centerOfMass + new Vector3(Random.Range(0, 200), 100, Random.Range(0, 200)), ForceMode.Impulse);
+            WoopSoundEffect.Play();
             StartCoroutine(EmergencyCooldown());
             emergencyEject = false;
         }
@@ -54,20 +62,25 @@ public class BotB02_Weapon : MonoBehaviour{
 
 	IEnumerator WithdrawFrontWeapon(){
 		yield return new WaitForSeconds(0.6f);
-        FrontWeapon.SetActive(false);
+        FrontWeapon.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        FrontWeapon.transform.Translate(0, -thrustAmount, 0);
         frontWeaponOut = false;
 	}
 
     IEnumerator WithdrawBackWeapon()
     {
         yield return new WaitForSeconds(0.6f);
-        BackWeapon.SetActive(false);
+        BackWeapon.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        BackWeapon.transform.Translate(0, -thrustAmount, 0);
         backWeaponOut = false;
     }
 
     IEnumerator EmergencyCooldown()
     {
-        yield return new WaitForSeconds(3f);
+        BottomSmoke.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        BottomSmoke.SetActive(false);
+        yield return new WaitForSeconds(2.0f);
         emergencyEject = true;
     }
 }
