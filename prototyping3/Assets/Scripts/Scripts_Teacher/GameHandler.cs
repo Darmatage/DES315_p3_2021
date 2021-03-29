@@ -181,6 +181,8 @@ public class GameHandler : MonoBehaviour{
 				StartCoroutine(EndGame());
 			} else if (isCoop == true){
 				coopPlayer1Dead=true;
+				Transform teleportBelow = GameObject.FindWithTag("FallRespawn").transform;
+				player1Prefab.transform.position = teleportBelow.position;
 				StartCoroutine(CoopEndGame());
 			}
 		}
@@ -193,6 +195,8 @@ public class GameHandler : MonoBehaviour{
 				StartCoroutine(EndGame());
 			} else if (isCoop == true){
 				coopPlayer2Dead=true;
+				Transform teleportBelow = GameObject.FindWithTag("FallRespawn").transform;
+				player2Prefab.transform.position = teleportBelow.position;
 				StartCoroutine(CoopEndGame());
 			}
 		}
@@ -212,8 +216,8 @@ public class GameHandler : MonoBehaviour{
 		gameTimer += 0.01f;
 		if (gameTime <= 0){
 			gameTime = 0;
-			winner = "Time's up! \nNo winner. \nP1 Health = " + p1Health + " \nP2 Health = " + p2Health;
 			if (isCoop == false){
+				winner = "Time's up! \nNo winner. \nP1 Health = " + p1Health + " \nP2 Health = " + p2Health;
 				StartCoroutine(EndGame());
 			}
 		}

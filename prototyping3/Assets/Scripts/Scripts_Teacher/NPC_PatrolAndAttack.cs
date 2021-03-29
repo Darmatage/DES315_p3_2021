@@ -34,7 +34,7 @@ public class NPC_PatrolAndAttack : MonoBehaviour {
 	public ParticleSystem attackParticles;
 	public bool isAttacking = false;
 	private float attackTimer = 0;
-	public float attackRate = 1f;
+	public float attackRate = 0.2f;
 
 	void Start() { 
 		myAgent = GetComponent<NavMeshAgent>();

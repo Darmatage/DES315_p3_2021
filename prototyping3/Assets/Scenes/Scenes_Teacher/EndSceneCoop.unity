@@ -255,7 +255,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 66, y: -280}
+  m_AnchoredPosition: {x: 0, y: -280}
   m_SizeDelta: {x: 220, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &41682483
@@ -1009,7 +1009,7 @@ PrefabInstance:
     - target: {fileID: 4891277828201287452, guid: c681e2acc7fb60b429fab8ef49065e29,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4891277828201287453, guid: c681e2acc7fb60b429fab8ef49065e29,
         type: 3}
@@ -1119,17 +1119,17 @@ PrefabInstance:
     - target: {fileID: 4891277828910644940, guid: c681e2acc7fb60b429fab8ef49065e29,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4891277828910644940, guid: c681e2acc7fb60b429fab8ef49065e29,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4891277828910644940, guid: c681e2acc7fb60b429fab8ef49065e29,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4891277829213288362, guid: c681e2acc7fb60b429fab8ef49065e29,
         type: 3}
@@ -1141,15 +1141,20 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Restart
       objectReference: {fileID: 0}
+    - target: {fileID: 4891277829213288364, guid: c681e2acc7fb60b429fab8ef49065e29,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4891277829641853871, guid: c681e2acc7fb60b429fab8ef49065e29,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4891277829641853871, guid: c681e2acc7fb60b429fab8ef49065e29,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4891277829814227687, guid: c681e2acc7fb60b429fab8ef49065e29,
         type: 3}
@@ -1567,7 +1572,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1371153315
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2314,6 +2319,21 @@ PrefabInstance:
       propertyPath: isCoop
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6311594513585171110, guid: 05be270cdabffa742bd6f579ed45bdbe,
+        type: 3}
+      propertyPath: monsterHealthText
+      value: 
+      objectReference: {fileID: 2015104275}
+    - target: {fileID: 6311594513585171110, guid: 05be270cdabffa742bd6f579ed45bdbe,
+        type: 3}
+      propertyPath: camTopHolder
+      value: 
+      objectReference: {fileID: 540345187}
+    - target: {fileID: 6311594513585171110, guid: 05be270cdabffa742bd6f579ed45bdbe,
+        type: 3}
+      propertyPath: camTopPrefab
+      value: 
+      objectReference: {fileID: 540345186}
     - target: {fileID: 6311594513585171111, guid: 05be270cdabffa742bd6f579ed45bdbe,
         type: 3}
       propertyPath: m_Name
