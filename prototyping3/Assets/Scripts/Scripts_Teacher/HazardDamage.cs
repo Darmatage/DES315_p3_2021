@@ -11,6 +11,7 @@ public class HazardDamage : MonoBehaviour{
 
 	public bool isPlayer1Weapon = false;
 	public bool isPlayer2Weapon = false;
+	public bool isMonsterWeapon = false;
 
     void Start(){
 		if (GameObject.FindWithTag("GameHandler") != null){

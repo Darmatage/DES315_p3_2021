@@ -19,6 +19,14 @@ public class GameHandler : MonoBehaviour{
     private Slider sliderVolumeCtrl;
 
 	public bool isShowcase = false;
+	
+	//Co-op game mode variables
+	public bool isCoop = false;
+	private static bool coopPlayer1Dead = false;
+	private static bool coopPlayer2Dead = false;
+	private static bool coopMonsterDead = false;
+	private static float monsterHealth;
+	public GameObject monsterHealthText;
 
 	//Players
 	public GameObject Player1Holder;
@@ -66,7 +74,7 @@ public class GameHandler : MonoBehaviour{
 	public GameObject[] botPrefabs;
 	Dictionary<string, GameObject> botDictionary;
 	
-	Scene thisScene;
+	private Scene thisScene;
 	public static bool notFirstGame = false;
 
 	public static UnityAction onBattleStart;
@@ -91,7 +99,7 @@ public class GameHandler : MonoBehaviour{
 			gameObject.GetComponent<GameHandler_LastBots>().UpdateLastBots(player1Prefab, player2Prefab);
 		}
 
-		// check for endscene
+		// check for endscene PvP
 		thisScene = SceneManager.GetActiveScene();
 		if (thisScene.name == "EndScene"){
 			if (player1Prefab != null){
@@ -114,6 +122,31 @@ public class GameHandler : MonoBehaviour{
 				
 			} else {Debug.Log("This Scene depends on static variables from an Arena Scene");}
 		}
+
+
+		// check for endscene Co-op
+		thisScene = SceneManager.GetActiveScene();
+		if (thisScene.name == "EndSceneCoop"){
+			if (player1Prefab != null){
+				Instantiate(player1Prefab, Player1Holder.transform.position, Player1Holder.transform.rotation, Player1Holder.transform);
+				Instantiate(player2Prefab, Player2Holder.transform.position, Player2Holder.transform.rotation, Player2Holder.transform);
+				UpdateStats();
+				
+				GameObject celebratePlayer1 = GameObject.FindWithTag("p1celeb");
+				GameObject celebratePlayer2 = GameObject.FindWithTag("p2celeb");
+				if(coopMonsterDead == true){
+					celebratePlayer1.SetActive(true);
+					celebratePlayer2.SetActive(true);
+					winner = "The Players win!";
+				} else if ((coopPlayer1Dead == true)&&(coopPlayer2Dead == true)){
+					celebratePlayer1.SetActive(false);
+					celebratePlayer2.SetActive(false);
+					winner = "The Monster defeated the players.";
+				}
+				
+			} else {Debug.Log("This Scene depends on static variables from a Co-op Scene");}
+		}
+
 
 		// check for Showcase
 		if (isShowcase == true){
@@ -141,21 +174,30 @@ public class GameHandler : MonoBehaviour{
 	void Update(){
 		if ((p1Health <= 0)&&(thisScene.name != "EndScene")){
 			p1Health = 0;
-			if (p2PlayerChoiceName != ""){
-				winner = "Player2: " + p2PlayerChoiceName;
-			} else {winner = "Player2: " + p2PrefabNameLast;}
-			StartCoroutine(EndGame());
+			if (isCoop == false){	
+				if (p2PlayerChoiceName != ""){
+					winner = "Player2: " + p2PlayerChoiceName;
+				} else {winner = "Player2: " + p2PrefabNameLast;}
+				StartCoroutine(EndGame());
+			} else if (isCoop == true){
+				coopPlayer1Dead=true;
+				StartCoroutine(CoopEndGame());
+			}
 		}
 		if ((p2Health <= 0)&&(thisScene.name != "EndScene")){
 			p2Health = 0;
-			if (p1PlayerChoiceName != ""){
-				winner = "Player1: " + p1PlayerChoiceName;
-			} else {winner = "Player1: " + p1PrefabNameLast;}
-			
-			StartCoroutine(EndGame());
+			if (isCoop == false){
+				if (p1PlayerChoiceName != ""){
+					winner = "Player1: " + p1PlayerChoiceName;
+				} else {winner = "Player1: " + p1PrefabNameLast;}
+				StartCoroutine(EndGame());
+			} else if (isCoop == true){
+				coopPlayer2Dead=true;
+				StartCoroutine(CoopEndGame());
+			}
 		}
 
-		//Pause Menu
+		//Pause Menu 1/2
 		if (Input.GetKeyDown(KeyCode.Escape)){
 			if (GameisPaused){ Resume(); }
 			else{ Pause(); }
@@ -171,7 +213,9 @@ public class GameHandler : MonoBehaviour{
 		if (gameTime <= 0){
 			gameTime = 0;
 			winner = "Time's up! \nNo winner. \nP1 Health = " + p1Health + " \nP2 Health = " + p2Health;
-			StartCoroutine(EndGame());
+			if (isCoop == false){
+				StartCoroutine(EndGame());
+			}
 		}
 		else if ((gameTimer >= 1f)&&(thisScene.name != "EndScene")){
 			gameTime -= 1;
@@ -271,7 +315,33 @@ public class GameHandler : MonoBehaviour{
 		}
 	}
 	
-	//Pause Menu
+	//Co-op game mode end-game functions
+	public void CoopUpdateMonster(float monsterHealth){
+		Text monHealthTemp = monsterHealthText.GetComponent<Text>();
+		monHealthTemp.text = "Monster Health: " + monsterHealth;
+		
+		if (monsterHealth <= 0){
+			coopMonsterDead = true;
+			StartCoroutine(CoopEndGame());
+		}
+	}
+	
+	IEnumerator CoopEndGame(){
+		if ((coopPlayer1Dead == true)&&(coopPlayer2Dead == true)){
+			yield return new WaitForSeconds(0.5f);		
+			if ((thisScene.name != "EndScene")&&(isShowcase == false)&&(thisScene.name != "MainMenu")&&(thisScene.name != "EndSceneCoop")){
+				SceneManager.LoadScene ("EndSceneCoop");
+			}
+		}
+		if (coopMonsterDead == true){
+			yield return new WaitForSeconds(0.5f);
+			if ((thisScene.name != "EndScene")&&(isShowcase == false)&&(thisScene.name != "MainMenu")&&(thisScene.name != "EndSceneCoop")){
+				SceneManager.LoadScene ("EndSceneCoop");
+			}
+		}
+	}
+	
+	//Pause Menu 2/2
 	void Pause(){
 		pauseMenuUI.SetActive(true);
 		Time.timeScale = 0f;
@@ -302,7 +372,23 @@ public class GameHandler : MonoBehaviour{
 		#endif
 	}
 	public void StartGame(){
+		Time.timeScale = 1f;
+		//restart the game:
+		p1Health = 20f;
+		p2Health = 20f;
+		p1Shields = 6;
+		p2Shields = 6;
 		SceneManager.LoadScene("Arena1");
+	}
+	
+	public void StartGameCoop(){
+		Time.timeScale = 1f;
+		//restart the game:
+		p1Health = 20f;
+		p2Health = 20f;
+		p1Shields = 6;
+		p2Shields = 6;
+		SceneManager.LoadScene("Coop1");
 	}
 	
 	//hit FIGHT button in player choice menu to start the battle
@@ -333,6 +419,11 @@ public class GameHandler : MonoBehaviour{
 		
 		GameObject camTop = Instantiate(camTopPrefab, camTopHolder.position, camTopHolder.rotation);
 		camTop.GetComponent<CameraTopDown>().loadPlayers(Player1, Player2);
+		
+		if (isCoop==true){
+			GameObject.FindWithTag("CoopNPCMonster").GetComponent<NPC_LoadPlayers>().LoadPlayerTargets();
+		}
+		
 		
 	}
 	

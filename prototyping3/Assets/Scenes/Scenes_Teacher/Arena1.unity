@@ -6339,6 +6339,7 @@ MonoBehaviour:
   SpawnParticlesHere: {x: 0, y: 0, z: 0}
   isPlayer1Weapon: 0
   isPlayer2Weapon: 0
+  isMonsterWeapon: 0
 --- !u!1 &1252157339
 GameObject:
   m_ObjectHideFlags: 0
@@ -10647,6 +10648,11 @@ PrefabInstance:
       propertyPath: camTopHolder
       value: 
       objectReference: {fileID: 1966704956}
+    - target: {fileID: 6311594513585171110, guid: 05be270cdabffa742bd6f579ed45bdbe,
+        type: 3}
+      propertyPath: monsterHealthText
+      value: 
+      objectReference: {fileID: 799394302}
     - target: {fileID: 6311594513585171111, guid: 05be270cdabffa742bd6f579ed45bdbe,
         type: 3}
       propertyPath: m_Name
