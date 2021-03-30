@@ -11,7 +11,7 @@ public class Mars_Weapon : MonoBehaviour{
 	
 	private bool weaponOut = false;
 
-    public AudioSource audioSource;
+    private AudioSource audioSource;
 
 	//grab axis from parent object
 	public string button1;
@@ -35,7 +35,9 @@ public class Mars_Weapon : MonoBehaviour{
     Vector3 wEndPos;
 
     void Start(){
-		button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
+        audioSource = GetComponent<AudioSource>();
+
+        button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
 		button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
 		button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
 		button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
@@ -103,7 +105,10 @@ public class Mars_Weapon : MonoBehaviour{
         
         if (Input.GetButtonDown(button1) && (weaponOut == false) && (cooldown <= 0f))
         {
-            audioSource.Play();
+            if (audioSource != null)
+            {
+                audioSource.Play();
+            }
 
             weaponThrust.transform.localScale = new Vector3(14f, 3.8f, 14f);
             weaponThrust.GetComponent<HazardDamage>().damage = 5;

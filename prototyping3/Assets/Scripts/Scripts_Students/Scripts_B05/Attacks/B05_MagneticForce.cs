@@ -25,12 +25,18 @@ public class B05_MagneticForce : MonoBehaviour
         if (b05.IsState(Bot05_Move.STATE.ATTRACTING))
         {
             for (int i = 0; i < tops.Length; ++i)
-                tops[i].MoveToward(b05.GetCenter().position);
+            {
+                if (tops[i].tag == gameObject.transform.root.tag)
+                    tops[i].MoveToward(b05.GetCenter().position);
+            }   
         }
         else if (b05.IsState(Bot05_Move.STATE.REPELING))
         {
             for (int i = 0; i < tops.Length; ++i)
-                tops[i].MoveAway(b05.GetCenter().position);
+            {
+                if (tops[i].tag == gameObject.transform.root.tag)
+                    tops[i].MoveAway(b05.GetCenter().position);
+            }
         }
         else
         {

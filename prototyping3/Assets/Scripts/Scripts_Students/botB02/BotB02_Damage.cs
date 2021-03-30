@@ -5,7 +5,7 @@ using UnityEngine;
 public class BotB02_Damage : MonoBehaviour{
 	public GameObject compassSides;
 	public GameObject compassVertical;
-	private float sidelimit = 3.0f;
+	private float sidelimit = 1.5f;
 	private float attackDamage;
 	public float knockBackSpeed = 10f;
 

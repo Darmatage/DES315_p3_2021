@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b30698b0a4329f448bd59a595546fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  moveSpeed: 2
   rotateSpeed: 200
   jumpSpeed: 7
   boostSpeed: 10
@@ -303,12 +303,12 @@ MonoBehaviour:
   ShieldBaseStats:
     RechargeDelay: 4
     RechargeRate: 0.75
-    PowerFrontMax: 10
-    PowerBackMax: 10
+    PowerFrontMax: 6
+    PowerBackMax: 6
     PowerLeftMax: 3
     PowerRightMax: 3
-    PowerTopMax: 10
-    PowerBottomMax: 5
+    PowerTopMax: 6
+    PowerBottomMax: 2
   ShieldReferences:
     shieldFrontObj: {fileID: 5842800509108774881}
     shieldBackObj: {fileID: 4646661635187871857}
@@ -356,7 +356,7 @@ MonoBehaviour:
   RightWeapon:
     weaponRef: {fileID: 1632756732603217317}
     weapon: {fileID: 0}
-  CooldownTime: 0.5
+  CooldownTime: 0.6
   recoilStrength: 12
   recoilDuration: 0.6
 --- !u!114 &8147630547611896326

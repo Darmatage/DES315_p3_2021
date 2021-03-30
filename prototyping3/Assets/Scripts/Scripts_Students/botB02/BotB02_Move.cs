@@ -96,7 +96,10 @@ public class BotB02_Move : MonoBehaviour
 				transform.eulerAngles = betterEulerAngles;
 			}
 		}
-
+        if(rb.velocity.y > 7)
+        {
+            rb.velocity.Set(rb.velocity.x, 10, rb.velocity.z);
+        }
 		// BOOST
 		// if (Input.GetButtonDown(button4)){
 			// rb.AddForce(transform.forward * boostSpeed, ForceMode.Impulse);

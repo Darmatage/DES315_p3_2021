@@ -184,7 +184,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -685,7 +685,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.03
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -825,7 +825,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.005193153
+      value: 0.0001
       mode: 0
       spread: 0
       speed:
@@ -1553,7 +1553,7 @@ ParticleSystem:
     speedRange: {x: 0, y: 1}
     tilesX: 6
     tilesY: 3
-    animationType: 0
+    animationType: 1
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
@@ -5047,7 +5047,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -5548,7 +5548,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.03
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -5688,7 +5688,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.005193153
+      value: 0.0001
       mode: 0
       spread: 0
       speed:
@@ -6416,7 +6416,7 @@ ParticleSystem:
     speedRange: {x: 0, y: 1}
     tilesX: 6
     tilesY: 3
-    animationType: 0
+    animationType: 1
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
@@ -9709,7 +9709,7 @@ GameObject:
   - component: {fileID: 5454023854317551948}
   m_Layer: 0
   m_Name: FlameThrowerRight
-  m_TagString: Untagged
+  m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10025,9 +10025,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aab929fe774a0084c8ae87aafe02faf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  rotateSpeed: 100
-  jumpSpeed: 7
+  moveSpeed: 6
+  rotateSpeed: 50
+  jumpSpeed: 1
   boostSpeed: 10
   groundCheck: {fileID: 1355330930762081256}
   turtleCheck: {fileID: 1355330929556144337}
@@ -10059,12 +10059,13 @@ MonoBehaviour:
   compassVertical: {fileID: 4587639291210960121}
   sidelimit: 0.1
   knockBackSpeed: 10
-  shieldPowerFront: 5
-  shieldPowerBack: 5
-  shieldPowerLeft: 5
-  shieldPowerRight: 5
-  shieldPowerTop: 5
-  shieldPowerBottom: 5
+  forceSideLimit_p75: 1
+  shieldPowerFront: 9
+  shieldPowerBack: 2
+  shieldPowerLeft: 8
+  shieldPowerRight: 8
+  shieldPowerTop: 4
+  shieldPowerBottom: 1
   shieldFrontObj: {fileID: 1098726327034351829}
   shieldBackObj: {fileID: 2186211737314387781}
   shieldLeftObj: {fileID: 2735579452779107192}
@@ -10115,7 +10116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 580a090119ffa394f9730559b8ef0687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainGunCooldownTimerMax: 2
+  mainGunCooldownTimerMax: 3
   bulletPrefab: {fileID: 8422104065351264406, guid: ddc0b6c1c0d9a1e488e5d681995b9dbf,
     type: 3}
   bulletSpawnPoint: {fileID: 7980869503635937377}
@@ -10124,7 +10125,6 @@ MonoBehaviour:
   button1: 
   button2: 
   button3: 
-  button4: 
 --- !u!82 &1396222249203377593
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10357,7 +10357,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2397639334846234185}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2, y: 18.1, z: -0.98}
+  m_LocalPosition: {x: 0.2, y: 18.1, z: -4.3}
   m_LocalScale: {x: 8.267747, y: 34.080673, z: 7.5219364}
   m_Children: []
   m_Father: {fileID: 2043475984407100332}
@@ -10389,9 +10389,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 
-  damage: 1
   isPlayer1Weapon: 0
   isPlayer2Weapon: 0
+  damage: 1
   cooldownTimerMax: 2
 --- !u!1 &3106808347015382348
 GameObject:
@@ -10498,7 +10498,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -10999,7 +10999,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.03
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -11139,7 +11139,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.005193153
+      value: 0.0001
       mode: 0
       spread: 0
       speed:
@@ -11867,7 +11867,7 @@ ParticleSystem:
     speedRange: {x: 0, y: 1}
     tilesX: 6
     tilesY: 3
-    animationType: 0
+    animationType: 1
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
@@ -15269,7 +15269,7 @@ GameObject:
   - component: {fileID: 4483337751948386974}
   m_Layer: 0
   m_Name: FlameThrowerLeft
-  m_TagString: Untagged
+  m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15364,7 +15364,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5693292796670736080}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2, y: 18.1, z: -0.98}
+  m_LocalPosition: {x: 0.2, y: 18.1, z: -4.3}
   m_LocalScale: {x: 8.267747, y: 34.080673, z: 7.5219364}
   m_Children: []
   m_Father: {fileID: 3519286859602486731}
@@ -15396,9 +15396,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 
-  damage: 1
   isPlayer1Weapon: 0
   isPlayer2Weapon: 0
+  damage: 1
   cooldownTimerMax: 2
 --- !u!1 &8670680530210160223
 GameObject:
@@ -15505,7 +15505,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -16006,7 +16006,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.03
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -16146,7 +16146,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.005193153
+      value: 0.0001
       mode: 0
       spread: 0
       speed:
@@ -16874,7 +16874,7 @@ ParticleSystem:
     speedRange: {x: 0, y: 1}
     tilesX: 6
     tilesY: 3
-    animationType: 0
+    animationType: 1
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
@@ -20184,7 +20184,7 @@ PrefabInstance:
     - target: {fileID: 7802144135687711158, guid: 35ec421f6b3536648a259353b0bfc753,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.46
       objectReference: {fileID: 0}
     - target: {fileID: 7802144135687711158, guid: 35ec421f6b3536648a259353b0bfc753,
         type: 3}

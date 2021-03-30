@@ -59,6 +59,10 @@ public class Bot05_Move : MonoBehaviour
 
     public B05_Camera cam;
 
+    public Material eye1;
+    public Material eye2;
+    public MeshRenderer eyeball;
+
     void Start()
     {
         if (gameObject.GetComponent<Rigidbody>() != null)
@@ -71,6 +75,17 @@ public class Bot05_Move : MonoBehaviour
         pHorizontal = gameObject.transform.parent.GetComponent<playerParent>().rotateAxis;
         pJump = gameObject.transform.parent.GetComponent<playerParent>().jumpInput;
         button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
+
+        if (gameObject.transform.root.tag == "Player1")
+        {
+            gameObject.layer = 15;
+            eyeball.material = eye1;
+        }
+        else if(gameObject.transform.root.tag == "Player2")
+        {
+            gameObject.layer = 18;
+            eyeball.material = eye2;
+        }
 
         cur_state = STATE.NORMAL;
     }
@@ -116,10 +131,14 @@ public class Bot05_Move : MonoBehaviour
         {
             if (isGrounded == true)
             {
-                rb.AddForce(rb.centerOfMass + new Vector3(0f, jumpSpeed * 10, 0f), ForceMode.Impulse);
-                if (IsState(STATE.NORMAL))
+                if (Mathf.Abs(transform.rotation.eulerAngles.x) < 1.0f &&
+                    Mathf.Abs(transform.rotation.eulerAngles.z) < 1.0f)
                 {
-                    a_pound.Activate();
+                    rb.AddForce(rb.centerOfMass + new Vector3(0f, jumpSpeed * 10, 0f), ForceMode.Impulse);
+                    if (IsState(STATE.NORMAL))
+                    {
+                        a_pound.Activate();
+                    }
                 }
             }
 

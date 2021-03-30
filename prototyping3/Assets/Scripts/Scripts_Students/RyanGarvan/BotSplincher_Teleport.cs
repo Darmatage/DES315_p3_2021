@@ -31,6 +31,13 @@ public class BotSplincher_Teleport : MonoBehaviour
     public GameObject damageParticlesPrefab;
     public GameObject teleportParticlesPrefab;
 
+    public List<MeshRenderer> m_chargebar1;
+    public List<MeshRenderer> m_chargebar2;
+    public List<MeshRenderer> m_chargebar3;
+
+    public float m_cooldownDuration = 0.25f;
+    float m_cooldownLeft = 0;
+
     void Start()
     {
         m_button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
@@ -49,6 +56,88 @@ public class BotSplincher_Teleport : MonoBehaviour
     void Update()
     {
         Vector3 targetPos = Vector3.zero;
+
+        if (m_cooldownLeft > 0)
+        {
+            m_cooldownLeft -= Time.deltaTime;
+
+            if (m_cooldownLeft < 0)
+            {
+                m_cooldownLeft = 0;
+            }
+        }
+
+        Color unchargedColor = new Color(0, 0, 0);
+        Color chargedColor = new Color(0.7f, 0.7f, 0);
+
+        if (m_cooldownLeft > m_cooldownDuration * 2.0f / 3.0f)
+        {
+            foreach (MeshRenderer mesh in m_chargebar1)
+            {
+                mesh.material.color = unchargedColor;
+            }
+
+            foreach (MeshRenderer mesh in m_chargebar2)
+            {
+                mesh.material.color = unchargedColor;
+            }
+
+            foreach (MeshRenderer mesh in m_chargebar3)
+            {
+                mesh.material.color = unchargedColor;
+            }
+        }
+        else if (m_cooldownLeft > m_cooldownDuration / 3.0f)
+        {
+            foreach (MeshRenderer mesh in m_chargebar1)
+            {
+                mesh.material.color = chargedColor;
+            }
+
+            foreach (MeshRenderer mesh in m_chargebar2)
+            {
+                mesh.material.color = unchargedColor;
+            }
+
+            foreach (MeshRenderer mesh in m_chargebar3)
+            {
+                mesh.material.color = unchargedColor;
+            }
+        }
+        else if (m_cooldownLeft > 0)
+        {
+            foreach (MeshRenderer mesh in m_chargebar1)
+            {
+                mesh.material.color = chargedColor;
+            }
+
+            foreach (MeshRenderer mesh in m_chargebar2)
+            {
+                mesh.material.color = chargedColor;
+            }
+
+            foreach (MeshRenderer mesh in m_chargebar3)
+            {
+                mesh.material.color = unchargedColor;
+            }
+        }
+        else
+        {
+            foreach (MeshRenderer mesh in m_chargebar1)
+            {
+                mesh.material.color = chargedColor;
+            }
+
+            foreach (MeshRenderer mesh in m_chargebar2)
+            {
+                mesh.material.color = chargedColor;
+            }
+
+            foreach (MeshRenderer mesh in m_chargebar3)
+            {
+                mesh.material.color = chargedColor;
+            }
+        }
 
         if (m_cursorOut)
         {
@@ -103,6 +192,8 @@ public class BotSplincher_Teleport : MonoBehaviour
                     m_audioSourceTeleport.pitch = Random.Range(0.8f, 1.2f);
                     m_audioSourceTeleport.Play();
 
+                    m_cooldownLeft = m_cooldownDuration;
+
                     StartCoroutine(BecomeCorporeal());
 
                     if (enemy != null)
@@ -136,7 +227,7 @@ public class BotSplincher_Teleport : MonoBehaviour
                     m_audioSourceTeleportFail.Play();
                 }
             }
-            else
+            else if (m_cooldownLeft <= 0.0f)
             {
                 m_cursor = Instantiate(m_cursorPrefab);
                 m_cursor.transform.position = transform.position + new Vector3(0, 3, 0);

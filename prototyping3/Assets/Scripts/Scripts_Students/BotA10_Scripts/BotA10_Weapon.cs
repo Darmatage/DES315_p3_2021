@@ -5,31 +5,34 @@ namespace Scripts_Students.BotA10_Scripts
 {
     public class BotA10_Weapon : MonoBehaviour
     {
-        //NOTE: This script goes on the main playerBot Game Object, and the weapon goes in the public GO slot
+        // Timers
         [SerializeField] private float mainGunCooldownTimerMax = 1f;
         private float _mainGunCooldownTimer = 1f;
         
+        // Objects
         [SerializeField] private Transform bulletPrefab = default;
         [SerializeField] private Transform bulletSpawnPoint = default;
         [SerializeField] private GameObject rightFlameThrower = default;
         [SerializeField] private GameObject leftFlameThrower = default;
-
+        
+        // Audio
         private AudioSource _audioSource;
-        //grab axis from parent object
+        
+        // buttons
         public string button1;
         public string button2;
         public string button3;
-        public string button4; // currently boost in player move script
-
-        //public event EventHandler OnShootB1;
 
         public void Start()
         {
-            button1 = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
-            button2 = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
-            button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
-            button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
+            // button setup
+            var parent = gameObject.transform.parent.GetComponent<playerParent>();
+            button1 = parent.action1Input;
+            button2 = parent.action2Input;
+            button3 = parent.action3Input;
+            // audio setup
             _audioSource = GetComponent<AudioSource>();
+            // timer setup
             _mainGunCooldownTimer = mainGunCooldownTimerMax;
         }
 
@@ -66,11 +69,11 @@ namespace Scripts_Students.BotA10_Scripts
 
         private void ShootMainGun()
         {
-            // instantiate the bullet
             var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
             bullet.GetComponent<BotA10_Bullet>().Setup(transform.forward);
+            
             _audioSource.Play();
-            // set team for bullet
+            
             if (gameObject.transform.root.tag == "Player1") { bullet.GetComponent<HazardDamage>().isPlayer1Weapon = true; }
             else { bullet.GetComponent<HazardDamage>().isPlayer2Weapon = true; }
         }
