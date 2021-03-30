@@ -120,6 +120,28 @@ public class NPC_PatrolAndAttack : MonoBehaviour {
 		}
 	}
 	
+	public void OnCollisionEnter(Collision other){
+			Transform teleportBelow = GameObject.FindWithTag("FallRespawn").transform;
+
+		if ((player1Target != null)&& (player2Target != null)){
+			if (other.gameObject.transform.parent != null){
+				if (other.gameObject.transform.parent.tag=="Player1"){
+					if(GameHandler.p1Health <=0){
+						player1Target.position = teleportBelow.position;
+						Debug.Log("I am teleporting " + GameHandler.player1Prefab + " (Player 1) to " + teleportBelow.position);
+					}
+				}
+
+				if (other.gameObject.transform.parent.tag=="Player2"){
+					if (GameHandler.p2Health <=0){
+						player2Target.position = teleportBelow.position;
+						Debug.Log("I am teleporting " + GameHandler.player2Prefab + " (Player 2) to " + teleportBelow.position);
+					}
+				}
+			}
+		}
+	}
+	
 
 	IEnumerator FindNextPatrolTarget(){
 		yield return new WaitForSeconds (0.1f); //pause at destination

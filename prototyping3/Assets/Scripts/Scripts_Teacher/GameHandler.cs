@@ -27,6 +27,10 @@ public class GameHandler : MonoBehaviour{
 	private static bool coopMonsterDead = false;
 	private static float monsterHealth;
 	public GameObject monsterHealthText;
+	public string coopDefeatMsg = "The Monster defeated the players.";
+	public string coopWinMsg = "The Players win!";
+	private bool sendP1death = true;
+	private bool sendP2death = true;
 
 	//Players
 	public GameObject Player1Holder;
@@ -41,10 +45,12 @@ public class GameHandler : MonoBehaviour{
 	public static GameObject player2Prefab;
 	public static string p1PrefabNameLast;
 	public static string p2PrefabNameLast;
-	public string p1PrefabName;
-	public string p2PrefabName;
+	public string p1PrefabName; //the actual p1 prefab
+	public string p2PrefabName; //the actual p2 prefab
 	public string p1PlayerChoiceName;
 	public string p2PlayerChoiceName;
+	public bool isP1_NPC = false; 
+	public bool isP2_NPC = false; 
 	
 	//Stats
 	public float playersHealthStart = 20f;
@@ -73,7 +79,12 @@ public class GameHandler : MonoBehaviour{
 	public string[] botNames;	
 	public GameObject[] botPrefabs;
 	Dictionary<string, GameObject> botDictionary;
-	
+
+	//Variables for Bot NPC arrays
+	public string[] botNamesNPC;	
+	public GameObject[] botPrefabsNPC;
+	Dictionary<string, GameObject> botDictionaryNPC;
+
 	private Scene thisScene;
 	public static bool notFirstGame = false;
 
@@ -89,12 +100,19 @@ public class GameHandler : MonoBehaviour{
     }
 	
 	void Start(){
-		//initialize the dictionary and populate with arrays content
+		//initialize the Bot dictionary and populate with arrays content
 		botDictionary = new Dictionary<string, GameObject>();
 		for (int i=0; i < botPrefabs.Length; i++) {
 			botDictionary.Add(botNames[i], botPrefabs[i]);
 		}
+		
+		//initialize the NPC dictionary and populate with arrays content
+		botDictionaryNPC = new Dictionary<string, GameObject>();
+		for (int i=0; i < botPrefabsNPC.Length; i++) {
+			botDictionaryNPC.Add(botNamesNPC[i], botPrefabsNPC[i]);
+		}
 
+		//rematch display
 		if ((notFirstGame==true)&&(gameObject.GetComponent<GameHandler_LastBots>()!= null)){
 			gameObject.GetComponent<GameHandler_LastBots>().UpdateLastBots(player1Prefab, player2Prefab);
 		}
@@ -137,11 +155,9 @@ public class GameHandler : MonoBehaviour{
 				if(coopMonsterDead == true){
 					celebratePlayer1.SetActive(true);
 					celebratePlayer2.SetActive(true);
-					winner = "The Players win!";
 				} else if ((coopPlayer1Dead == true)&&(coopPlayer2Dead == true)){
 					celebratePlayer1.SetActive(false);
 					celebratePlayer2.SetActive(false);
-					winner = "The Monster defeated the players.";
 				}
 				
 			} else {Debug.Log("This Scene depends on static variables from a Co-op Scene");}
@@ -172,31 +188,31 @@ public class GameHandler : MonoBehaviour{
 	}
 
 	void Update(){
-		if ((p1Health <= 0)&&(thisScene.name != "EndScene")){
+		if ((p1Health <= 0)&&(thisScene.name != "EndScene")&&(thisScene.name != "EndSceneCoop")){
 			p1Health = 0;
 			if (isCoop == false){	
 				if (p2PlayerChoiceName != ""){
 					winner = "Player2: " + p2PlayerChoiceName;
 				} else {winner = "Player2: " + p2PrefabNameLast;}
 				StartCoroutine(EndGame());
-			} else if (isCoop == true){
+			} else if ((isCoop == true)&&(sendP1death == true)){
 				coopPlayer1Dead=true;
-				Transform teleportBelow = GameObject.FindWithTag("FallRespawn").transform;
-				player1Prefab.transform.position = teleportBelow.position;
+				sendP1death = false;
+				//Debug.Log("player 1 is deeeeeeaaaad...."); 
 				StartCoroutine(CoopEndGame());
 			}
 		}
-		if ((p2Health <= 0)&&(thisScene.name != "EndScene")){
+		if ((p2Health <= 0)&&(thisScene.name != "EndScene")&&(thisScene.name != "EndSceneCoop")){
 			p2Health = 0;
 			if (isCoop == false){
 				if (p1PlayerChoiceName != ""){
 					winner = "Player1: " + p1PlayerChoiceName;
 				} else {winner = "Player1: " + p1PrefabNameLast;}
 				StartCoroutine(EndGame());
-			} else if (isCoop == true){
+			} else if ((isCoop == true)&&(sendP2death == true)){
 				coopPlayer2Dead=true;
-				Transform teleportBelow = GameObject.FindWithTag("FallRespawn").transform;
-				player2Prefab.transform.position = teleportBelow.position;
+				sendP2death = false;
+				//Debug.Log("player 2 is deeeeeeaaaad....");
 				StartCoroutine(CoopEndGame());
 			}
 		}
@@ -307,7 +323,8 @@ public class GameHandler : MonoBehaviour{
 		GTtemp.text = "" + gameTime;
 		
 		Text winTemp = winnerText.GetComponent<Text>();
-		winTemp.text = "WINNER: \n" + winner;
+		if (isCoop == false){winTemp.text = "WINNER: \n" + winner;}
+		else if (isCoop == true){winTemp.text = "" + winner;}		
 	}
 	
 	IEnumerator EndGame(){
@@ -331,14 +348,17 @@ public class GameHandler : MonoBehaviour{
 	}
 	
 	IEnumerator CoopEndGame(){
+		notFirstGame = true;
 		if ((coopPlayer1Dead == true)&&(coopPlayer2Dead == true)){
-			yield return new WaitForSeconds(0.5f);		
+			winner = coopDefeatMsg;
+			yield return new WaitForSeconds(1.0f);		
 			if ((thisScene.name != "EndScene")&&(isShowcase == false)&&(thisScene.name != "MainMenu")&&(thisScene.name != "EndSceneCoop")){
 				SceneManager.LoadScene ("EndSceneCoop");
 			}
 		}
 		if (coopMonsterDead == true){
-			yield return new WaitForSeconds(0.5f);
+			winner = coopWinMsg;
+			yield return new WaitForSeconds(1.0f);
 			if ((thisScene.name != "EndScene")&&(isShowcase == false)&&(thisScene.name != "MainMenu")&&(thisScene.name != "EndSceneCoop")){
 				SceneManager.LoadScene ("EndSceneCoop");
 			}
@@ -410,8 +430,11 @@ public class GameHandler : MonoBehaviour{
 			onBattleStart.Invoke();
 			
 		if (p1PrefabName != ""){	
-			player1Prefab = botDictionary[p1PrefabName];
-			player2Prefab = botDictionary[p2PrefabName];
+			if (isP1_NPC == false){	player1Prefab = botDictionary[p1PrefabName];}
+			else if (isP1_NPC == true){	player1Prefab = botDictionaryNPC[p1PrefabName];}
+			
+			if (isP2_NPC == false){	player2Prefab = botDictionary[p2PrefabName];}
+			else if (isP2_NPC == true){	player2Prefab = botDictionaryNPC[p2PrefabName];}
 		}
 		
 		//Instantiate players and cameras, and turn off StartCamera:

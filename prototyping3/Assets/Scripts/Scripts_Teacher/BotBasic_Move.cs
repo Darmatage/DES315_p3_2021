@@ -76,6 +76,7 @@ public class BotBasic_Move : MonoBehaviour
 				rb.AddForce(rb.centerOfMass + new Vector3(jumpSpeed / 2, 0, jumpSpeed / 2), ForceMode.Impulse);
 				transform.Rotate(flipSpeed, 0, 0);
 				GetComponent<Rigidbody>().velocity = Vector3.zero;
+				GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 				// canFlip = false;
 				// canFlipGate = true;
 			}
@@ -84,6 +85,7 @@ public class BotBasic_Move : MonoBehaviour
 				Vector3 betterEulerAngles = new Vector3(gameObject.transform.parent.eulerAngles.x, transform.eulerAngles.y, gameObject.transform.parent.eulerAngles.z); 
 				transform.eulerAngles = betterEulerAngles;
 				GetComponent<Rigidbody>().velocity = Vector3.zero;
+				GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 			}
 		}
 
