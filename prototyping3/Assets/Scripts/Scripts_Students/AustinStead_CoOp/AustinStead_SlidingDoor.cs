@@ -18,7 +18,6 @@ namespace AustinStead
         public Material OpenMat;
         public Material ClosedMat;
 
-
         private Renderer renderer;
 
         private void OnEnable()
@@ -35,7 +34,9 @@ namespace AustinStead
             doorAnim = door.GetComponent<Animator>();
             renderer = door.GetComponent<Renderer>();
 
-            doorAnim.SetBool("IsOpen", IsOpen);
+            //doorAnim.SetBool("IsOpen", IsOpen);
+            IsOpen = !IsOpen;
+            Activate();
         }
 
         void Activate()

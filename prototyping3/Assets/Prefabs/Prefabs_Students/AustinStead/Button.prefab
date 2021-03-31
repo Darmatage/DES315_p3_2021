@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5e03595576d5ea44699177c91d1732a3, type: 2}
+  - {fileID: 2100000, guid: 4aadae5826bcca14fa9db6cab302c793, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -141,6 +141,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CooldownDuration: 1
+  OpenMat: {fileID: 2100000, guid: 4aadae5826bcca14fa9db6cab302c793, type: 2}
+  ClosedMat: {fileID: 2100000, guid: 86343cf81b3b7984abd7857bdbec47ab, type: 2}
+  ToggleObj: {fileID: 32498575443025733}
 --- !u!136 &6365059636216068806
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -244,7 +247,7 @@ MeshCollider:
   m_GameObject: {fileID: 4256574114731456847}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30

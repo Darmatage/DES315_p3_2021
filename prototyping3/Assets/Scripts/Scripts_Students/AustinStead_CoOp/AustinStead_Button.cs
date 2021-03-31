@@ -12,24 +12,39 @@ public class AustinStead_Button : MonoBehaviour
     public event ButtonAction ButtonActivated;
 
 
+    public Material OpenMat;
+    public Material ClosedMat;
+    public GameObject ToggleObj;
+
+    private Renderer renderer;
+
     // Start is called before the first frame update
     void Start()
     {
         cooldownClock = 0;
+        renderer = ToggleObj.GetComponent<Renderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        cooldownClock = Mathf.Max(0, cooldownClock - Time.deltaTime);
+        if(cooldownClock > 0)
+        {
+            cooldownClock = Mathf.Max(0, cooldownClock - Time.deltaTime);
+            
+            if (cooldownClock == 0)
+                CooldownComplete();
+        }
+
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        //if(cooldownClock <= 0)
+        if(cooldownClock <= 0)
         {
-            //cooldownClock = CooldownDuration;
+            cooldownClock = CooldownDuration;
+            renderer.material = ClosedMat;
 
             if (ButtonActivated != null)
                 ButtonActivated();
@@ -37,7 +52,10 @@ public class AustinStead_Button : MonoBehaviour
 
     }
 
-
+    private void CooldownComplete()
+    {
+        renderer.material = OpenMat;
+    }
 
 
 
