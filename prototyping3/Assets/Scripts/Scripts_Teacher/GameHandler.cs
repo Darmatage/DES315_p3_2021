@@ -387,7 +387,11 @@ public class GameHandler : MonoBehaviour{
 	}
 	
 	//MainMenu buttons
-	public void MainMenu(){SceneManager.LoadScene("MainMenu");}
+	public void MainMenu(){
+		Time.timeScale = 1f;
+		SceneManager.LoadScene("MainMenu");
+		}
+		
 	public void Quit(){
 		#if UNITY_EDITOR 
 		UnityEditor.EditorApplication.isPlaying = false;
