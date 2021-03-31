@@ -15,15 +15,11 @@ public class B16_NPC_Movement : MonoBehaviour
 	public Transform groundCheck;
 	public Transform turtleCheck;
 	public LayerMask groundLayer;
-	//public Collider[] isGrounded;
 	public bool isGrounded;
 	public bool isTurtled;
 
 	// flip cooldown logic
 	public bool canFlip = true;
-	// private bool canFlipGate = true;
-	// private float flipTimer = 0;
-	// public float flipTime = 1f;
 
 	public bool isGrabbed = false;
 
@@ -32,10 +28,12 @@ public class B16_NPC_Movement : MonoBehaviour
 	public string pVertical;
 	public string pHorizontal;
 	public string pJump;
-	public string button4; // right bumper or [y] or [/] keys, to test on boost
 
 	private GameObject enemy;
 	private NavMeshAgent agent;
+	private Rigidbody rigidbody;
+
+	private Weapons_ChaseG weapon;
 
 	void Start()
 	{
@@ -44,36 +42,47 @@ public class B16_NPC_Movement : MonoBehaviour
 			rb = gameObject.GetComponent<Rigidbody>();
 		}
 
+		weapon = GetComponent<Weapons_ChaseG>();
+
 		parentName = this.transform.parent.gameObject.name;
 		pVertical = gameObject.transform.parent.GetComponent<playerParent>().moveAxis;
 		pHorizontal = gameObject.transform.parent.GetComponent<playerParent>().rotateAxis;
 		pJump = gameObject.transform.parent.GetComponent<playerParent>().jumpInput;
-		button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
-
-		// pVertical = "p1Vertical";
-		// pHorizontal = "p1Horizontal";
-		// pJump = "p1Jump";
-		// button4 = "p1Fire4";
 
 		enemy = GetEnemy();
 		agent = GetComponent<NavMeshAgent>();
+		rigidbody = GetComponentInParent<Rigidbody>();
 	}
 
 	void Update()
 	{
 		float botMove = Input.GetAxisRaw(pVertical) * moveSpeed * Time.deltaTime;
 		float botRotate = Input.GetAxisRaw(pHorizontal) * rotateSpeed * Time.deltaTime;
-
-		if(enemy)
+		
+		if (enemy)
         {
 			Vector3 destination = enemy.transform.position;
 			destination.y = transform.position.y;
-			agent.destination = destination;
 
-			if(Vector3.Distance(destination, transform.position) < 10)
+			if (Vector3.Distance(destination, transform.position) < 10 && weapon.Ready())
             {
-				//GetComponent<Weapons_ChaseG>().StartAttack();
+				isGrounded = false;
+				agent.enabled = false;
+				weapon.StartAttack();
             }
+            else if(weapon.Done())
+            {
+				agent.enabled = true;
+				agent.destination = destination;
+			}
+			else
+            {
+				transform.LookAt(destination);
+				Vector3 velocity = transform.forward * moveSpeed;
+				velocity.y = rigidbody.velocity.y;
+				
+				rigidbody.velocity = velocity;
+			}
         }
 
 
@@ -116,11 +125,6 @@ public class B16_NPC_Movement : MonoBehaviour
 				GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 			}
 		}
-
-		// BOOST
-		// if (Input.GetButtonDown(button4)){
-		// rb.AddForce(transform.forward * boostSpeed, ForceMode.Impulse);
-		// }
 	}
 
 	private GameObject GetEnemy()
@@ -140,26 +144,4 @@ public class B16_NPC_Movement : MonoBehaviour
 			return null;
         }
 	}
-
-	//Flip cooldown timer
-	// void FixedUpdate(){
-	// if (canFlipGate == false){
-	// flipTimer += 1f;
-	// if (flipTimer >= flipTime){
-	// canFlip = true;
-	// flipTimer = 0f;
-	// }
-	// }
-	// }
-
 }
-
-
-
-	//isGrounded = Physics2D.OverlapCircle(GroundCheck1.position, 0.15f, groundLayer);
-	//rb.transform.Rotate(Vector3(flipSpeed,0,0));
-	//rb.AddTorque.transform.Rotate(Vector3(flipSpeed,0,0), ForceMode.Impulse);
-	//else gameObject.transform.rotation = gameObject.transform.parent.rotation;
-	//else transform.rotation = Quaternion.Euler(90, transform.eulerAngle.y, 90);
-	//else  transform.Rotate (new Vector3 (90, gameObject.eulerAngle.y, 90));
-
