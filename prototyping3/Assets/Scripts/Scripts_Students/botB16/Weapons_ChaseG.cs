@@ -58,26 +58,9 @@ public class Weapons_ChaseG : MonoBehaviour
 	void Update()
 	{
 		//if (Input.GetKeyDown(KeyCode.T)){
-		if ((Input.GetButtonDown(button1)) && (weaponOut == false) && CDtimer >= CoolDown)
+		if ((Input.GetButtonDown(button1)))
 		{
-			CDtimer = 0;
-
-			Vector3 thrust = gameObject.GetComponentInParent<Transform>().up * 15;
-			gameObject.GetComponentInParent<Rigidbody>().velocity = thrust;
-
-			//weaponStomp.transform.Translate(0, -thrustAmount, 0);
-			weaponOut = true;
-			attack = true;
-			weaponStomp.tag = "Hazard";
-
-			BoosterFL_down.Play();
-			BoosterBL_down.Play();
-			BoosterFR_down.Play();
-			BoosterBR_down.Play();
-
-			AudioSourceUp.GetComponent<AudioSource>().Play();
-
-			//StartCoroutine(WithdrawWeapon());
+			StartAttack();
 		}
 
 
@@ -154,6 +137,29 @@ public class Weapons_ChaseG : MonoBehaviour
 			Booster2.GetComponent<MeshRenderer>().material = ReadyMaterial;
 			Booster3.GetComponent<MeshRenderer>().material = ReadyMaterial;
 			Booster4.GetComponent<MeshRenderer>().material = ReadyMaterial;
+		}
+	}
+
+	public void StartAttack()
+    {
+		if ((weaponOut == false) && CDtimer >= CoolDown)
+		{
+			CDtimer = 0;
+
+			Vector3 thrust = gameObject.GetComponentInParent<Transform>().up * 15;
+			gameObject.GetComponentInParent<Rigidbody>().velocity = thrust;
+
+			//weaponStomp.transform.Translate(0, -thrustAmount, 0);
+			weaponOut = true;
+			attack = true;
+			weaponStomp.tag = "Hazard";
+
+			BoosterFL_down.Play();
+			BoosterBL_down.Play();
+			BoosterFR_down.Play();
+			BoosterBR_down.Play();
+
+			AudioSourceUp.GetComponent<AudioSource>().Play();
 		}
 	}
 
