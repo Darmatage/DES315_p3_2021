@@ -12,7 +12,6 @@ public class Rotater : MonoBehaviour
 
     private float timer = 0f;
 
-    private bool CooldownIsActive = false;
     
     // Start is called before the first frame update
     void Start()
@@ -23,12 +22,12 @@ public class Rotater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (CooldownIsActive)
+        if (Manager.CooldownIsActive)
         {
             timer += Time.deltaTime;
             if (timer >= CooldownTimer)
             {
-                CooldownIsActive = false;
+                Manager.CooldownIsActive = false;
                 timer = 0f;
             }
         }
@@ -36,9 +35,11 @@ public class Rotater : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
+        if (Manager.CooldownIsActive)
+            return;
         if ((other.transform.root.gameObject.tag == "Player1") || (other.transform.root.gameObject.tag == "Player2"))
         {
-            CooldownIsActive = true;
+            Manager.CooldownIsActive = true;
             if (isClockwise)
                 Manager.RotateClockwise();
             else

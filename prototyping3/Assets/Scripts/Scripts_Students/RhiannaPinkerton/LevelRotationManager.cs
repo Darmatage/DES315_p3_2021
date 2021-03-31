@@ -13,13 +13,20 @@ public class LevelRotationManager : MonoBehaviour
 
 
     private float StartRotation = 0f;
+    private float EndRotation = 0f;
 
     private bool Clockwise = false;
     private bool CounterClockwise = false;
 
 
-    [SerializeField] private float RotateTime = 2f;
-    private float timer = 0f;
+    //[SerializeField] private float RotateTime = 2f;
+    //private float timer = 0f;
+    
+    public bool CooldownIsActive = false;
+
+    private float AngleCount = 0;
+
+    [SerializeField] private float IncreaseAmount = 0.5f;
     
     // Start is called before the first frame update
     void Start()
@@ -34,35 +41,39 @@ public class LevelRotationManager : MonoBehaviour
     {
         if (Clockwise)
         {
-            timer += Time.deltaTime;
-            if (timer >= RotateTime)
+            AngleCount += IncreaseAmount;
+            //timer += Time.deltaTime;
+            //if (timer >= RotateTime)
+            if (AngleCount >= 90f)
             {
                 Clockwise = false;
-                Level.transform.rotation = Quaternion.Euler(0f, 0f, StartRotation + 180f);
+                Level.transform.rotation = Quaternion.Euler(0f, 0f, EndRotation);
             }
-            //Vector3 rotation = Level.transform.rotation.eulerAngles;
-            //rotation = Vector3.Lerp(new Vector3(0f, 0f, StartRotation), new Vector3(0f, 0f, StartRotation + 90f),
-            //                        timer / RotateTime);
-            //Level.transform.Rotate(rotation);
-            
-            Player1.transform.position = new Vector3(-10f, 15f, 0f);
-            Player2.transform.position = new Vector3(10f, 15f, 0f);
-            Level.transform.Rotate(Vector3.forward,
-                Mathf.Lerp(StartRotation, StartRotation + 180f, Time.deltaTime * (timer / RotateTime)));// timer / RotateTime));
-                                    //Mathf.Pow(growthTimer / GrowthTime, Interpolant
+
+            //Player1.transform.position = new Vector3(-8f, 8f, 0f);
+            //Player2.transform.position = new Vector3(8f, 8f, 0f);
+            Level.transform.Rotate(Vector3.forward, -IncreaseAmount);
+            //Level.transform.Rotate(Vector3.forward,
+            //    Mathf.Lerp(StartRotation, EndRotation, Time.deltaTime * (timer / RotateTime)));// timer / RotateTime));
         }
         else if (CounterClockwise)
         {
-            timer += Time.deltaTime;
-            if (timer >= RotateTime)
+            AngleCount += IncreaseAmount;
+            //timer += Time.deltaTime;
+            //if (timer >= RotateTime)
+            if (AngleCount >= 90f)
             {
-                Clockwise = false;
-                Level.transform.rotation = Quaternion.Euler(0f, 0f, StartRotation - 180f);
+                CounterClockwise = false;
+                Level.transform.rotation = Quaternion.Euler(0f, 0f, EndRotation);
             }
-            Player1.transform.position = new Vector3(-10f, 15f, 0f);
-            Player2.transform.position = new Vector3(10f, 15f, 0f);
-            Level.transform.Rotate(Vector3.forward,
-                Mathf.Lerp(StartRotation, StartRotation - 180f, Time.deltaTime * (timer / RotateTime)));// timer / RotateTime));
+            else
+            {
+                //Player1.transform.position = new Vector3(-8f, 8f, 0f);
+                //Player2.transform.position = new Vector3(8f, 8f, 0f);
+                Level.transform.Rotate(Vector3.forward, IncreaseAmount);
+                //Level.transform.Rotate(Vector3.forward,
+                //    Mathf.Lerp(StartRotation, EndRotation, Time.deltaTime * (timer / RotateTime) * 2f));// timer / RotateTime));
+            }
         }
     }
 
@@ -70,15 +81,71 @@ public class LevelRotationManager : MonoBehaviour
     {
         Clockwise = true;
         CounterClockwise = false;
-        timer = 0f;
+        //timer = 0f;
+        AngleCount = 0;
         StartRotation = Level.transform.rotation.z;
+        GetEndRotation();
+
+        Rigidbody P1 = Player1.GetComponentInChildren<Rigidbody>();
+        if (P1)
+            P1.AddForce(P1.centerOfMass + new Vector3(0f, 50f*10, 0f), ForceMode.Impulse);
+
+        Rigidbody P2 = Player2.GetComponentInChildren<Rigidbody>();
+        if (P2)
+            P2.AddForce(P2.centerOfMass + new Vector3(0f, 50f*10, 0f), ForceMode.Impulse);
+
     }
 
     public void RotateCounterClockwise()
     {
-        Clockwise = true;
-        CounterClockwise = false;
-        timer = 0f;
-        StartRotation = Level.transform.rotation.z;
+        Clockwise = false;
+        CounterClockwise = true;
+        //timer = 0f;
+        AngleCount = 0;
+        StartRotation = Level.transform.localRotation.eulerAngles.z;
+        GetEndRotation();
+    }
+
+
+    private void GetEndRotation()
+    {
+        if (Clockwise)
+        {
+            if (StartRotation >= 270f)
+            {
+                EndRotation = 0f;
+            }
+            else if (StartRotation >= 180f)
+            {
+                EndRotation = 270f;
+            }
+            else if (StartRotation >= 90f)
+            {
+                EndRotation = 180f;
+            }
+            else if (StartRotation >= 0f)
+            {
+                EndRotation = 90f;
+            }
+        }
+        else if (CounterClockwise)
+        {
+            if (StartRotation >= 270f)
+            {
+                EndRotation = 0f;
+            }
+            else if (StartRotation >= 180f)
+            {
+                EndRotation = 270f;
+            }
+            else if (StartRotation >= 90f)
+            {
+                EndRotation = 180f;
+            }
+            else if (StartRotation >= 0f)
+            {
+                EndRotation = 90f;
+            }
+        }
     }
 }
