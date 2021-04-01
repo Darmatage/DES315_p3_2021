@@ -6,7 +6,6 @@
     <e p="C:\Users\jacpb\Desktop\j.presley\Junior\Spring\DES315\PROJECT3\PROJECT3_GIT\DES315_p3_2021\prototyping3" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="DH_MoveToDestination.cs" t="Include" />
         <e p="Media" t="Include">
           <e p="Media_Students" t="Include">
             <e p="botA06" t="Include">
@@ -18,6 +17,7 @@
             </e>
           </e>
         </e>
+        <e p="NPC_TeacherBot_Approach.cs" t="Include" />
         <e p="OK_FlashKick.cs" t="Include" />
         <e p="Prefabs" t="Include">
           <e p="Prefabs_Students" t="Include">
@@ -39,6 +39,7 @@
             <e p="AdamDoolittle" t="Include">
               <e p="GroundSmashAttack.cs" t="Include" />
               <e p="Jetpack.cs" t="Include" />
+              <e p="SpawnShockWave.cs" t="Include" />
             </e>
             <e p="AkshatMadanScripts" t="Include">
               <e p="AkshatMadanWeapon.cs" t="Include" />
@@ -88,6 +89,11 @@
               <e p="QuillShoot.cs" t="Include" />
             </e>
             <e p="botB01" t="Include">
+              <e p="Arena" t="Include">
+                <e p="botB01_ArenaManager.cs" t="Include" />
+                <e p="botB01_FallingFloor.cs" t="Include" />
+                <e p="botB01_LavaHazard.cs" t="Include" />
+              </e>
               <e p="Attacks" t="Include">
                 <e p="botB01_EarthQuake.cs" t="Include" />
                 <e p="botB01_PushBack.cs" t="Include" />
@@ -153,6 +159,7 @@
             <e p="botB17" t="Include">
               <e p="DH_FlareButton.cs" t="Include" />
               <e p="DH_FlareTrap.cs" t="Include" />
+              <e p="DH_MoveToDestination.cs" t="Include" />
               <e p="DH_SpikeButton.cs" t="Include" />
               <e p="DH_SpikeHazard.cs" t="Include" />
               <e p="DH_SwapperAbility.cs" t="Include" />
@@ -203,8 +210,11 @@
             <e p="MK_Scripts" t="Include">
               <e p="A07_Base.cs" t="Include" />
             </e>
+            <e p="RhiannaPinkerton" t="Include">
+              <e p="LevelRotationManager.cs" t="Include" />
+              <e p="Rotater.cs" t="Include" />
+            </e>
             <e p="RyanGarvan" t="Include">
-              <e p="BotSplincher_DamageBox.cs" t="Include" />
               <e p="BotSplincher_Move.cs" t="Include" />
               <e p="BotSplincher_Teleport.cs" t="Include" />
             </e>
@@ -244,13 +254,18 @@
             <e p="BotBasic_Move.cs" t="Include" />
             <e p="BotBasic_Weapon.cs" t="Include" />
             <e p="ButtonCamerasToggle.cs" t="Include" />
+            <e p="ButtonCameraTopToggle.cs" t="Include" />
             <e p="CameraFollow.cs" t="Include" />
+            <e p="CameraTopDown.cs" t="Include" />
             <e p="dropdownHandler.cs" t="Include" />
             <e p="GameHandler.cs" t="Include" />
             <e p="GameHandler_LastBots.cs" t="Include" />
             <e p="HazardBladeButton.cs" t="Include" />
             <e p="HazardDamage.cs" t="Include" />
             <e p="MainMenuShowcase.cs" t="Include" />
+            <e p="NPC_Damage.cs" t="Include" />
+            <e p="NPC_LoadPlayers.cs" t="Include" />
+            <e p="NPC_PatrolAndAttack.cs" t="Include" />
             <e p="playerParent.cs" t="Include" />
           </e>
         </e>
