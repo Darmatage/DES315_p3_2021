@@ -31,17 +31,13 @@ public class B16_NPC_Movement : MonoBehaviour
 
 	private GameObject enemy;
 	private NavMeshAgent agent;
-	private Rigidbody rigidbody;
 
 	private Weapons_ChaseG weapon;
 
+	private float attachTimer = 0;
+
 	void Start()
 	{
-		if (gameObject.GetComponent<Rigidbody>() != null)
-		{
-			rb = gameObject.GetComponent<Rigidbody>();
-		}
-
 		weapon = GetComponent<Weapons_ChaseG>();
 
 		parentName = this.transform.parent.gameObject.name;
@@ -51,7 +47,7 @@ public class B16_NPC_Movement : MonoBehaviour
 
 		enemy = GetEnemy();
 		agent = GetComponent<NavMeshAgent>();
-		rigidbody = GetComponentInParent<Rigidbody>();
+		rb = GetComponentInParent<Rigidbody>();
 	}
 
 	void Update()
@@ -59,7 +55,11 @@ public class B16_NPC_Movement : MonoBehaviour
 		float botMove = Input.GetAxisRaw(pVertical) * moveSpeed * Time.deltaTime;
 		float botRotate = Input.GetAxisRaw(pHorizontal) * rotateSpeed * Time.deltaTime;
 		
-		if (enemy)
+		if(agent == null)
+        {
+			agent = GetComponent<NavMeshAgent>();
+		}
+		else if (enemy)
         {
 			Vector3 destination = enemy.transform.position;
 			destination.y = transform.position.y;
@@ -68,21 +68,35 @@ public class B16_NPC_Movement : MonoBehaviour
             {
 				isGrounded = false;
 				agent.enabled = false;
+				attachTimer = 0;
 				weapon.StartAttack();
             }
             else if(weapon.Done())
             {
-				agent.enabled = true;
-				agent.destination = destination;
+				attachTimer += Time.deltaTime;
+
+				if (attachTimer > 1.0f)
+                {
+					agent.enabled = true;
+				}
+				
+				if (agent.isOnNavMesh && attachTimer > 1.0f)
+				{
+					agent.destination = destination;
+				}
 			}
-			else
+			else if(Vector3.Distance(destination, transform.position) > 2)
             {
 				transform.LookAt(destination);
 				Vector3 velocity = transform.forward * moveSpeed;
-				velocity.y = rigidbody.velocity.y;
+				velocity.y = rb.velocity.y;
 				
-				rigidbody.velocity = velocity;
+				rb.velocity = velocity;
 			}
+        }
+        else
+        {
+			enemy = GetEnemy();
         }
 
 
