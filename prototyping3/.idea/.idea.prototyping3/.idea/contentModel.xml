@@ -6,6 +6,7 @@
     <e p="C:\Users\jacpb\Desktop\j.presley\Junior\Spring\DES315\PROJECT3\PROJECT3_GIT\DES315_p3_2021\prototyping3" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="KeeganTompkinsTileFall.cs" t="Include" />
         <e p="Media" t="Include">
           <e p="Media_Students" t="Include">
             <e p="botA06" t="Include">
@@ -42,11 +43,19 @@
               <e p="SpawnShockWave.cs" t="Include" />
             </e>
             <e p="AkshatMadanScripts" t="Include">
+              <e p="AkshatMadan_BallLogic.cs" t="Include" />
+              <e p="AkshatMadan_CameraFollow.cs" t="Include" />
+              <e p="AkshatMadan_FollowBall.cs" t="Include" />
+              <e p="AkshatMadan_GoalScript.cs" t="Include" />
               <e p="AkshatMadanWeapon.cs" t="Include" />
             </e>
             <e p="AloraNewbury" t="Include">
               <e p="Teleport.cs" t="Include" />
               <e p="Weapons.cs" t="Include" />
+            </e>
+            <e p="AustinStead_CoOp" t="Include">
+              <e p="AustinStead_Button.cs" t="Include" />
+              <e p="AustinStead_SlidingDoor.cs" t="Include" />
             </e>
             <e p="BotA02" t="Include">
               <e p="Hammer.cs" t="Include" />
@@ -73,6 +82,7 @@
               <e p="BotA10_Bullet.cs" t="Include" />
               <e p="BotA10_Weapon.cs" t="Include" />
               <e p="FlameThrower.cs" t="Include" />
+              <e p="SpikeTrap.cs" t="Include" />
             </e>
             <e p="botA11" t="Include">
               <e p="A11_AttacksManager.cs" t="Include" />
@@ -147,6 +157,8 @@
             <e p="botB12" t="Include">
               <e p="BotB12_CannonBall.cs" t="Include" />
               <e p="BotB12_CannonFire.cs" t="Include" />
+              <e p="CornerCover_Button.cs" t="Include" />
+              <e p="MiddleRotate.cs" t="Include" />
             </e>
             <e p="botB15" t="Include">
               <e p="JWymerClaw.cs" t="Include" />
@@ -154,6 +166,7 @@
               <e p="JWymerPlow.cs" t="Include" />
             </e>
             <e p="botB16" t="Include">
+              <e p="B16_NPC_Movement.cs" t="Include" />
               <e p="Weapons_ChaseG.cs" t="Include" />
             </e>
             <e p="botB17" t="Include">
@@ -177,6 +190,7 @@
             </e>
             <e p="DevinCavness" t="Include">
               <e p="BotBasic_Weapon_DRC.cs" t="Include" />
+              <e p="Elevator_Dummy_DRC.cs" t="Include" />
               <e p="Missile_DRC.cs" t="Include" />
             </e>
             <e p="DevonA13Scripts" t="Include">
@@ -196,12 +210,14 @@
               <e p="BotA14_LaserColliderScript.cs" t="Include" />
             </e>
             <e p="KeeganTompkins" t="Include">
-              <e p="DestroyOnCollide.cs" t="Include" />
-              <e p="LotsaShot.cs" t="Include" />
-              <e p="MortarShot.cs" t="Include" />
-              <e p="RocketJump.cs" t="Include" />
-              <e p="temp.cs" t="Include" />
-              <e p="timedDestroy.cs" t="Include" />
+              <e p="BotScripts" t="Include">
+                <e p="DestroyOnCollide.cs" t="Include" />
+                <e p="LotsaShot.cs" t="Include" />
+                <e p="MortarShot.cs" t="Include" />
+                <e p="RocketJump.cs" t="Include" />
+                <e p="temp.cs" t="Include" />
+                <e p="timedDestroy.cs" t="Include" />
+              </e>
             </e>
             <e p="MarsJurich" t="Include">
               <e p="Mars_Damage.cs" t="Include" />
@@ -269,6 +285,7 @@
             <e p="playerParent.cs" t="Include" />
           </e>
         </e>
+        <e p="TileManager.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
