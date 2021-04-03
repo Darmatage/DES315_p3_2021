@@ -11,7 +11,7 @@ public class PacManMove : MonoBehaviour
     float switchProbability = 0.2f;
 
     NavMeshAgent Agent;
-    Pellet currentPellet, previousPellet;
+    [SerializeField] Pellet currentPellet, previousPellet;
 
     bool traveling, waiting;
     float waitTimer;
