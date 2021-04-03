@@ -40,6 +40,8 @@ public class MineBehavior : MonoBehaviour
     public MineSpawner ParentSpawner;
 
     private AudioSource BeepAudioSource;
+
+    public float KnockBackStrength = 10f;
     
     // Start is called before the first frame update
     void Start()
@@ -128,7 +130,8 @@ public class MineBehavior : MonoBehaviour
         
         else if (isActive && other.gameObject.transform.root.tag.Contains("Player"))
         {
-            float KnockBackStrength = 10f;
+            //other.gameObject.GetComponent<>()
+            
             Vector3 direction = other.transform.position - transform.position;
             Vector3 velocity = direction.normalized * KnockBackStrength + (Vector3.up * (KnockBackStrength / 3f));
             direction.y = 3.0f;
@@ -139,7 +142,8 @@ public class MineBehavior : MonoBehaviour
 
     private void Explode()
     {
-        ParentSpawner.IncrementMines();
+        if (ParentSpawner)
+            ParentSpawner.IncrementMines();
         MineObj.SetActive(false);
         isActive = false;
         Collider.enabled = false;
