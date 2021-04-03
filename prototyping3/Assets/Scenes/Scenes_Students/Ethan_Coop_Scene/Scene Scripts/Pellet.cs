@@ -6,7 +6,7 @@ public class Pellet : MonoBehaviour
 {
     List<Pellet> Pellet_List;
 
-    float pellet_radius = 160f;
+    float pellet_radius = 50f;
     // Start is called before the first frame update
     void Start()
     {
