@@ -13,8 +13,7 @@ namespace Scripts_Students.botB01.Arena
         {
             GameHandler.onBattleStart -= InitializeCamerasDelayed;
         }
-
-
+        
         private void InitializeCamerasDelayed()
         {
             Invoke(nameof(InitializeCameras), 0.1f);

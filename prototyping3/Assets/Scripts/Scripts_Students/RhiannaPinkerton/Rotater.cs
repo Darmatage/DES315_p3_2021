@@ -8,7 +8,7 @@ public class Rotater : MonoBehaviour
 
     [SerializeField] private LevelRotationManager Manager;
     
-    [SerializeField] private float CooldownTimer = 3f;
+    [SerializeField] private float CooldownTimer = 5f;
 
     private float timer = 0f;
 
