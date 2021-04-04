@@ -5,19 +5,30 @@ using UnityEngine;
 public class Pellet : MonoBehaviour
 {
     List<Pellet> Pellet_List;
+<<<<<<< HEAD
     public bool collected = false, finished = false;
     GameObject[] PelletGO;
     List<GameObject> FinishedPellet;
 
     float pellet_radius = 5f;
+=======
+
+    float pellet_radius = 50f;
+>>>>>>> origin/main
     // Start is called before the first frame update
     void Start()
     {
 
+<<<<<<< HEAD
         PelletGO = GameObject.FindGameObjectsWithTag("Pellet");
 
         Pellet_List = new List<Pellet>();
         FinishedPellet = new List<GameObject>();
+=======
+        GameObject[] PelletGO = GameObject.FindGameObjectsWithTag("Pellet");
+
+        Pellet_List = new List<Pellet>();
+>>>>>>> origin/main
 
         for(int i = 0; i < PelletGO.Length; i++)
         {
@@ -56,6 +67,7 @@ public class Pellet : MonoBehaviour
         }
         else
         {
+<<<<<<< HEAD
             Pellet nextPellet = null;
             //int nextIndex = 0;
             
@@ -68,6 +80,16 @@ public class Pellet : MonoBehaviour
                 }  
             }
             nextPellet = Pellet_List[Random.Range(0, Pellet_List.Count)];
+=======
+            Pellet nextPellet;
+            int nextIndex = 0;
+            do
+            {
+                nextIndex = UnityEngine.Random.Range(0, Pellet_List.Count);
+                nextPellet = Pellet_List[nextIndex];
+            }
+            while (nextPellet == PreviousPellet);
+>>>>>>> origin/main
 
             return nextPellet;
         }
@@ -76,6 +98,7 @@ public class Pellet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
         for(int i = 0; i < PelletGO.Length; i++)
         {
             if(PelletGO[i].GetComponent<Pellet>().collected && !FinishedPellet.Contains(PelletGO[i]))
@@ -86,5 +109,8 @@ public class Pellet : MonoBehaviour
 
         if (FinishedPellet.Count == PelletGO.Length)
             finished = true;
+=======
+        
+>>>>>>> origin/main
     }
 }
