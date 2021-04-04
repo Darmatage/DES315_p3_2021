@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BotB09_GoalCheck : MonoBehaviour
 {
@@ -15,9 +16,12 @@ public class BotB09_GoalCheck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(p1entered && p2entered)
+        if (p1entered && p2entered)
         {
             // won
+            // GameObject.FindWithTag("GameHandler").GetComponent<GameHandler>().winnerText
+            GameHandler.winner = "wow";
+            SceneManager.LoadScene("EndSceneCoop");
         }
     }
 
