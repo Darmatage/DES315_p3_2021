@@ -23,7 +23,7 @@ public class B05_UtilitySelector : B05_Node
 
         _nodeState = nodes[cur].Evaluate();
 
-        if (_nodeState == NodeState.SUCCESS)
+        if (_nodeState == NodeState.SUCCESS || _nodeState == NodeState.FAILURE)
             cur = -1;
 
         return _nodeState;
