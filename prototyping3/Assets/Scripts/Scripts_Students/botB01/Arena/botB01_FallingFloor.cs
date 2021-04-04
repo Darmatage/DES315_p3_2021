@@ -9,10 +9,12 @@ namespace Scripts_Students.botB01.Arena
         [Range(0, 10)] public float FallDelay;
         private int state = 0;
 
+        private Collider col;
         private Vector3 spawnPos;
         private void Start()
         {
             fallTimer = 0.0f;
+            col = GetComponent<Collider>();
             spawnPos = transform.position;
         }
 
@@ -33,8 +35,11 @@ namespace Scripts_Students.botB01.Arena
             else if (state >= 2)
             {
                 fallTimer += Time.deltaTime;
-                transform.position = Vector3.Lerp(spawnPos, new Vector3(spawnPos.x, 0, spawnPos.z), 
+                transform.position = Vector3.Lerp(spawnPos, new Vector3(spawnPos.x, -2, spawnPos.z), 
                     Mathf.Pow(fallTimer / FallTime, 2));
+
+                if (fallTimer > FallTime / 2)
+                    col.enabled = false;
             }
         }
 
