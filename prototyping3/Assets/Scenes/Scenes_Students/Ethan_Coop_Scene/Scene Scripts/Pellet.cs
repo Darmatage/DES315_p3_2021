@@ -13,6 +13,7 @@ public class Pellet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         PelletGO = GameObject.FindGameObjectsWithTag("Pellet");
 
         Pellet_List = new List<Pellet>();
@@ -67,7 +68,6 @@ public class Pellet : MonoBehaviour
                 }  
             }
             nextPellet = Pellet_List[Random.Range(0, Pellet_List.Count)];
-
 
             return nextPellet;
         }

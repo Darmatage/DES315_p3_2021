@@ -19,8 +19,8 @@ public class PacManMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Visted_Pellets = new List<Pellet>();
 
+        Visted_Pellets = new List<Pellet>();
         Agent = GetComponent<NavMeshAgent>();
         if(Agent == null)
         {
@@ -30,22 +30,20 @@ public class PacManMove : MonoBehaviour
         {
             if(currentPellet == null)
             {
-
                 GameObject[] PelletsGO = GameObject.FindGameObjectsWithTag("Pellet Start");
-                if (PelletsGO.Length > 0)
+                if(PelletsGO.Length > 0)
                 {
                     int random = Random.Range(0, PelletsGO.Length);
                     startingPellet = PelletsGO[random].GetComponent<Pellet>();
 
-                    if (startingPellet != null)
+                    if(startingPellet != null)
                     {
                         currentPellet = startingPellet;
                     }
-
-                    else
-                    {
-                        Debug.LogError("No Waypoints found");
-                    } 
+                }
+                else
+                {
+                    Debug.LogError("No Waypoints found");
                 }
             }
         }
@@ -97,6 +95,8 @@ public class PacManMove : MonoBehaviour
             }
             while (Visted_Pellets.Contains(nextPellet));
 
+            previousPellet = currentPellet;
+            currentPellet = nextPellet;
         }
 
         Vector3 Target = currentPellet.transform.position;
