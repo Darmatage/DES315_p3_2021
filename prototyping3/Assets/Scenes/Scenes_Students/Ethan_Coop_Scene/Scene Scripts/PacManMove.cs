@@ -8,10 +8,10 @@ public class PacManMove : MonoBehaviour
     bool PatrolWaiting = false;
     float PatrolWaitTime = 3.0f;
 
-    float switchProbability = 0.2f;
+    List<Pellet> Visted_Pellets;
 
     NavMeshAgent Agent;
-    [SerializeField] Pellet currentPellet, previousPellet;
+    [SerializeField] Pellet currentPellet, previousPellet, startingPellet;
 
     bool traveling, waiting;
     float waitTimer;
@@ -19,6 +19,8 @@ public class PacManMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        Visted_Pellets = new List<Pellet>();
         Agent = GetComponent<NavMeshAgent>();
         if(Agent == null)
         {
@@ -28,18 +30,15 @@ public class PacManMove : MonoBehaviour
         {
             if(currentPellet == null)
             {
-                GameObject[] PelletsGO = GameObject.FindGameObjectsWithTag("Pellet");
+                GameObject[] PelletsGO = GameObject.FindGameObjectsWithTag("Pellet Start");
                 if(PelletsGO.Length > 0)
                 {
-                    while(currentPellet == null)
-                    {
-                        int random = Random.Range(0, PelletsGO.Length);
-                        Pellet startingPellet = PelletsGO[random].GetComponent<Pellet>();
+                    int random = Random.Range(0, PelletsGO.Length);
+                    startingPellet = PelletsGO[random].GetComponent<Pellet>();
 
-                        if(startingPellet != null)
-                        {
-                            currentPellet = startingPellet;
-                        }
+                    if(startingPellet != null)
+                    {
+                        currentPellet = startingPellet;
                     }
                 }
                 else
@@ -55,7 +54,7 @@ public class PacManMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(traveling && Agent.remainingDistance <= 1)
+        if(traveling && Agent.remainingDistance <= 1 && !currentPellet.finished)
         {
             traveling = false;
             PelletsVisited++;
@@ -84,7 +83,18 @@ public class PacManMove : MonoBehaviour
     {
         if(PelletsVisited > 0)
         {
-            Pellet nextPellet = currentPellet.GetNextPellet(previousPellet);
+            Visted_Pellets.Add(currentPellet);
+            if(Visted_Pellets.Count >= 5)
+            {
+                Visted_Pellets.RemoveAt(0);
+            }
+            Pellet nextPellet = null;
+            do
+            {
+                nextPellet = currentPellet.GetNextPellet(previousPellet);
+            }
+            while (Visted_Pellets.Contains(nextPellet));
+
             previousPellet = currentPellet;
             currentPellet = nextPellet;
         }
@@ -92,5 +102,6 @@ public class PacManMove : MonoBehaviour
         Vector3 Target = currentPellet.transform.position;
         Agent.SetDestination(Target);
         traveling = true;
+        previousPellet.collected = true;
     }
 }
