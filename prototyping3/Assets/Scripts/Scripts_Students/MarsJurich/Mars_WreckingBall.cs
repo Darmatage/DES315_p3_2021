@@ -31,7 +31,6 @@ class Mars_WreckingBall : MonoBehaviour
     private NPC_LoadPlayers playerLoader;
 
     public Transform wreckingBall;
-    public bool isAttacking = false;
 
     enum WreckingBallState
     {
@@ -42,6 +41,15 @@ class Mars_WreckingBall : MonoBehaviour
     }
 
     private WreckingBallState state = WreckingBallState.Swinging;
+    private WreckingBallState prevState = WreckingBallState.Swinging;
+
+    float trigTimer = 0;
+    float stalledTimer = 0;
+    float stalledTimerMax = 5f;
+    Vector3 oldBallPos;
+    Vector3 targetPos;
+
+    float oldSpeed;
 
     void Start()
     {
@@ -49,6 +57,8 @@ class Mars_WreckingBall : MonoBehaviour
         playerLoader = GetComponent<NPC_LoadPlayers>();
 
         nextPatrolTarget = patrolTarget1;
+
+        oldSpeed = myAgent.speed;
     }
 
     private void Update()
@@ -63,8 +73,8 @@ class Mars_WreckingBall : MonoBehaviour
             distToPlayer2 = Vector3.Distance(player2Target.position, gameObject.transform.position);
 
             //is the player close enough to attack?
-            attackPlayer1 = ((distToPlayer1 <= playerAttackDistance) && (distToPlayer1 < distToPlayer2));
-            attackPlayer2 = ((distToPlayer2 <= playerAttackDistance) && (distToPlayer2 < distToPlayer1));
+            attackPlayer1 = (distToPlayer1 <= playerAttackDistance) && (distToPlayer1 < distToPlayer2);
+            attackPlayer2 = (distToPlayer2 <= playerAttackDistance) && (distToPlayer2 < distToPlayer1);
         }
 
         //am I moving towards the player or my next patrol location? 
@@ -75,8 +85,11 @@ class Mars_WreckingBall : MonoBehaviour
             {
                 transform.LookAt(player1Target);
             }
-            isAttacking = true;
-            AttackPlayer();
+            if (distToPlayer1 < 15f && state == WreckingBallState.Swinging)
+            {
+                state = WreckingBallState.Raise;
+                myAgent.speed = 0;
+            }
         }
         else if (attackPlayer2 == true)
         {
@@ -85,8 +98,11 @@ class Mars_WreckingBall : MonoBehaviour
             {
                 transform.LookAt(player2Target);
             }
-            isAttacking = true;
-            AttackPlayer();
+            if (distToPlayer1 < 15f && state == WreckingBallState.Swinging)
+            {
+                state = WreckingBallState.Raise;
+                myAgent.speed = 0;
+            }
         }
         else
         {
@@ -95,8 +111,6 @@ class Mars_WreckingBall : MonoBehaviour
             {
                 transform.LookAt(nextPatrolTarget);
             }
-            isAttacking = false;
-            AttackPlayer();
         }
 
         //have a I reached a patrol destination, so I should switch to the next?
@@ -120,6 +134,8 @@ class Mars_WreckingBall : MonoBehaviour
         }
 
         UpdateWreckingBall();
+
+        prevState = state;
     }
 
     public void OnCollisionEnter(Collision other)
@@ -168,24 +184,13 @@ class Mars_WreckingBall : MonoBehaviour
         }
     }
 
-    public void AttackPlayer()
-    {
-        if (isAttacking == true)
-        {
-            
-        }
-        else
-        {
-            
-        }
-    }
-
-    float trigTimer = 0;
-    float stalledTimer = 0;
-    float stalledTimerMax = 5f;
+    float timer = 0;
 
     private void UpdateWreckingBall()
     {
+        bool stateChanged = (state != prevState);
+        timer += Time.deltaTime;
+
         if (state == WreckingBallState.Swinging)
         {
             trigTimer += Time.deltaTime * 2f;
@@ -201,11 +206,57 @@ class Mars_WreckingBall : MonoBehaviour
         }
         else if (state == WreckingBallState.Raise)
         {
+            if (stateChanged)
+            {
+                timer = 0;
 
+                float swingSin = Mathf.Sin(trigTimer);
+                float swingCos = Mathf.Cos(trigTimer);
+
+                Vector3 newPos = new Vector3();
+                newPos.x = swingSin * 14f;
+                newPos.z = swingCos * 14f;
+
+                oldBallPos = transform.position + newPos;
+            }
+
+            Vector3 above = transform.position;
+            above.y += 14f;
+
+            wreckingBall.position = Vector3.MoveTowards(wreckingBall.position, above, timer / 2f);
+
+            if (timer >= 1.0f)
+            {
+                state = WreckingBallState.Smash;
+                oldBallPos = above;
+            }
         }
         else if (state == WreckingBallState.Smash)
         {
+            if (stateChanged)
+            {
+                timer = 0;
 
+                if (attackPlayer1 == true)
+                {
+                    targetPos = player1Target.transform.position;
+                }
+                else if (attackPlayer2 == true)
+                {
+                    targetPos = player2Target.transform.position;
+                }
+            }
+
+            Vector3 above = transform.position;
+            above.y += 14f;
+
+            wreckingBall.position = Vector3.MoveTowards(wreckingBall.position, targetPos, timer);
+
+            if (timer >= 1.0f)
+            {
+                state = WreckingBallState.Stalled;
+                oldBallPos = above;
+            }
         }
         else if (state == WreckingBallState.Stalled)
         {
@@ -215,6 +266,7 @@ class Mars_WreckingBall : MonoBehaviour
             {
                 stalledTimer = 0;
                 state = WreckingBallState.Swinging;
+                myAgent.speed = oldSpeed;
             }
         }
     }
