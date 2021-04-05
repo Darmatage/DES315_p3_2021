@@ -273,7 +273,12 @@ public class BotSplincher_Teleport : MonoBehaviour
         {
             if ((transform.root.tag == "Player1" && collider.transform.root.tag == "Player2") || (transform.root.tag == "Player2" && collider.transform.root.tag == "Player1"))
             {
-                enemy = collider.transform.root.GetComponentInChildren<BotBasic_Damage>().transform;
+                BotBasic_Damage enemy_damage = collider.transform.root.GetComponentInChildren<BotBasic_Damage>();
+
+                if (enemy_damage != null)
+                {
+                    enemy = enemy_damage.transform;
+                }
                 break;
             }
         }
