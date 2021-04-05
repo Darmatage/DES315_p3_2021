@@ -14,6 +14,8 @@ public class GroundSmashAttack : MonoBehaviour
 
     public GameObject shockWaveSpawner;
 
+    //public SpawnShockWave shockWave;
+
     //public GameObject shockwave;
     //public GameObject frontShield;
 
@@ -27,6 +29,7 @@ public class GroundSmashAttack : MonoBehaviour
         button3 = gameObject.transform.parent.GetComponent<playerParent>().action3Input;
         button4 = gameObject.transform.parent.GetComponent<playerParent>().action4Input;
 
+        //shockWave = GetComponentInChildren<SpawnShockWave>();
         //shockwaveEndPos = new Vector3(shockwave.transform.position.x + 10, shockwave.transform.position.y, shockwave.transform.position.z + 10);
     }
 
@@ -49,7 +52,7 @@ public class GroundSmashAttack : MonoBehaviour
         if(botController.isGrounded == true)
         {
             isPointedDown = false;
-            shockWaveSpawner.SetActive(false);
+            //shockWaveSpawner.SetActive(false);
         }
     }
 }

@@ -13,7 +13,7 @@ public class SpawnShockWave : MonoBehaviour
 
     float aliveTimer = 5.0f;
     public float speed = 3.0f;
-    float shockWaveCooldown = 0.0f;
+    public float shockWaveCooldown = 0.0f;
 
     public bool canGrow = false;
 
@@ -80,5 +80,6 @@ public class SpawnShockWave : MonoBehaviour
         canGrow = false;
         Destroy(thisShock);
         shockWaveCooldown = 0.0f;
+        this.gameObject.SetActive(false);
     }
 }
