@@ -5,13 +5,15 @@ using UnityEngine;
 public class Lava : MonoBehaviour
 {
 
-    public GameObject Lava;
-    private Timer timer = GetComponent<Timer>();
-    private float remaining;
+    public GameObject lava;
+    public GameObject timerObj;
+    public Timer timer;
+    public bool scaled;
     // Start is called before the first frame update
     void Start()
     {
-        remaining = timer.timeRemaining; 
+        scaled = false;
+        timer = timerObj.GetComponent<Timer>();
     }
 
 
@@ -19,29 +21,33 @@ public class Lava : MonoBehaviour
 
     void Update()
     {
-        transform.localScale = Vector3.Lerp(transform.localScale, targetScale, speed * Time.deltaTime);
 
-        // If you don't want an eased scaling, replace the above line with the following line
-        //   and change speed to suit:
-        // transform.localScale = Vector3.MoveTowards (transform.localScale, targetScale, speed * Time.deltaTime);
+        if ((int)timer.timeRemaining % 10 == 0 && timer.timeRemaining > 0 )
+        {
+            if (scaled == false)
+            {
+                scaled = true;
+                ChangeSize(true);
+            }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-            ChangeSize(true);
-        if (Input.GetKeyDown(KeyCode.DownjArrow))
+        }
+        else
+        {
             ChangeSize(false);
+            scaled = false;
+        }
     }
 
     public void ChangeSize(bool bigger)
     {
 
-        if (bigger)
-            currScale++;
-        else
-            currScale--;
+        if (bigger && scaled)
+        {
+            lava.transform.localScale += new Vector3(0, 4, 0);
+        }
+        
 
-        currScale = Mathf.Clamp(currScale, minSize, maxSize + 1);
 
-        targetScale = baseScale * currScale;
     }
 
 
