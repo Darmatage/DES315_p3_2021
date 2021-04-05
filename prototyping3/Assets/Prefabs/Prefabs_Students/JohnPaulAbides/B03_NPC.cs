@@ -11,11 +11,14 @@ public class B03_NPC : MonoBehaviour
     public Transform target;
     public float attackRange = 10.0f;
     public Rigidbody rigid;
+    public GameObject shotPrefab;
+    public Transform webShot = null;
 
     // attack animation
     public float jumpHeight;
     public AnimationCurve jumpHeightCurve;
     public AnimationCurve jumpAimCurve;
+    public Transform shotOrigin;
 
     private NavMeshAgent myAgent;
     private NPC_LoadPlayers playerLoader;
@@ -27,6 +30,8 @@ public class B03_NPC : MonoBehaviour
     private float timer;
     private int phase;
     private Vector3 startingPos;
+    private bool webShotFlag;
+    public bool webPullFlag;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +74,8 @@ public class B03_NPC : MonoBehaviour
     private void Idle()
     {
         timer += Time.fixedDeltaTime;
+        transform.position = new Vector3(-9.0f, 0.0f, 2.0f);
+        transform.rotation = Quaternion.identity;
 
         if (timer >= 1.0f)
         {
@@ -107,16 +114,49 @@ public class B03_NPC : MonoBehaviour
 
         timer += Time.fixedDeltaTime;
 
-        float lerpPercent = jumpHeightCurve.Evaluate(timer);
-        float lerpTiltPercent = jumpAimCurve.Evaluate(timer);
-        transform.position = (Vector3.Lerp(startingPos, startingPos + Vector3.up * jumpHeight, lerpPercent));
-        Vector3 dir = target.position - transform.position;
-        transform.rotation = (Quaternion.Euler(Quaternion.LookRotation(dir).eulerAngles.x - 180.0f * lerpTiltPercent, Quaternion.LookRotation(dir).eulerAngles.y, transform.rotation.eulerAngles.z));
-
-        if (timer >= 1.0f)
+        if (timer < 1.0f)
         {
-            timer = 0.0f;
-            action = Action.IDLE;
+            float lerpPercent = jumpHeightCurve.Evaluate(timer);
+            float lerpTiltPercent = jumpAimCurve.Evaluate(timer);
+            transform.position = (Vector3.Lerp(startingPos, startingPos + Vector3.up * jumpHeight, lerpPercent));
+            Vector3 dir = target.position - transform.position;
+            transform.rotation = (Quaternion.Euler(Quaternion.LookRotation(dir).eulerAngles.x - 180.0f * lerpTiltPercent, Quaternion.LookRotation(dir).eulerAngles.y, transform.rotation.eulerAngles.z));
+        }
+        else // fire webshot
+        {
+            if (!webShotFlag)
+            {
+                GameObject shot = Instantiate(shotPrefab, shotOrigin.position, transform.rotation * Quaternion.Euler(180.0f, 0.0f, 0.0f));
+                webShot = shot.transform;
+                B03_NPCShot shotComponent = shot.GetComponent<B03_NPCShot>();
+                shotComponent.origin = shotOrigin;
+                shotComponent.parent = this;
+                webShotFlag = true;
+            }
+            else
+            {
+                // web reached, begin stun
+                if (webShot == null)
+                {
+                    webShotFlag = false;
+                    timer = 0.0f;
+                    action = Action.IDLE;
+                }
+
+                if (webPullFlag)
+                {
+                    Vector3 dir = (webShot.position - transform.position).normalized;
+                    rigid.MovePosition(transform.position + dir * 30.0f * Time.fixedDeltaTime);
+                }
+            }
+
+            // spent too much time shooting, return to idle
+            if (timer > 3.0f)
+            {
+                webShotFlag = false;
+                timer = 0.0f;
+                action = Action.IDLE;
+            }
         }
     }
 

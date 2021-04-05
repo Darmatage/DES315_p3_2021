@@ -5,9 +5,8 @@ using UnityEngine;
 public class Pellet : MonoBehaviour
 {
     List<Pellet> Pellet_List;
-    public bool collected = false, finished = false;
+    public bool collected = false;
     GameObject[] PelletGO;
-    List<GameObject> FinishedPellet;
 
     float pellet_radius = 5f;
     // Start is called before the first frame update
@@ -17,7 +16,6 @@ public class Pellet : MonoBehaviour
         PelletGO = GameObject.FindGameObjectsWithTag("Pellet");
 
         Pellet_List = new List<Pellet>();
-        FinishedPellet = new List<GameObject>();
 
         for(int i = 0; i < PelletGO.Length; i++)
         {
@@ -76,15 +74,6 @@ public class Pellet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for(int i = 0; i < PelletGO.Length; i++)
-        {
-            if(PelletGO[i].GetComponent<Pellet>().collected && !FinishedPellet.Contains(PelletGO[i]))
-            {
-                FinishedPellet.Add(PelletGO[i]);
-            }
-        }
-
-        if (FinishedPellet.Count == PelletGO.Length)
-            finished = true;
+        
     }
 }
