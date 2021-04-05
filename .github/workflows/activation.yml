@@ -1,5 +1,7 @@
 name: Acquire activation file
-on: [push]
+on:
+  push:
+    branches: [ activate-license ] # Will only run on the activate-license branch
 jobs:
   activation:
     name: Request manual activation file 🔑

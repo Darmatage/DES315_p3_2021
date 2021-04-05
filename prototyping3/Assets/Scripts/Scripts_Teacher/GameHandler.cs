@@ -19,6 +19,7 @@ public class GameHandler : MonoBehaviour{
     private Slider sliderVolumeCtrl;
 
 	public bool isShowcase = false;
+	public static Scene lastPlayScene;
 	
 	//Co-op game mode variables
 	public bool isCoop = false;
@@ -163,7 +164,6 @@ public class GameHandler : MonoBehaviour{
 			} else {Debug.Log("This Scene depends on static variables from a Co-op Scene");}
 		}
 
-
 		// check for Showcase
 		if (isShowcase == true){
 		if (player1Prefab != null){
@@ -171,6 +171,11 @@ public class GameHandler : MonoBehaviour{
 				Instantiate(cam1Prefab, Player1Holder.transform.position, Player1Holder.transform.rotation, Player1Holder.transform);
 				camStart.SetActive(false);
 			} else {Debug.Log("This Scene depends on static variables from MainMenu Scene");}
+		}
+		
+		//if this scene is a play scene, load into variable for replay:
+		if ((thisScene.name != "Mainmenu")&&(thisScene.name != "EndScene")&&(thisScene.name != "EndSceneCoop")){
+			lastPlayScene = thisScene;
 		}
 		
 		//initial menu displays
@@ -383,7 +388,11 @@ public class GameHandler : MonoBehaviour{
 		p2Health = 20f;
 		p1Shields = 6;
 		p2Shields = 6;
-		SceneManager.LoadScene("Arena1");
+		
+		SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
+		
+		//if (notFirstGame==true){ SceneManager.LoadScene(lastPlayScene);}//shoudl this be .name?
+		//else { SceneManager.LoadScene("Arena1");}
 	}
 	
 	//MainMenu buttons

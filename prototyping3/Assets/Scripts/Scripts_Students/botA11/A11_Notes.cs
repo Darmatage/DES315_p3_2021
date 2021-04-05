@@ -91,11 +91,15 @@ namespace Amogh
             if (other.gameObject.CompareTag("Hazard"))
             {
                 Destroy(gameObject);
-            } 
+            }
             else if (other.gameObject.name.Contains("Bot"))
             {
                 handler.TakeDamage(other.gameObject.transform.root.tag, -1);
                 Destroy(gameObject);
+            }
+            else if (other.gameObject.name.Contains("A11"))
+            {
+                NPC_Damage.health += 1;
             }
         }
     }
