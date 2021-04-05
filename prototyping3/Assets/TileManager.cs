@@ -61,7 +61,7 @@ public class TileManager : MonoBehaviour
 
     public void FightStart()
     {
-        BeginFallRoutine();
+        StartCoroutine(BeginFallRoutine());
         FindObjectOfType<GameHandler>().StartBattle();
     }
 
