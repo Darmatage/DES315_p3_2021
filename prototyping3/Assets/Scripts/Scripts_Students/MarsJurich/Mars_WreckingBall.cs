@@ -32,6 +32,8 @@ class Mars_WreckingBall : MonoBehaviour
 
     public Transform wreckingBall;
 
+    private GameHandler gameHandler;
+
     enum WreckingBallState
     {
         Swinging,
@@ -53,6 +55,11 @@ class Mars_WreckingBall : MonoBehaviour
 
     void Start()
     {
+        if (GameObject.FindWithTag("GameHandler") != null)
+        {
+            gameHandler = GameObject.FindWithTag("GameHandler").GetComponent<GameHandler>();
+        }
+
         myAgent = GetComponent<NavMeshAgent>();
         playerLoader = GetComponent<NPC_LoadPlayers>();
 
@@ -98,7 +105,7 @@ class Mars_WreckingBall : MonoBehaviour
             {
                 transform.LookAt(player2Target);
             }
-            if (distToPlayer1 < 15f && state == WreckingBallState.Swinging)
+            if (distToPlayer2 < 15f && state == WreckingBallState.Swinging)
             {
                 state = WreckingBallState.Raise;
                 myAgent.speed = 0;
@@ -156,6 +163,13 @@ class Mars_WreckingBall : MonoBehaviour
                     Debug.Log("I am teleporting " + GameHandler.player2Prefab + " (Player 2) to " + teleportBelow.position);
                 }
             }
+        }
+
+        if (other.gameObject.tag == "Hazard")
+        {
+            float attackDamage = other.gameObject.GetComponent<HazardDamage>().damage;
+
+            gameHandler.TakeDamage("CoopNPCMonster", attackDamage);
         }
     }
 

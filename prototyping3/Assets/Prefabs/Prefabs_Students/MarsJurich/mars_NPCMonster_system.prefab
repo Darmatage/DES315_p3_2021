@@ -550,7 +550,7 @@ GameObject:
   - component: {fileID: 4422661950308945771}
   m_Layer: 0
   m_Name: WreckingBall
-  m_TagString: Untagged
+  m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -635,7 +635,7 @@ MonoBehaviour:
   SpawnParticlesHere: {x: 0, y: 0, z: 0}
   isPlayer1Weapon: 0
   isPlayer2Weapon: 0
-  isMonsterWeapon: 1
+  isMonsterWeapon: 0
 --- !u!136 &4422661950308945771
 CapsuleCollider:
   m_ObjectHideFlags: 0
