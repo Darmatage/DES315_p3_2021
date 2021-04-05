@@ -332,7 +332,7 @@ public class GameHandler : MonoBehaviour{
 		else if (isCoop == true){winTemp.text = "" + winner;}		
 	}
 	
-	IEnumerator EndGame(){
+	public IEnumerator EndGame(){
 		notFirstGame = true;
 		yield return new WaitForSeconds(0.5f);
 		//Debug.Log("Game Over! \n Winner = " + winner);		
@@ -352,7 +352,7 @@ public class GameHandler : MonoBehaviour{
 		}
 	}
 	
-	IEnumerator CoopEndGame(){
+	public IEnumerator CoopEndGame(){
 		notFirstGame = true;
 		if ((coopPlayer1Dead == true)&&(coopPlayer2Dead == true)){
 			winner = coopDefeatMsg;
