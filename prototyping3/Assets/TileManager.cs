@@ -39,8 +39,6 @@ public class TileManager : MonoBehaviour
             Grid[index].GetComponent<KeeganTompkinsTileFall>().Safe();
             Grid.RemoveAt(index);
         }
-
-        StartCoroutine(BeginFallRoutine());
     }
 
     IEnumerator BeginFallRoutine()
