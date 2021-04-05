@@ -43,7 +43,8 @@ public class Jetpack : MonoBehaviour
                 //Debug.Log(fuel);
                 if (isFacingUp == false)
                 {
-                    transform.Rotate(-90, 0, 0);
+                    //transform.Rotate(-90, 0, 0);
+                    transform.rotation = Quaternion.Euler(-90, 0, 0);
                     isFacingUp = true;
                 }
                 if (isParticlePlaying == false)

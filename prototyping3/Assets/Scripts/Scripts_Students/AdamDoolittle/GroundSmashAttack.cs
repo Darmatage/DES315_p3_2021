@@ -12,6 +12,8 @@ public class GroundSmashAttack : MonoBehaviour
     bool isPointedDown = false;
     bool isCollidingWithFloor = false;
 
+    public GameObject shockWaveSpawner;
+
     //public GameObject shockwave;
     //public GameObject frontShield;
 
@@ -38,13 +40,16 @@ public class GroundSmashAttack : MonoBehaviour
             rb.AddForce(rb.centerOfMass - new Vector3(0, botController.boostSpeed * 50, 0), ForceMode.Impulse);
             if(isPointedDown == false)
             {
-                transform.Rotate(180, 0, 0);
+                //transform.Rotate(180, 0, 0);
+                transform.rotation = Quaternion.Euler(90, 0, 0);
+                shockWaveSpawner.SetActive(true);
                 isPointedDown = true;
             }
         }
         if(botController.isGrounded == true)
         {
             isPointedDown = false;
+            shockWaveSpawner.SetActive(false);
         }
     }
 }

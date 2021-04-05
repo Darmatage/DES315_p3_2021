@@ -5120,7 +5120,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   compassSides: {fileID: 1029706280859159121}
   compassVertical: {fileID: 4587639291210960121}
+  sidelimit: 0.75
   knockBackSpeed: 10
+  forceSideLimit_p75: 1
   shieldPowerFront: 5
   shieldPowerBack: 5
   shieldPowerLeft: 5
@@ -5201,6 +5203,7 @@ MonoBehaviour:
   button2: 
   button3: 
   button4: 
+  shockWaveSpawner: {fileID: 1581507978386451248}
 --- !u!1 &1355330930662561729
 GameObject:
   m_ObjectHideFlags: 0
@@ -5327,7 +5330,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4444063290360097218
 Transform:
   m_ObjectHideFlags: 0
@@ -5369,8 +5372,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shockwave: {fileID: 4111615730738940329, guid: 9c64919d93d9c16468c95634e1d341d5,
     type: 3}
+  newShock: {fileID: 0}
   targetScale: {x: 0, y: 0, z: 0}
   speed: 0.5
+  canGrow: 0
   botController: {fileID: 0}
 --- !u!1 &4587639291210960121
 GameObject:
@@ -5515,6 +5520,7 @@ MonoBehaviour:
   SpawnParticlesHere: {x: 0, y: 0, z: 0}
   isPlayer1Weapon: 0
   isPlayer2Weapon: 0
+  isMonsterWeapon: 0
 --- !u!1 &9087276614291981752
 GameObject:
   m_ObjectHideFlags: 0
