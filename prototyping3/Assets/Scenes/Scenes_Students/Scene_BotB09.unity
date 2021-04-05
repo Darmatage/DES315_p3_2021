@@ -7231,6 +7231,7 @@ GameObject:
   - component: {fileID: 1394344774}
   - component: {fileID: 1394344773}
   - component: {fileID: 1394344772}
+  - component: {fileID: 1394344775}
   m_Layer: 8
   m_Name: EndPad
   m_TagString: Untagged
@@ -7312,6 +7313,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1394344770}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1394344775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394344770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28c59efc2f350a449779db8b95fe268, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  p1entered: 0
+  p2entered: 0
 --- !u!1 &1422667866
 GameObject:
   m_ObjectHideFlags: 0
