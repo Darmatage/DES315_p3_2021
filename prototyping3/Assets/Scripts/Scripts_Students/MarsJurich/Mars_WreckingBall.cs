@@ -45,7 +45,7 @@ class Mars_WreckingBall : MonoBehaviour
 
     float trigTimer = 0;
     float stalledTimer = 0;
-    float stalledTimerMax = 5f;
+    float stalledTimerMax = 2.5f;
     Vector3 oldBallPos;
     Vector3 targetPos;
 
@@ -134,8 +134,6 @@ class Mars_WreckingBall : MonoBehaviour
         }
 
         UpdateWreckingBall();
-
-        prevState = state;
     }
 
     public void OnCollisionEnter(Collision other)
@@ -229,6 +227,7 @@ class Mars_WreckingBall : MonoBehaviour
             {
                 state = WreckingBallState.Smash;
                 oldBallPos = above;
+                return;
             }
         }
         else if (state == WreckingBallState.Smash)
@@ -247,15 +246,12 @@ class Mars_WreckingBall : MonoBehaviour
                 }
             }
 
-            Vector3 above = transform.position;
-            above.y += 14f;
-
             wreckingBall.position = Vector3.MoveTowards(wreckingBall.position, targetPos, timer);
 
             if (timer >= 1.0f)
             {
                 state = WreckingBallState.Stalled;
-                oldBallPos = above;
+                return;
             }
         }
         else if (state == WreckingBallState.Stalled)
@@ -267,7 +263,10 @@ class Mars_WreckingBall : MonoBehaviour
                 stalledTimer = 0;
                 state = WreckingBallState.Swinging;
                 myAgent.speed = oldSpeed;
+                return;
             }
         }
+
+        prevState = state;
     }
 }
