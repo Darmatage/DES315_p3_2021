@@ -60,7 +60,7 @@ public class PacManMove : MonoBehaviour
 
         if (finished_Pellet_count == GameObject.FindGameObjectsWithTag("Pellet").Length)
         {
-            finished = true;
+            GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>().CoopEndGame();
         }
 
         if (start)
