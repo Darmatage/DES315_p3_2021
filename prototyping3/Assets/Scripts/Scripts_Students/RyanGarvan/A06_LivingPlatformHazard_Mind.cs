@@ -57,8 +57,10 @@ public class A06_LivingPlatformHazard_Mind : MonoBehaviour
             case MOOD.SPRING:
                 break;
             case MOOD.SUMMER:
+                our_mass.transform.parent.localPosition = new Vector3(Random.Range(-0.1f, 0.1f), 0, Random.Range(-0.1f, 0.1f));
                 break;
             case MOOD.AUTUMN:
+                our_mass.transform.parent.localPosition = Vector3.zero;
                 if (transform.position.y < our_home.y + a_ways_above)
                 {
                     transform.position += Vector3.up * a_leisurely_pace * Time.deltaTime;
