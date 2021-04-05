@@ -33,4 +33,17 @@ public class BotB09_WallButton : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        move = !move;
+        if (move)
+        {
+            gameObject.GetComponent<Renderer>().material = onMat;
+        }
+        else
+        {
+            gameObject.GetComponent<Renderer>().material = offMat;
+        }
+    }
+
 }
