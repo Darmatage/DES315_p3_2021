@@ -1304,8 +1304,8 @@ GameObject:
   - component: {fileID: 148329363}
   - component: {fileID: 148329368}
   - component: {fileID: 148329367}
-  - component: {fileID: 148329366}
   - component: {fileID: 148329365}
+  - component: {fileID: 148329366}
   m_Layer: 0
   m_Name: InnerRing
   m_TagString: Untagged
@@ -1342,8 +1342,8 @@ MonoBehaviour:
   move: 0
   offMat: {fileID: 2100000, guid: cdffad94d108f954089e6c9c9acce2f1, type: 2}
   onMat: {fileID: 2100000, guid: 4803274b50d77bc43857804c856c3e3a, type: 2}
---- !u!136 &148329366
-CapsuleCollider:
+--- !u!65 &148329366
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1352,10 +1352,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  serializedVersion: 2
+  m_Size: {x: 1.0000005, y: 2.0000048, z: 1.0000007}
+  m_Center: {x: 0.00000002980233, y: -2.8712335e-13, z: 0.00000014901158}
 --- !u!23 &148329367
 MeshRenderer:
   m_ObjectHideFlags: 0
