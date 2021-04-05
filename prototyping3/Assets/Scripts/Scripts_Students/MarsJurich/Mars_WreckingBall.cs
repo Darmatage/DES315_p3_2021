@@ -41,7 +41,7 @@ class Mars_WreckingBall : MonoBehaviour
         Stalled
     }
 
-    private WreckingBallState state;
+    private WreckingBallState state = WreckingBallState.Swinging;
 
     void Start()
     {
@@ -180,22 +180,24 @@ class Mars_WreckingBall : MonoBehaviour
         }
     }
 
-    float stalledTimer;
+    float trigTimer = 0;
+    float stalledTimer = 0;
     float stalledTimerMax = 5f;
 
     private void UpdateWreckingBall()
     {
         if (state == WreckingBallState.Swinging)
         {
-            float swingSin = Mathf.Sin(Time.deltaTime);
-            float swingCos = Mathf.Cos(Time.deltaTime);
+            trigTimer += Time.deltaTime * 2f;
+
+            float swingSin = Mathf.Sin(trigTimer);
+            float swingCos = Mathf.Cos(trigTimer);
             
             Vector3 newPos = new Vector3();
-            newPos.x = gameObject.transform.position.x + swingSin;
-            newPos.y = gameObject.transform.position.y;
-            newPos.z = gameObject.transform.position.z + swingCos;
+            newPos.x = swingSin * 14f;
+            newPos.z = swingCos * 14f;
 
-            wreckingBall.position = newPos;
+            wreckingBall.position = transform.position + newPos;
         }
         else if (state == WreckingBallState.Raise)
         {
