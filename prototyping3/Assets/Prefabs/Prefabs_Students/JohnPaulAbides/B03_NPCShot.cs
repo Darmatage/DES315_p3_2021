@@ -7,7 +7,7 @@ public class B03_NPCShot : MonoBehaviour
     public B03_NPC parent;
     public Transform origin;
     public Transform web;
-    public float speed = 15.0f;
+    public float speed = 20.0f;
 
     private Rigidbody rigid;
     private bool hitFlag;
@@ -31,7 +31,7 @@ public class B03_NPCShot : MonoBehaviour
     {
         timer += Time.deltaTime;
         // update web appearance
-        //web.localPosition = (origin.position - transform.position) / 2.0f;
+        web.position = (origin.position + transform.position) / 2.0f;
         web.localScale = new Vector3(0.25f, 0.25f, Vector3.Distance(origin.position, transform.position));
     }
 
@@ -43,6 +43,7 @@ public class B03_NPCShot : MonoBehaviour
         if (other.gameObject.transform.root.name == "B03_NPCMonster")
         {
             parent.webShot = null;
+            parent.webPullFlag = false;
             Destroy(gameObject);
         }
         else
