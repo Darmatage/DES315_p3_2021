@@ -14,7 +14,10 @@ namespace Amogh
         private float timer = 10f;
         private ParticleSystem boomChildParticles;
         private Animator bassAnimator;
-        void Start()
+
+        private Vector3 target;
+        private bool useTarget;
+        void Awake()
         {
             boomChildParticles = bassChild.GetComponentInChildren<ParticleSystem>();
             bassAnimator = bassChild.GetComponent<Animator>();
@@ -63,10 +66,18 @@ namespace Amogh
             {
                 GameObject shuriken = Instantiate(boomShurikenPrefab,
                     bassChild.transform.position + bassChild.transform.forward, Quaternion.identity);
-
-                var rb = shuriken.GetComponent<Rigidbody>();
                 
-                rb.velocity = bassChild.transform.forward * force;
+                shuriken.SetActive(true);
+                var rb = shuriken.GetComponent<Rigidbody>();
+
+                if (useTarget == false)
+                {
+                    rb.velocity = bassChild.transform.forward * force;
+                }
+                else
+                {
+                    rb.velocity = (target - bassChild.transform.position).normalized * force;
+                }
                 
                 Destroy(shuriken, 3f);
                 yield return new WaitForSeconds(0.5f);
@@ -111,6 +122,12 @@ namespace Amogh
         public void ButtonUp()
         {
             
+        }
+
+        public void SetTarget(Vector3 pos)
+        {
+            target = pos;
+            useTarget = true;
         }
     }
 }

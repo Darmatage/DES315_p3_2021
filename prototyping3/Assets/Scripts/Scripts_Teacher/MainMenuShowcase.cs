@@ -10,7 +10,7 @@ public class MainMenuShowcase : MonoBehaviour{
 	public GameHandler gameHandlerObj;		
 		
 	public void Showcase(){
-		GameHandler.player1Prefab = botPrefab;
+		//GameHandler.player1Prefab = botPrefab; 	//This command was for project #3
 		SceneManager.LoadScene(myScene);
 	}
 

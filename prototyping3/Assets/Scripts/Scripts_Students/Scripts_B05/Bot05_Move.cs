@@ -63,6 +63,10 @@ public class Bot05_Move : MonoBehaviour
     public Material eye2;
     public MeshRenderer eyeball;
 
+    public bool b_isBot = false;
+    public float horizontal_movement = 0.0f;
+    public float vertical_movement = 0.0f;
+
     void Start()
     {
         if (gameObject.GetComponent<Rigidbody>() != null)
@@ -94,6 +98,12 @@ public class Bot05_Move : MonoBehaviour
     {
         float botMove = Input.GetAxisRaw(pVertical) * moveSpeed * Time.deltaTime;
         float botRotate = Input.GetAxisRaw(pHorizontal) * rotateSpeed * Time.deltaTime;
+
+        if (b_isBot)
+        {
+            botMove = vertical_movement * moveSpeed * Time.deltaTime;
+            botRotate = horizontal_movement * rotateSpeed * Time.deltaTime;
+        }
 
         if (isGrabbed == false)
         {

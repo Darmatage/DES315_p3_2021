@@ -9,14 +9,16 @@ namespace Amogh
     {
         private Transform dad;
         private NavMeshAgent agent;
-
+        
         [SerializeField] private float radius;
 
         [SerializeField] private GameObject[] notes;
         
         [SerializeField] private AudioClip healsSong;
         private AudioSource source;
-        
+
+        private int numShurikens = 2;
+        private float burstTime = 0.5f, delay = 1f;
         void Start()
         {
             agent = GetComponent<NavMeshAgent>();
@@ -43,15 +45,15 @@ namespace Amogh
         {
             while (true)
             {
-                for (int i = 0; i < 2; ++i)
+                for (int i = 0; i < numShurikens; ++i)
                 {
                     GameObject note = Instantiate(notes[Random.Range(0,2)], transform.position + (transform.up * 4) + transform.right, Quaternion.identity);
                     note.GetComponent<A11_Notes>().SetTrackingTransform(dad);
                     
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(burstTime);
                 }
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(delay);
             }
         }
         
@@ -84,6 +86,13 @@ namespace Amogh
                 dad.gameObject.GetComponent<A11_Heal>().MiniBotDeath();
             }
             
+        }
+
+        public void SetShurikenParameters(int num, float burst1, float burst2)
+        {
+            numShurikens = num;
+            burstTime = burst1;
+            delay = burst2;
         }
     }
 }
