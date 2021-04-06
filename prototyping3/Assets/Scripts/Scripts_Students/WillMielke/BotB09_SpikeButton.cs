@@ -11,7 +11,6 @@ public class BotB09_SpikeButton : MonoBehaviour
 	public float spikeMoveTime = 1.0f;
 	public Transform spikePathStart;
 	public Transform spikePathEnd;
-	public bool atStart = true;
 	public float SpikeDownDuration;
 	public bool stopForever;
 	public bool goingUp = false;
