@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class B05N_BladeRush : B05_UNode
 {
+    private float IDEAL_DIST = 5.0f;
+    private float BAD_DIST = 30.0f;
+
     private B05_BladeRush rush;
     private Bot05_Move bot;
     private Transform enemy;
@@ -45,18 +48,19 @@ public class B05N_BladeRush : B05_UNode
 
     public override float CalcScore()
     {
+
         if (!IsAvaliable())
             return 0.0f;
 
         float dist = Vector3.Distance(enemy.position, ai.transform.position);
 
-        if (dist >= ai.distance_goal)
+        if (dist <= IDEAL_DIST)
         {
             return 1.0f;
         }
         else
         {
-            return ((ai.distance_goal - dist)/ai.distance_goal) + 1.0f;
+            return Mathf.Clamp(1 - (dist / BAD_DIST), 0.0f, 1.0f);
         }
     }
 }

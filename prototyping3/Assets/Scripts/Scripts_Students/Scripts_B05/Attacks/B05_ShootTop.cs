@@ -128,4 +128,9 @@ public class B05_ShootTop : MonoBehaviour
     {
         b_cooling = false;
     }
+
+    public bool IsAvaliable()
+    {
+        return top_count < top_max;
+    }
 }

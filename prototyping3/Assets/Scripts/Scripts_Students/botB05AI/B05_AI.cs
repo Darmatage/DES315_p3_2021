@@ -49,18 +49,26 @@ public class B05_AI : MonoBehaviour
 
     private void ConstructBehaviorTree()
     {
-        // move branch
+        // idle branch
+        B05N_Idle idle_node = new B05N_Idle();
         B05N_FaceEnemy turn_node = new B05N_FaceEnemy(enemy_trans, GetComponent<Bot05_Move>());
+        B05_UIgnoreFailure ignore_turn = new B05_UIgnoreFailure(turn_node);
+        B05_USim idle_branch = new B05_USim(new List<B05_UNode> { ignore_turn, idle_node });
+
+        // move branch
         B05N_Move move_node = new B05N_Move(enemy_trans, agent, this);
         B05_USim moveAndTurn = new B05_USim(new List<B05_UNode> { move_node, turn_node });
 
         // blade rush branch
-        B05_UIgnoreFailure ignore_turn = new B05_UIgnoreFailure(turn_node);
         B05N_BladeRush rush_node = new B05N_BladeRush(GetComponent<B05_BladeRush>(), GetComponent<Bot05_Move>(), enemy_trans, this);
         B05_USequence rush_seq = new B05_USequence(new List<B05_UNode> { ignore_turn, rush_node });
 
+        // shoot branch
+        B05N_Shoot shoot_node = new B05N_Shoot(enemy_trans, enemy.GetComponentInChildren<Rigidbody>(),
+                                               GetComponent<Bot05_Move>(), GetComponent<B05_ShootTop>());
+
         // utility node 
-        topNode = new B05_UtilitySelector(new List<B05_UNode> { moveAndTurn, rush_seq });
+        topNode = new B05_UtilitySelector(new List<B05_UNode> { idle_branch, moveAndTurn, rush_seq, shoot_node });
     }
 
     // Update is called once per frame
