@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TileManager : MonoBehaviour
 {
+    public int SafeTiles = 1;
+
     public Vector2Int GridWidth = new Vector2Int(2, 2);
     public GameObject TilePrefab = null;
 
@@ -31,7 +33,12 @@ public class TileManager : MonoBehaviour
             }
         }
 
-        StartCoroutine(BeginFallRoutine());
+        for (int i = 0; i < SafeTiles; ++i)
+        {
+            int index = Random.Range(0, Grid.Count);
+            Grid[index].GetComponent<KeeganTompkinsTileFall>().Safe();
+            Grid.RemoveAt(index);
+        }
     }
 
     IEnumerator BeginFallRoutine()
@@ -46,9 +53,15 @@ public class TileManager : MonoBehaviour
         }
     }
 
+    public Vector3 RandomTilePos()
+    {
+        int index = Random.Range(0, Grid.Count);
+        return Grid[index].transform.position;
+    }
+
     public void FightStart()
     {
-        BeginFallRoutine();
+        StartCoroutine(BeginFallRoutine());
         FindObjectOfType<GameHandler>().StartBattle();
     }
 

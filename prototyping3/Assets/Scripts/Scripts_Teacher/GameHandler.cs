@@ -19,13 +19,15 @@ public class GameHandler : MonoBehaviour{
     private Slider sliderVolumeCtrl;
 
 	public bool isShowcase = false;
-	public static Scene lastPlayScene;
+	public static string lastPlayScene;
 	
 	//Co-op game mode variables
 	public bool isCoop = false;
 	private static bool coopPlayer1Dead = false;
 	private static bool coopPlayer2Dead = false;
 	private static bool coopMonsterDead = false;
+	public bool coopMonsterWins = false;	
+	public bool coopPlayersWin = false;
 	private static float monsterHealth;
 	public GameObject monsterHealthText;
 	public string coopDefeatMsg = "The Monster defeated the players.";
@@ -75,6 +77,7 @@ public class GameHandler : MonoBehaviour{
 	public int gameTime = 60;
 	public GameObject gameTimerText;
 	private float gameTimer = 0f;
+	private bool isGameTime = false;
 
 	//Variables for Bot arrays
 	public string[] botNames;	
@@ -175,7 +178,7 @@ public class GameHandler : MonoBehaviour{
 		
 		//if this scene is a play scene, load into variable for replay:
 		if ((thisScene.name != "Mainmenu")&&(thisScene.name != "EndScene")&&(thisScene.name != "EndSceneCoop")){
-			lastPlayScene = thisScene;
+			lastPlayScene = thisScene.name;
 		}
 		
 		//initial menu displays
@@ -234,18 +237,20 @@ public class GameHandler : MonoBehaviour{
 	}
 
 	void FixedUpdate(){
-		gameTimer += 0.01f;
-		if (gameTime <= 0){
-			gameTime = 0;
-			if (isCoop == false){
-				winner = "Time's up! \nNo winner. \nP1 Health = " + p1Health + " \nP2 Health = " + p2Health;
-				StartCoroutine(EndGame());
+		if (isGameTime==true){
+			gameTimer += 0.01f;
+			if (gameTime <= 0){
+				gameTime = 0;
+				if (isCoop == false){
+					winner = "Time's up! \nNo winner. \nP1 Health = " + p1Health + " \nP2 Health = " + p2Health;
+					StartCoroutine(EndGame());
+				}
 			}
-		}
-		else if ((gameTimer >= 1f)&&(thisScene.name != "EndScene")){
-			gameTime -= 1;
-		    UpdateStats();
-			gameTimer = 0;
+			else if ((gameTimer >= 1f)&&(thisScene.name != "EndScene")){
+				gameTime -= 1;
+				UpdateStats();
+				gameTimer = 0;
+			}
 		}
 	}
 
@@ -323,7 +328,6 @@ public class GameHandler : MonoBehaviour{
 			else { p2Ntemp.text = ""; }
 		}
 		
-		
 		Text GTtemp = gameTimerText.GetComponent<Text>();
 		GTtemp.text = "" + gameTime;
 		
@@ -332,7 +336,7 @@ public class GameHandler : MonoBehaviour{
 		else if (isCoop == true){winTemp.text = "" + winner;}		
 	}
 	
-	IEnumerator EndGame(){
+	public IEnumerator EndGame(){
 		notFirstGame = true;
 		yield return new WaitForSeconds(0.5f);
 		//Debug.Log("Game Over! \n Winner = " + winner);		
@@ -352,7 +356,7 @@ public class GameHandler : MonoBehaviour{
 		}
 	}
 	
-	IEnumerator CoopEndGame(){
+	public IEnumerator CoopEndGame(){
 		notFirstGame = true;
 		if ((coopPlayer1Dead == true)&&(coopPlayer2Dead == true)){
 			winner = coopDefeatMsg;
@@ -368,6 +372,23 @@ public class GameHandler : MonoBehaviour{
 				SceneManager.LoadScene ("EndSceneCoop");
 			}
 		}
+		
+		if (coopMonsterWins == true){
+			winner = coopDefeatMsg;
+			yield return new WaitForSeconds(1.0f);		
+			if ((thisScene.name != "EndScene")&&(isShowcase == false)&&(thisScene.name != "MainMenu")&&(thisScene.name != "EndSceneCoop")){
+				SceneManager.LoadScene ("EndSceneCoop");
+			}
+		}
+		if (coopPlayersWin == true){
+			winner = coopWinMsg;
+			yield return new WaitForSeconds(1.0f);
+			if ((thisScene.name != "EndScene")&&(isShowcase == false)&&(thisScene.name != "MainMenu")&&(thisScene.name != "EndSceneCoop")){
+				SceneManager.LoadScene ("EndSceneCoop");
+			}
+		}
+		
+		
 	}
 	
 	//Pause Menu 2/2
@@ -388,11 +409,22 @@ public class GameHandler : MonoBehaviour{
 		p2Health = 20f;
 		p1Shields = 6;
 		p2Shields = 6;
-		
-		SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
-		
-		//if (notFirstGame==true){ SceneManager.LoadScene(lastPlayScene);}//shoudl this be .name?
-		//else { SceneManager.LoadScene("Arena1");}
+		SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);	
+	}
+	
+	public void Replay(){
+		Time.timeScale = 1f;
+		//restart the game:
+		p1Health = 20f;
+		p2Health = 20f;
+		p1Shields = 6;
+		p2Shields = 6;
+		if (notFirstGame==true){ 
+			SceneManager.LoadScene(lastPlayScene);
+		} 
+		else { 
+			SceneManager.LoadScene("MainMenu");
+		}
 	}
 	
 	//MainMenu buttons
@@ -459,6 +491,8 @@ public class GameHandler : MonoBehaviour{
 		
 		GameObject camTop = Instantiate(camTopPrefab, camTopHolder.position, camTopHolder.rotation);
 		camTop.GetComponent<CameraTopDown>().loadPlayers(Player1, Player2);
+		
+		isGameTime = true;
 		
 		if (isCoop==true){
 			GameObject.FindWithTag("CoopNPCMonster").GetComponent<NPC_LoadPlayers>().LoadPlayerTargets();

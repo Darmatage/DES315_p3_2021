@@ -90,4 +90,9 @@ public class B05_BladeRush : MonoBehaviour
         vent.material = mat_able;
         timer = 0.0f;
     }
+
+    public bool IsAvaliable()
+    {
+        return !b_active && b05.IsState(Bot05_Move.STATE.NORMAL);
+    }
 }
