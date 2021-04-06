@@ -316,7 +316,7 @@ public class GameHandler_Version2 : MonoBehaviour
 		p2Health = 20f;
 		p1Shields = 6;
 		p2Shields = 6;
-		SceneManager.LoadScene("Arena1");
+		SceneManager.LoadScene("AloraNewbury");
 	}
 
 	//MainMenu buttons
@@ -331,7 +331,7 @@ public class GameHandler_Version2 : MonoBehaviour
 	}
 	public void StartGame()
 	{
-		SceneManager.LoadScene("Arena1");
+		SceneManager.LoadScene("AloraNewbury");
 	}
 
 	//hit FIGHT button in player choice menu to start the battle
