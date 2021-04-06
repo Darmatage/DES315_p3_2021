@@ -509,6 +509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer1: 1
+  isNPC: 0
 --- !u!1 &89466271
 GameObject:
   m_ObjectHideFlags: 0
@@ -2726,6 +2727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer1: 0
+  isNPC: 0
 --- !u!1 &687608132
 GameObject:
   m_ObjectHideFlags: 0
@@ -9366,7 +9368,7 @@ PrefabInstance:
     - target: {fileID: 4891277829213288362, guid: c681e2acc7fb60b429fab8ef49065e29,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartGameCoop
+      value: Restart
       objectReference: {fileID: 0}
     - target: {fileID: 4891277829641853871, guid: c681e2acc7fb60b429fab8ef49065e29,
         type: 3}
