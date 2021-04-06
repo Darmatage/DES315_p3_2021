@@ -5,6 +5,7 @@ using UnityEngine;
 public class BotB09_WallButton : MonoBehaviour
 {
     public bool move;
+    public bool oneUse;
     public Material offMat;
     public Material onMat;
 
@@ -17,12 +18,18 @@ public class BotB09_WallButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        move = !move;
+        if(oneUse)
+        {
+            if (!move)
+                move = true;
+        }
+        else
+            move = !move;
         if(move)
         {
             gameObject.GetComponent<Renderer>().material = onMat;
@@ -35,7 +42,14 @@ public class BotB09_WallButton : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        move = !move;
+        if (oneUse)
+        {
+            if (!move)
+                move = true;
+        }
+        else
+            move = !move;
+
         if (move)
         {
             gameObject.GetComponent<Renderer>().material = onMat;
