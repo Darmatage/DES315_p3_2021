@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\Mark\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Mark\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_prototyping3.-1869623888.00" t="ExcludeRecursive" />
-    <e p="D:\Libraries\Documents\Development\School\DES315\DES315_p3_2021\prototyping3" t="IncludeRecursive">
+    <e p="C:\Users\jacpb\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\jacpb\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_prototyping3.1346789786.00" t="ExcludeRecursive" />
+    <e p="C:\Users\jacpb\Desktop\j.presley\Junior\Spring\DES315\PROJECT3\PROJECT3_GIT\DES315_p3_2021\prototyping3" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="KeeganTompkinsTileFall.cs" t="Include" />
+        <e p="KeeganTompkinsTileTeleport.cs" t="Include" />
         <e p="Media" t="Include">
           <e p="Media_Students" t="Include">
             <e p="botA06" t="Include">
@@ -24,6 +25,7 @@
           <e p="Prefabs_Students" t="Include">
             <e p="JohnPaulAbides" t="Include">
               <e p="B03_NPC.cs" t="Include" />
+              <e p="B03_NPCShot.cs" t="Include" />
             </e>
             <e p="Oussama" t="Include">
               <e p="OK_particles.cs" t="Include" />
@@ -50,6 +52,13 @@
                 <e p="Pellet.cs" t="Include" />
               </e>
             </e>
+            <e p="Scene_DieterVoegels" t="Include">
+              <e p="FloorSwapper" t="Include">
+                <e p="FloorSwapperButtonManager.cs" t="Include" />
+                <e p="FloorSwapperManager.cs" t="Include" />
+                <e p="FloorSwapperTileRingManager.cs" t="Include" />
+              </e>
+            </e>
           </e>
         </e>
         <e p="Scripts" t="Include">
@@ -74,7 +83,14 @@
               <e p="AkshatMadanWeapon.cs" t="Include" />
             </e>
             <e p="AloraNewbury" t="Include">
+              <e p="ButtonPress.cs" t="Include" />
+              <e p="dropdownHandler.cs" t="Include" />
+              <e p="GameHandler_LastBot_V2.cs" t="Include" />
+              <e p="GameHandler_Version2.cs" t="Include" />
+              <e p="Lava.cs" t="Include" />
+              <e p="OpenGate.cs" t="Include" />
               <e p="Teleport.cs" t="Include" />
+              <e p="Timer.cs" t="Include" />
               <e p="Weapons.cs" t="Include" />
             </e>
             <e p="AustinStead_CoOp" t="Include">
@@ -96,6 +112,7 @@
               <e p="A08_ProjectileAttack.cs" t="Include" />
               <e p="A08_ProjectileParticle.cs" t="Include" />
               <e p="leechAttack.cs" t="Include" />
+              <e p="LorenzoDeMaine_TrapTrigger.cs" t="Include" />
             </e>
             <e p="botA09" t="Include">
               <e p="Barrel.cs" t="Include" />
@@ -120,6 +137,7 @@
               <e p="A11_JukeBox.cs" t="Include" />
               <e p="A11_MiniBot.cs" t="Include" />
               <e p="A11_Notes.cs" t="Include" />
+              <e p="A11_NPC_Monster.cs" t="Include" />
               <e p="MusicManager.cs" t="Include" />
             </e>
             <e p="botA15" t="Include">
@@ -173,6 +191,26 @@
               <e p="BotB04_WeaponHandler.cs" t="Include" />
               <e p="Bullet.cs" t="Include" />
             </e>
+            <e p="botB05AI" t="Include">
+              <e p="B05_AI.cs" t="Include" />
+              <e p="BehaviorTree" t="Include">
+                <e p="B05_Node.cs" t="Include" />
+                <e p="B05_Sequence.cs" t="Include" />
+                <e p="B05_UIgnoreFailure.cs" t="Include" />
+                <e p="B05_UNode.cs" t="Include" />
+                <e p="B05_USequence.cs" t="Include" />
+                <e p="B05_USim.cs" t="Include" />
+                <e p="Nodes" t="Include">
+                  <e p="B05_UtilitySelector.cs" t="Include" />
+                  <e p="B05N_BladeRush.cs" t="Include" />
+                  <e p="B05N_FaceEnemy.cs" t="Include" />
+                  <e p="B05N_Mag.cs" t="Include" />
+                  <e p="B05N_Move.cs" t="Include" />
+                  <e p="B05N_Pound.cs" t="Include" />
+                  <e p="B05N_Shoot.cs" t="Include" />
+                </e>
+              </e>
+            </e>
             <e p="botB08" t="Include">
               <e p="CannonBehavior.cs" t="Include" />
               <e p="CannonSpawner.cs" t="Include" />
@@ -190,6 +228,7 @@
               <e p="BotB12_CannonBall.cs" t="Include" />
               <e p="BotB12_CannonFire.cs" t="Include" />
               <e p="BotB12_HealthPack.cs" t="Include" />
+              <e p="BotB12_Teleporter.cs" t="Include" />
               <e p="CornerCover_Button.cs" t="Include" />
               <e p="MiddleRotate.cs" t="Include" />
             </e>
@@ -203,6 +242,8 @@
               <e p="Weapons_ChaseG.cs" t="Include" />
             </e>
             <e p="botB17" t="Include">
+              <e p="DH_CameraFollow.cs" t="Include" />
+              <e p="DH_CameraPosition.cs" t="Include" />
               <e p="DH_FlareButton.cs" t="Include" />
               <e p="DH_FlareTrap.cs" t="Include" />
               <e p="DH_MoveToDestination.cs" t="Include" />
@@ -212,6 +253,9 @@
               <e p="DH_TriggerTrapsAbility.cs" t="Include" />
             </e>
             <e p="botB18" t="Include">
+              <e p="LevelScripts" t="Include">
+                <e p="QB_SpringOut.cs" t="Include" />
+              </e>
               <e p="QB_ControlInfo.cs" t="Include" />
               <e p="QB_FlipAttack.cs" t="Include" />
               <e p="QB_OverheadAttack.cs" t="Include" />
@@ -223,8 +267,10 @@
             </e>
             <e p="DevinCavness" t="Include">
               <e p="BotBasic_Weapon_DRC.cs" t="Include" />
+              <e p="Disappear_DRC.cs" t="Include" />
               <e p="Elevator_Dummy_DRC.cs" t="Include" />
               <e p="Missile_DRC.cs" t="Include" />
+              <e p="Teleport_DRC.cs" t="Include" />
             </e>
             <e p="DevonA13Scripts" t="Include">
               <e p="A13_Bullet.cs" t="Include" />
@@ -255,9 +301,13 @@
                 <e p="timedDestroy.cs" t="Include" />
               </e>
             </e>
+            <e p="LorenzoDeMaine" t="Include">
+              <e p="LorenzoDeMaine_FlingTrap.cs" t="Include" />
+            </e>
             <e p="MarsJurich" t="Include">
               <e p="Mars_Damage.cs" t="Include" />
               <e p="Mars_Weapon.cs" t="Include" />
+              <e p="Mars_WreckingBall.cs" t="Include" />
             </e>
             <e p="MK_Scripts" t="Include">
               <e p="A07_Base.cs" t="Include" />
@@ -269,6 +319,9 @@
               <e p="Rotater.cs" t="Include" />
             </e>
             <e p="RyanGarvan" t="Include">
+              <e p="A06_LivingPlatformHazard_Body.cs" t="Include" />
+              <e p="A06_LivingPlatformHazard_Mind.cs" t="Include" />
+              <e p="A06_LivingPlatformHazard_Sight.cs" t="Include" />
               <e p="BotSplincher_Move.cs" t="Include" />
               <e p="BotSplincher_Teleport.cs" t="Include" />
             </e>
@@ -286,14 +339,19 @@
             </e>
             <e p="SkylerPowers" t="Include">
               <e p="HazardDamageTrigger.cs" t="Include" />
+              <e p="SP_AI.cs" t="Include" />
               <e p="SP_GoopBehavior.cs" t="Include" />
               <e p="SP_GoopSpawner.cs" t="Include" />
             </e>
             <e p="WillMielke" t="Include">
               <e p="Bot09_Damage.cs" t="Include" />
               <e p="Bot09_Weapon.cs" t="Include" />
+              <e p="BotB09_Boulder.cs" t="Include" />
               <e p="BotB09_cameraOverride.cs" t="Include" />
               <e p="BotB09_GoalCheck.cs" t="Include" />
+              <e p="BotB09_SpikeButton.cs" t="Include" />
+              <e p="BotB09_WallButton.cs" t="Include" />
+              <e p="MoveWall.cs" t="Include" />
               <e p="WeaponRotate.cs" t="Include" />
             </e>
             <e p="ZacBrown" t="Include">
