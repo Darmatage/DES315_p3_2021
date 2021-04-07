@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class PacManMove : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class PacManMove : MonoBehaviour
     List<Pellet> Visted_Pellets;
     [SerializeField] int finished_Pellet_count = 0, length;
     bool finished = false;
+
+    public Text collectedPelletsText;
 
     NavMeshAgent Agent;
     [SerializeField] Pellet currentPellet, previousPellet, startingPellet;
@@ -58,6 +61,10 @@ public class PacManMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(collectedPelletsText != null)
+        {
+            collectedPelletsText.text = "Pellets Collected: " + finished_Pellet_count + "/" + length;
+        }
 
         if (finished_Pellet_count >= length)
         {
