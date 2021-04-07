@@ -14,6 +14,7 @@ public class MonsterAttack_AmyS : MonoBehaviour
     public GameObject rippleParticles;
     public GameObject blastCircleSprite;
     public GameObject bombSignifier;
+    public GameObject bombDamageObj;
 
     public float blastForceScalar = 100f;
 
@@ -42,6 +43,8 @@ public class MonsterAttack_AmyS : MonoBehaviour
     float timer = 2.0f;
     bool deleteCircles = false;
 
+    List<Vector3> hitPoints = new List<Vector3>();
+
     //Vector3 MonsterOrig;
 
     // Start is called before the first frame update
@@ -68,12 +71,15 @@ public class MonsterAttack_AmyS : MonoBehaviour
 
             BlastDefense();
 
-
+            //if(deleteCircles)
+            //{
+            //    StartCoroutine(TimeStuff3());
+            //}
 
             if (isBombing && !isHoming)
             {
                 List<Vector3> positions = new List<Vector3>();
-                List<Vector3> hitPoints = new List<Vector3>();
+               
 
                 for (int i = 0; i < 40; ++i)
                 {
@@ -105,7 +111,7 @@ public class MonsterAttack_AmyS : MonoBehaviour
 
 
                 deleteCircles = true;
-
+                StartCoroutine(TimeStuff3());
 
 
                 isBombing = false;
@@ -159,6 +165,24 @@ public class MonsterAttack_AmyS : MonoBehaviour
 
         isHoming = true;
         isBombing = false;
+
+    }
+
+    IEnumerator TimeStuff3()
+    {
+
+
+        yield return new WaitForSeconds(2f);
+
+        Debug.Log("Deleting");
+
+        foreach (Vector3 pos in hitPoints)
+        {
+            GameObject obj = Instantiate(bombDamageObj, new Vector3(pos.x, pos.y - 2.3f, pos.z), Quaternion.identity);
+            Destroy(obj, .5f);
+        }
+
+        deleteCircles = false;
 
     }
 
