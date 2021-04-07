@@ -116,7 +116,11 @@ public class MonsterAttack_AmyS : MonoBehaviour
             }
             else if(isHoming && !isBombing)
             {
-                Debug.Log("Homing Bullets");
+                //Debug.Log("Homing Bullets");
+                isHoming = false;
+
+                StartCoroutine(TimeStuff());
+                StartCoroutine(TimeStuff2());
             }
 
             
