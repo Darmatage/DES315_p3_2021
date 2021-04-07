@@ -490,7 +490,7 @@ GameObject:
   - component: {fileID: 3605967592779658295}
   - component: {fileID: 8770355363562557775}
   - component: {fileID: 4582951975505182610}
-  - component: {fileID: 1333942482400995071}
+  - component: {fileID: 6052693068874056281}
   m_Layer: 0
   m_Name: LJNScorpMonster
   m_TagString: Untagged
@@ -506,7 +506,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8145147346200762122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.8459597, y: 10.220264, z: -8.7}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 8145147345980553973}
@@ -642,7 +642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playersReady: 0
---- !u!114 &1333942482400995071
+--- !u!114 &6052693068874056281
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -651,19 +651,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8145147346200762122}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2814ca53d9c565e4d8db2959b5a78d7f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c650f3b66af8724282dba7f7c9e42a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1Target: {fileID: 0}
-  player2Target: {fileID: 0}
+  defaultPatrolTarget: {fileID: 0}
   nextPatrolTarget: {fileID: 0}
-  patrolTarget1: {fileID: 0}
-  patrolTarget2: {fileID: 0}
-  patrolTarget3: {fileID: 0}
-  patrolTarget4: {fileID: 0}
-  playerAttackDistance: 25
-  patrolSwitchThreshold1: 8
-  patrolSwitchThreshold2: 30
   turnThreshold: 40
   distToPlayer1: 0
   distToPlayer2: 0
@@ -672,11 +664,12 @@ MonoBehaviour:
   attackPlayer2: 0
   getNextTarget: 1
   attackPoint: {fileID: 0}
-  attackRange: 10
-  lavaSpherePrefab: {fileID: 0}
-  attackParticles: {fileID: 0}
+  attackRange: 2
   isAttacking: 0
   attackRate: 0.2
+  tail: {fileID: 0}
+  rightArm: {fileID: 0}
+  leftArm: {fileID: 0}
 --- !u!1 &8145147346453947136
 GameObject:
   m_ObjectHideFlags: 0
