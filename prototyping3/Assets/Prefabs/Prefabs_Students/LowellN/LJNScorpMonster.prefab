@@ -654,8 +654,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c650f3b66af8724282dba7f7c9e42a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player1Target: {fileID: 0}
+  player2Target: {fileID: 0}
   defaultPatrolTarget: {fileID: 0}
   nextPatrolTarget: {fileID: 0}
+  playerAttackDistance: 15
   turnThreshold: 40
   distToPlayer1: 0
   distToPlayer2: 0
@@ -1120,6 +1123,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 1.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919812908290139633, guid: 1baf8f87b80006947bc3040db99a6e03,
+        type: 3}
+      propertyPath: isMonsterWeapon
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8130926249892479026, guid: 1baf8f87b80006947bc3040db99a6e03,
         type: 3}
