@@ -6,9 +6,13 @@ public class MoveWall : MonoBehaviour
 {
     public GameObject Wall;
     public BotB09_WallButton button;
-    public Vector3 movePosition;
+    public Transform movePosition;
 
     public Vector3 initialpos;
+    public float duration = 1.0f;
+    public float respawnDuration = 5.0f;
+    public bool teleportBack;
+    public Collider buttonCollider;
     private float t;
     // Start is called before the first frame update
     void Start()
@@ -24,10 +28,16 @@ public class MoveWall : MonoBehaviour
         {
             
             t += Time.deltaTime;
-            if (t > 1.0f)
+            if (t > duration)
             {
-                t = 1.0f;
-                Wall.transform.position = movePosition;
+                t = duration;
+                Wall.transform.position = movePosition.position;
+                if(teleportBack)
+                {
+                    buttonCollider.enabled = false;
+                    teleportBack = false;
+                    StartCoroutine(ResetPos());
+                }
             }
                 
         }
@@ -41,8 +51,19 @@ public class MoveWall : MonoBehaviour
             }
                 
         }
-        if(t > 0.0f && t < 1.0f)
-            Wall.transform.position = initialpos * (1 - t) + movePosition * t;
+        if(t > 0.0f && t < duration)
+            Wall.transform.position = initialpos * (1 - (t / duration)) + movePosition.position * (t / duration);
+    }
+
+    IEnumerator ResetPos()
+    {
+        yield return new WaitForSeconds(respawnDuration);
+        button.move = false;
+        t = 0.0f;
+        Wall.transform.position = initialpos;
+        button.GetComponent<Renderer>().material = button.offMat;
+        teleportBack = true;
+        buttonCollider.enabled = true;
     }
 
 }
