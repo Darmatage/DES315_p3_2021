@@ -167,19 +167,19 @@ public class JWymer_NPC_Patrol_Strafe : MonoBehaviour {
 	//Attack
 	public void AttackPlayer(){
 		//if ((isAttacking==true)&&((distToPlayer1 < 20f)||(distToPlayer2 < 20f))){
-		if (isAttacking == true){
-			//attackBlock.SetActive(true);
-			attackParticles.Play();
-		} else {
-			//attackBlock.SetActive(false);
-			attackParticles.Stop();
-			}
+		//if (isAttacking == true){
+		//	//attackBlock.SetActive(true);
+		//	attackParticles.Play();
+		//} else {
+		//	//attackBlock.SetActive(false);
+		//	attackParticles.Stop();
+		//	}
 	}
 
 	IEnumerator makeLava(){
-		GameObject lavaSphere = Instantiate(lavaSpherePrefab, attackPoint.position, Quaternion.identity);
+		//GameObject lavaSphere = Instantiate(lavaSpherePrefab, attackPoint.position, Quaternion.identity);
 		yield return new WaitForSeconds(5.0f);
-		Destroy(lavaSphere);
+		//Destroy(lavaSphere);
 	}
 	
 
