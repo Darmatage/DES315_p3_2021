@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class BotB09_GoalCheck : MonoBehaviour
 {
     public bool p1entered, p2entered;
+    public static bool wonGame = false;
     // Start is called before the first frame update
+
+    void Awake()
+    {
+        SceneManager.sceneUnloaded += BotB09WinText;
+    }
+    
+    
     void Start()
     {
         p1entered = false;
         p2entered = false;
+        wonGame = false;
     }
 
     // Update is called once per frame
@@ -19,9 +29,9 @@ public class BotB09_GoalCheck : MonoBehaviour
         if (p1entered && p2entered)
         {
             // won
-            // GameObject.FindWithTag("GameHandler").GetComponent<GameHandler>().winnerText
-            GameHandler.winner = "wow";
-            SceneManager.LoadScene("EndSceneCoop");
+            wonGame = true;
+            StartCoroutine(WonGame());
+
         }
     }
 
@@ -48,5 +58,23 @@ public class BotB09_GoalCheck : MonoBehaviour
             p2entered = false;
         }
     }
+
+    IEnumerator WonGame()
+    {
+        GameHandler.notFirstGame = true;
+        yield return new WaitForSeconds(1.0f);
+        GameHandler.winner = "Your team beat the obstacle course!";
+        SceneManager.LoadScene("EndSceneCoop");
+    }
+
+    void BotB09WinText(Scene scene)
+    {
+        if(scene.name == "Scene_BotB09" && !wonGame)
+        {
+            GameHandler.winner = "Obstacle Course Won!";
+        }
+            
+    }
+
 
 }

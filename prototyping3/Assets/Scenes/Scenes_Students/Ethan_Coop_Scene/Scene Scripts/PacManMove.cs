@@ -8,7 +8,11 @@ public class PacManMove : MonoBehaviour
     bool PatrolWaiting = false;
     float PatrolWaitTime = 3.0f;
 
+    public float health = 100;
+
     List<Pellet> Visted_Pellets;
+    [SerializeField] int finished_Pellet_count = 0, length;
+    bool finished = false;
 
     NavMeshAgent Agent;
     [SerializeField] Pellet currentPellet, previousPellet, startingPellet;
@@ -16,9 +20,11 @@ public class PacManMove : MonoBehaviour
     bool traveling, waiting;
     float waitTimer;
     int PelletsVisited;
+    public bool start = false;
     // Start is called before the first frame update
     void Start()
     {
+        length = GameObject.FindGameObjectsWithTag("Pellet").Length;
 
         Visted_Pellets = new List<Pellet>();
         Agent = GetComponent<NavMeshAgent>();
@@ -47,14 +53,25 @@ public class PacManMove : MonoBehaviour
                 }
             }
         }
-
-        SetDestination();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(traveling && Agent.remainingDistance <= 1 && !currentPellet.finished)
+
+        if (finished_Pellet_count >= length)
+        {
+            GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>().coopMonsterWins = true;
+            StartCoroutine(GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>().CoopEndGame());
+        }
+
+        if (start)
+        {
+            SetDestination();
+            start = false;
+        }
+
+        if (traveling && Agent.remainingDistance <= 1 && !finished)
         {
             traveling = false;
             PelletsVisited++;
@@ -77,6 +94,11 @@ public class PacManMove : MonoBehaviour
                 SetDestination();
             }
         }
+    }
+
+    public void Begin()
+    {
+        start = true;
     }
 
     private void SetDestination()
@@ -102,6 +124,10 @@ public class PacManMove : MonoBehaviour
         Vector3 Target = currentPellet.transform.position;
         Agent.SetDestination(Target);
         traveling = true;
-        previousPellet.collected = true;
+        if (previousPellet && !previousPellet.collected)
+        {
+            previousPellet.collected = true;
+            finished_Pellet_count++;
+        }
     }
 }

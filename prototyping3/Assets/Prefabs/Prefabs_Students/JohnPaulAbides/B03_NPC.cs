@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 
 public class B03_NPC : MonoBehaviour
@@ -11,11 +12,18 @@ public class B03_NPC : MonoBehaviour
     public Transform target;
     public float attackRange = 10.0f;
     public Rigidbody rigid;
+    public GameObject shotPrefab;
+    public GameObject damageTextPrefab;
+    public GameObject hitbox;
+    public Transform webShot = null;
+    public int startingHealth;
+    public Slider healthBar;
 
     // attack animation
     public float jumpHeight;
     public AnimationCurve jumpHeightCurve;
     public AnimationCurve jumpAimCurve;
+    public Transform shotOrigin;
 
     private NavMeshAgent myAgent;
     private NPC_LoadPlayers playerLoader;
@@ -27,6 +35,8 @@ public class B03_NPC : MonoBehaviour
     private float timer;
     private int phase;
     private Vector3 startingPos;
+    private bool webShotFlag;
+    public bool webPullFlag;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +45,10 @@ public class B03_NPC : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         myAgent = GetComponent<NavMeshAgent>();
         playerLoader = GetComponent<NPC_LoadPlayers>();
+
+        // update health
+        healthBar.maxValue = startingHealth;
+        healthBar.value = startingHealth;
     }
 
     // Update is called once per frame
@@ -42,8 +56,13 @@ public class B03_NPC : MonoBehaviour
     {
         if (playerLoader.playersReady == true)
         {
-            player1 = GameObject.FindWithTag("Player1").transform.GetChild(0);
-            player2 = GameObject.FindWithTag("Player2").transform.GetChild(0);
+            GameObject player = GameObject.FindWithTag("Player1");
+            if (player != null && GameObject.FindWithTag("Player1").transform.childCount >= 1)
+                player1 = GameObject.FindWithTag("Player1").transform.GetChild(0);
+
+            player = GameObject.FindWithTag("Player2");
+            if (player != null && GameObject.FindWithTag("Player2").transform.childCount >= 1)
+                player2 = GameObject.FindWithTag("Player2").transform.GetChild(0);
         }
     }
 
@@ -56,6 +75,7 @@ public class B03_NPC : MonoBehaviour
                 Idle();
                 break;
             case Action.CHASE:
+                Chase();
                 break;
             case Action.ATTACK:
                 Attack();
@@ -69,33 +89,42 @@ public class B03_NPC : MonoBehaviour
     private void Idle()
     {
         timer += Time.fixedDeltaTime;
+        rigid.MoveRotation(Quaternion.Euler(0.0f, transform.eulerAngles.y, 0.0f));
 
         if (timer >= 1.0f)
         {
             timer = 0.0f;
             startingPos = transform.position;
-            action = Action.ATTACK;
+            action = Action.CHASE;
         }
     }
 
     private void Chase()
     {
+        myAgent.enabled = true;
+        timer += Time.fixedDeltaTime;
+
         // select target
-        if (Vector3.SqrMagnitude(player1.position - transform.position) < Vector3.SqrMagnitude(player2.position - transform.position))
-        {
+        if (player1 != null && player2 == null) // only player1 exists
             target = player1;
-        }
-        else
-        {
+        else if (player2 != null && player1 == null) // only player2 exists
             target = player2;
-        }    
+        else if (player1 != null && player2 != null ) // both players exist
+        {
+            if (Vector3.SqrMagnitude(player1.position - transform.position) < Vector3.SqrMagnitude(player2.position - transform.position))
+                target = player1;
+            else
+                target = player2;
+        }
 
         // move to target
         myAgent.destination = target.position;
 
         // if target is in range, start attack
-        if (Vector3.Distance(transform.position, target.position) < attackRange)
+        if (Vector3.Distance(transform.position, target.position) < attackRange && timer > 1.0f)
         {
+            timer = 0.0f;
+            startingPos = transform.position;
             action = Action.ATTACK;
         }
     }
@@ -104,24 +133,110 @@ public class B03_NPC : MonoBehaviour
     {
         // monster leaps into the air and aims its back towards target
         rigid.isKinematic = true;
+        myAgent.enabled = false;
 
         timer += Time.fixedDeltaTime;
 
-        float lerpPercent = jumpHeightCurve.Evaluate(timer);
-        float lerpTiltPercent = jumpAimCurve.Evaluate(timer);
-        transform.position = (Vector3.Lerp(startingPos, startingPos + Vector3.up * jumpHeight, lerpPercent));
-        Vector3 dir = target.position - transform.position;
-        transform.rotation = (Quaternion.Euler(Quaternion.LookRotation(dir).eulerAngles.x - 180.0f * lerpTiltPercent, Quaternion.LookRotation(dir).eulerAngles.y, transform.rotation.eulerAngles.z));
+        // start jump
+        if (timer < 1.0f)
+        {
+            float lerpPercent = jumpHeightCurve.Evaluate(timer);
+            float lerpTiltPercent = jumpAimCurve.Evaluate(timer);
+            rigid.MovePosition(Vector3.Lerp(startingPos, startingPos + Vector3.up * jumpHeight, lerpPercent));
+            Vector3 dir;
+            if (target == null)
+                dir = (startingPos + transform.forward * 8.0f) - (startingPos + Vector3.up * jumpHeight);
+            else
+                dir = target.position - (startingPos + Vector3.up * jumpHeight);
+            Quaternion dirAngle = Quaternion.LookRotation(dir);
+            rigid.MoveRotation(Quaternion.Euler(dirAngle.eulerAngles.x - 175.0f * lerpTiltPercent, dirAngle.eulerAngles.y, transform.eulerAngles.z));
+        }
+        else // fire webshot
+        {
+            if (!webShotFlag)
+            {
+                GameObject shot = Instantiate(shotPrefab, shotOrigin.position, transform.rotation * Quaternion.Euler(180.0f, 0.0f, 0.0f));
+                webShot = shot.transform;
+                B03_NPCShot shotComponent = shot.GetComponent<B03_NPCShot>();
+                shotComponent.origin = shotOrigin;
+                shotComponent.parent = this;
+                webShotFlag = true;
+            }
+            else
+            {
+                // web reached, begin stun
+                if (webShot == null)
+                {
+                    webShotFlag = false;
+                    timer = 0.0f;
+                    action = Action.STUNNED;
+                    rigid.MoveRotation(Quaternion.Euler(-175.0f, transform.eulerAngles.y, 0.0f));
+                    hitbox.SetActive(false);
+                }
+                else // shot is still out
+                {
+                    // shot has made contact, begin pull
+                    if (webPullFlag)
+                    {
+                        hitbox.SetActive(true);
+                        Vector3 dir = (webShot.position - transform.position).normalized;
+                        rigid.MovePosition(transform.position + dir * 40.0f * Time.fixedDeltaTime);
+                        rigid.MoveRotation(Quaternion.Euler(transform.eulerAngles + Vector3.forward * 2160.0f * Time.fixedDeltaTime));
+                    }
+                    else // shot is still moving, move out
+                    {
+                        Vector3 dir = (webShot.position - transform.position).normalized;
+                        rigid.MovePosition(transform.position - dir * 5.0f * Time.fixedDeltaTime);
+                    }
+                }
+            }
 
-        if (timer >= 1.0f)
+            // spent too much time shooting, return to idle
+            if (timer > 3.0f)
+            {
+                Destroy(webShot.gameObject);
+                webShot = null;
+                webShotFlag = false;
+                timer = 0.0f;
+                action = Action.STUNNED;
+                rigid.MoveRotation(Quaternion.Euler(-175.0f, transform.eulerAngles.y, 0.0f));
+                hitbox.SetActive(false);
+            }
+        }
+    }
+
+    private void Stunned()
+    {
+        rigid.isKinematic = false;
+        timer += Time.fixedDeltaTime;
+        if (timer >= 3.0f)
         {
             timer = 0.0f;
             action = Action.IDLE;
         }
     }
 
-    private void Stunned()
+    private void OnTriggerEnter(Collider other)
     {
+        if ((other.gameObject.tag == "Hazard") && (other.gameObject.GetComponent<HazardDamage>().isMonsterWeapon == false))
+        {
+            int damage = (int)other.gameObject.GetComponent<HazardDamage>().damage;
+            TakeDamage(damage);
+        }
+    }
 
+    public void TakeDamage(int damage)
+    {
+        // minimum 1 damage
+        if (damage == 0) damage = 1;
+
+        healthBar.value -= damage;
+        if (healthBar.value <= 0)
+        {
+            healthBar.value = 0;
+            Destroy(gameObject);
+        }
+        Text damageText = Instantiate(damageTextPrefab, transform.position, Quaternion.identity).GetComponentInChildren<Text>();
+        damageText.text = damage.ToString();
     }
 }

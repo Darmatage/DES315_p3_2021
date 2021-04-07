@@ -382,9 +382,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7886064223878588148}
+  - component: {fileID: 1963095878}
   m_Layer: 0
-  m_Name: A11_NPC_monster 1
-  m_TagString: Untagged
+  m_Name: A11_NPC_monster
+  m_TagString: CoopNPCMonster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -405,6 +406,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1963095878
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7366548744734735438}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83564da3f2f16a146a0c0b99cbef9ca9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8834398275625511944
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,6 +559,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -6714842646313051960, guid: e38ec2c4bed431840b643fac8a44c73f,
         type: 3}
+    - target: {fileID: 124949357393328291, guid: 7eeace672f4f5b140b877fb49129c31e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 364999052203561223, guid: 7eeace672f4f5b140b877fb49129c31e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 918670847134558970, guid: 7eeace672f4f5b140b877fb49129c31e,
         type: 3}
       propertyPath: m_IsActive
@@ -624,11 +654,21 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 1355330930375697358, guid: 7eeace672f4f5b140b877fb49129c31e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4016393721663624827, guid: 7eeace672f4f5b140b877fb49129c31e,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 2.828
       objectReference: {fileID: 0}
+    - target: {fileID: 5274779310524913400, guid: 7eeace672f4f5b140b877fb49129c31e,
+        type: 3}
+      propertyPath: boomShurikenPrefab
+      value: 
+      objectReference: {fileID: 5896672352191488204}
     - target: {fileID: 6830276767407990651, guid: 7eeace672f4f5b140b877fb49129c31e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -639,11 +679,97 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 4.338
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1355330930375697357, guid: 7eeace672f4f5b140b877fb49129c31e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7eeace672f4f5b140b877fb49129c31e, type: 3}
 --- !u!4 &5726920617279566300 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1355330930375697356, guid: 7eeace672f4f5b140b877fb49129c31e,
     type: 3}
   m_PrefabInstance: {fileID: 6752305113008411152}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8764516482976919103
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5726920617279566300}
+    m_Modifications:
+    - target: {fileID: 2539803285580731465, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2539803285580731465, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 2539803285580731465, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.712
+      objectReference: {fileID: 0}
+    - target: {fileID: 2539803285580731465, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2539803285580731465, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2539803285580731465, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2539803285580731465, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2539803285580731465, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2539803285580731465, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2539803285580731465, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2539803285580731465, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2915202305418104563, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: m_Name
+      value: boomShuriken
+      objectReference: {fileID: 0}
+    - target: {fileID: 2915202305418104563, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934782995401397932, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+        type: 3}
+      propertyPath: isMonsterWeapon
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8919584a6d3a0e840aa37843ef3ee98d, type: 3}
+--- !u!1 &5896672352191488204 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2915202305418104563, guid: 8919584a6d3a0e840aa37843ef3ee98d,
+    type: 3}
+  m_PrefabInstance: {fileID: 8764516482976919103}
   m_PrefabAsset: {fileID: 0}
