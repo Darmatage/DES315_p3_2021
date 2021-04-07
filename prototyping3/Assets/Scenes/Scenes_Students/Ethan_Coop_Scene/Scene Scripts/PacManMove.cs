@@ -11,7 +11,7 @@ public class PacManMove : MonoBehaviour
     public float health = 100;
 
     List<Pellet> Visted_Pellets;
-    int finished_Pellet_count = 0;
+    [SerializeField] int finished_Pellet_count = 0, length;
     bool finished = false;
 
     NavMeshAgent Agent;
@@ -24,6 +24,7 @@ public class PacManMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        length = GameObject.FindGameObjectsWithTag("Pellet").Length;
 
         Visted_Pellets = new List<Pellet>();
         Agent = GetComponent<NavMeshAgent>();
@@ -58,9 +59,10 @@ public class PacManMove : MonoBehaviour
     void Update()
     {
 
-        if (finished_Pellet_count == GameObject.FindGameObjectsWithTag("Pellet").Length)
+        if (finished_Pellet_count >= length)
         {
-            GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>().CoopEndGame();
+            GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>().coopMonsterWins = true;
+            StartCoroutine(GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>().CoopEndGame());
         }
 
         if (start)
@@ -103,6 +105,8 @@ public class PacManMove : MonoBehaviour
     {
         if(PelletsVisited > 0)
         {
+            previousPellet = currentPellet;
+
             Visted_Pellets.Add(currentPellet);
             if(Visted_Pellets.Count >= 5)
             {
@@ -115,7 +119,7 @@ public class PacManMove : MonoBehaviour
             }
             while (Visted_Pellets.Contains(nextPellet));
 
-            previousPellet = currentPellet;
+            
             currentPellet = nextPellet;
         }
 
