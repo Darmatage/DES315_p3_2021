@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class PacManMove : MonoBehaviour
 {
@@ -11,8 +12,10 @@ public class PacManMove : MonoBehaviour
     public float health = 100;
 
     List<Pellet> Visted_Pellets;
-    int finished_Pellet_count = 0;
+    [SerializeField] int finished_Pellet_count = 0, length;
     bool finished = false;
+
+    public Text collectedPelletsText;
 
     NavMeshAgent Agent;
     [SerializeField] Pellet currentPellet, previousPellet, startingPellet;
@@ -24,6 +27,7 @@ public class PacManMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        length = GameObject.FindGameObjectsWithTag("Pellet").Length;
 
         Visted_Pellets = new List<Pellet>();
         Agent = GetComponent<NavMeshAgent>();
@@ -57,10 +61,15 @@ public class PacManMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (finished_Pellet_count == GameObject.FindGameObjectsWithTag("Pellet").Length)
+        if(collectedPelletsText != null)
         {
-            GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>().CoopEndGame();
+            collectedPelletsText.text = "Pellets Collected: " + finished_Pellet_count + "/" + length;
+        }
+
+        if (finished_Pellet_count >= length)
+        {
+            GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>().coopMonsterWins = true;
+            StartCoroutine(GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>().CoopEndGame());
         }
 
         if (start)
@@ -103,6 +112,8 @@ public class PacManMove : MonoBehaviour
     {
         if(PelletsVisited > 0)
         {
+            previousPellet = currentPellet;
+
             Visted_Pellets.Add(currentPellet);
             if(Visted_Pellets.Count >= 5)
             {
@@ -115,7 +126,7 @@ public class PacManMove : MonoBehaviour
             }
             while (Visted_Pellets.Contains(nextPellet));
 
-            previousPellet = currentPellet;
+            
             currentPellet = nextPellet;
         }
 

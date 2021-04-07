@@ -199,7 +199,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.05, y: 1.05, z: 1.05}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7193803869642218457
 MonoBehaviour:
@@ -320,7 +320,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.05, y: 1.05, z: 1.05}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7349302136447720360
 MonoBehaviour:
@@ -1018,8 +1018,11 @@ MonoBehaviour:
   rippleParticles: {fileID: 2295547999087866070, guid: 04a0ee11fa33de6468f0f851b3613827,
     type: 3}
   blastCircleSprite: {fileID: 6975215377060730301}
-  blastForceScalar: 100
+  bombSignifier: {fileID: 868482813381372857, guid: ba29b2ce21d394b46bccae14d6e60e2a,
+    type: 3}
+  blastForceScalar: 500
   blastRadius: 16
+  gaussRadius: 100
 --- !u!1 &4541663270678557466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1471,7 +1474,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.05, y: 1.05, z: 1.05}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5896593248866479930
 MonoBehaviour:

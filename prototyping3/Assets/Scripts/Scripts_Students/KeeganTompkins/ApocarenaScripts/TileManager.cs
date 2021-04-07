@@ -8,6 +8,9 @@ public class TileManager : MonoBehaviour
 
     public Vector2Int GridWidth = new Vector2Int(2, 2);
     public GameObject TilePrefab = null;
+    public GameObject LaserPrefab = null;
+
+    public float LaserTiming = 5.0f;
 
     private List<GameObject> Grid;
 
@@ -59,9 +62,18 @@ public class TileManager : MonoBehaviour
         return Grid[index].transform.position;
     }
 
+    IEnumerator BeginLasersRoutine()
+    {
+        yield return new WaitForSeconds(LaserTiming);
+        Vector3 pos = RandomTilePos();
+        Instantiate(LaserPrefab, pos, Quaternion.identity);
+        StartCoroutine(BeginLasersRoutine());
+    }
+
     public void FightStart()
     {
         StartCoroutine(BeginFallRoutine());
+        StartCoroutine(BeginLasersRoutine());
         FindObjectOfType<GameHandler>().StartBattle();
     }
 

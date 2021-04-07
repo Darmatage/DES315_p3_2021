@@ -54,21 +54,61 @@ public class Pellet : MonoBehaviour
         }
         else
         {
-            Pellet nextPellet = null;
-            //int nextIndex = 0;
-            
-            for(int i = 0; i < Pellet_List.Count; i++)
+            Pellet nextPellet = null, closestPellet;
+            for (int i = 0; i < Pellet_List.Count; i++)
             {
                 if(!Pellet_List[i].collected)
                 {
                     nextPellet = Pellet_List[i];
                     return nextPellet;
-                }  
+                }
             }
+
+            //closestPellet = ClosestPellet(PreviousPellet);
+            ////int nextIndex = 0;
+
+            //float distance = float.MaxValue;
+
+            ////Get the next pellet that will lead to the next uncollected pellet
+            //for (int i = 0; i < Pellet_List.Count; i++)
+            //{
+            //    if(Vector3.Distance(Pellet_List[i].transform.position, closestPellet.transform.position) < distance)
+            //    {
+            //        distance = Vector3.Distance(Pellet_List[i].transform.position, closestPellet.transform.position);
+            //        nextPellet = Pellet_List[i];
+            //    }  
+            //}
             nextPellet = Pellet_List[Random.Range(0, Pellet_List.Count)];
 
             return nextPellet;
         }
+    }
+
+    Pellet ClosestPellet(Pellet currentPellet) //finds the closest uncollected Pellet
+    {
+
+        List<Pellet> Uncollected_Pellets = new List<Pellet>();
+
+        for(int i = 0; i < PelletGO.Length; i++)
+        {
+            if (!PelletGO[i].GetComponent<Pellet>().collected)
+                Uncollected_Pellets.Add(PelletGO[i].GetComponent<Pellet>());
+        }
+
+        float distance = float.MaxValue;
+        Pellet closestPellet = null;
+        for(int i = 0; i < Uncollected_Pellets.Count; i++)
+        {
+            if(Vector3.Distance(Uncollected_Pellets[i].gameObject.transform.position, currentPellet.gameObject.transform.position) < distance)
+            {
+                distance = Vector3.Distance(Uncollected_Pellets[i].gameObject.transform.position, currentPellet.gameObject.transform.position);
+                closestPellet = Uncollected_Pellets[i];
+            }
+        }
+
+
+
+        return closestPellet;
     }
 
     // Update is called once per frame

@@ -25,6 +25,10 @@ public class SnareTrap_DevonPeterson : MonoBehaviour
         if (grabtimer > 0.0f)
         {
             grabtimer -= Time.deltaTime;
+            //if (collisionobject != null) 
+            //{
+            //    collisionobject.transform.position = transform.position;
+            //}
         }
         else if (collisionobject != null && grabtimer <= 0.0f) 
         {

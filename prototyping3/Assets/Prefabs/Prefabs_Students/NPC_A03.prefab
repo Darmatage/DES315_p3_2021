@@ -74,14 +74,15 @@ GameObject:
   - component: {fileID: 6362456292364079154}
   - component: {fileID: 7107478127326975586}
   - component: {fileID: 1355330930375697357}
-  - component: {fileID: 1355330930375697358}
   - component: {fileID: 1355330930375697359}
   - component: {fileID: 364999052203561223}
   - component: {fileID: 5780095072016173801}
   - component: {fileID: 1305075737534427569}
   - component: {fileID: 8151000635173172551}
+  - component: {fileID: 933128832205436458}
+  - component: {fileID: 2850306803763716411}
   m_Layer: 0
-  m_Name: BotA03
+  m_Name: NPC_A03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,36 +182,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1355330930375697358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355330930375697355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aab929fe774a0084c8ae87aafe02faf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 10
-  rotateSpeed: 100
-  jumpSpeed: 5
-  boostSpeed: 10
-  groundCheck: {fileID: 1355330930762081256}
-  turtleCheck: {fileID: 1355330929556144337}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  isGrounded: 0
-  isTurtled: 0
-  canFlip: 1
-  isGrabbed: 0
-  parentName: 
-  pVertical: 
-  pHorizontal: 
-  pJump: 
-  button4: 
 --- !u!114 &1355330930375697359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +198,7 @@ MonoBehaviour:
   compassVertical: {fileID: 4587639291210960121}
   sidelimit: 0.1
   knockBackSpeed: 10
+  forceSideLimit_p75: 1
   shieldPowerFront: 10
   shieldPowerBack: 5
   shieldPowerLeft: 5
@@ -386,6 +358,48 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!195 &933128832205436458
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355330930375697355}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &2850306803763716411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355330930375697355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76580765dc2dcb84aaaea9c0c95b67c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  move_speed: 10
+  rotate_speed: 100
+  jump_speed: 5
+  boost_speed: 10
+  parent_name: 
+  parent_vertical: 
+  parent_horizontal: 
+  parent_jump: 
 --- !u!1 &1355330930762081239
 GameObject:
   m_ObjectHideFlags: 0
