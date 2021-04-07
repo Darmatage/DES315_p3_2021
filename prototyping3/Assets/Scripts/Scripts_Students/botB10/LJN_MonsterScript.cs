@@ -170,4 +170,9 @@ public class LJN_MonsterScript : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("ROOT: " + other.name);
+    }
 }

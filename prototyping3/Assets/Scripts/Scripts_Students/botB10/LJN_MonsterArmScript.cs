@@ -17,4 +17,9 @@ public class LJN_MonsterArmScript : MonoBehaviour
     {
         
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("ARM: " + other.name);
+    }
 }
