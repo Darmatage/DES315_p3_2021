@@ -105,6 +105,8 @@ public class PacManMove : MonoBehaviour
     {
         if(PelletsVisited > 0)
         {
+            previousPellet = currentPellet;
+
             Visted_Pellets.Add(currentPellet);
             if(Visted_Pellets.Count >= 5)
             {
@@ -117,7 +119,7 @@ public class PacManMove : MonoBehaviour
             }
             while (Visted_Pellets.Contains(nextPellet));
 
-            previousPellet = currentPellet;
+            
             currentPellet = nextPellet;
         }
 
