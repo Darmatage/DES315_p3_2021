@@ -6,12 +6,35 @@ public class QB_SpringiIntoPit : MonoBehaviour
 {
     public float speed;
 
+    private QB_StunController stun;
+
+    void Start()
+    {
+        stun = gameObject.GetComponent<QB_StunController>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.root.name == "PLAYER1_SLOT" || other.transform.root.name == "PLAYER2_SLOT")
         {
-            Vector3 landingPos = new Vector3(0, 0, 0);
-            Vector3 launchVec = GetLaunchVelocity(other.transform.localPosition, landingPos, speed);
+            GameObject obj = other.transform.root.GetChild(0).gameObject;
+            
+            //while (obj.name != other.gameObject.transform.root.gameObject.name)
+            //{
+            //    if (obj.GetComponent<Rigidbody>())
+            //    {
+            //        break;
+            //    }
+            //    obj = obj.transform.parent.gameObject;
+            //}
+            //
+            //if (obj.name == other.gameObject.transform.root.gameObject.name)
+            //{
+            //    Debug.LogError("QB_SprintIntoPit.cs: Object was not a part of a bot!");
+            //}
+
+            Vector3 landingPos = new Vector3(0, -2, 0);
+            Vector3 launchVec = GetLaunchVelocity(obj.transform.position, landingPos, speed);
 
             if(launchVec == Vector3.zero)
             {
@@ -19,18 +42,20 @@ public class QB_SpringiIntoPit : MonoBehaviour
                 return;
             }
 
-            Rigidbody rbody = other.gameObject.GetComponent<Rigidbody>();
+            Rigidbody rbody = obj.gameObject.GetComponent<Rigidbody>();
 
             if(rbody)
             {
                 rbody.velocity = launchVec;
-                //rbody.angularVelocity = new Vector3(Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10));
+                rbody.angularVelocity = new Vector3(Random.Range(0, 5), Random.Range(0, 5), Random.Range(0, 5));
             }
             else
             {
                 Debug.LogError("QB_SpringiIntoPit: OnTriggerEnter: Could not get Rigidbody from colliding GameObject!");
                 return;
             }
+
+            stun.Stun(obj.gameObject);
         }
     }
 
