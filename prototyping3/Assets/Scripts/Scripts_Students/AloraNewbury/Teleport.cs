@@ -72,6 +72,7 @@ public class Teleport : MonoBehaviour
         if (is_Teleporting == true && Begin.isPlaying == false)
         {
             player.transform.position = GetBehindlocation(5.0f);
+            player.transform.position = player.transform.forward;
 
             End.Play();
 

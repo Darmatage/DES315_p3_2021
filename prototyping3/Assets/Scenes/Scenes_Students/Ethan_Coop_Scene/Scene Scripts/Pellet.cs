@@ -5,9 +5,8 @@ using UnityEngine;
 public class Pellet : MonoBehaviour
 {
     List<Pellet> Pellet_List;
-    public bool collected = false, finished = false;
+    public bool collected = false;
     GameObject[] PelletGO;
-    List<GameObject> FinishedPellet;
 
     float pellet_radius = 5f;
     // Start is called before the first frame update
@@ -17,7 +16,6 @@ public class Pellet : MonoBehaviour
         PelletGO = GameObject.FindGameObjectsWithTag("Pellet");
 
         Pellet_List = new List<Pellet>();
-        FinishedPellet = new List<GameObject>();
 
         for(int i = 0; i < PelletGO.Length; i++)
         {
@@ -56,35 +54,66 @@ public class Pellet : MonoBehaviour
         }
         else
         {
-            Pellet nextPellet = null;
-            //int nextIndex = 0;
-            
-            for(int i = 0; i < Pellet_List.Count; i++)
+            Pellet nextPellet = null, closestPellet;
+            for (int i = 0; i < Pellet_List.Count; i++)
             {
                 if(!Pellet_List[i].collected)
                 {
                     nextPellet = Pellet_List[i];
                     return nextPellet;
-                }  
+                }
             }
+
+            //closestPellet = ClosestPellet(PreviousPellet);
+            ////int nextIndex = 0;
+
+            //float distance = float.MaxValue;
+
+            ////Get the next pellet that will lead to the next uncollected pellet
+            //for (int i = 0; i < Pellet_List.Count; i++)
+            //{
+            //    if(Vector3.Distance(Pellet_List[i].transform.position, closestPellet.transform.position) < distance)
+            //    {
+            //        distance = Vector3.Distance(Pellet_List[i].transform.position, closestPellet.transform.position);
+            //        nextPellet = Pellet_List[i];
+            //    }  
+            //}
             nextPellet = Pellet_List[Random.Range(0, Pellet_List.Count)];
 
             return nextPellet;
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    Pellet ClosestPellet(Pellet currentPellet) //finds the closest uncollected Pellet
     {
+
+        List<Pellet> Uncollected_Pellets = new List<Pellet>();
+
         for(int i = 0; i < PelletGO.Length; i++)
         {
-            if(PelletGO[i].GetComponent<Pellet>().collected && !FinishedPellet.Contains(PelletGO[i]))
+            if (!PelletGO[i].GetComponent<Pellet>().collected)
+                Uncollected_Pellets.Add(PelletGO[i].GetComponent<Pellet>());
+        }
+
+        float distance = float.MaxValue;
+        Pellet closestPellet = null;
+        for(int i = 0; i < Uncollected_Pellets.Count; i++)
+        {
+            if(Vector3.Distance(Uncollected_Pellets[i].gameObject.transform.position, currentPellet.gameObject.transform.position) < distance)
             {
-                FinishedPellet.Add(PelletGO[i]);
+                distance = Vector3.Distance(Uncollected_Pellets[i].gameObject.transform.position, currentPellet.gameObject.transform.position);
+                closestPellet = Uncollected_Pellets[i];
             }
         }
 
-        if (FinishedPellet.Count == PelletGO.Length)
-            finished = true;
+
+
+        return closestPellet;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

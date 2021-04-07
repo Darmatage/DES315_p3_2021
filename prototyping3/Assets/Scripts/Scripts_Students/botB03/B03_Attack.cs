@@ -88,9 +88,6 @@ public class B03_Attack : MonoBehaviour
 
 	void Update()
 	{
-		// only update if enemy is available
-		if (enemyRigid == null) return;
-
 		// update magnetized status
 		if (magnetized)
         {
@@ -116,7 +113,8 @@ public class B03_Attack : MonoBehaviour
 			// create explosion
 			GameObject obj = Instantiate(projectile, transform.position + transform.forward * 4.0f, transform.rotation);
 			B03_Bullet bullet = obj.GetComponent<B03_Bullet>();
-			bullet.target = enemyRigid.transform.root.name;
+			if (enemyRigid != null)
+				bullet.target = enemyRigid.transform.root.name;
 			bullet.parent = this;
 
 			// assign hitbox
@@ -133,8 +131,6 @@ public class B03_Attack : MonoBehaviour
 
     private void FixedUpdate()
     {
-		// only update if enemy is available
-		if (enemyRigid == null) return;
 
 		// update attacks
 		switch (action)
@@ -188,7 +184,7 @@ public class B03_Attack : MonoBehaviour
 			}
 
 			// start throw if enemy makes contact within range
-			Collider[] hits = Physics.OverlapSphere(grappleOffset, 1.0f);
+			Collider[] hits = Physics.OverlapSphere(grappleOffset, 1.25f);
 			// determine if any of the collisions belong to the enemy, begin grab if so
 			foreach (var hit in hits)
             {

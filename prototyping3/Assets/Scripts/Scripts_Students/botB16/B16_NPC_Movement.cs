@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class B16_NPC_Movement : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class B16_NPC_Movement : MonoBehaviour
 	public float jumpSpeed = 7f;
 	private float flipSpeed = 150f;
 	public float boostSpeed = 10f;
+	public float wanderDist;
 
 	private Rigidbody rb;
 	public Transform groundCheck;
@@ -35,6 +37,10 @@ public class B16_NPC_Movement : MonoBehaviour
 	private Weapons_ChaseG weapon;
 
 	private float attachTimer = 0;
+	private float wanderTimer = 0;
+	private bool attackMode = false;
+
+	private string sceneName;
 
 	void Start()
 	{
@@ -48,62 +54,96 @@ public class B16_NPC_Movement : MonoBehaviour
 		enemy = GetEnemy();
 		agent = GetComponent<NavMeshAgent>();
 		rb = GetComponentInParent<Rigidbody>();
+
+		sceneName = SceneManager.GetActiveScene().name;
 	}
 
 	void Update()
 	{
+		if(sceneName == "EndScene")
+        {
+			return;
+        }
+
 		float botMove = Input.GetAxisRaw(pVertical) * moveSpeed * Time.deltaTime;
 		float botRotate = Input.GetAxisRaw(pHorizontal) * rotateSpeed * Time.deltaTime;
-		
-		if(agent == null)
-        {
+
+		if (agent == null)
+		{
 			agent = GetComponent<NavMeshAgent>();
 		}
-		else if (enemy)
-        {
-			Vector3 destination = enemy.transform.position;
-			destination.y = transform.position.y;
-
-			if (Vector3.Distance(destination, transform.position) < 10 && weapon.Ready())
-            {
-				isGrounded = false;
-				agent.enabled = false;
-				attachTimer = 0;
-				weapon.StartAttack();
-            }
-            else if(weapon.Done())
-            {
-				attachTimer += Time.deltaTime;
-
-				if (attachTimer > 1.0f)
-                {
-					agent.enabled = true;
-				}
-				
-				if (agent.isOnNavMesh && attachTimer > 1.0f)
-				{
-					agent.destination = destination;
-				}
-			}
-			else if(Vector3.Distance(destination, transform.position) > 2)
-            {
-				transform.LookAt(destination);
-				Vector3 velocity = transform.forward * moveSpeed;
-				velocity.y = rb.velocity.y;
-				
-				rb.velocity = velocity;
-			}
-        }
-        else
-        {
-			enemy = GetEnemy();
-        }
-
-
-		if (isGrabbed == false)
+		else if (attackMode)
 		{
-			transform.Translate(0, 0, botMove);
-			transform.Rotate(0, botRotate, 0);
+
+			if (enemy)
+			{
+				Vector3 destination = enemy.transform.position;
+				destination.y = transform.position.y;
+
+				if (Vector3.Distance(destination, transform.position) < 10 && weapon.Ready())
+				{
+					isGrounded = false;
+					agent.enabled = false;
+					attachTimer = 0;
+					weapon.StartAttack();
+				}
+				else if (weapon.Done())
+				{
+					attachTimer += Time.deltaTime;
+
+					if (attachTimer > 1.0f)
+					{
+						agent.enabled = true;
+						attackMode = false;
+					}
+
+					if (agent.isOnNavMesh && attachTimer > 1.0f)
+					{
+						agent.destination = destination;
+					}
+				}
+				else if (Vector3.Distance(destination, transform.position) > 2)
+				{
+					transform.LookAt(destination);
+					Vector3 velocity = transform.forward * moveSpeed;
+					velocity.y = rb.velocity.y;
+
+					rb.velocity = velocity;
+				}
+			}
+			else
+			{
+				enemy = GetEnemy();
+			}
+		}
+		else // if runMode
+		{
+			wanderTimer += Time.deltaTime;
+
+			if(wanderTimer > 2.5)
+            {
+				attackMode = true;
+				wanderTimer = 0;
+			}
+
+			if (Vector3.Distance(transform.position, agent.destination) < 6)
+			{
+				Vector3 direction = Random.insideUnitSphere * wanderDist;
+				NavMeshHit navHit;
+				if (NavMesh.SamplePosition(transform.position + direction, out navHit, wanderDist, -1))
+				{
+					agent.destination = navHit.position;
+				}
+			}
+		}
+
+		if (isGrabbed == true)
+		{
+			agent.updateRotation = false;
+			agent.updatePosition = false;
+
+			//transform.Translate(0, 0, botMove);
+			//transform.Rotate(0, botRotate, 0);
 		}
 
 		// JUMP
