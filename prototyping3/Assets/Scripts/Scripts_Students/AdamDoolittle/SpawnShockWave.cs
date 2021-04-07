@@ -12,7 +12,7 @@ public class SpawnShockWave : MonoBehaviour
     public Vector3 targetScale;
 
     float aliveTimer = 5.0f;
-    public float speed = 3.0f;
+    public float speed = 5.0f;
     public float shockWaveCooldown = 0.0f;
 
     public bool canGrow = false;
@@ -24,7 +24,7 @@ public class SpawnShockWave : MonoBehaviour
     {
         //shockwaveEndPos = new Vector3(shockwave.transform.position.x + 100, shockwave.transform.position.y, shockwave.transform.position.z + 100);
         //shockwaveStartPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        targetScale = new Vector3(60f, 0.005f, 60f);
+        targetScale = new Vector3(160f, 0.005f, 160f);
         botController = transform.parent.GetComponent<BotBasic_Move>();
     }
 

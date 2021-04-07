@@ -19,6 +19,10 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
     bool canFly = true;
     bool isParticlePlaying = false;
     bool botChoosen = false;
+    bool attackBotChoosen = false;
+    bool stunBotChoosen = false;
+    bool isFuelCharging = false;
+    bool isAttackBotDone = false;
 
     public float fuel = 2.0f;
     public float rocketSpeed = 10.0f;
@@ -32,14 +36,29 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isAttackBotDone == true)
+        {
+            isAttackBotDone = false;
+            botChoosen = false;
+            attackBotChoosen = false;
+        }
         if(botChoosen == false)
         {
-            botSelection = Random.Range(0, 1);
+            botSelection = Random.Range(0, 2);
             botChoosen = true;
         }
         if(botSelection == 0)
         {
+            if(attackBotChoosen == false)
+            {
+                AttackBotAbilityChoose();
+            }
             AttackBot();
+            attackBotChoosen = true;
+        }
+        if(botSelection == 1)
+        {
+            botSelection = Random.Range(0, 2);
         }
     }
 
@@ -47,7 +66,7 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
     {
         var botController = attackBot.GetComponent<BotBasic_Move>();
         var rb = attackBot.GetComponent<Rigidbody>();
-        attackBotMode = Random.Range(0, 1);
+        //attackBotMode = Random.Range(0, 2);
         switch(attackBotMode)
         {
             case 0:
@@ -75,21 +94,33 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
                 JetBooster1.GetComponent<ParticleSystem>().Stop();
                 JetBooster2.GetComponent<ParticleSystem>().Stop();
                 isParticlePlaying = false;
+                isFuelCharging = true;
                 //fuel = 2.0f;
             }
-            if(fuel == 2.0f)
+            if(isFuelCharging == true)
             {
                 canFly = true;
+                fuel = 2.0f;
+                isAttackBotDone = true;
             }
            break;
            case 1:
                 rb.AddForce(rb.centerOfMass - new Vector3(0, botController.boostSpeed * 50, 0), ForceMode.Impulse);
                 attackBot.transform.rotation = Quaternion.Euler(90, 0, 0);
                 shockWaveSpawner.SetActive(true);
+                if(shockWaveSpawner.activeInHierarchy == true)
+                {
+                    isAttackBotDone = true;
+                }
                 break;
            default:
                print("no attack choosen");
                break;
         }
+    }
+
+    void AttackBotAbilityChoose()
+    {
+        attackBotMode = Random.Range(0, 2);
     }
 }
