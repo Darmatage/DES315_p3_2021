@@ -47,7 +47,7 @@ class Mars_WreckingBall : MonoBehaviour
 
     float trigTimer = 0;
     float stalledTimer = 0;
-    float stalledTimerMax = 2.5f;
+    float stalledTimerMax = 5f;
     Vector3 oldBallPos;
     Vector3 targetPos;
 
@@ -163,13 +163,6 @@ class Mars_WreckingBall : MonoBehaviour
                     Debug.Log("I am teleporting " + GameHandler.player2Prefab + " (Player 2) to " + teleportBelow.position);
                 }
             }
-        }
-
-        if (other.gameObject.tag == "Hazard")
-        {
-            float attackDamage = other.gameObject.GetComponent<HazardDamage>().damage;
-
-            gameHandler.TakeDamage("CoopNPCMonster", attackDamage);
         }
     }
 
