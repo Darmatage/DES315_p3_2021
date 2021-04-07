@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEditor.Experimental;
 using UnityEngine;
 
@@ -30,13 +31,15 @@ public class LevelRotationManager : MonoBehaviour
     [SerializeField] private float IncreaseAmount = 0.5f;
 
     [SerializeField] private float JumpHeight = 15f;
+
+    // TODO USe this fo rthe rotaters to not sense rotating until done
+    public bool isRotating = false;
     
     // Start is called before the first frame update
     void Start()
     {
         Player1 = GameObject.FindWithTag("Player1");
         Player2 = GameObject.FindWithTag("Player2");
-        
     }
 
     // Update is called once per frame
@@ -53,13 +56,22 @@ public class LevelRotationManager : MonoBehaviour
                 //if (timer >= RotateTime)
                 if (AngleCount >= 90f)
                 {
+                    isRotating = false;
+                    CooldownIsActive = true;
+
                     Clockwise = false;
-                    Level.transform.rotation = Quaternion.Euler(0f, 0f, EndRotation);
+                    
+                    //if (OpposingSide)
+                    //    OpposingSide.SetActive(false);
+                    
+                    //Level.transform.localRotation = Quaternion.Euler(0f, 0f, EndRotation);
                 }
 
                 //Player1.transform.position = new Vector3(-8f, 8f, 0f);
                 //Player2.transform.position = new Vector3(8f, 8f, 0f);
+                
                 Level.transform.Rotate(Vector3.forward, -IncreaseAmount);
+
                 //Level.transform.Rotate(Vector3.forward,
                 //    Mathf.Lerp(StartRotation, EndRotation, Time.deltaTime * (timer / RotateTime)));// timer / RotateTime));
             }
@@ -74,8 +86,15 @@ public class LevelRotationManager : MonoBehaviour
                 //if (timer >= RotateTime)
                 if (AngleCount >= 90f)
                 {
+                    isRotating = false;
+                    CooldownIsActive = true;
+
                     CounterClockwise = false;
-                    Level.transform.rotation = Quaternion.Euler(0f, 0f, EndRotation);
+                    //Level.transform.localRotation = Quaternion.Euler(0f, 0f, EndRotation);
+                    
+                    
+                    //if (OpposingSide)
+                    //    OpposingSide.SetActive(false);
                 }
                 else
                 {
@@ -91,13 +110,14 @@ public class LevelRotationManager : MonoBehaviour
 
     public void RotateClockwise()
     {
+        isRotating = true;
         Clockwise = true;
         CounterClockwise = false;
         timer = 0f;
         AngleCount = 0;
-        StartRotation = Level.transform.rotation.z;
+        StartRotation = Level.transform.localRotation.z;
         GetEndRotation();
-
+        
         Rigidbody P1 = Player1.GetComponentInChildren<Rigidbody>();
         if (P1)
         {
@@ -113,13 +133,14 @@ public class LevelRotationManager : MonoBehaviour
 
     public void RotateCounterClockwise()
     {
+        isRotating = true;
         Clockwise = false;
         CounterClockwise = true;
         timer = 0f;
         AngleCount = 0;
         StartRotation = Level.transform.localRotation.eulerAngles.z;
         GetEndRotation();
-        
+
         Rigidbody P1 = Player1.GetComponentInChildren<Rigidbody>();
         if (P1)
         {
@@ -140,19 +161,19 @@ public class LevelRotationManager : MonoBehaviour
         {
             if (StartRotation >= 270f)
             {
-                EndRotation = 0f;
+                EndRotation = 180f;
             }
             else if (StartRotation >= 180f)
             {
-                EndRotation = 270f;
+                EndRotation = 90f;
             }
             else if (StartRotation >= 90f)
             {
-                EndRotation = 180f;
+                EndRotation = 0f;
             }
             else if (StartRotation >= 0f)
             {
-                EndRotation = 90f;
+                EndRotation = 270f;
             }
         }
         else if (CounterClockwise)
