@@ -15,18 +15,26 @@ public class PacManMove : MonoBehaviour
     [SerializeField] int finished_Pellet_count = 0, length;
     bool finished = false;
 
+    int player = -1;
+
+    [SerializeField] float anger_timer = 15f, anger_cd = 30f;
+
     public Text collectedPelletsText;
+
+    Transform player1, player2;
 
     NavMeshAgent Agent;
     [SerializeField] Pellet currentPellet, previousPellet, startingPellet;
 
-    bool traveling, waiting;
+    bool traveling, waiting, attack = false;
     float waitTimer;
     int PelletsVisited;
     public bool start = false;
     // Start is called before the first frame update
     void Start()
     {
+        
+
         length = GameObject.FindGameObjectsWithTag("Pellet").Length;
 
         Visted_Pellets = new List<Pellet>();
@@ -61,6 +69,55 @@ public class PacManMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (player1 == null)
+        {
+            for (int i = 0; i < GameObject.FindGameObjectWithTag("Player1").transform.childCount; i++)
+            {
+                string childname = GameObject.FindGameObjectWithTag("Player1").transform.GetChild(i).name;
+                string prefabname = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>().p1PrefabName + "(Clone)";
+                //print("child name: " + childname + "    prefabname: " + prefabname);
+                if (childname == prefabname)
+                {
+                    // print("Foudn Player 1");
+                    player1 = GameObject.FindGameObjectWithTag("Player1").transform.GetChild(i);
+                }
+
+            }
+        }
+        if (player2 == null)
+        {
+            for (int i = 0; i < GameObject.FindGameObjectWithTag("Player2").transform.childCount; i++)
+            {
+                string childname = GameObject.FindGameObjectWithTag("Player2").transform.GetChild(i).name;
+                string prefabname = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>().p2PrefabName + "(Clone)";
+                //print("child name: " + childname + "    prefabname: " + prefabname);
+                if (childname == prefabname)
+                {
+                    // print("Foudn Player 1");
+                    player2 = GameObject.FindGameObjectWithTag("Player2").transform.GetChild(i);
+                }
+
+            }
+        }
+
+        if (anger_cd > 0)
+        {
+            anger_cd -= Time.deltaTime;
+        }
+        else if( anger_cd < 0 && anger_timer > 0)
+        {
+            anger_timer -= Time.deltaTime;
+            if (attack == false)
+                SetDestination(true);
+        }
+        else if(anger_timer <= 0)
+        {
+            anger_cd = 30;
+            anger_timer = 15;
+            player = -1;
+            attack = false;
+        }
+
         if(collectedPelletsText != null)
         {
             collectedPelletsText.text = "Pellets Collected: " + finished_Pellet_count + "/" + length;
@@ -74,7 +131,7 @@ public class PacManMove : MonoBehaviour
 
         if (start)
         {
-            SetDestination();
+            SetDestination(false);
             start = false;
         }
 
@@ -89,7 +146,7 @@ public class PacManMove : MonoBehaviour
                 waitTimer = 0;
             }
             else
-                SetDestination();
+                SetDestination(false);
         }
 
         if(waiting)
@@ -98,7 +155,7 @@ public class PacManMove : MonoBehaviour
             if(waitTimer >= PatrolWaitTime)
             {
                 waiting = false;
-                SetDestination();
+                SetDestination(false);
             }
         }
     }
@@ -108,35 +165,54 @@ public class PacManMove : MonoBehaviour
         start = true;
     }
 
-    private void SetDestination()
+    private void SetDestination(bool chase)
     {
-        if(PelletsVisited > 0)
+        if(chase)
         {
-            previousPellet = currentPellet;
-
-            Visted_Pellets.Add(currentPellet);
-            if(Visted_Pellets.Count >= 5)
+            if(player == -1)
             {
-                Visted_Pellets.RemoveAt(0);
+                player = Random.Range(0, 1);
             }
-            Pellet nextPellet = null;
-            do
+            else if(player == 0)
             {
-                nextPellet = currentPellet.GetNextPellet(previousPellet);
+                Agent.SetDestination(player1.position);
             }
-            while (Visted_Pellets.Contains(nextPellet));
-
-            
-            currentPellet = nextPellet;
+            else if(player == 1)
+            {
+                Agent.SetDestination(player2.position);
+            }
+            attack = true;
         }
-
-        Vector3 Target = currentPellet.transform.position;
-        Agent.SetDestination(Target);
-        traveling = true;
-        if (previousPellet && !previousPellet.collected)
+        else
         {
-            previousPellet.collected = true;
-            finished_Pellet_count++;
+            if (PelletsVisited > 0)
+            {
+                previousPellet = currentPellet;
+
+                Visted_Pellets.Add(currentPellet);
+                if (Visted_Pellets.Count >= 5)
+                {
+                    Visted_Pellets.RemoveAt(0);
+                }
+                Pellet nextPellet = null;
+                do
+                {
+                    nextPellet = currentPellet.GetNextPellet(previousPellet);
+                }
+                while (Visted_Pellets.Contains(nextPellet));
+
+
+                currentPellet = nextPellet;
+            }
+
+            Vector3 Target = currentPellet.transform.position;
+            Agent.SetDestination(Target);
+            traveling = true;
+            if (previousPellet && !previousPellet.collected)
+            {
+                previousPellet.collected = true;
+                finished_Pellet_count++;
+            }
         }
     }
 }
