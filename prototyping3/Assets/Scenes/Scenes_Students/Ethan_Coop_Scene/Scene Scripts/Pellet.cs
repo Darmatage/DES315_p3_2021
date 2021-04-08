@@ -8,6 +8,7 @@ public class Pellet : MonoBehaviour
     public bool collected = false;
 
     PelletHolder p_holder;
+    GameObject[] All_Pellets;
 
     float pellet_radius = 5f;
     // Start is called before the first frame update
@@ -16,11 +17,13 @@ public class Pellet : MonoBehaviour
 
         p_holder = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<PelletHolder>();
 
+        All_Pellets = p_holder.GetPellets();
+
         Pellet_List = new List<Pellet>();
 
-        for(int i = 0; i < p_holder.All_Pellets.Length; i++)
+        for(int i = 0; i < All_Pellets.Length; i++)
         {
-            Pellet nextPellet = p_holder.All_Pellets[i].GetComponent<Pellet>();
+            Pellet nextPellet = All_Pellets[i].GetComponent<Pellet>();
 
             if(nextPellet != null)
             {
@@ -39,8 +42,8 @@ public class Pellet : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 1.0f);
 
-        //Gizmos.color = Color.blue;
-        //Gizmos.DrawWireSphere(transform.position, pellet_radius);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, pellet_radius);
     }
 
     

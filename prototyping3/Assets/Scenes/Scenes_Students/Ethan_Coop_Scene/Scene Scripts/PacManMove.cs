@@ -8,6 +8,7 @@ public class PacManMove : MonoBehaviour
 {
 
     PelletHolder p_holder;
+    GameObject[] All_Pellets;
     [SerializeField] Pellet closestPellet;
 
     bool PatrolWaiting = false;
@@ -38,6 +39,7 @@ public class PacManMove : MonoBehaviour
     void Start()
     {
         p_holder = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<PelletHolder>();
+        All_Pellets = p_holder.GetPellets();
 
         length = GameObject.FindGameObjectsWithTag("Pellet").Length;
 
@@ -60,6 +62,8 @@ public class PacManMove : MonoBehaviour
                     if(startingPellet != null)
                     {
                         currentPellet = startingPellet;
+                        PelletsVisited++;
+                        //SetDestination(false);
                     }
                 }
                 else
@@ -111,8 +115,7 @@ public class PacManMove : MonoBehaviour
         else if( anger_cd < 0 && anger_timer > 0)
         {
             anger_timer -= Time.deltaTime;
-            if (attack == false)
-                SetDestination(true);
+            SetDestination(true);
         }
         else if(anger_timer <= 0)
         {
@@ -173,11 +176,11 @@ public class PacManMove : MonoBehaviour
     {
         if(chase)
         {
-            if(player == -1)
+            if (player == -1)
             {
-                player = Random.Range(0, 1);
+                player = Random.Range(0, 2);
             }
-            else if(player == 0)
+            if(player == 0)
             {
                 Agent.SetDestination(player1.position);
             }
@@ -185,7 +188,6 @@ public class PacManMove : MonoBehaviour
             {
                 Agent.SetDestination(player2.position);
             }
-            attack = true;
         }
         else
         {
@@ -199,9 +201,15 @@ public class PacManMove : MonoBehaviour
                     Visted_Pellets.RemoveAt(0);
                 }
                 Pellet nextPellet = null;
+                int count = 0;
                 do
                 {
-                    //nextPellet = GetNextPellet(previousPellet, player1, player2);
+                    count++;
+                    nextPellet = GetNextPellet(previousPellet, player1, player2);
+                    if(count >= 5) //infinite loop break
+                    {
+                        break;
+                    }
                 }
                 while (Visted_Pellets.Contains(nextPellet));
 
@@ -244,11 +252,11 @@ public class PacManMove : MonoBehaviour
                     nextPellet = previousPellet.Pellet_List[i];
                     return nextPellet;
                 }
-                //else if (Vector3.Distance(Pellet_List[i].transform.position, closestPellet.transform.position) < distance)
-                //{
-                //    distance = Vector3.Distance(Pellet_List[i].transform.position, closestPellet.transform.position);
-                //    nextPellet = Pellet_List[i];
-                //}
+                else if (Vector3.Distance(previousPellet.Pellet_List[i].transform.position, closestPellet.transform.position) < distance)
+                {
+                    distance = Vector3.Distance(previousPellet.Pellet_List[i].transform.position, closestPellet.transform.position);
+                    nextPellet = previousPellet.Pellet_List[i];
+                }
             }
 
             //closestPellet = ClosestPellet(PreviousPellet);
@@ -265,7 +273,7 @@ public class PacManMove : MonoBehaviour
             //        nextPellet = Pellet_List[i];
             //    }  
             //}
-            nextPellet = previousPellet.Pellet_List[Random.Range(0, previousPellet.Pellet_List.Count)];
+            //nextPellet = previousPellet.Pellet_List[Random.Range(0, previousPellet.Pellet_List.Count)];
 
             return nextPellet;
         }
@@ -276,10 +284,10 @@ public class PacManMove : MonoBehaviour
 
         List<Pellet> Uncollected_Pellets = new List<Pellet>();
 
-        for (int i = 0; i < p_holder.All_Pellets.Length; i++)
+        for (int i = 0; i < All_Pellets.Length; i++)
         {
-            if (!p_holder.All_Pellets[i].GetComponent<Pellet>().collected)
-                Uncollected_Pellets.Add(p_holder.All_Pellets[i].GetComponent<Pellet>());
+            if (!All_Pellets[i].GetComponent<Pellet>().collected)
+                Uncollected_Pellets.Add(All_Pellets[i].GetComponent<Pellet>());
         }
 
         float distance = float.MaxValue;
