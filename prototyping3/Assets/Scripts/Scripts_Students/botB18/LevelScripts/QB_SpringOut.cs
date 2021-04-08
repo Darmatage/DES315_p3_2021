@@ -12,12 +12,13 @@ public class QB_SpringOut : MonoBehaviour
     private float timer2 = 0.0f;
     private GameObject obj1;
     private GameObject obj2;
-    
+
+    private QB_StunController stun;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        stun = gameObject.GetComponent<QB_StunController>();
     }
 
     // Update is called once per frame
@@ -32,6 +33,7 @@ public class QB_SpringOut : MonoBehaviour
                 timer = 0.0f;
                 // throw player out of area
                 Launch(obj1);
+                stun.Stun(obj1);
             }
         }
 
@@ -44,12 +46,29 @@ public class QB_SpringOut : MonoBehaviour
                 timer2 = 0.0f;
                 // throw player2 out of area
                 Launch(obj2);
+                stun.Stun(obj2);
             }
         }
     }
 
     private void Launch(GameObject obj)
     {
+        //GameObject obj = robj;
+        //
+        //while(obj.name != robj.transform.root.gameObject.name)
+        //{
+        //    if(obj.GetComponent<Rigidbody>())
+        //    {
+        //        break;
+        //    }
+        //    obj = obj.transform.parent.gameObject;
+        //}
+        //
+        //if(obj.name == robj.transform.root.gameObject.name)
+        //{
+        //    Debug.LogError("QB_SprintOut.cs: Object was not a part of a bot!");
+        //}
+
         Vector3 landingPos = new Vector3(7, 2, 0);
 
         if(obj.transform.position.x >= 0)
@@ -70,7 +89,7 @@ public class QB_SpringOut : MonoBehaviour
         if(rbody)
         {
             rbody.velocity = launchVec;
-            //rbody.angularVelocity = new Vector3(Random.Range(0, 10), Random.Range(0, 10), Random.Range(0, 10));
+            rbody.angularVelocity = new Vector3(Random.Range(0, 5), Random.Range(0, 5), Random.Range(0, 5));
         }
         else
         {
@@ -79,43 +98,99 @@ public class QB_SpringOut : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.transform.root.name == "PLAYER1_SLOT" || collision.transform.root.name == "PLAYER2_SLOT")
+        if (other.transform.root.name == "PLAYER1_SLOT" || other.transform.root.name == "PLAYER2_SLOT")
         {
-            if(!obj1)
+            if (obj1 == other.transform.root.GetChild(0).gameObject || obj2 == other.transform.root.GetChild(0).gameObject)
             {
-                obj1 = collision.gameObject;
+                return;
+            }
+
+            if (!obj1)
+            {
+                obj1 = other.transform.root.GetChild(0).gameObject;
                 timer = timerMax;
             }
-            else if(!obj2)
+            else if (!obj2)
             {
-                obj2 = collision.gameObject;
+                obj2 = other.transform.root.GetChild(0).gameObject;
                 timer2 = timerMax;
             }
             else
             {
                 Debug.LogError("QB_SprintOut.cs: OnCollisionEnter: Neither object is tested as free!");
             }
+
+            Debug.Log(other.gameObject.name + " has entered the fire pit!");
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.transform.root.name == "PLAYER1_SLOT" || collision.transform.root.name == "PLAYER2_SLOT")
+        if (other.transform.root.name == "PLAYER1_SLOT" || other.transform.root.name == "PLAYER2_SLOT")
         {
-            if (obj1 == collision.gameObject)
+            if (obj1 == other.transform.root.GetChild(0).gameObject)
             {
                 obj1 = null;
                 timer = 0.0f;
             }
-            else if(obj2 == collision.gameObject)
+            else if (obj2 == other.transform.root.GetChild(0).gameObject)
             {
                 obj2 = null;
                 timer2 = timerMax;
             }
+
+            Debug.Log(other.gameObject.name + " is leaving the fire pit!");
         }
     }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if(collision.transform.root.name == "PLAYER1_SLOT" || collision.transform.root.name == "PLAYER2_SLOT")
+    //    {
+    //        if(obj1 == collision.transform.root.GetChild(0).gameObject || obj2 == collision.transform.root.GetChild(0).gameObject)
+    //        {
+    //            return;
+    //        }
+    //
+    //        if(!obj1)
+    //        {
+    //            obj1 = collision.transform.root.GetChild(0).gameObject;
+    //            timer = timerMax;
+    //        }
+    //        else if(!obj2)
+    //        {
+    //            obj2 = collision.transform.root.GetChild(0).gameObject;
+    //            timer2 = timerMax;
+    //        }
+    //        else
+    //        {
+    //            Debug.LogError("QB_SprintOut.cs: OnCollisionEnter: Neither object is tested as free!");
+    //        }
+    //
+    //        Debug.Log(collision.gameObject.name + " has entered the fire pit!");
+    //    }
+    //}
+    //
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.transform.root.name == "PLAYER1_SLOT" || collision.transform.root.name == "PLAYER2_SLOT")
+    //    {
+    //        if (obj1 == collision.transform.root.GetChild(0).gameObject)
+    //        {
+    //            obj1 = null;
+    //            timer = 0.0f;
+    //        }
+    //        else if (obj2 == collision.transform.root.GetChild(0).gameObject)
+    //        {
+    //            obj2 = null;
+    //            timer2 = timerMax;
+    //        }
+    //
+    //        Debug.Log(collision.gameObject.name + " is leaving the fire pit!");
+    //    }
+    //}
 
 
     private Vector3 GetLaunchVelocity(Vector3 startPos, Vector3 targetPos, float speed, bool highArc = true)
