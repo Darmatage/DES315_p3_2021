@@ -8,6 +8,7 @@ public class PacManMove : MonoBehaviour
 {
 
     PelletHolder p_holder;
+    GameObject[] All_Pellets;
     [SerializeField] Pellet closestPellet;
 
     bool PatrolWaiting = false;
@@ -21,7 +22,7 @@ public class PacManMove : MonoBehaviour
 
     int player = -1;
 
-    [SerializeField] float anger_timer = 15f, anger_cd = 30f;
+    [SerializeField] float anger_timer = 10f, anger_cd = 20f;
 
     public Text collectedPelletsText;
 
@@ -38,6 +39,7 @@ public class PacManMove : MonoBehaviour
     void Start()
     {
         p_holder = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<PelletHolder>();
+        All_Pellets = p_holder.GetPellets();
 
         length = GameObject.FindGameObjectsWithTag("Pellet").Length;
 
@@ -60,6 +62,8 @@ public class PacManMove : MonoBehaviour
                     if(startingPellet != null)
                     {
                         currentPellet = startingPellet;
+                        PelletsVisited++;
+                        //SetDestination(false);
                     }
                 }
                 else
@@ -108,13 +112,13 @@ public class PacManMove : MonoBehaviour
         {
             anger_cd -= Time.deltaTime;
         }
-        else if( anger_cd < 0 && anger_timer > 0)
+        else if (anger_cd < 0 && anger_timer > 0)
         {
             anger_timer -= Time.deltaTime;
-            if (attack == false)
+            if(!attack)
                 SetDestination(true);
         }
-        else if(anger_timer <= 0)
+        else if (anger_timer <= 0)
         {
             anger_cd = 30;
             anger_timer = 15;
@@ -122,7 +126,7 @@ public class PacManMove : MonoBehaviour
             attack = false;
         }
 
-        if(collectedPelletsText != null)
+        if (collectedPelletsText != null)
         {
             collectedPelletsText.text = "Pellets Collected: " + finished_Pellet_count + "/" + length;
         }
@@ -139,7 +143,7 @@ public class PacManMove : MonoBehaviour
             start = false;
         }
 
-        if (traveling && Agent.remainingDistance <= 1 && !finished)
+        if (traveling && Agent.remainingDistance <= 1 && !finished && !attack)
         {
             traveling = false;
             PelletsVisited++;
@@ -173,11 +177,11 @@ public class PacManMove : MonoBehaviour
     {
         if(chase)
         {
-            if(player == -1)
+            if (player == -1)
             {
-                player = Random.Range(0, 1);
+                player = Random.Range(0, 2);
             }
-            else if(player == 0)
+            if(player == 0)
             {
                 Agent.SetDestination(player1.position);
             }
@@ -185,7 +189,7 @@ public class PacManMove : MonoBehaviour
             {
                 Agent.SetDestination(player2.position);
             }
-            attack = true;
+            attack = false;
         }
         else
         {
@@ -199,9 +203,15 @@ public class PacManMove : MonoBehaviour
                     Visted_Pellets.RemoveAt(0);
                 }
                 Pellet nextPellet = null;
+                int count = 0;
                 do
                 {
-                    //nextPellet = GetNextPellet(previousPellet, player1, player2);
+                    count++;
+                    nextPellet = GetNextPellet(previousPellet, player1, player2);
+                    if(count >= 5) //infinite loop break
+                    {
+                        break;
+                    }
                 }
                 while (Visted_Pellets.Contains(nextPellet));
 
@@ -235,19 +245,21 @@ public class PacManMove : MonoBehaviour
         {
             Pellet nextPellet = null;
             closestPellet = ClosestPellet(PreviousPellet);
-            float distance = float.MaxValue;
 
             for (int i = 0; i < previousPellet.Pellet_List.Count; i++)
             {
                 if (!previousPellet.Pellet_List[i].collected)
                 {
                     nextPellet = previousPellet.Pellet_List[i];
-                    return nextPellet;
                 }
-                //else if (Vector3.Distance(Pellet_List[i].transform.position, closestPellet.transform.position) < distance)
+                else
+                {
+                    nextPellet = closestPellet;
+                }
+                //else if (Vector3.Distance(previousPellet.Pellet_List[i].transform.position, player1.position) > distance)
                 //{
-                //    distance = Vector3.Distance(Pellet_List[i].transform.position, closestPellet.transform.position);
-                //    nextPellet = Pellet_List[i];
+                //    distance = Vector3.Distance(previousPellet.Pellet_List[i].transform.position, player1.position);
+                //    nextPellet = previousPellet.Pellet_List[i];
                 //}
             }
 
@@ -265,7 +277,7 @@ public class PacManMove : MonoBehaviour
             //        nextPellet = Pellet_List[i];
             //    }  
             //}
-            nextPellet = previousPellet.Pellet_List[Random.Range(0, previousPellet.Pellet_List.Count)];
+            //nextPellet = previousPellet.Pellet_List[Random.Range(0, previousPellet.Pellet_List.Count)];
 
             return nextPellet;
         }
@@ -276,10 +288,10 @@ public class PacManMove : MonoBehaviour
 
         List<Pellet> Uncollected_Pellets = new List<Pellet>();
 
-        for (int i = 0; i < p_holder.All_Pellets.Length; i++)
+        for (int i = 0; i < All_Pellets.Length; i++)
         {
-            if (!p_holder.All_Pellets[i].GetComponent<Pellet>().collected)
-                Uncollected_Pellets.Add(p_holder.All_Pellets[i].GetComponent<Pellet>());
+            if (!All_Pellets[i].GetComponent<Pellet>().collected)
+                Uncollected_Pellets.Add(All_Pellets[i].GetComponent<Pellet>());
         }
 
         float distance = float.MaxValue;

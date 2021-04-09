@@ -5,11 +5,11 @@ using UnityEngine;
 public class PelletHolder : MonoBehaviour
 {
 
-    public GameObject[] All_Pellets;
+    [SerializeField] public GameObject[] All_Pellets;
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         All_Pellets = GameObject.FindGameObjectsWithTag("Pellet");
     }
@@ -18,5 +18,10 @@ public class PelletHolder : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public GameObject[] GetPellets()
+    {
+        return All_Pellets;
     }
 }
