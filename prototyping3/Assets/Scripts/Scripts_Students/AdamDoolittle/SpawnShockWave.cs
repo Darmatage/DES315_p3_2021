@@ -8,6 +8,7 @@ public class SpawnShockWave : MonoBehaviour
     public GameObject newShock;
     //Vector3 shockwaveEndPos;
     //Vector3 shockwaveStartPos;
+    Vector3 shockwaveSpawnPos;
 
     public Vector3 targetScale;
 
@@ -26,10 +27,12 @@ public class SpawnShockWave : MonoBehaviour
         //shockwaveStartPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         targetScale = new Vector3(160f, 0.005f, 160f);
         botController = transform.parent.GetComponent<BotBasic_Move>();
+        //shockwaveSpawnPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
     }
 
     private void Update()
     {
+        shockwaveSpawnPos = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
         if (canGrow == true)
         {
             newShock.transform.localScale = Vector3.Lerp(newShock.transform.localScale, targetScale, Time.deltaTime * speed);
@@ -59,7 +62,8 @@ public class SpawnShockWave : MonoBehaviour
         if (other.gameObject.layer == 8 && shockWaveCooldown == 0.0f)
         {
             Debug.Log("I hit the ground!");
-            newShock = Instantiate(shockwave, transform.position, Quaternion.identity);
+            newShock = Instantiate(shockwave, shockwaveSpawnPos, Quaternion.identity);
+            newShock.GetComponent<ShockWave_Pushback>().spawner = this.gameObject;
             if (gameObject.transform.root.tag == "Player1") { newShock.GetComponent<HazardDamage>().isPlayer1Weapon = true; }
             if (gameObject.transform.root.tag == "Player2") { newShock.GetComponent<HazardDamage>().isPlayer2Weapon = true; }
             //newShock.transform.localScale = Vector3.Lerp(shockwaveStartPos, shockwaveEndPos, 2.0f);

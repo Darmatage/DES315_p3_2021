@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4111615730738940334}
   - component: {fileID: 6816712684484777078}
   - component: {fileID: 6878939718402049276}
+  - component: {fileID: 7049026148258146707}
   m_Layer: 0
   m_Name: ShockWave2
   m_TagString: Hazard
@@ -65,6 +66,21 @@ MonoBehaviour:
   isPlayer1Weapon: 0
   isPlayer2Weapon: 0
   isMonsterWeapon: 0
+--- !u!114 &7049026148258146707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4111615730738940329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c756a7ff1b5ba489e33cb98fab1cad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
+  source: {fileID: 0}
+  pushBack: 100
 --- !u!1 &4111615731950366798
 GameObject:
   m_ObjectHideFlags: 0
