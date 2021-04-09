@@ -22,7 +22,7 @@ public class PacManMove : MonoBehaviour
 
     int player = -1;
 
-    [SerializeField] float anger_timer = 15f, anger_cd = 30f;
+    [SerializeField] float anger_timer = 10f, anger_cd = 20f;
 
     public Text collectedPelletsText;
 
@@ -112,12 +112,13 @@ public class PacManMove : MonoBehaviour
         {
             anger_cd -= Time.deltaTime;
         }
-        else if( anger_cd < 0 && anger_timer > 0)
+        else if (anger_cd < 0 && anger_timer > 0)
         {
             anger_timer -= Time.deltaTime;
-            SetDestination(true);
+            if(!attack)
+                SetDestination(true);
         }
-        else if(anger_timer <= 0)
+        else if (anger_timer <= 0)
         {
             anger_cd = 30;
             anger_timer = 15;
@@ -125,7 +126,7 @@ public class PacManMove : MonoBehaviour
             attack = false;
         }
 
-        if(collectedPelletsText != null)
+        if (collectedPelletsText != null)
         {
             collectedPelletsText.text = "Pellets Collected: " + finished_Pellet_count + "/" + length;
         }
@@ -142,7 +143,7 @@ public class PacManMove : MonoBehaviour
             start = false;
         }
 
-        if (traveling && Agent.remainingDistance <= 1 && !finished)
+        if (traveling && Agent.remainingDistance <= 1 && !finished && !attack)
         {
             traveling = false;
             PelletsVisited++;
@@ -188,6 +189,7 @@ public class PacManMove : MonoBehaviour
             {
                 Agent.SetDestination(player2.position);
             }
+            attack = false;
         }
         else
         {
@@ -243,20 +245,22 @@ public class PacManMove : MonoBehaviour
         {
             Pellet nextPellet = null;
             closestPellet = ClosestPellet(PreviousPellet);
-            float distance = float.MaxValue;
 
             for (int i = 0; i < previousPellet.Pellet_List.Count; i++)
             {
                 if (!previousPellet.Pellet_List[i].collected)
                 {
                     nextPellet = previousPellet.Pellet_List[i];
-                    return nextPellet;
                 }
-                else if (Vector3.Distance(previousPellet.Pellet_List[i].transform.position, closestPellet.transform.position) < distance)
+                else
                 {
-                    distance = Vector3.Distance(previousPellet.Pellet_List[i].transform.position, closestPellet.transform.position);
-                    nextPellet = previousPellet.Pellet_List[i];
+                    nextPellet = closestPellet;
                 }
+                //else if (Vector3.Distance(previousPellet.Pellet_List[i].transform.position, player1.position) > distance)
+                //{
+                //    distance = Vector3.Distance(previousPellet.Pellet_List[i].transform.position, player1.position);
+                //    nextPellet = previousPellet.Pellet_List[i];
+                //}
             }
 
             //closestPellet = ClosestPellet(PreviousPellet);
