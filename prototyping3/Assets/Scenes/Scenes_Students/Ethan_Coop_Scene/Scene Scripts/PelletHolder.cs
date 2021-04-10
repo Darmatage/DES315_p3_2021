@@ -22,6 +22,8 @@ public class PelletHolder : MonoBehaviour
 
     public GameObject[] GetPellets()
     {
+        if(All_Pellets == null)
+            All_Pellets = GameObject.FindGameObjectsWithTag("Pellet");
         return All_Pellets;
     }
 }

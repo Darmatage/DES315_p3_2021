@@ -11,9 +11,12 @@ public class Pellet : MonoBehaviour
     GameObject[] All_Pellets;
 
     float pellet_radius = 5f;
+    PacManMove Pacman;
     // Start is called before the first frame update
     void Start()
     {
+
+        Pacman = GameObject.FindGameObjectWithTag("CoopNPCMonster").GetComponent<PacManMove>();
 
         p_holder = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<PelletHolder>();
 
@@ -53,4 +56,5 @@ public class Pellet : MonoBehaviour
     {
         
     }
+
 }
