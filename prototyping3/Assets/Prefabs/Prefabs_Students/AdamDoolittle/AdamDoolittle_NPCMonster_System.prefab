@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 203218595200316059}
   - component: {fileID: 807495935}
+  - component: {fileID: 1829606071017121709}
   m_Layer: 0
   m_Name: AdamDoolittle_NPCMonster_System
   m_TagString: Untagged
@@ -50,9 +51,53 @@ MonoBehaviour:
   JetBooster1: {fileID: 8992993373066353684}
   JetBooster2: {fileID: 375253894268767683}
   shockWaveSpawner: {fileID: 1667280864321663644}
+  player1Target: {fileID: 0}
+  player2Target: {fileID: 0}
   botTimer: 10
+  attackBotTimer: 3
+  attackSpeed: 10
+  stunBotTimer: 3
   fuel: 2
   rocketSpeed: 10
+--- !u!114 &1829606071017121709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203218595200316058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c1ab3308c9f2a14a87df73a220a9aa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playersReady: 0
+--- !u!114 &203218595466599016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161612528329816679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d059d45be39ef4692ca8fe138efee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthStart: 80
+--- !u!114 &203218595466599015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161612528635530205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d059d45be39ef4692ca8fe138efee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthStart: 80
 --- !u!1001 &203218595014597036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60,10 +105,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 203218595200316059}
     m_Modifications:
+    - target: {fileID: 364999052203561223, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1355330930375697355, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
         type: 3}
       propertyPath: m_Name
       value: Attack_bot
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355330930375697355, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
+        type: 3}
+      propertyPath: m_TagString
+      value: CoopNPCMonster
       objectReference: {fileID: 0}
     - target: {fileID: 1355330930375697356, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
         type: 3}
@@ -135,6 +190,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1355330930375697358, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355330930375697359, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2225174154151788689, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
         type: 3}
       propertyPath: m_Enabled
@@ -184,10 +249,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 203218595200316059}
     m_Modifications:
+    - target: {fileID: 364999052203561223, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1355330930375697355, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
         type: 3}
       propertyPath: m_Name
       value: Stun_bot
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355330930375697355, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
+        type: 3}
+      propertyPath: m_TagString
+      value: CoopNPCMonster
       objectReference: {fileID: 0}
     - target: {fileID: 1355330930375697356, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
         type: 3}
@@ -258,6 +333,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355330930375697358, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355330930375697359, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2225174154151788689, guid: bbec8dcd9bcfc3d4e92c2526d4ddfcff,
         type: 3}

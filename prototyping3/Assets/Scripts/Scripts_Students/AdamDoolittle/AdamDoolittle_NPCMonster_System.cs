@@ -13,11 +13,18 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
     public Transform player1Target;
     public Transform player2Target;
 
+    Vector3 stunBotStartPos;
+    Vector3 stunBotCurPos;
+
     public float botTimer = 10f;
     public float attackBotTimer = 3.0f;
+    public float attackSpeed = 10.0f;
+    public float stunBotTimer = 3.0f;
 
     private int attackBotMode;
     private int botSelection;
+    private int choosePlayer;
+
 
     bool isFacingUp = false;
     bool canFly = true;
@@ -27,19 +34,32 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
     bool stunBotChoosen = false;
     bool isFuelCharging = false;
     bool isAttackBotDone = false;
+    bool isStunBotDone = false;
+    bool attackPlayer1 = false;
+    bool attackPlayer2 = false;
 
     public float fuel = 2.0f;
     public float rocketSpeed = 10.0f;
 
+    private NPC_LoadPlayers playerLoader;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        stunBotStartPos = new Vector3(stunBot.transform.position.x, stunBot.transform.position.y, stunBot.transform.position.z);
+        playerLoader = GetComponent<NPC_LoadPlayers>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        stunBotCurPos = new Vector3(stunBot.transform.position.x, stunBot.transform.position.y, stunBot.transform.position.z);
+        if(isStunBotDone == true)
+        {
+            isStunBotDone = false;
+            botChoosen = false;
+            stunBotChoosen = false;
+        }
         if(isAttackBotDone == true)
         {
             isAttackBotDone = false;
@@ -62,7 +82,14 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
         }
         if(botSelection == 1)
         {
-            botSelection = Random.Range(0, 2);
+            //botSelection = Random.Range(0, 2);
+            StunBot();
+            stunBotChoosen = true;
+        }
+
+        if(playerLoader.playersReady == true)
+        {
+            LoadPlayerTargets();
         }
     }
 
@@ -153,7 +180,59 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
 
     void StunBot()
     {
-
+        choosePlayer = Random.Range(0, 2);
+        if(choosePlayer == 0 && isStunBotDone == false)
+        {
+            if (stunBotTimer == 3.0f)
+            {
+                if (playerLoader.playersReady == true)
+                {
+                    attackPlayer1 = true;
+                    stunBot.transform.LookAt(player1Target);
+                    Vector3.Lerp(stunBotStartPos, player1Target.position, attackSpeed);
+                }
+            }
+            if(stunBotTimer <= 0.0f)
+            {
+                //isStunBotDone = true;
+                stunBotTimer = 3.0f;
+                Vector3.Lerp(stunBotCurPos, stunBotStartPos, attackSpeed);
+                if(stunBotCurPos == stunBotStartPos)
+                {
+                    isStunBotDone = true;
+                }
+            }
+            else
+            {
+                stunBotTimer -= Time.deltaTime;
+            }
+        }
+        if(choosePlayer == 1)
+        {
+            if (stunBotTimer == 3.0f)
+            {
+                if (playerLoader.playersReady == true)
+                {
+                    attackPlayer2 = true;
+                    stunBot.transform.LookAt(player2Target);
+                    Vector3.Lerp(stunBotStartPos, player2Target.position, attackSpeed);
+                }
+            }
+            if(stunBotTimer <= 0.0f)
+            {
+                //isStunBotDone = true;
+                stunBotTimer = 3.0f;
+                Vector3.Lerp(stunBotCurPos, stunBotStartPos, attackSpeed);
+                if(stunBotCurPos == stunBotStartPos)
+                {
+                    isStunBotDone = true;
+                }
+            }
+            else
+            {
+                stunBotTimer -= Time.deltaTime;
+            }
+        }
     }
 
     public void LoadPlayerTargets()
