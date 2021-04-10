@@ -27,6 +27,23 @@ public class FallBotsLogic : MonoBehaviour
     float Timer;
     float TimerMax = 6.0f;
 
+    // Transform of the GameObject you want to shake
+    private Transform Trans;
+
+    // Desired duration of the shake effect
+    float shakeDuration = 0f;
+    float shakeTime = 3.0f;
+
+    // A measure of magnitude for the shake. Tweak based on your preference
+    float shakeMagnitude = 0.1f;
+
+    // A measure of how quickly the shake effect should evaporate
+    float dampingSpeed = 1.0f;
+
+    // The initial position of the GameObject
+    Vector3 initialPosition;
+
+
     //TODO: Add Wobble, Add kill barrier, add lerp fall for tiles.
     void Start()
     {
@@ -43,6 +60,18 @@ public class FallBotsLogic : MonoBehaviour
             SelectTile();
             Timer = TimerMax;
         }
+
+        if (shakeDuration > 0)
+        {
+            Trans.localPosition = initialPosition + Random.insideUnitSphere * shakeMagnitude;
+
+            shakeDuration -= Time.deltaTime * dampingSpeed;
+        }
+        else
+        {
+            shakeDuration = 0f;
+            //transform.localPosition = initialPosition;
+        }
     }
 
     void SelectTile()
@@ -50,59 +79,71 @@ public class FallBotsLogic : MonoBehaviour
         switch (TileCount)
         {
             case 1:
-                DropTile(FallAwayOR6);
+                TriggerShake(FallAwayOR6);
                 break;
             case 2:
-                DropTile(FallAwayOR7);
+                TriggerShake(FallAwayOR7);
                 break;
             case 3:
-                DropTile(FallAwayOR2);
+                TriggerShake(FallAwayOR2);
                 break;
             case 4:
-                DropTile(FallAwayOR5);
+                TriggerShake(FallAwayOR5);
                 break;
             case 5:
-                DropTile(FallAwayOR8);
+                TriggerShake(FallAwayOR8);
                 break;
             case 6:
-                DropTile(FallAwayOR4);
+                TriggerShake(FallAwayOR4);
                 break;
             case 7:
-                DropTile(FallAwayOR1);
+                TriggerShake(FallAwayOR1);
                 break;
             case 8:
-                DropTile(FallAwayOR3);
+                TriggerShake(FallAwayOR3);
                 break;
             case 9:
-                DropTile(FallAwayIR2);
+                TriggerShake(FallAwayIR2);
                 break;
             case 10:
-                DropTile(FallAwayIR4);
+                TriggerShake(FallAwayIR4);
                 break;
             case 11:
-                DropTile(FallAwayIR3);
+                TriggerShake(FallAwayIR3);
                 break;
             case 12:
-                DropTile(FallAwayIR8);
+                TriggerShake(FallAwayIR8);
                 break;
             case 13:
-                DropTile(FallAwayIR6);
+                TriggerShake(FallAwayIR6);
                 break;
             case 14:
-                DropTile(FallAwayIR5);
+                TriggerShake(FallAwayIR5);
                 break;
             case 15:
-                DropTile(FallAwayIR7);
+                TriggerShake(FallAwayIR7);
                 break;
             case 16:
-                DropTile(FallAwayIR1);
+                TriggerShake(FallAwayIR1);
                 break;
         }
     }
 
-    void DropTile(GameObject Tile)
+    IEnumerator DropTile(GameObject Tile)
     {
-        Vector3 pos = new Vector3(1000, 1000, 1000);
-        Tile.transform.position = pos;
+        yield return new WaitForSeconds(shakeTime + 0.001f);
+        //Vector3 pos = new Vector3(1000, 1000, 1000);
+        //Tile.transform.position = pos;
+        Tile.SetActive(false);
     }
+
+    public void TriggerShake(GameObject tile)
+    {
+        shakeDuration = shakeTime;
+        Trans = tile.transform;
+        initialPosition = Trans.localPosition;
+        StartCoroutine(DropTile(tile));
+    }
+
+
 }

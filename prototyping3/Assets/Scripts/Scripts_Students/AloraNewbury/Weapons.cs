@@ -36,10 +36,10 @@ public class Weapons : MonoBehaviour
 		//if (Input.GetKeyDown(KeyCode.T)){
 		if ((Input.GetButtonDown(button1)) && (weaponOut == false))
 		{
-			weaponThrust.GetComponent<ParticleSystem>().Play();
-			///weaponThrust.transform.Translate(0, thrustAmount, 0);
+			//weaponThrust.GetComponent<ParticleSystem>().Play();
+			weaponThrust.transform.Translate(0, thrustAmount, 0);
 			weaponOut = true;
-			//StartCoroutine(WithdrawWeapon());
+			StartCoroutine(WithdrawWeapon());
 		}
 		if ((Input.GetButtonDown(button2)) && (weaponOut_l == false))
 		{
@@ -61,9 +61,8 @@ public class Weapons : MonoBehaviour
 	{
 		if (weaponOut)
 		{ 
-			//yield return new WaitForSeconds(0.6f);
-			//weaponThrust.transform.Translate(0, -thrustAmount, 0);
-			//weaponThrust.transform.lo
+			yield return new WaitForSeconds(0.6f);
+			weaponThrust.transform.Translate(0, -thrustAmount, 0);
 			weaponOut = false;
 		}
 		if (weaponOut_l)

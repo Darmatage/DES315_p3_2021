@@ -10,36 +10,35 @@ public class Rotater : MonoBehaviour
     
     [SerializeField] private float CooldownTimer = 5f;
 
-    private float timer = 0f;
+    public float timer = 0f;
 
+    private bool CooldownActive = false;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (Manager.CooldownIsActive)
+        if (CooldownActive)
         {
             timer += Time.deltaTime;
             if (timer >= CooldownTimer)
             {
-                Manager.CooldownIsActive = false;
+                CooldownActive = false;
                 timer = 0f;
             }
         }
     }
+
+    public void StartCooldown()
+    {
+        CooldownActive = true;
+    }
     
     private void OnTriggerEnter(Collider other)
     {
-        if (Manager.CooldownIsActive)
+        if (CooldownActive || Manager.isRotating)
             return;
         if ((other.transform.root.gameObject.tag == "Player1") || (other.transform.root.gameObject.tag == "Player2"))
         {
-            Manager.CooldownIsActive = true;
             if (isClockwise)
                 Manager.RotateClockwise();
             else

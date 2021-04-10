@@ -7,7 +7,7 @@ public class BotA14_AttackScript : MonoBehaviour
 	//NOTE: This script goes on the main playerBot Game Object, and the weapon goes in the public GO slot
 
 	public GameObject weaponThrust;
-	private float thrustAmount = 3f;
+	//private float thrustAmount = 3f;
 	public float chargeTime = 0f;
 	public float chargeTimeCounter = 0;
 	public AudioSource source2;
