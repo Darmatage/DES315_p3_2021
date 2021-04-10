@@ -11,9 +11,12 @@ public class Pellet : MonoBehaviour
     GameObject[] All_Pellets;
 
     float pellet_radius = 5f;
+    PacManMove Pacman;
     // Start is called before the first frame update
     void Start()
     {
+
+        Pacman = GameObject.FindGameObjectWithTag("CoopNPCMonster").GetComponent<PacManMove>();
 
         p_holder = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<PelletHolder>();
 
@@ -52,5 +55,19 @@ public class Pellet : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.transform.CompareTag("CoopNPCMonster"))
+        {
+            Physics.IgnoreCollision(other, GetComponent<CapsuleCollider>(), true);
+        }
+        else
+        { 
+            other.gameObject.GetComponent<PacManMove>().nom.PlayOneShot(other.gameObject.GetComponent<PacManMove>().nom.clip);
+            GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<CapsuleCollider>().enabled = false;
+        }
     }
 }

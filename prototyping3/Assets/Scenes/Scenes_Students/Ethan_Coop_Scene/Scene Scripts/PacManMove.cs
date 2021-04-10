@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -26,7 +25,7 @@ public class PacManMove : MonoBehaviour
 
     public Text collectedPelletsText;
 
-    Transform player1, player2;
+    public Transform player1, player2;
 
     NavMeshAgent Agent;
     [SerializeField] Pellet currentPellet, previousPellet, startingPellet;
@@ -35,9 +34,14 @@ public class PacManMove : MonoBehaviour
     float waitTimer;
     int PelletsVisited;
     public bool start = false;
+
+    public AudioSource nom;
     // Start is called before the first frame update
     void Start()
     {
+        nom = GetComponent<AudioSource>();
+
+
         p_holder = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<PelletHolder>();
         All_Pellets = p_holder.GetPellets();
 
@@ -45,21 +49,21 @@ public class PacManMove : MonoBehaviour
 
         Visted_Pellets = new List<Pellet>();
         Agent = GetComponent<NavMeshAgent>();
-        if(Agent == null)
+        if (Agent == null)
         {
             Debug.LogError("There is no NavMeshAgent on: " + gameObject.name);
         }
         else
         {
-            if(currentPellet == null)
+            if (currentPellet == null)
             {
                 GameObject[] PelletsGO = GameObject.FindGameObjectsWithTag("Pellet Start");
-                if(PelletsGO.Length > 0)
+                if (PelletsGO.Length > 0)
                 {
                     int random = Random.Range(0, PelletsGO.Length);
                     startingPellet = PelletsGO[random].GetComponent<Pellet>();
 
-                    if(startingPellet != null)
+                    if (startingPellet != null)
                     {
                         currentPellet = startingPellet;
                         PelletsVisited++;
@@ -115,7 +119,7 @@ public class PacManMove : MonoBehaviour
         else if (anger_cd < 0 && anger_timer > 0)
         {
             anger_timer -= Time.deltaTime;
-            if(!attack)
+            if (!attack)
                 SetDestination(true);
         }
         else if (anger_timer <= 0)
@@ -157,10 +161,10 @@ public class PacManMove : MonoBehaviour
                 SetDestination(false);
         }
 
-        if(waiting)
+        if (waiting)
         {
             waitTimer += Time.deltaTime;
-            if(waitTimer >= PatrolWaitTime)
+            if (waitTimer >= PatrolWaitTime)
             {
                 waiting = false;
                 SetDestination(false);
@@ -175,17 +179,17 @@ public class PacManMove : MonoBehaviour
 
     private void SetDestination(bool chase)
     {
-        if(chase)
+        if (chase)
         {
             if (player == -1)
             {
                 player = Random.Range(0, 2);
             }
-            if(player == 0)
+            if (player == 0)
             {
                 Agent.SetDestination(player1.position);
             }
-            else if(player == 1)
+            else if (player == 1)
             {
                 Agent.SetDestination(player2.position);
             }
@@ -208,7 +212,7 @@ public class PacManMove : MonoBehaviour
                 {
                     count++;
                     nextPellet = GetNextPellet(previousPellet, player1, player2);
-                    if(count >= 5) //infinite loop break
+                    if (count >= 5) //infinite loop break
                     {
                         break;
                     }
