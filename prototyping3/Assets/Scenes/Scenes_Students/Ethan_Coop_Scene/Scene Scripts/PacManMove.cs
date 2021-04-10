@@ -231,6 +231,7 @@ public class PacManMove : MonoBehaviour
                 previousPellet.collected = true;
                 finished_Pellet_count++;
                 previousPellet.gameObject.GetComponent<MeshRenderer>().enabled = false;
+                nom.PlayOneShot(nom.clip);
             }
         }
     }

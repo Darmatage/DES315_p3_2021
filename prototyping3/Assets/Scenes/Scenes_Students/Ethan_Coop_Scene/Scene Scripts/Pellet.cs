@@ -57,29 +57,4 @@ public class Pellet : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.CompareTag("CoopNPCMonster"))
-        {
-            print("Collision");
-        }
-        else
-        {
-            Physics.IgnoreCollision(collision.collider, GetComponent<CapsuleCollider>(), true);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //if (!)
-        //{
-        //    Physics.IgnoreCollision(other, GetComponent<CapsuleCollider>(), true);
-        //}
-        if(other.transform.CompareTag("CoopNPCMonster"))
-        { 
-            other.gameObject.GetComponent<PacManMove>().nom.PlayOneShot(other.gameObject.GetComponent<PacManMove>().nom.clip);
-            GetComponent<MeshRenderer>().enabled = false;
-            GetComponent<CapsuleCollider>().enabled = false;
-        }
-    }
 }
