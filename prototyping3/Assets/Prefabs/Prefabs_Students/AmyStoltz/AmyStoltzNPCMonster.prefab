@@ -937,6 +937,7 @@ GameObject:
   - component: {fileID: -7490436989370972739}
   - component: {fileID: 4831637901146781839}
   - component: {fileID: 2395497124939380431}
+  - component: {fileID: 6747800150573554523}
   m_Layer: 0
   m_Name: AmyStoltzNPCMonster
   m_TagString: CoopNPCMonster
@@ -1018,13 +1019,112 @@ MonoBehaviour:
   rippleParticles: {fileID: 2295547999087866070, guid: 04a0ee11fa33de6468f0f851b3613827,
     type: 3}
   blastCircleSprite: {fileID: 6975215377060730301}
-  bombSignifier: {fileID: 868482813381372857, guid: ba29b2ce21d394b46bccae14d6e60e2a,
+  bombSignifier: {fileID: 868482813381372857, guid: 6d8208d78a606364f9b29ed3a7b48338,
     type: 3}
-  bombDamageObj: {fileID: 5537728375078132570, guid: 9646321cadeea4a4ebd450d28f7fbc29,
+  bombDamageObj: {fileID: 5537728375078132570, guid: da65ced6588312649869a088ec8f4514,
     type: 3}
+  blastSound: {fileID: 8300000, guid: 0700ff535fad36f44a2c4eaf507d1021, type: 3}
+  explosionSound: {fileID: 8300000, guid: c809751d67dae294999c708ad22baafb, type: 3}
   blastForceScalar: 500
   blastRadius: 16
   gaussRadius: 100
+--- !u!82 &6747800150573554523
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4229324019680726393}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: ab5732fb3a74006408f07ff6a825dad7,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4541663270678557466
 GameObject:
   m_ObjectHideFlags: 0
