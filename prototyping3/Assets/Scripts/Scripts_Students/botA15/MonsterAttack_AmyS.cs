@@ -14,6 +14,7 @@ public class MonsterAttack_AmyS : MonoBehaviour
     public GameObject rippleParticles;
     public GameObject blastCircleSprite;
     public GameObject bombSignifier;
+    public GameObject bombDamageObj;
 
     public float blastForceScalar = 100f;
 
@@ -42,6 +43,8 @@ public class MonsterAttack_AmyS : MonoBehaviour
     float timer = 2.0f;
     bool deleteCircles = false;
 
+    List<Vector3> hitPoints = new List<Vector3>();
+
     //Vector3 MonsterOrig;
 
     // Start is called before the first frame update
@@ -65,40 +68,42 @@ public class MonsterAttack_AmyS : MonoBehaviour
 
         if (player1 && player2)
         {
-            
+
             BlastDefense();
 
-
-
+            //if(deleteCircles)
+            //{
+            //    StartCoroutine(TimeStuff3());
+            //}
 
             if (isBombing && !isHoming)
             {
                 List<Vector3> positions = new List<Vector3>();
-                List<Vector3> hitPoints = new List<Vector3>();
+               
 
-                for(int i = 0; i < 40; ++i)
+                for (int i = 0; i < 40; ++i)
                 {
                     float randRange = generateNormalRandom(0, gaussRadius);
                     Vector3 newPos = PolarToCartesian(transform.position, randRange, Random.Range(0f, 360f));
-                    
+
                     RaycastHit hit;
-                    if(Physics.Raycast(newPos, new Vector3(0f,-500f,0f), out hit, 500f))
+                    if (Physics.Raycast(newPos, new Vector3(0f, -500f, 0f), out hit, 500f))
                     {
                         //Debug.DrawRay(newPos, new Vector3(0f, -500f, 0f), Color.red);
-                        
-                        if(hit.collider.gameObject.name == "Ground" && Vector3.Distance(hit.point, distanceCheck.transform.position) > 20f)
+
+                        if (hit.collider.gameObject.name == "Ground" && Vector3.Distance(hit.point, distanceCheck.transform.position) > 20f)
                         {
                             //Instantiate(bombSignifier, hit.point, Quaternion.identity);
 
-                           // positions.Add(newPos);
+                            // positions.Add(newPos);
                             hitPoints.Add(hit.point);
                         }
-                        
+
                     }
                 }
 
 
-                foreach(Vector3 pos in hitPoints)
+                foreach (Vector3 pos in hitPoints)
                 {
                     GameObject thing = Instantiate(bombSignifier, pos, Quaternion.identity);
                     Destroy(thing, 4f);
@@ -106,28 +111,28 @@ public class MonsterAttack_AmyS : MonoBehaviour
 
 
                 deleteCircles = true;
+                StartCoroutine(TimeStuff3());
 
-                
 
                 isBombing = false;
 
                 StartCoroutine(TimeStuff());
                 StartCoroutine(TimeStuff2());
             }
-            else if(isHoming && !isBombing)
+            else if (isHoming && !isBombing)
             {
                 //Debug.Log("Homing Bullets");
-                isHoming = false;
+                //isHoming = false;
 
-                StartCoroutine(TimeStuff());
-                StartCoroutine(TimeStuff2());
+                //StartCoroutine(TimeStuff());
+                //StartCoroutine(TimeStuff2());
             }
 
-            
+
 
         }
 
-        
+
 
 
         //float randRange = generateNormalRandom(0, gaussRadius);
@@ -154,7 +159,7 @@ public class MonsterAttack_AmyS : MonoBehaviour
     IEnumerator TimeStuff2()
     {
         float waitTime;
-        waitTime = Random.Range(2.0f, 5.0f);
+        waitTime = Random.Range(4.0f, 8.0f);
 
         yield return new WaitForSeconds(waitTime);
 
@@ -163,47 +168,65 @@ public class MonsterAttack_AmyS : MonoBehaviour
 
     }
 
+    IEnumerator TimeStuff3()
+    {
+
+
+        yield return new WaitForSeconds(2f);
+
+        Debug.Log("Deleting");
+
+        foreach (Vector3 pos in hitPoints)
+        {
+            GameObject obj = Instantiate(bombDamageObj, new Vector3(pos.x, pos.y - 2.3f, pos.z), Quaternion.identity);
+            Destroy(obj, .5f);
+        }
+
+        deleteCircles = false;
+
+    }
+
 
     void BlastDefense()
     {
-         // if one of the players is within blast range
+        // if one of the players is within blast range
         if (Vector3.Distance(player1.transform.position, distanceCheck.transform.position) <= blastRadius
                || Vector3.Distance(player2.transform.position, distanceCheck.transform.position) <= blastRadius)
         {
-             // if it hasn't already been activated, initiate blast sequence
+            // if it hasn't already been activated, initiate blast sequence
             if (!isChargingBlast)
                 StartCoroutine(Blast());
         }
-         // if they go outside the blast radius during counting
+        // if they go outside the blast radius during counting
         else
         {
-             // then if it hasn't already initiated, stop sequence
+            // then if it hasn't already initiated, stop sequence
             if (!isChargingBlast)
                 StopCoroutine(Blast());
         }
 
-         // once the blast has been initiated
+        // once the blast has been initiated
         if (isChargingBlast)
         {
-             // strobe for a bit
+            // strobe for a bit
             if (detonateTimer >= 0)
             {
                 //Debug.Log("I am in the first if statement");
                 Strobe();
                 detonateTimer -= Time.deltaTime;
             }
-             // once charge timer is up
+            // once charge timer is up
             else
             {
                 meshRend.material.SetColor("_Color", originalColor);
                 blastCircleSprite.GetComponent<SpriteRenderer>().enabled = false;
 
 
-                Vector3 newTrans = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - (body.transform.localScale.y / 2.0f) +1f, transform.position.z);
+                Vector3 newTrans = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - (body.transform.localScale.y / 2.0f) + 1f, transform.position.z);
 
                 Vector3 newRotation = new Vector3(-90f, 0f, -0f);
 
-                if(!doOnce)
+                if (!doOnce)
                 {
                     Instantiate(rippleParticles, newTrans, Quaternion.Euler(newRotation));
                     // if the players are still in radius then blast them away
@@ -223,13 +246,13 @@ public class MonsterAttack_AmyS : MonoBehaviour
                     }
                     doOnce = true;
                 }
-                
 
-                
+
+
 
                 StartCoroutine(Rest());
 
-                
+
 
             }
 
@@ -316,7 +339,7 @@ public class MonsterAttack_AmyS : MonoBehaviour
         float waitTime;
         waitTime = Random.Range(2f, 4.5f);
 
-        yield return  new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(waitTime);
 
         isChargingBlast = true;
     }
@@ -336,11 +359,11 @@ public class MonsterAttack_AmyS : MonoBehaviour
 
     Vector3 PolarToCartesian(Vector3 origin, float radius, float theta)
     {
-        float rad =  Mathf.Deg2Rad * theta;
+        float rad = Mathf.Deg2Rad * theta;
         float resX = Mathf.Cos(rad) * radius + origin.x;
         float resZ = Mathf.Sin(rad) * radius + origin.z;
 
-         // why is Y up for 3D its so dumb
+        // why is Y up for 3D its so dumb
         return new Vector3(resX, origin.y, resZ);
 
     }
