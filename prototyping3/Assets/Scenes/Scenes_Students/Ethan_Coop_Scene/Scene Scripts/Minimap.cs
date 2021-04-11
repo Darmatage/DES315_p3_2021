@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Minimap : MonoBehaviour
 {
-    public GameObject Menu;
+    public GameObject Menu, PauseMenu;
     public GameObject minimap;
 
     // Start is called before the first frame update
@@ -19,7 +19,7 @@ public class Minimap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Menu.activeSelf == false)
+        if (Menu.activeSelf == false && PauseMenu.activeSelf == false)
         {
             minimap.gameObject.SetActive(true);
         }

@@ -11480,9 +11480,9 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1008321281}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.65
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -11505,6 +11505,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 50d2139fa58a96a4eaedd4cbe725ae2a, type: 2}
+  - {fileID: 2100000, guid: 8612b1fe51b092a46a4c3fe830a685a3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11582,7 +11583,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   closestPellet: {fileID: 0}
-  health: 100
   finished_Pellet_count: 0
   length: 0
   anger_timer: 15
@@ -11594,7 +11594,6 @@ MonoBehaviour:
   previousPellet: {fileID: 0}
   startingPellet: {fileID: 0}
   start: 0
-  nom: {fileID: 0}
 --- !u!114 &1008321288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11620,7 +11619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d059d45be39ef4692ca8fe138efee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthStart: 100
+  healthStart: 20
 --- !u!82 &1008321290
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11634,7 +11633,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: be7d5ed07bc216a4ca3604ae23b20bad, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -22265,6 +22264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Menu: {fileID: 312197686}
+  PauseMenu: {fileID: 103164548}
   minimap: {fileID: 564931807}
 --- !u!114 &1812304299
 MonoBehaviour:
