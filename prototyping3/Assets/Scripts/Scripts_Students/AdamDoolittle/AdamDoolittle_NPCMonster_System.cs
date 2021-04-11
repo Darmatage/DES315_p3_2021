@@ -37,6 +37,7 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
     bool isStunBotDone = false;
     bool attackPlayer1 = false;
     bool attackPlayer2 = false;
+    bool loadPlayersHasBeenCalled = false;
 
     public float fuel = 2.0f;
     public float rocketSpeed = 10.0f;
@@ -83,6 +84,10 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
         if(botSelection == 1)
         {
             //botSelection = Random.Range(0, 2);
+            if(stunBotChoosen == false)
+            {
+                StunBotChoosePlayer();
+            }
             StunBot();
             stunBotChoosen = true;
         }
@@ -180,63 +185,131 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
 
     void StunBot()
     {
+        switch(choosePlayer)
+        {
+            case 0:
+                if(stunBotTimer == 3.0f)
+                {
+                    if(loadPlayersHasBeenCalled == true)
+                    {
+                        attackPlayer1 = true;
+                        stunBot.transform.LookAt(player1Target);
+                        Vector3.Lerp(stunBotStartPos, player1Target.position, attackSpeed);
+                    }
+                }
+                if(stunBotTimer <= 0.0f && isStunBotDone == false)
+                {
+                    Vector3.Lerp(stunBotCurPos, stunBotStartPos, attackSpeed);
+                    if(stunBotCurPos == stunBotStartPos)
+                    {
+                        isStunBotDone = true;
+                        attackPlayer1 = false;
+                        stunBotTimer = 3.0f;
+                    }
+                }
+                else if(loadPlayersHasBeenCalled == true)
+                {
+                    stunBotTimer -= Time.deltaTime;
+                }
+                break;
+
+            case 1:
+                if (stunBotTimer == 3.0f)
+                {
+                    if (loadPlayersHasBeenCalled == true)
+                    {
+                        attackPlayer2 = true;
+                        stunBot.transform.LookAt(player2Target);
+                        Vector3.Lerp(stunBotStartPos, player2Target.position, attackSpeed);
+                    }
+                }
+                if (stunBotTimer <= 0.0f && isStunBotDone == false)
+                {
+                    Vector3.Lerp(stunBotCurPos, stunBotStartPos, attackSpeed);
+                    if (stunBotCurPos == stunBotStartPos)
+                    {
+                        isStunBotDone = true;
+                        attackPlayer2 = false;
+                        stunBotTimer = 3.0f;
+                    }
+                }
+                else if(loadPlayersHasBeenCalled == true)
+                {
+                    stunBotTimer -= Time.deltaTime;
+                }
+                break;
+
+            default:
+                print("No player Choosen");
+                break;
+        }
+        //choosePlayer = Random.Range(0, 2);
+        //if (choosePlayer == 0 && isStunBotDone == false)
+        //{
+        //    if (stunBotTimer > 0.0f)
+        //    {
+        //        if (loadPlayersHasBeenCalled == true)
+        //        {
+        //            attackPlayer1 = true;
+        //            stunBot.transform.LookAt(player1Target);
+        //            Vector3.Lerp(stunBotStartPos, player1Target.position, attackSpeed);
+        //        }
+        //    }
+        //    if (stunBotTimer <= 0.0f)
+        //    {
+        //        //isStunBotDone = true;
+
+        //        Vector3.Lerp(stunBotCurPos, stunBotStartPos, attackSpeed);
+        //        if (stunBotCurPos == stunBotStartPos)
+        //        {
+        //            isStunBotDone = true;
+        //            attackPlayer1 = false;
+        //            stunBotTimer = 3.0f;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        stunBotTimer -= Time.deltaTime;
+        //    }
+        //}
+        //if (choosePlayer == 1 && isStunBotDone == false)
+        //{
+        //    if (stunBotTimer > 0.0f)
+        //    {
+        //        if (loadPlayersHasBeenCalled == true)
+        //        {
+        //            attackPlayer2 = true;
+        //            stunBot.transform.LookAt(player2Target);
+        //            Vector3.Lerp(stunBotStartPos, player2Target.position, attackSpeed);
+        //        }
+        //    }
+        //    if (stunBotTimer <= 0.0f)
+        //    {
+        //        //isStunBotDone = true;
+
+        //        Vector3.Lerp(stunBotCurPos, stunBotStartPos, attackSpeed);
+        //        if (stunBotCurPos == stunBotStartPos)
+        //        {
+        //            isStunBotDone = true;
+        //            attackPlayer2 = false;
+        //            stunBotTimer = 3.0f;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        stunBotTimer -= Time.deltaTime;
+        //    }
+        //}
+    }
+
+    void StunBotChoosePlayer()
+    {
         choosePlayer = Random.Range(0, 2);
-        if(choosePlayer == 0 && isStunBotDone == false)
-        {
-            if (stunBotTimer == 3.0f)
-            {
-                if (playerLoader.playersReady == true)
-                {
-                    attackPlayer1 = true;
-                    stunBot.transform.LookAt(player1Target);
-                    Vector3.Lerp(stunBotStartPos, player1Target.position, attackSpeed);
-                }
-            }
-            if(stunBotTimer <= 0.0f)
-            {
-                //isStunBotDone = true;
-                stunBotTimer = 3.0f;
-                Vector3.Lerp(stunBotCurPos, stunBotStartPos, attackSpeed);
-                if(stunBotCurPos == stunBotStartPos)
-                {
-                    isStunBotDone = true;
-                }
-            }
-            else
-            {
-                stunBotTimer -= Time.deltaTime;
-            }
-        }
-        if(choosePlayer == 1)
-        {
-            if (stunBotTimer == 3.0f)
-            {
-                if (playerLoader.playersReady == true)
-                {
-                    attackPlayer2 = true;
-                    stunBot.transform.LookAt(player2Target);
-                    Vector3.Lerp(stunBotStartPos, player2Target.position, attackSpeed);
-                }
-            }
-            if(stunBotTimer <= 0.0f)
-            {
-                //isStunBotDone = true;
-                stunBotTimer = 3.0f;
-                Vector3.Lerp(stunBotCurPos, stunBotStartPos, attackSpeed);
-                if(stunBotCurPos == stunBotStartPos)
-                {
-                    isStunBotDone = true;
-                }
-            }
-            else
-            {
-                stunBotTimer -= Time.deltaTime;
-            }
-        }
     }
 
     public void LoadPlayerTargets()
     {
+        loadPlayersHasBeenCalled = true;
         //load players as targets when they appear:
         if (GameObject.FindWithTag("Player1").transform.GetChild(0) != null)
         {
