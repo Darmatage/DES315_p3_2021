@@ -8,6 +8,11 @@ public class BotBasic_FallRespawn : MonoBehaviour
 	private GameObject fallRespawn;
 	private Transform playerParent;
 
+	//fall-does-damage variables
+	private GameHandler gameHandler;
+	private string thisPlayer;
+	public bool doesFallDamage = false;
+	public int playerFallDamage = 4;
 
     // Start is called before the first frame update
     void Start(){
@@ -17,6 +22,11 @@ public class BotBasic_FallRespawn : MonoBehaviour
 		if (gameObject.GetComponent<Rigidbody>() != null){
 			rb = gameObject.GetComponent<Rigidbody>();
 		}
+		
+		if (GameObject.FindWithTag("GameHandler") != null){
+			gameHandler = GameObject.FindWithTag("GameHandler").GetComponent<GameHandler>();
+		}
+		thisPlayer = gameObject.transform.root.tag;
     }
 
     // Update is called once per frame
@@ -27,6 +37,10 @@ public class BotBasic_FallRespawn : MonoBehaviour
 			gameObject.transform.rotation = gameObject.transform.parent.rotation;
 			rb.velocity = Vector3.zero;
 			rb.angularVelocity = Vector3.zero;
+			
+			if (doesFallDamage == true){
+				gameHandler.TakeDamage(thisPlayer, playerFallDamage);
+			}
 		}
     }
 }

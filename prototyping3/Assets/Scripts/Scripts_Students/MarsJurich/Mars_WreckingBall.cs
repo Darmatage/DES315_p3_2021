@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -31,6 +32,8 @@ class Mars_WreckingBall : MonoBehaviour
     private NPC_LoadPlayers playerLoader;
 
     public Transform wreckingBall;
+    public Transform pointer;
+    Vector3 savedPointerScale;
 
     private GameHandler gameHandler;
 
@@ -47,7 +50,7 @@ class Mars_WreckingBall : MonoBehaviour
 
     float trigTimer = 0;
     float stalledTimer = 0;
-    float stalledTimerMax = 5f;
+    float stalledTimerMax = 4f;
     Vector3 oldBallPos;
     Vector3 targetPos;
 
@@ -66,6 +69,9 @@ class Mars_WreckingBall : MonoBehaviour
         nextPatrolTarget = patrolTarget1;
 
         oldSpeed = myAgent.speed;
+
+        savedPointerScale = pointer.localScale;
+        pointer.localScale = new Vector3();
     }
 
     private void Update()
@@ -141,6 +147,7 @@ class Mars_WreckingBall : MonoBehaviour
         }
 
         UpdateWreckingBall();
+        UpdatePointer();
     }
 
     public void OnCollisionEnter(Collision other)
@@ -189,17 +196,22 @@ class Mars_WreckingBall : MonoBehaviour
         }
     }
 
+    void UpdateTargetPos(Vector3 newPos)
+    {
+        targetPos = new Vector3(newPos.x, transform.position.y, newPos.z);
+    }
+
+    //
     float timer = 0;
 
     private void UpdateWreckingBall()
     {
         bool stateChanged = (state != prevState);
         timer += Time.deltaTime;
+        trigTimer += Time.deltaTime * 2f;
 
         if (state == WreckingBallState.Swinging)
         {
-            trigTimer += Time.deltaTime * 2f;
-
             float swingSin = Mathf.Sin(trigTimer);
             float swingCos = Mathf.Cos(trigTimer);
             
@@ -223,6 +235,18 @@ class Mars_WreckingBall : MonoBehaviour
                 newPos.z = swingCos * 14f;
 
                 oldBallPos = transform.position + newPos;
+
+                StartPointer();
+            }
+
+            // update targetPos for the pointer
+            if (attackPlayer1 == true)
+            {
+                UpdateTargetPos(player1Target.transform.position);
+            }
+            else if (attackPlayer2 == true)
+            {
+                UpdateTargetPos(player2Target.transform.position);
             }
 
             Vector3 above = transform.position;
@@ -245,11 +269,11 @@ class Mars_WreckingBall : MonoBehaviour
 
                 if (attackPlayer1 == true)
                 {
-                    targetPos = player1Target.transform.position;
+                    UpdateTargetPos(player1Target.transform.position);
                 }
                 else if (attackPlayer2 == true)
                 {
-                    targetPos = player2Target.transform.position;
+                    UpdateTargetPos(player2Target.transform.position);
                 }
             }
 
@@ -263,6 +287,11 @@ class Mars_WreckingBall : MonoBehaviour
         }
         else if (state == WreckingBallState.Stalled)
         {
+            if (stateChanged)
+            {
+                StopPointer();
+            }
+
             stalledTimer += Time.deltaTime;
 
             if (stalledTimer >= stalledTimerMax)
@@ -275,5 +304,20 @@ class Mars_WreckingBall : MonoBehaviour
         }
 
         prevState = state;
+    }
+
+    private void StartPointer()
+    {
+        pointer.localScale = savedPointerScale;
+    }
+
+    private void StopPointer()
+    {
+        pointer.localScale = new Vector3();
+    }
+
+    private void UpdatePointer()
+    {
+        pointer.position = new Vector3(targetPos.x, targetPos.y + (Mathf.Sin(trigTimer) + 3f), targetPos.z);
     }
 }

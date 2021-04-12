@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameHandler_LastBots : MonoBehaviour
-{
+public class GameHandler_LastBots : MonoBehaviour{
 	public GameHandler gameHandlerObj;
 	public GameObject MenuLastBots;
 	public GameObject lastBotsP1Text;
@@ -30,3 +29,5 @@ public class GameHandler_LastBots : MonoBehaviour
     }
 	
 }
+
+// NOTE: this script just DISPLAYS the names of the bots from the pevious match -- GameHandler plays them
