@@ -39,9 +39,10 @@ public class DH_RoomLogic : MonoBehaviour
         }
       }
 
-      if(done)
+      if(done && door.active)
       {
         door.SetActive(false);
+        GetComponent<AudioSource>().Play();
       }
 
       if(Input.GetKeyDown(KeyCode.K))
@@ -68,7 +69,9 @@ public class DH_RoomLogic : MonoBehaviour
     foreach (GameObject obj in enemiesToSpawn)
     {
       Vector3 spawnLocation = new Vector3(Random.Range(minCubeCorner.x, maxCubeCorner.x), Random.Range(minCubeCorner.y, maxCubeCorner.y), Random.Range(minCubeCorner.z, maxCubeCorner.z));
-      Instantiate(obj, spawnLocation, Quaternion.identity);
+      GameObject spawnedObj = Instantiate(obj, spawnLocation, Quaternion.identity);
+      spawnedObj.AddComponent<DH_Health>();
+      spawnedObj.GetComponent<NPC_LoadPlayers>().playersReady = true;
     }
   }
 }
