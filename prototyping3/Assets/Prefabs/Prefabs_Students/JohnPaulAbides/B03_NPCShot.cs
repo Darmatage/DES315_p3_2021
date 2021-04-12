@@ -38,7 +38,7 @@ public class B03_NPCShot : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // only activate after shot leaves parent
-        if (timer < 0.1f) return;
+        if (timer < 0.2f) return;
 
         if (other.gameObject.transform.root.name == "B03_NPCMonster")
         {
