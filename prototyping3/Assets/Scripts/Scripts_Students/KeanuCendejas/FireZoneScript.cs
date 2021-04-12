@@ -5,8 +5,8 @@ using UnityEngine;
 public class FireZoneScript : MonoBehaviour
 {
     public float timer = 10.0f;
-    public float growthRate = 0.4f;
-    public float growthTime = 5.0f;
+    public float growthRate = 4f;
+    public float growthTime = 2.0f;
     public float timerTracker = 0;
     public float growthTimeTracker = 0;
 
