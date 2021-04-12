@@ -17,6 +17,8 @@ public class HealingSpot : MonoBehaviour
     
     [SerializeField] private GameHandler Handler;
     
+        [SerializeField] private GameObject HealParticles;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,8 @@ public class HealingSpot : MonoBehaviour
     {
         if (isHealing)
         {
+            HealParticles.transform.position = BotParent.GetComponentInChildren<BotBasic_Move>().transform.position;
+            
             timer += Time.deltaTime;
 
             if (timer >= HealTimer)
@@ -77,7 +81,9 @@ public class HealingSpot : MonoBehaviour
         // Don't start timer over if already healing
         if (other.transform.parent && BotParent.CompareTag(other.transform.parent.tag) && !isHealing)
         {
-            Debug.Log("healing");
+            HealParticles.transform.position = BotParent.GetComponentInChildren<BotBasic_Move>().transform.position;
+            HealParticles.GetComponent<ParticleSystem>().Play();
+            
             isHealing = true;
             timer = 0f;
         }
@@ -87,7 +93,8 @@ public class HealingSpot : MonoBehaviour
     {
         if (other.transform.parent && BotParent.CompareTag(other.transform.parent.tag))
         {
-            Debug.Log("stop healing");
+            HealParticles.GetComponent<ParticleSystem>().Stop();
+
             isHealing = false;
         }
     }

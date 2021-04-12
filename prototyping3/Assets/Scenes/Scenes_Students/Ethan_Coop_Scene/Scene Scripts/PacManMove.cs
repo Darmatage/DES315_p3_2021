@@ -10,16 +10,11 @@ public class PacManMove : MonoBehaviour
     GameObject[] All_Pellets;
     [SerializeField] Pellet closestPellet;
 
-    bool PatrolWaiting = false;
-    float PatrolWaitTime = 3.0f;
-
-    public float health = 100;
-
     List<Pellet> Visted_Pellets;
     [SerializeField] int finished_Pellet_count = 0, length;
     bool finished = false;
 
-    int player = -1;
+    int player = -1, starter = 0;
 
     [SerializeField] float anger_timer = 10f, anger_cd = 20f;
 
@@ -30,17 +25,17 @@ public class PacManMove : MonoBehaviour
     NavMeshAgent Agent;
     [SerializeField] Pellet currentPellet, previousPellet, startingPellet;
 
-    bool traveling, waiting, attack = false;
-    float waitTimer;
+    public bool traveling, attack = false;
     int PelletsVisited;
     public bool start = false;
 
-    public AudioSource nom;
+    AudioSource nom;
     // Start is called before the first frame update
     void Start()
     {
         nom = GetComponent<AudioSource>();
 
+        GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[0];
 
         p_holder = GameObject.FindGameObjectWithTag("GameHandler").GetComponent<PelletHolder>();
         All_Pellets = p_holder.GetPellets();
@@ -81,6 +76,15 @@ public class PacManMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Start
+        if (start)
+        {
+            SetDestination(false);
+            start = false;
+            starter++;
+        }
+
+        //Get player transforms
         if (player1 == null)
         {
             for (int i = 0; i < GameObject.FindGameObjectWithTag("Player1").transform.childCount; i++)
@@ -112,7 +116,8 @@ public class PacManMove : MonoBehaviour
             }
         }
 
-        if (anger_cd > 0)
+        //Chase player logic
+        if (anger_cd > 0 && starter > 0)
         {
             anger_cd -= Time.deltaTime;
         }
@@ -120,7 +125,10 @@ public class PacManMove : MonoBehaviour
         {
             anger_timer -= Time.deltaTime;
             if (!attack)
+            {
+                GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[1];
                 SetDestination(true);
+            }
         }
         else if (anger_timer <= 0)
         {
@@ -128,48 +136,31 @@ public class PacManMove : MonoBehaviour
             anger_timer = 15;
             player = -1;
             attack = false;
+            GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[0];
         }
 
+        //Collected pellet code
         if (collectedPelletsText != null)
         {
             collectedPelletsText.text = "Pellets Collected: " + finished_Pellet_count + "/" + length;
         }
 
+        //Win condition
         if (finished_Pellet_count >= length)
         {
             GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>().coopMonsterWins = true;
             StartCoroutine(GameObject.FindGameObjectWithTag("GameHandler").GetComponent<GameHandler>().CoopEndGame());
         }
 
-        if (start)
-        {
-            SetDestination(false);
-            start = false;
-        }
-
+        //Set new destinations
         if (traveling && Agent.remainingDistance <= 1 && !finished && !attack)
         {
             traveling = false;
             PelletsVisited++;
 
-            if (PatrolWaiting)
-            {
-                waiting = true;
-                waitTimer = 0;
-            }
-            else
-                SetDestination(false);
+            SetDestination(false);
         }
 
-        if (waiting)
-        {
-            waitTimer += Time.deltaTime;
-            if (waitTimer >= PatrolWaitTime)
-            {
-                waiting = false;
-                SetDestination(false);
-            }
-        }
     }
 
     public void Begin()
@@ -193,7 +184,7 @@ public class PacManMove : MonoBehaviour
             {
                 Agent.SetDestination(player2.position);
             }
-            attack = false;
+            attack = true;
         }
         else
         {
@@ -226,7 +217,7 @@ public class PacManMove : MonoBehaviour
             Vector3 Target = currentPellet.transform.position;
             Agent.SetDestination(Target);
             traveling = true;
-            if (previousPellet && !previousPellet.collected)
+            if (previousPellet && !previousPellet.collected && !attack)
             {
                 previousPellet.collected = true;
                 finished_Pellet_count++;
