@@ -5,6 +5,7 @@ using UnityEngine;
 public class QB_SpringiIntoPit : MonoBehaviour
 {
     public float speed;
+    public ParticleSystem particles;
 
     private QB_StunController stun;
 
@@ -56,6 +57,7 @@ public class QB_SpringiIntoPit : MonoBehaviour
             }
 
             stun.Stun(obj.gameObject);
+            particles.Play();
         }
     }
 
