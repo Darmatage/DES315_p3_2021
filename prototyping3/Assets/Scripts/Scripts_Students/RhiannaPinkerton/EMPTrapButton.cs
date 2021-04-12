@@ -46,18 +46,6 @@ public class EMPTrapButton : MonoBehaviour
 
     void FixedUpdate()
     {
-        //move the spawner
-        //if (isMoving)
-        //{
-        //    if (atStart == true){
-        //        Vector3 targetPosition = pathEnd.localPosition;
-        //        StartCoroutine(LerpPosition(targetPosition, MoveTime));
-        //    }
-        //    else if (atStart == false){
-        //        Vector3 targetPosition = pathStart.localPosition;
-        //        StartCoroutine(LerpPosition(targetPosition, MoveTime));
-        //    }
-        //}
         
         //stop the spawner
         //if (Spawner.transform.localPosition.y == pathEnd.transform.localPosition.y){
@@ -106,15 +94,6 @@ public class EMPTrapButton : MonoBehaviour
             EMPParticles.GetComponent<ParticleSystem>().Play();
             playerFrozen = true;
         }
-        //if ((other.transform.root.gameObject.tag=="Player1")||(other.transform.root.gameObject.tag=="Player2"))
-        //{
-        //    theButton.transform.localPosition = new Vector3(theButton.transform.localPosition.x, theButtonUpPos - 0.4f, theButton.transform.localPosition.z);
-        //    isMoving = true;
-        //    Renderer buttonRend = theButton.GetComponent<Renderer>();
-        //    buttonRend.material.color = new Color(2.0f, 0.5f, 0.5f, 2.5f); 
-        //    
-        //    playerFrozen = true;
-        //}
     }
     
     public void ButtonUp(){
