@@ -14,7 +14,7 @@ public class PacManMove : MonoBehaviour
     [SerializeField] int finished_Pellet_count = 0, length;
     bool finished = false;
 
-    int player = -1;
+    int player = -1, starter = 0;
 
     [SerializeField] float anger_timer = 10f, anger_cd = 20f;
 
@@ -25,7 +25,7 @@ public class PacManMove : MonoBehaviour
     NavMeshAgent Agent;
     [SerializeField] Pellet currentPellet, previousPellet, startingPellet;
 
-    bool traveling, attack = false;
+    public bool traveling, attack = false;
     int PelletsVisited;
     public bool start = false;
 
@@ -81,6 +81,7 @@ public class PacManMove : MonoBehaviour
         {
             SetDestination(false);
             start = false;
+            starter++;
         }
 
         //Get player transforms
@@ -116,7 +117,7 @@ public class PacManMove : MonoBehaviour
         }
 
         //Chase player logic
-        if (anger_cd > 0)
+        if (anger_cd > 0 && starter > 0)
         {
             anger_cd -= Time.deltaTime;
         }
@@ -135,6 +136,7 @@ public class PacManMove : MonoBehaviour
             anger_timer = 15;
             player = -1;
             attack = false;
+            GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[0];
         }
 
         //Collected pellet code
