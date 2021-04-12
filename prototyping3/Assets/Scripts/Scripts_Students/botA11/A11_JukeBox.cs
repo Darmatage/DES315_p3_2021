@@ -28,25 +28,27 @@ namespace Amogh
 
         private void SpawnDiscoBall()
         {
-            GameObject currBall = Instantiate(discoBall, transform.position + Random.onUnitSphere, Random.rotationUniform);
-            currBall.GetComponent<Rigidbody>().AddForce(Vector3.up, ForceMode.Acceleration);
-            Destroy(currBall, 1.5f);
+            GameObject currBall = Instantiate(discoBall, transform.position + Vector3.up * 2f + Random.onUnitSphere, Random.rotationUniform);
+            var rb = currBall.GetComponent<Rigidbody>();
+            rb.AddForce(Vector3.down * 2f);
+            rb.AddTorque(Vector3.left);
+            //Destroy(currBall, 1.5f);
             
             allBalls.Add(currBall);
         }
         
         public void ButtonDown()
         {
-            //currIndex = Random.Range(0, allClips.Length);
-            ++currIndex;
-            currIndex %= allClips.Length;
+            currIndex = Random.Range(0, allClips.Length);
+            //++currIndex;
+            //currIndex %= allClips.Length;
             
             source.clip = allClips[currIndex];
             source.Play();
             
             bodyMat.SetColor("_EmissionColor", Color.white);
 
-            InvokeRepeating(nameof(SpawnDiscoBall), 0.1f, 0.5f);
+            InvokeRepeating(nameof(SpawnDiscoBall), 0.1f, 0.25f);
         }
         
         public void ButtonHeld()

@@ -9,6 +9,7 @@ public class botA03_NPC_Movement : MonoBehaviour
     public float rotate_speed = 100f;
     public float jump_speed = 5f;
     public float boost_speed = 10f;
+    public float distance;
 
     public string parent_name;
     public string parent_vertical;
@@ -63,6 +64,16 @@ public class botA03_NPC_Movement : MonoBehaviour
         else
         {
             enemy = EnemySetup();
+
+            //if (Vector3.Distance(transform.position, nm_agent.destination) < 6)
+            //{
+            //    Vector3 direction = Random.insideUnitSphere * distance;
+            //    NavMeshHit navHit;
+            //    if (NavMesh.SamplePosition(transform.position + direction, out navHit, distance, -1))
+            //    {
+            //        nm_agent.destination = navHit.position;
+            //    }
+            //}
         }
     }
 

@@ -179,6 +179,7 @@ public class botB06_Ethan : MonoBehaviour
         {
             if ((other.gameObject.GetComponent<HazardDamage>().isPlayer1Weapon == false) && (thisPlayer == "Player1")) { notMyWeapon = true; }
             else if ((other.gameObject.GetComponent<HazardDamage>().isPlayer2Weapon == false) && (thisPlayer == "Player2")) { notMyWeapon = true; }
+            else if ((other.gameObject.GetComponent<HazardDamage>().isMonsterWeapon == false)) { notMyWeapon = true; }
             else { notMyWeapon = false; }
         }
 

@@ -10,6 +10,8 @@ public class SnareTrap_DevonPeterson : MonoBehaviour
     float cooldowntimer = 0.0f;
     bool activated = false;
     public GameObject collisionobject = null;
+    public Material ready_color;
+    public Material cooldown_color;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +19,7 @@ public class SnareTrap_DevonPeterson : MonoBehaviour
         grabtimer = 0.0f;
         cooldowntimer = cooldown;
         cooldown = 0.0f;
+        gameObject.GetComponent<MeshRenderer>().material = ready_color;
     }
 
     // Update is called once per frame
@@ -25,10 +28,12 @@ public class SnareTrap_DevonPeterson : MonoBehaviour
         if (grabtimer > 0.0f)
         {
             grabtimer -= Time.deltaTime;
-            //if (collisionobject != null) 
-            //{
-            //    collisionobject.transform.position = transform.position;
-            //}
+            if (collisionobject != null) 
+            {
+                Vector3 pull = gameObject.transform.position;
+                pull.y += .5f;
+                collisionobject.transform.position = pull;
+            }
         }
         else if (collisionobject != null && grabtimer <= 0.0f) 
         {
@@ -48,6 +53,7 @@ public class SnareTrap_DevonPeterson : MonoBehaviour
             {
                 gameObject.GetComponent<CapsuleCollider>().enabled = true;
                 activated = false;
+                gameObject.GetComponent<MeshRenderer>().material = ready_color;
             }
         }
 
@@ -55,7 +61,7 @@ public class SnareTrap_DevonPeterson : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.transform.parent.tag == "Player1" || other.gameObject.transform.parent.tag == "Player2")
+        if (other.gameObject.transform.root.tag == "Player1" || other.gameObject.transform.root.tag == "Player2")
         {
             other.gameObject.GetComponent<BotBasic_Move>().isGrabbed = true;
             grabtimer = timer;
@@ -63,6 +69,9 @@ public class SnareTrap_DevonPeterson : MonoBehaviour
             activated = true;
             gameObject.GetComponent<CapsuleCollider>().enabled = false;
             other.gameObject.transform.position = gameObject.transform.position;
+            other.transform.rotation = other.transform.rotation;
+            gameObject.GetComponent<AudioSource>().Play();
+            gameObject.GetComponent<MeshRenderer>().material = cooldown_color;
             foreach (Transform child in transform) 
             {
                 child.localPosition = new Vector3(child.localPosition.x, -2.8f, child.localPosition.z);
