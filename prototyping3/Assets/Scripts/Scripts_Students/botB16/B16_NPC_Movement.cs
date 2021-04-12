@@ -60,10 +60,10 @@ public class B16_NPC_Movement : MonoBehaviour
 
 	void Update()
 	{
-		if(sceneName == "EndScene")
+		/*if(sceneName == "EndScene")
         {
 			return;
-        }
+        }*/
 
 		float botMove = Input.GetAxisRaw(pVertical) * moveSpeed * Time.deltaTime;
 		float botRotate = Input.GetAxisRaw(pHorizontal) * rotateSpeed * Time.deltaTime;
@@ -120,7 +120,7 @@ public class B16_NPC_Movement : MonoBehaviour
 		{
 			wanderTimer += Time.deltaTime;
 
-			if(wanderTimer > 2.5)
+			if(wanderTimer > 2)
             {
 				attackMode = true;
 				wanderTimer = 0;
@@ -145,6 +145,11 @@ public class B16_NPC_Movement : MonoBehaviour
 			//transform.Translate(0, 0, botMove);
 			//transform.Rotate(0, botRotate, 0);
 		}
+		else
+        {
+			agent.updateRotation = true;
+			agent.updatePosition = true;
+        }
 
 		// JUMP
 		isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f, groundLayer);
