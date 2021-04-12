@@ -33,6 +33,23 @@ public class LJN_MonsterScript : MonoBehaviour
     public GameObject rightArm;
     public GameObject leftArm;
 
+    public float ArmSpeed = 5.0f;
+    public float SawSpeed = 5.0f;
+
+    private float ArmLerpAmountLeft = 0;
+    private float ArmLerpAmountRight = 0;
+    private float SawLerpAmount = 0;
+
+    public Vector3 LeftGrabArmStart;
+    public Vector3 RightGrabArmStart;
+    public Vector3 SawArmStart;
+
+    public Vector3 LeftGrabArmEnd;
+    public Vector3 RightGrabArmEnd;
+    public Vector3 SawArmEnd;
+
+    private float distThreshold = 0.5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -122,11 +139,28 @@ public class LJN_MonsterScript : MonoBehaviour
         {
             LoadPlayerTargets();
         }
+
+        if(distToTarget <= distThreshold)
+        {
+            ChooseTarget();
+        }
+
+        if(!isAttacking)
+        {
+
+        }
     }
 
     public void AttackPlayer()
     {
+        float dt = Time.deltaTime;
         //use attack pattern
+
+        SawLerpAmount += dt * SawSpeed;
+
+        if (SawLerpAmount > 1.0f) SawLerpAmount = 1.0f;
+        tail.transform.localEulerAngles = Vector3.Lerp(SawArmStart, SawArmEnd, SawLerpAmount);
+
     }
 
     public void LoadPlayerTargets()
@@ -175,4 +209,11 @@ public class LJN_MonsterScript : MonoBehaviour
     {
         Debug.Log("ROOT: " + other.name);
     }
+
+    private void ChooseTarget()
+    {
+        //based on attack pattern
+        nextPatrolTarget = player1Target;
+    }
+
 }
