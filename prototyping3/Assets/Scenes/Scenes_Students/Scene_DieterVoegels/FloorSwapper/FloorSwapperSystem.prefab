@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1634265513869521735}
   - component: {fileID: 3610706334212665463}
-  - component: {fileID: 7347137408084091820}
+  - component: {fileID: 1638759870928900494}
   m_Layer: 0
   m_Name: FloorSwapperButton
   m_TagString: Untagged
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413913379697438451}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 5.05, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6216432118812390318}
@@ -48,7 +48,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &7347137408084091820
+--- !u!114 &1638759870928900494
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,7 +57,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 413913379697438451}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9eae6ea171312746b2e98616ba159d3, type: 3}
+  m_Script: {fileID: 11500000, guid: ca5084fc64932ce43ba4d666f9befd97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &465214754684263324
@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 7934776208602120079}
   - component: {fileID: 8069979745795570480}
   - component: {fileID: 9027090416540183944}
+  - component: {fileID: 7587842837245908218}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -87,10 +88,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 465214754684263324}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0}
   m_LocalScale: {x: 1.0001, y: 1, z: 1.0001}
   m_Children: []
-  m_Father: {fileID: 6148326919659223140}
+  m_Father: {fileID: 7346177423990077601}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7934776208602120079
@@ -153,6 +154,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7587842837245908218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465214754684263324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9400377b0340304ea4bb6829634618c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotator: {fileID: 6462171015766625739}
 --- !u!1 &1460295989164782390
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,7 +431,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6105710751811085688}
+  - {fileID: 7346177423990077601}
   - {fileID: 9126468285431387029}
   m_Father: {fileID: 1115661605941113093}
   m_RootOrder: 0
@@ -431,7 +445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1115661605941113093}
-  - component: {fileID: -1203125693690814759}
+  - component: {fileID: 3097298667344384809}
   m_Layer: 0
   m_Name: FloorSwapperSystem
   m_TagString: Untagged
@@ -455,7 +469,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1203125693690814759
+--- !u!114 &3097298667344384809
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -464,7 +478,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2679509168112245658}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b3a5cb91ed38d04e926207b81bc658b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d37346cc6557a04fa9f84c25153645c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   activateStartingTime: 0
@@ -557,7 +571,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9126468285431387029}
-  - component: {fileID: 3177946104311565422}
+  - component: {fileID: 3502568663590140295}
   m_Layer: 0
   m_Name: TileRing
   m_TagString: Untagged
@@ -583,7 +597,7 @@ Transform:
   m_Father: {fileID: 6148326919659223140}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3177946104311565422
+--- !u!114 &3502568663590140295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -592,7 +606,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4188479962056292263}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 477401aa9a97c844294ffeef90144ead, type: 3}
+  m_Script: {fileID: 11500000, guid: e484d3f7b5647b241824aea77beae0c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4328716965696403058
@@ -674,6 +688,37 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &6462171015766625739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7346177423990077601}
+  m_Layer: 0
+  m_Name: TileRotator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7346177423990077601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6462171015766625739}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6105710751811085688}
+  m_Father: {fileID: 6148326919659223140}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7754973462307037652
 GameObject:
   m_ObjectHideFlags: 0
