@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class BotB09_GoalCheck : MonoBehaviour
 {
-    public bool p1entered, p2entered;
+    public static bool p1entered, p2entered;
     public static bool wonGame = false;
     // Start is called before the first frame update
 

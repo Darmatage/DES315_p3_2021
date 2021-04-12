@@ -6,23 +6,53 @@ public class Lava : MonoBehaviour
 {
 
     public GameObject lava;
-    public GameObject timerObj;
-    public Timer timer;
+    public GameHandler timerObj;
+    public AudioSource bubbling;
+    public int gameTime = 120;
+    public GameObject fight;
+    private float gameTimer = 0f;
+    private bool isGameTime = false;
     public bool scaled;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
+        fight = timerObj.fightButton; 
         scaled = false;
-        timer = timerObj.GetComponent<Timer>();
+        isGameTime = false;
+        bubbling.Play();
+
     }
 
-
+    void FixedUpdate()
+    {
+        if (isGameTime == true)
+        {
+            gameTimer += 0.01f;
+            if (gameTime <= 0)
+            {
+                gameTime = 0;
+         
+            }
+            else if ((gameTimer >= 1f))
+            {
+                gameTime -= 1;
+                gameTimer = 0;
+            }
+        }
+    }
 
 
     void Update()
     {
+        if (fight.activeSelf == true)
+        {
+            isGameTime = true;
+        }
 
-        if ((int)timer.timeRemaining % 10 == 0 && timer.timeRemaining > 0 )
+        if ((int)gameTimer % 10 == 0 && gameTimer > 0 )
         {
             if (scaled == false)
             {
@@ -43,7 +73,7 @@ public class Lava : MonoBehaviour
 
         if (bigger && scaled)
         {
-            lava.transform.localScale += new Vector3(0, 4, 0);
+            lava.transform.localScale += new Vector3(0, 2, 0);
         }
         
 

@@ -7,6 +7,10 @@ public class AkshatMadan_GoalScript : MonoBehaviour
 {
     public bool isGoal2 = false;
     public GameObject goalsText;
+    public GameObject confetti;
+
+    private GameObject temp;
+
     int score = 0;
     // Start is called before the first frame update
     void Start()
@@ -29,6 +33,22 @@ public class AkshatMadan_GoalScript : MonoBehaviour
         {
             // Goal scored
             score++;
+            AudioSource audioData = GetComponent<AudioSource>();
+            audioData.Play(0);
+
+            temp = Instantiate(confetti, transform);
+
+            StartCoroutine(ResetBall(other.gameObject));
         }
+    }
+
+    IEnumerator ResetBall(GameObject ball)
+    {
+        yield return new WaitForSeconds(1);
+
+        ball.transform.position = new Vector3(0, 1, 0);
+
+        yield return new WaitForSeconds(1.5f);
+        Destroy(temp);
     }
 }

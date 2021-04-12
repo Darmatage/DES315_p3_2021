@@ -1416,6 +1416,7 @@ GameObject:
   - component: {fileID: 285377133}
   - component: {fileID: 285377134}
   - component: {fileID: 285377135}
+  - component: {fileID: 285377136}
   m_Layer: 0
   m_Name: BoundaryWall (1)
   m_TagString: Untagged
@@ -1463,6 +1464,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+--- !u!114 &285377136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285377132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb63f48900b92f4291f52361d6f9474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerMax: 4
 --- !u!1 &293041829
 GameObject:
   m_ObjectHideFlags: 0
@@ -5387,6 +5401,7 @@ GameObject:
   - component: {fileID: 1125826552}
   - component: {fileID: 1125826553}
   - component: {fileID: 1125826554}
+  - component: {fileID: 1125826555}
   m_Layer: 0
   m_Name: BoundaryWall (2)
   m_TagString: Untagged
@@ -5434,6 +5449,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+--- !u!114 &1125826555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125826551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb63f48900b92f4291f52361d6f9474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerMax: 4
 --- !u!1 &1136647088
 GameObject:
   m_ObjectHideFlags: 0
@@ -6327,6 +6355,7 @@ GameObject:
   - component: {fileID: 1371779189}
   - component: {fileID: 1371779190}
   - component: {fileID: 1371779191}
+  - component: {fileID: 1371779192}
   m_Layer: 0
   m_Name: BoundaryWall (3)
   m_TagString: Untagged
@@ -6374,6 +6403,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+--- !u!114 &1371779192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371779188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb63f48900b92f4291f52361d6f9474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerMax: 4
 --- !u!1 &1381939234
 GameObject:
   m_ObjectHideFlags: 0
@@ -6660,8 +6702,11 @@ GameObject:
   - component: {fileID: 1440761417}
   - component: {fileID: 1440761416}
   - component: {fileID: 1440761415}
+  - component: {fileID: 1440761422}
   - component: {fileID: 1440761418}
+  - component: {fileID: 1440761421}
   - component: {fileID: 1440761419}
+  - component: {fileID: 1440761420}
   m_Layer: 8
   m_Name: FirePitBottom
   m_TagString: Untagged
@@ -6691,10 +6736,10 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1440761413}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0000001, y: 2, z: 1.0000002}
+  m_Size: {x: 1.0000001, y: 3, z: 1.0000002}
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &1440761416
 MeshRenderer:
@@ -6776,6 +6821,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerMax: 1
   throwSpeed: 20
+--- !u!114 &1440761420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440761413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb63f48900b92f4291f52361d6f9474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerMax: 4
+--- !u!114 &1440761421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440761413}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c544732e9a23e541bd8938ba67b8a18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  particlesPrefab: {fileID: 7246120000014656734, guid: 740a2aebec573654ab0fea34ed35ef72,
+    type: 3}
+  SpawnParticlesHere: {x: 0, y: 0, z: 0}
+  isPlayer1Weapon: 1
+  isPlayer2Weapon: 0
+--- !u!65 &1440761422
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440761413}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 2, z: 1.0000002}
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &1443605524
 GameObject:
   m_ObjectHideFlags: 0
@@ -9189,6 +9278,7 @@ GameObject:
   - component: {fileID: 2005149480}
   - component: {fileID: 2005149481}
   - component: {fileID: 2005149482}
+  - component: {fileID: 2005149483}
   m_Layer: 0
   m_Name: BoundaryWall
   m_TagString: Untagged
@@ -9236,6 +9326,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+--- !u!114 &2005149483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005149479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb63f48900b92f4291f52361d6f9474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerMax: 4
 --- !u!1 &2006376834
 GameObject:
   m_ObjectHideFlags: 0
