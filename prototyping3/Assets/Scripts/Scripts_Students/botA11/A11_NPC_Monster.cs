@@ -52,6 +52,8 @@ namespace Amogh
             StartCoroutine(Patrol());
             isPatrolling = true;
             anim.SetBool("Patrol", isPatrolling);
+
+            StartCoroutine(WinDance());
         }
 
         IEnumerator BehaviorTree()
@@ -169,6 +171,15 @@ namespace Amogh
             if (player2Target == null && GameObject.FindWithTag("Player2") && GameObject.FindWithTag("Player2").transform.GetChild(0) != null) { 
                 player2Target = GameObject.FindWithTag("Player2").transform.GetChild(0).GetComponent<Transform>(); 
             }
+        }
+
+        private IEnumerator WinDance()
+        {
+            var gh = FindObjectOfType<GameHandler>();
+            yield return new WaitUntil(() => gh.coopMonsterWins);
+            anim.SetBool("Patrol", false);
+            anim.SetBool("Jump", false);
+            anim.SetBool("Dance", true);
         }
     }
 }
