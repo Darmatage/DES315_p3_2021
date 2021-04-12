@@ -31,7 +31,10 @@ public class LJN_Saw_Script : MonoBehaviour
     }
     private void OnCollisionEnter(Collision other)
     {
-        transform.parent.parent.GetComponent<LJN_Weapon_Script>().SawCanDown = false;
+        if(transform.parent.parent.GetComponent<LJN_Weapon_Script>() != null)
+        {
+            transform.parent.parent.GetComponent<LJN_Weapon_Script>().SawCanDown = false;
+        }
 
         if(source != null)
         {
