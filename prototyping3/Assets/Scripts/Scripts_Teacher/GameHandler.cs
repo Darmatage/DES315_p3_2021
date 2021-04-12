@@ -23,6 +23,7 @@ public class GameHandler : MonoBehaviour{
 	
 	//Co-op game mode variables
 	public bool isCoop = false;
+	public bool coopMonstersWillSpawn = false;
 	private static bool coopPlayer1Dead = false;
 	private static bool coopPlayer2Dead = false;
 	private static bool coopMonsterDead = false;
@@ -78,6 +79,10 @@ public class GameHandler : MonoBehaviour{
 	public GameObject gameTimerText;
 	private float gameTimer = 0f;
 	private bool isGameTime = false;
+
+	//Fall Does Damage
+	public bool fallDoesdamage = false;
+	public int fallDamage = 4;
 
 	//Variables for Bot arrays
 	public string[] botNames;	
@@ -494,11 +499,16 @@ public class GameHandler : MonoBehaviour{
 		
 		isGameTime = true;
 		
-		if (isCoop==true){
+		if ((isCoop==true)&&(coopMonstersWillSpawn == false)){
 			GameObject.FindWithTag("CoopNPCMonster").GetComponent<NPC_LoadPlayers>().LoadPlayerTargets();
 		}
 		
-		
+		if (fallDoesdamage == true){
+			Player1.GetComponent<BotBasic_FallRespawn>().doesFallDamage = true;
+			Player1.GetComponent<BotBasic_FallRespawn>().playerFallDamage = fallDamage;
+			Player2.GetComponent<BotBasic_FallRespawn>().doesFallDamage = true;
+			Player2.GetComponent<BotBasic_FallRespawn>().playerFallDamage = fallDamage;
+		}
 	}
 	
 	public void SetLevel (float sliderValue){
