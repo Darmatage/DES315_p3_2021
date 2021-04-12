@@ -18,7 +18,7 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
 
     public float botTimer = 10f;
     public float attackBotTimer = 3.0f;
-    public float attackSpeed = 10.0f;
+    public float attackSpeed = 1.0f;
     public float stunBotTimer = 3.0f;
 
     private int attackBotMode;
@@ -54,7 +54,7 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        stunBotCurPos = new Vector3(stunBot.transform.position.x, stunBot.transform.position.y, stunBot.transform.position.z);
+        //stunBotCurPos = new Vector3(stunBot.transform.position.x, stunBot.transform.position.y, stunBot.transform.position.z);
         if(isStunBotDone == true)
         {
             isStunBotDone = false;
@@ -185,26 +185,39 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
 
     void StunBot()
     {
+        var rb = stunBot.GetComponent<Rigidbody>();
+        var botController = stunBot.GetComponent<BotBasic_Move>();
         switch(choosePlayer)
         {
             case 0:
-                if(stunBotTimer == 3.0f)
+                if(stunBotTimer <= 3.0f && stunBotTimer > 0.0f)
                 {
                     if(loadPlayersHasBeenCalled == true)
                     {
                         attackPlayer1 = true;
                         stunBot.transform.LookAt(player1Target);
-                        Vector3.Lerp(stunBotStartPos, player1Target.position, attackSpeed);
+                        //stunBot.transform.position = Vector3.Lerp(stunBot.transform.position, player1Target.position, Time.deltaTime * attackSpeed);
+                        //stunBot.transform.position = Vector3.MoveTowards(stunBot.transform.position, player1Target.position, Time.deltaTime * attackSpeed);
+                        //rb.AddForceAtPosition(rb.centerOfMass - new Vector3(0, 0, botController.boostSpeed + 10), player1Target.position, ForceMode.Impulse);
+                        //rb.MovePosition(player1Target.position);
+                        rb.AddRelativeForce(0, 0, 1000);
+                        //rb.AddForce(player1Target.position * attackSpeed);
                     }
                 }
-                if(stunBotTimer <= 0.0f && isStunBotDone == false)
+                if(stunBotTimer <= 0.0f)
                 {
-                    Vector3.Lerp(stunBotCurPos, stunBotStartPos, attackSpeed);
-                    if(stunBotCurPos == stunBotStartPos)
+                    //Debug.Log(isStunBotDone.ToString());
+                    if (isStunBotDone == false)
                     {
-                        isStunBotDone = true;
-                        attackPlayer1 = false;
-                        stunBotTimer = 3.0f;
+                        //stunBot.transform.position = Vector3.Lerp(stunBot.transform.position, stunBotStartPos, attackSpeed);
+                        //Vector3.MoveTowards(stunBot.transform.position, stunBotStartPos, attackSpeed);
+                        //stunBot.transform.position = stunBotStartPos;
+                        //if (stunBot.transform.position == stunBotStartPos)
+                        //{
+                            isStunBotDone = true;
+                            attackPlayer1 = false;
+                            stunBotTimer = 3.0f;
+                        //}
                     }
                 }
                 else if(loadPlayersHasBeenCalled == true)
@@ -214,23 +227,33 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
                 break;
 
             case 1:
-                if (stunBotTimer == 3.0f)
+                if (stunBotTimer <= 3.0f && stunBotTimer > 0.0f)
                 {
                     if (loadPlayersHasBeenCalled == true)
                     {
                         attackPlayer2 = true;
                         stunBot.transform.LookAt(player2Target);
-                        Vector3.Lerp(stunBotStartPos, player2Target.position, attackSpeed);
+                        //stunBot.transform.position = Vector3.Lerp(stunBot.transform.position, player2Target.position, Time.deltaTime * attackSpeed);
+                        //stunBot.transform.position = Vector3.MoveTowards(stunBot.transform.position, player2Target.position, Time.deltaTime * attackSpeed);
+                        //rb.AddForceAtPosition(rb.centerOfMass - new Vector3(0, 0, botController.boostSpeed + 10), player2Target.position, ForceMode.Impulse);
+                        //rb.MovePosition(player2Target.position);
+                        rb.AddRelativeForce(0, 0, 1000);
+                        //rb.AddForce(player2Target.position * attackSpeed);
                     }
                 }
-                if (stunBotTimer <= 0.0f && isStunBotDone == false)
+                if (stunBotTimer <= 0.0f)
                 {
-                    Vector3.Lerp(stunBotCurPos, stunBotStartPos, attackSpeed);
-                    if (stunBotCurPos == stunBotStartPos)
+                    if (isStunBotDone == false)
                     {
-                        isStunBotDone = true;
-                        attackPlayer2 = false;
-                        stunBotTimer = 3.0f;
+                        //stunBot.transform.position = Vector3.Lerp(stunBot.transform.position, stunBotStartPos, Time.deltaTime * attackSpeed);
+                        //Vector3.MoveTowards(stunBot.transform.position, stunBotStartPos, attackSpeed);
+                        //stunBot.transform.position = stunBotStartPos;
+                        //if (stunBot.transform.position == stunBotStartPos)
+                        //{
+                            isStunBotDone = true;
+                            attackPlayer2 = false;
+                            stunBotTimer = 3.0f;
+                        //}
                     }
                 }
                 else if(loadPlayersHasBeenCalled == true)
@@ -320,4 +343,6 @@ public class AdamDoolittle_NPCMonster_System : MonoBehaviour
             player2Target = GameObject.FindWithTag("Player2").transform.GetChild(0).GetComponent<Transform>();
         }
     }
+
+    
 }

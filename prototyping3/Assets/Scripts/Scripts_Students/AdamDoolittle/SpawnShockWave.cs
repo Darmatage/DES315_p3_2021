@@ -32,7 +32,7 @@ public class SpawnShockWave : MonoBehaviour
 
     private void Update()
     {
-        shockwaveSpawnPos = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
+        shockwaveSpawnPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
         if (canGrow == true)
         {
             newShock.transform.localScale = Vector3.Lerp(newShock.transform.localScale, targetScale, Time.deltaTime * speed);
@@ -66,6 +66,7 @@ public class SpawnShockWave : MonoBehaviour
             newShock.GetComponent<ShockWave_Pushback>().spawner = this.gameObject;
             if (gameObject.transform.root.tag == "Player1") { newShock.GetComponent<HazardDamage>().isPlayer1Weapon = true; }
             if (gameObject.transform.root.tag == "Player2") { newShock.GetComponent<HazardDamage>().isPlayer2Weapon = true; }
+            if (gameObject.transform.root.tag == "CoopNPCMonster") { newShock.GetComponent<HazardDamage>().isMonsterWeapon = true; newShock.GetComponent<HazardDamage>().damage = 5.0f; }
             //newShock.transform.localScale = Vector3.Lerp(shockwaveStartPos, shockwaveEndPos, 2.0f);
             canGrow = true;
             StartCoroutine(DestroyShock(newShock));

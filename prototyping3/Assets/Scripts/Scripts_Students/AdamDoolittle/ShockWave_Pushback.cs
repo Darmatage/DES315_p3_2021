@@ -7,7 +7,7 @@ public class ShockWave_Pushback : MonoBehaviour
     public GameObject spawner;
 
     public Transform source;
-    public float pushBack = 100;
+    public float pushBack = 200;
 
     // Start is called before the first frame update
     void Start()
