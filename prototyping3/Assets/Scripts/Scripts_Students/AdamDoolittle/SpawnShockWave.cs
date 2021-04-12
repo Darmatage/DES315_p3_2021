@@ -8,12 +8,13 @@ public class SpawnShockWave : MonoBehaviour
     public GameObject newShock;
     //Vector3 shockwaveEndPos;
     //Vector3 shockwaveStartPos;
+    Vector3 shockwaveSpawnPos;
 
     public Vector3 targetScale;
 
     float aliveTimer = 5.0f;
-    public float speed = 3.0f;
-    float shockWaveCooldown = 0.0f;
+    public float speed = 5.0f;
+    public float shockWaveCooldown = 0.0f;
 
     public bool canGrow = false;
 
@@ -24,12 +25,14 @@ public class SpawnShockWave : MonoBehaviour
     {
         //shockwaveEndPos = new Vector3(shockwave.transform.position.x + 100, shockwave.transform.position.y, shockwave.transform.position.z + 100);
         //shockwaveStartPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        targetScale = new Vector3(60f, 0.005f, 60f);
+        targetScale = new Vector3(160f, 0.005f, 160f);
         botController = transform.parent.GetComponent<BotBasic_Move>();
+        //shockwaveSpawnPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
     }
 
     private void Update()
     {
+        shockwaveSpawnPos = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
         if (canGrow == true)
         {
             newShock.transform.localScale = Vector3.Lerp(newShock.transform.localScale, targetScale, Time.deltaTime * speed);
@@ -59,9 +62,11 @@ public class SpawnShockWave : MonoBehaviour
         if (other.gameObject.layer == 8 && shockWaveCooldown == 0.0f)
         {
             Debug.Log("I hit the ground!");
-            newShock = Instantiate(shockwave, transform.position, Quaternion.identity);
+            newShock = Instantiate(shockwave, shockwaveSpawnPos, Quaternion.identity);
+            newShock.GetComponent<ShockWave_Pushback>().spawner = this.gameObject;
             if (gameObject.transform.root.tag == "Player1") { newShock.GetComponent<HazardDamage>().isPlayer1Weapon = true; }
             if (gameObject.transform.root.tag == "Player2") { newShock.GetComponent<HazardDamage>().isPlayer2Weapon = true; }
+            if (gameObject.transform.root.tag == "CoopNPCMonster") { newShock.GetComponent<HazardDamage>().isMonsterWeapon = true; newShock.GetComponent<HazardDamage>().damage = 5.0f; }
             //newShock.transform.localScale = Vector3.Lerp(shockwaveStartPos, shockwaveEndPos, 2.0f);
             canGrow = true;
             StartCoroutine(DestroyShock(newShock));
@@ -80,5 +85,6 @@ public class SpawnShockWave : MonoBehaviour
         canGrow = false;
         Destroy(thisShock);
         shockWaveCooldown = 0.0f;
+        this.gameObject.SetActive(false);
     }
 }
