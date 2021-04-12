@@ -11,7 +11,7 @@ public class LJN_MonsterScript : MonoBehaviour
     public Transform defaultPatrolTarget;
     public Transform nextPatrolTarget;
 
-    public float playerAttackDistance = 15f;
+    public float playerAttackDistance = 1f;
     public float turnThreshold = 40f;
     public float distToPlayer1;
     public float distToPlayer2;
@@ -48,7 +48,9 @@ public class LJN_MonsterScript : MonoBehaviour
     public Vector3 RightGrabArmEnd;
     public Vector3 SawArmEnd;
 
-    private float distThreshold = 0.5f;
+    private float distThreshold = 12f;
+    private float spinTimer;
+ 
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +63,7 @@ public class LJN_MonsterScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float dt = Time.deltaTime;
         distToTarget = Vector3.Distance(nextPatrolTarget.position, gameObject.transform.position);
 
         if ((player1Target != null) && (player2Target != null))
@@ -138,16 +141,23 @@ public class LJN_MonsterScript : MonoBehaviour
         if (playerLoader.playersReady == true)
         {
             LoadPlayerTargets();
+
+            if (distToTarget <= playerAttackDistance)
+            {
+                ChooseTarget();
+               
+            }
         }
 
-        if(distToTarget <= distThreshold)
-        {
-            ChooseTarget();
-        }
+      
 
         if(!isAttacking)
         {
+            SawLerpAmount -= dt * SawSpeed;
 
+            if (SawLerpAmount < 0.0f) SawLerpAmount = 0.0f;
+
+            tail.transform.localEulerAngles = Vector3.Lerp(SawArmStart, SawArmEnd, SawLerpAmount);
         }
     }
 
@@ -161,6 +171,8 @@ public class LJN_MonsterScript : MonoBehaviour
         if (SawLerpAmount > 1.0f) SawLerpAmount = 1.0f;
         tail.transform.localEulerAngles = Vector3.Lerp(SawArmStart, SawArmEnd, SawLerpAmount);
 
+
+        attackTimer += dt;
     }
 
     public void LoadPlayerTargets()
@@ -207,13 +219,22 @@ public class LJN_MonsterScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("ROOT: " + other.name);
+       // Debug.Log("ROOT: " + other.name);
     }
 
     private void ChooseTarget()
     {
         //based on attack pattern
-        nextPatrolTarget = player1Target;
+        if(attackTimer >= 2.5f)
+        {
+            nextPatrolTarget = player1Target;
+            attackTimer = 0;
+        }
+        else
+        {
+            myAgent.destination = gameObject.transform.position;
+            Debug.Log("wait");
+        }
     }
 
 }
