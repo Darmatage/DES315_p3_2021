@@ -9,7 +9,7 @@ public class FloorSwapperManager : MonoBehaviour
   GameObject player2;
 
   //Floor swapper script references
-  GameObject tile;
+  FloorSwapperTileManager tile;
   FloorSwapperTileRingManager tileRing;
   FloorSwapperButtonManager button;
 
@@ -25,7 +25,7 @@ public class FloorSwapperManager : MonoBehaviour
   void Start()
   {
     //Get script references
-    tile = transform.Find("FloorSwapper").Find("Tile").gameObject;
+    tile = transform.Find("FloorSwapper").Find("TileRotator").Find("Tile").GetComponent<FloorSwapperTileManager>();
     tileRing = transform.Find("FloorSwapper").Find("TileRing").GetComponent<FloorSwapperTileRingManager>();
     button = transform.Find("FloorSwapperButton").GetComponent<FloorSwapperButtonManager>();
 
@@ -55,6 +55,11 @@ public class FloorSwapperManager : MonoBehaviour
       {
         activateTimer -= Time.deltaTime;
         tileRing.UpdateRingForward(activateTimer / activateStartingTime);
+
+        if (activateTimer < 0.0f)
+        {
+          tile.Activate();
+        }
       }
       else if (inactiveTimer >= 0.0f)
       {

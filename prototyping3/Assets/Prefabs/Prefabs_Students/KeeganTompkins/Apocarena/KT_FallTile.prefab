@@ -50,7 +50,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f8d776afbad4ee44ca83a664e015855a, type: 2}
+  - {fileID: 2100000, guid: 6c4a4359330cb4f4c9ef813a0d61e866, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,20 +135,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 8728350279830391424}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93c3ac96671087344881dd3bf4fdf30f, type: 3}
+  m_Script: {fileID: 11500000, guid: f3865d49b7dab0c4d997cbb7ece64446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  YellowTime: 0.8
+  YellowTime: 0.3
   RedTime: 0.5
-  FallSpeed: 50
-  AccelSpeed: 1.1
+  FallSpeed: 10
+  AccelSpeed: 5
   Yellow: {fileID: 2100000, guid: 23668b00fe1a1a7459f7128439e9a155, type: 2}
   Red: {fileID: 2100000, guid: bb30de72c141f9747a738bf3a536358a, type: 2}
   mSafe: {fileID: 2100000, guid: 66f2ac7afb7b4b948a653a7c578416fa, type: 2}
   ShakeLerp: 0.1
-  ShakeYellow: 0.1
-  ShakeRed: 0.3
-  pitchOff: 0.3
+  ShakeYellow: 0.5
+  ShakeRed: 0.8
+  pitchOff: 0.2
   ShakeObj: {fileID: 9063535914545286409}
 --- !u!82 &6991194200254835627
 AudioSource:

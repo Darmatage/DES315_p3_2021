@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5127539845685705049}
   - component: {fileID: 8845807843758715781}
   - component: {fileID: 7224419468140051930}
+  - component: {fileID: 587544255561293572}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -58,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 058316492f0073c45aabaf78fc6f81eb, type: 2}
+  - {fileID: 2100000, guid: a794dc5f8cad3a546b16b206230c29d2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79,6 +80,24 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &587544255561293572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2272235435151282039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 859b55e6d63d6b14480290582a0d3cd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HazardCollider: {fileID: 6846524250121789031}
+  Laser: {fileID: 2272235435151282039}
+  ChargeTime: 1
+  SFX_Charge: {fileID: 0}
+  SFX_Boom: {fileID: 0}
+  Time: 1
 --- !u!1 &2592183327629761254
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,14 +141,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2592183327629761254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f347e2be6d550fb42a636c2cea054717, type: 3}
+  m_Script: {fileID: 11500000, guid: 859b55e6d63d6b14480290582a0d3cd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   HazardCollider: {fileID: 6846524250121789031}
   Laser: {fileID: 2272235435151282039}
   ChargeTime: 1
-  SFX_Charge: {fileID: 8300000, guid: fc43133c9556e604f8135298b11ba0ed, type: 3}
-  SFX_Boom: {fileID: 8300000, guid: 19c47fbd6116d1d439505e8aee3eb5c3, type: 3}
+  SFX_Charge: {fileID: 8300000, guid: f9a2758015da1c348810e393ca38d810, type: 3}
+  SFX_Boom: {fileID: 8300000, guid: 43b7e167e1b927e489c3f85ceba9cec5, type: 3}
   Time: 1
 --- !u!82 &6091871936449045575
 AudioSource:
@@ -240,7 +259,6 @@ GameObject:
   - component: {fileID: 875286967243745305}
   - component: {fileID: 2694369817596037618}
   - component: {fileID: 6812905634022085460}
-  - component: {fileID: 2490196272009466422}
   m_Layer: 0
   m_Name: DamageCollider
   m_TagString: Hazard
@@ -288,7 +306,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4afc8a4a63b1e944eb33c2da82f0745d, type: 2}
+  - {fileID: 2100000, guid: a794dc5f8cad3a546b16b206230c29d2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -341,15 +359,3 @@ MonoBehaviour:
   isPlayer1Weapon: 0
   isPlayer2Weapon: 0
   isMonsterWeapon: 0
---- !u!114 &2490196272009466422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6846524250121789031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bfc55afa88cf064880d129c7c744198, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -31,6 +31,8 @@ namespace Amogh
         private A11_IAttack[] attackInterfaces;
 
         private bool isPatrolling;
+
+        private bool jukeBoxReady = true;
         void Start()
         {
             playerLoader = GetComponent<NPC_LoadPlayers>();
@@ -43,34 +45,49 @@ namespace Amogh
             attackInterfaces[1] = GetComponentInChildren<A11_ChargeAttack>();
             attackInterfaces[2] = GetComponentInChildren<A11_JukeBox>();
             
-            InvokeRepeating(nameof(LoadPlayerTargets), 2f, 4f);
-            InvokeRepeating(nameof(UpdatePlayerDistances), 5f, 0.5f);
+            //InvokeRepeating(nameof(LoadPlayerTargets), 2f, 4f);
+            //InvokeRepeating(nameof(UpdatePlayerDistances), 5f, 0.5f);
             
             StartCoroutine(BehaviorTree());
             StartCoroutine(Patrol());
             isPatrolling = true;
             anim.SetBool("Patrol", isPatrolling);
-            
         }
 
         IEnumerator BehaviorTree()
         {
-            yield return new WaitForEndOfFrame();
+            yield return new WaitUntil( () => playerLoader.playersReady);
+            UpdatePlayerDistances();
+            
             while (true)
             {
                 if (playersWithinRange())
                 {
-                    StopCoroutine(Patrol());
-                    isPatrolling = false;
-                    anim.SetBool("Patrol", isPatrolling);
+                    if (isPatrolling)
+                    {
+                        StopCoroutine(Patrol());
+                        isPatrolling = false;
+                        anim.SetBool("Patrol", isPatrolling);
+                    }
 
                     if (distToPlayer1 <= playerLongAttackDistance && distToPlayer1 >= playerShortAttackDistance)
                         RangedAttack(player1Target.position);
                     else if (distToPlayer2 <= playerLongAttackDistance && distToPlayer2 >= playerShortAttackDistance)
                         RangedAttack(player2Target.position);
+                    else if (jukeBoxReady && (distToPlayer1 <= playerShortAttackDistance ||
+                                              distToPlayer2 <= playerShortAttackDistance))
+                    {
+                        StartCoroutine(ShortAttack());
+                        isPatrolling = true;
+                        StartCoroutine(Patrol());
+                        agent.speed = Mathf.Clamp(agent.speed * 3.5f, 0f,35f);
+                        anim.SetBool("Patrol", isPatrolling);
+                        yield return  new WaitForSeconds(1.5f);
+                        agent.speed /= 2;
+                    }
                     
-                    if (NPC_Damage.health <= 30f)
-                        attackInterfaces[0].ButtonDown();
+                    //if (NPC_Damage.health <= 30f)
+                      //  attackInterfaces[0].ButtonDown();
                 }
                 else
                 {
@@ -79,10 +96,12 @@ namespace Amogh
                         isPatrolling = true;
                         StartCoroutine(Patrol());
                         anim.SetBool("Patrol", isPatrolling);
+                        yield return new WaitForSeconds(2f);
                     }
                 }
 
                 yield return new WaitForSeconds(1f);
+                UpdatePlayerDistances();
             }
 
         }
@@ -123,6 +142,23 @@ namespace Amogh
             abc.SetTarget(target);
             attackInterfaces[1].ButtonDown();
         }
+
+        private IEnumerator ShortAttack()
+        {
+            Debug.Log("Short attack disco ball");
+            attackInterfaces[2].ButtonDown();
+            anim.SetBool("Jump", true);
+            jukeBoxReady = false;
+            
+            yield return new WaitForSeconds(Random.Range(10f, 12f));
+            attackInterfaces[2].ButtonUp();
+            anim.SetBool("Jump", false);
+
+            // Cooldown
+            yield return new WaitForSeconds(7f);
+            jukeBoxReady = true;
+        }
+        
         
         public void LoadPlayerTargets()
         {

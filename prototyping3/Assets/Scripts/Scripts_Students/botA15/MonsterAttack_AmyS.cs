@@ -16,6 +16,11 @@ public class MonsterAttack_AmyS : MonoBehaviour
     public GameObject bombSignifier;
     public GameObject bombDamageObj;
 
+    public AudioClip blastSound;
+    public AudioClip explosionSound;
+
+    private AudioSource audioSource;
+
     public float blastForceScalar = 100f;
 
     private MeshRenderer meshRend;
@@ -58,6 +63,7 @@ public class MonsterAttack_AmyS : MonoBehaviour
 
         meshRend = body.GetComponent<MeshRenderer>();
         originalColor = meshRend.material.color;
+        audioSource = GetComponent<AudioSource>();
         //MonsterOrig = transform.position;
     }
 
@@ -176,6 +182,8 @@ public class MonsterAttack_AmyS : MonoBehaviour
 
         Debug.Log("Deleting");
 
+        audioSource.PlayOneShot(explosionSound);
+
         foreach (Vector3 pos in hitPoints)
         {
             GameObject obj = Instantiate(bombDamageObj, new Vector3(pos.x, pos.y - 2.3f, pos.z), Quaternion.identity);
@@ -229,6 +237,9 @@ public class MonsterAttack_AmyS : MonoBehaviour
                 if (!doOnce)
                 {
                     Instantiate(rippleParticles, newTrans, Quaternion.Euler(newRotation));
+
+                    audioSource.PlayOneShot(blastSound);
+
                     // if the players are still in radius then blast them away
                     if (Vector3.Distance(player1.transform.position, distanceCheck.transform.position) <= blastRadius)
                     {
@@ -236,13 +247,16 @@ public class MonsterAttack_AmyS : MonoBehaviour
                         {
                             player1RB.AddForce(gameObject.transform.right * blastForceScalar, ForceMode.Impulse);
                             //Debug.Log("Boom");
-
+                            GameObject obj = Instantiate(bombDamageObj, player1.gameObject.transform.position, Quaternion.identity);
+                            Destroy(obj, .5f);
                         }
                     }
 
                     if (Vector3.Distance(player2.transform.position, distanceCheck.transform.position) <= blastRadius)
                     {
                         player2RB.AddForce(gameObject.transform.right * blastForceScalar, ForceMode.Impulse);
+                        GameObject obj = Instantiate(bombDamageObj, player2.gameObject.transform.position, Quaternion.identity);
+                        Destroy(obj, .5f);
                     }
                     doOnce = true;
                 }
