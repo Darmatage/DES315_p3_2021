@@ -243,6 +243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e173a7401170b4c8b91f0cf261062e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doesFallDamage: 0
+  playerFallDamage: 4
 --- !u!114 &1305075737534427569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,13 +391,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1355330930375697355}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76580765dc2dcb84aaaea9c0c95b67c6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1451117e52a3ca34c85dfb0c8f1107a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   move_speed: 10
   rotate_speed: 100
   jump_speed: 5
   boost_speed: 10
+  distance: 0
   parent_name: 
   parent_vertical: 
   parent_horizontal: 
