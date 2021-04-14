@@ -5,6 +5,7 @@ using UnityEngine;
 public class AustinStead_Button : MonoBehaviour
 {
     public float CooldownDuration = 1.0f;
+    public bool StayDown = false;
 
     private float cooldownClock;
 
@@ -50,6 +51,8 @@ public class AustinStead_Button : MonoBehaviour
             if (ButtonActivated != null)
                 ButtonActivated();
 
+            if (StayDown)
+                this.enabled = false;
         }
     }
 
