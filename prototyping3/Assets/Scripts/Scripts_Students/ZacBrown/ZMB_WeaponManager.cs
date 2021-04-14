@@ -18,7 +18,7 @@ public class ZMB_WeaponManager : MonoBehaviour
     private GameObject cv;
     private GameObject AcidMeter;
     
-    private float Acid = 10.0f;
+    public float Acid = 10.0f;
 
     private bool ability1 = false;
     private bool ability2 = false;
@@ -26,12 +26,18 @@ public class ZMB_WeaponManager : MonoBehaviour
     private GameObject hp1;
     private GameObject hp2;
 
+    public bool AI;
+
     // Start is called before the first frame update
     void Start()
     {
-        //Set Controls and find Particle System for Acid Spray
-        SprayInput = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
-        AcidPoolInput = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
+        if (!AI)
+        {
+            //Set Controls and find Particle System for Acid Spray
+            SprayInput = gameObject.transform.parent.GetComponent<playerParent>().action1Input;
+            AcidPoolInput = gameObject.transform.parent.GetComponent<playerParent>().action2Input;
+        }
+        
         ps = transform.Find("AcidSpray").GetComponent<ParticleSystem>();
 
         //Setup AcidMeter text over battle-bot
@@ -71,52 +77,31 @@ public class ZMB_WeaponManager : MonoBehaviour
     void Update()
     {
         //Check if player is spraying acid
-        if (Input.GetButtonDown(SprayInput))
+        if (!AI && Input.GetButtonDown(SprayInput))
         {
             if (!ps.isPlaying) //Start playing particles if off
             {
-                ps.Play();
-                ability1 = true;
+                StartAcidSpray();
             }
         }
-        else if (Input.GetButtonUp(SprayInput))
+        else if (!AI && Input.GetButtonUp(SprayInput))
         {
             if (ps.isPlaying) //Start playing particles if on
             {
-                ps.Stop();
-                ability1 = false;
+                StopAcidSpray();
             }
         }
 
         //Check if playing is dumping Acid
-        if (Input.GetButtonDown(AcidPoolInput))
+        if (!AI && Input.GetButtonDown(AcidPoolInput))
         {
-            GameObject pool = Instantiate(AcidPool, transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
-            pool.transform.localScale = new Vector3(pool.transform.localScale.x * Acid, pool.transform.localScale.y,
-                pool.transform.localScale.z * Acid);
-
-            ParticleSystem ps = pool.GetComponentInChildren<ParticleSystem>();
-            ParticleSystem.ShapeModule shape = ps.shape;
-            shape.radius *= Acid;
-
-            if (gameObject.transform.root.tag == "Player1")
-            {
-                pool.transform.GetChild(0).GetComponent<HazardDamage>().isPlayer1Weapon = true;
-            }
-            else if (gameObject.transform.root.tag == "Player2")
-            {
-                pool.transform.GetChild(0).GetComponent<HazardDamage>().isPlayer2Weapon = true;
-            }
-            
-            Destroy(pool, 5.0f);
-
-            //Reset Acid level
-            Acid = 0.0f;
+            ActivateAcidPool();
         }
 
         UpdateAcid();
 
-        AcidMeter.transform.rotation = transform.root.GetChild(1).rotation;
+        if (transform.root.childCount > 2)
+            AcidMeter.transform.rotation = transform.root.GetChild(1).rotation;
     }
 
     private void UpdateAcid()
@@ -138,6 +123,44 @@ public class ZMB_WeaponManager : MonoBehaviour
         
         AcidMeter.GetComponent<Text>().text = (Mathf.Round(Acid * 10.0f) / 10.0f).ToString();
     }
+
+    public void StartAcidSpray()
+    {
+        ps.Play();
+        ability1 = true;
+    }
+
+    public void StopAcidSpray()
+    {
+        ps.Stop();
+        ability1 = false;
+    }
+
+    public void ActivateAcidPool()
+    {
+        GameObject pool = Instantiate(AcidPool, transform.position - new Vector3(0, 0.6f, 0), Quaternion.identity);
+        pool.transform.localScale = new Vector3(pool.transform.localScale.x * Acid, pool.transform.localScale.y,
+            pool.transform.localScale.z * Acid);
+
+        ParticleSystem ps = pool.GetComponentInChildren<ParticleSystem>();
+        ParticleSystem.ShapeModule shape = ps.shape;
+        shape.radius *= Acid;
+
+        if (gameObject.transform.root.tag == "Player1")
+        {
+            pool.transform.GetChild(0).GetComponent<HazardDamage>().isPlayer1Weapon = true;
+        }
+        else if (gameObject.transform.root.tag == "Player2")
+        {
+            pool.transform.GetChild(0).GetComponent<HazardDamage>().isPlayer2Weapon = true;
+        }
+            
+        Destroy(pool, 5.0f);
+
+        //Reset Acid level
+        Acid = 0.0f;
+    }
+    
 
     private void OnDestroy()
     {

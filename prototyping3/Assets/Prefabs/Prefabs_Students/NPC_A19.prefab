@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 5780095072016173801}
   - component: {fileID: 1575833269936463731}
   - component: {fileID: -8636594193760618097}
+  - component: {fileID: 652067085828957956}
   m_Layer: 0
   m_Name: NPC_A19
   m_TagString: Untagged
@@ -352,6 +353,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e173a7401170b4c8b91f0cf261062e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doesFallDamage: 0
+  playerFallDamage: 4
 --- !u!114 &1575833269936463731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,6 +372,8 @@ MonoBehaviour:
   AcidPool: {fileID: 1643563390897282765, guid: f290e43febb6f714092f09fd83173f26,
     type: 3}
   AcidBar: {fileID: 8309181849678496042, guid: 8afe45502c9283a459a9fd30962d58c5, type: 3}
+  Acid: 10
+  AI: 1
 --- !u!195 &-8636594193760618097
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -379,7 +384,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -391,6 +396,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &652067085828957956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355330930375697355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71701c03c042f124b8171a12879a1f87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1355330930662561729
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,7 +671,7 @@ PrefabInstance:
     - target: {fileID: 2303490008151070641, guid: ce3a25ac63eb2a546b6dac540c10142d,
         type: 3}
       propertyPath: damage
-      value: 0.5
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4147504092403899154, guid: ce3a25ac63eb2a546b6dac540c10142d,
         type: 3}
@@ -669,12 +686,12 @@ PrefabInstance:
     - target: {fileID: 4413067665891277319, guid: ce3a25ac63eb2a546b6dac540c10142d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.93
+      value: 0.41
       objectReference: {fileID: 0}
     - target: {fileID: 4413067665891277319, guid: ce3a25ac63eb2a546b6dac540c10142d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.35
+      value: 2.78
       objectReference: {fileID: 0}
     - target: {fileID: 4413067665891277319, guid: ce3a25ac63eb2a546b6dac540c10142d,
         type: 3}
