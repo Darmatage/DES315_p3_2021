@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class B05N_Move : B05_UNode
 {
     private float MIN_DIST = 0.2f;
-    private float OFFSET_VALUE = 10.0f;
     private float MAX_TIME = 2.0f;
 
     private Transform enemy;
@@ -81,8 +80,15 @@ public class B05N_Move : B05_UNode
 
     public override float CalcScore()
     {
-        float offset = Mathf.Abs(ai.distance_goal - Vector3.Distance(enemy.position, ai.transform.position));
-        float factor = offset / OFFSET_VALUE;
-        return factor;// * factor;
+        float dist = Vector3.Distance(enemy.position, ai.transform.position);
+
+        if (dist < ai.distance_goal)
+        {
+            return Mathf.Clamp(1.0f - (dist / ai.distance_goal), 0.0f, 1.0f);
+        }
+        else
+        {
+            return Mathf.Clamp((dist / (ai.distance_goal * 2)) - 0.5f, 0.0f, 1.0f);
+        }
     }
 }

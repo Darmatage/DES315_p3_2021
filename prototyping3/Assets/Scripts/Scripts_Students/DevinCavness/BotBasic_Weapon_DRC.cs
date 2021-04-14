@@ -31,7 +31,8 @@ public class BotBasic_Weapon_DRC : MonoBehaviour{
 
     void Update(){
 		//if (Input.GetKeyDown(KeyCode.T)){
-		if ((Input.GetButtonDown(button1))&&(weaponOut==false)){
+		if ( Input.GetButtonDown(button1) && weaponOut == false )
+		{
 			//weaponThrust.transform.Translate(0,thrustAmount, 0);
 			weaponOut = true;
 			GameObject thisone = Instantiate(missile);
@@ -60,6 +61,13 @@ public class BotBasic_Weapon_DRC : MonoBehaviour{
 		else if(weaponOut == true)
         {
 			timeOut += Time.deltaTime;
+
+			if (GameObject.Find("Rocket_DRC(Clone)").transform.position.y <= GameObject.FindWithTag("FallRespawn").transform.position.y)
+			{
+				GameObject.Find("Rocket_DRC(Clone)").transform.position = transform.parent.position;
+				GameObject.Find("Rocket_DRC(Clone)").GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
+			}
+
 			if (timeOut > 0.5f && GameObject.Find("Rocket_DRC(Clone)") != null)
 			{
 				Vector3 test = GameObject.Find("Rocket_DRC(Clone)").transform.position - transform.position;
@@ -70,6 +78,16 @@ public class BotBasic_Weapon_DRC : MonoBehaviour{
 				}
 				else
                 {
+					if(Input.GetButton(button2))
+                    {
+						Vector3 between = GameObject.Find("Rocket_DRC(Clone)").transform.position - transform.position;
+						between.Normalize();
+						between *= (25.0f + timeOut) * Time.deltaTime;
+
+						GameObject.Find("Rocket_DRC(Clone)").transform.position = GameObject.Find("Rocket_DRC(Clone)").transform.position - between;
+							
+
+					}
 					GetComponent<LineRenderer>().SetPosition(0, transform.position);
 					GetComponent<LineRenderer>().SetPosition(1, GameObject.Find("Rocket_DRC(Clone)").transform.position);
                 }

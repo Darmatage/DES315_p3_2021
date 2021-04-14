@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Teleport_DRC : MonoBehaviour
 {
+    public float distance;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,6 @@ public class Teleport_DRC : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        collision.gameObject.transform.position = new Vector3(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y + 5.3f, collision.gameObject.transform.position.z);
+        collision.gameObject.transform.position = new Vector3(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y + distance, collision.gameObject.transform.position.z);
     }
 }

@@ -127,4 +127,11 @@ public class botA03_Weapons : MonoBehaviour
             smokeCoolTime = 0.0f;
         }
     }
+
+    public void DemoAttack()
+    {
+        weaponThrust.transform.Translate(0,thrustAmount, 0);
+        weaponOut = true;
+        StartCoroutine(WithdrawWeapon());
+    }
 }

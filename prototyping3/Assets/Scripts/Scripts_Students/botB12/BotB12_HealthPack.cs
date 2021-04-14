@@ -50,7 +50,7 @@ public class BotB12_HealthPack : MonoBehaviour
         if (other.gameObject.name.Contains("Bot") && (timer <= 0.0f))
         {
             timer = originalCD;
-            handler.TakeDamage(other.gameObject.transform.root.tag, -3);
+            handler.TakeDamage(other.gameObject.transform.root.tag, -2);
             pLight.intensity = 0;
             healthpackHorizMesh.enabled = false;
             healthpackVertMesh.enabled = false;

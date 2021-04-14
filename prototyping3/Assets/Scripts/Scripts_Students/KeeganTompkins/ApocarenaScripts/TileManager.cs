@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class TileManager : MonoBehaviour
 {
@@ -10,12 +11,57 @@ public class TileManager : MonoBehaviour
     public GameObject TilePrefab = null;
     public GameObject LaserPrefab = null;
 
-    public float LaserTiming = 5.0f;
+    [System.Serializable]
+    public class LaserTimings
+    {
+        [System.Serializable]
+        public struct TimingPercent
+        {
+            public float percent;
+            public int Number;
+            public float Wait;
+        }
+
+        public List<TimingPercent> TimingPercents;
+
+        [System.NonSerialized]
+        public float maxTime;
+
+        private int IndexFromTiming(float timing)
+        {
+            int i = -1;
+            float Percent = ((maxTime - timing) / maxTime);
+            foreach (var LT in TimingPercents)
+            {
+                ++i;
+                Percent -= LT.percent; 
+                if (Percent <= 0)
+                {
+                    break;
+                }
+            }
+            return i;
+        }
+
+        public int GetNumberLasers(float timing)
+        {
+            return TimingPercents[IndexFromTiming(timing)].Number;
+        }
+        public float GetWait(float timing)
+        {
+            return TimingPercents[IndexFromTiming(timing)].Wait;
+        }
+    };
+
+    public LaserTimings LaserTimes;
 
     private List<GameObject> Grid;
 
     public float[] FallTimings;
     private int TimingIndex;
+
+    private float LevelTimingMax;
+    private float LevelTiming;
 
     // Start is called before the first frame update
     void Start()
@@ -64,15 +110,22 @@ public class TileManager : MonoBehaviour
 
     IEnumerator BeginLasersRoutine()
     {
-        yield return new WaitForSeconds(LaserTiming);
-        Vector3 pos = RandomTilePos();
-        Instantiate(LaserPrefab, pos, Quaternion.identity);
+        yield return new WaitForSeconds(LaserTimes.GetWait(FindObjectOfType<GameHandler>().gameTime));
+
+        for (int i = LaserTimes.GetNumberLasers(FindObjectOfType<GameHandler>().gameTime); i > 0; --i)
+        {
+            Vector3 pos = RandomTilePos();
+            Instantiate(LaserPrefab, pos, Quaternion.identity);
+        }
         StartCoroutine(BeginLasersRoutine());
     }
 
     public void FightStart()
     {
+        LevelTimingMax = FindObjectOfType<GameHandler>().gameTime;
+        Debug.Log("MaxTiming = " + LevelTimingMax);
         StartCoroutine(BeginFallRoutine());
+        LaserTimes.maxTime = LevelTimingMax;
         StartCoroutine(BeginLasersRoutine());
         FindObjectOfType<GameHandler>().StartBattle();
     }
@@ -80,6 +133,6 @@ public class TileManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //NavMeshBuilder.UpdateNavMeshData(NavMesh.GetNav)
     }
 }
