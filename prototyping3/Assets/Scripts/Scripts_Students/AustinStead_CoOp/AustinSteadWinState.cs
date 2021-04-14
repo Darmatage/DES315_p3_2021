@@ -39,7 +39,7 @@ public class AustinSteadWinState : MonoBehaviour
         {
             //Victory
             gameHandler.coopPlayersWin = true;
-
+            gameHandler.coopDefeatMsg = "Maze complete!";
             StartCoroutine(gameHandler.CoopEndGame());
         }
     }
