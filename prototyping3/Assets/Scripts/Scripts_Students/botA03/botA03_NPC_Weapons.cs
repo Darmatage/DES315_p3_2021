@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class botA03_Weapons : MonoBehaviour
+public class botA03_NPC_Weapons : MonoBehaviour
 {
     //NOTE: This script goes on the main playerBot Game Object, and the weapon goes in the public GO slot
 
@@ -42,45 +42,57 @@ public class botA03_Weapons : MonoBehaviour
     }
 
     void Update(){
-        //if (Input.GetKeyDown(KeyCode.T)){
-        if ((Input.GetButtonDown(button1)) && (tankOut == false) && (dashCoolOn == false))
-        {
-            currentDashTime = 0.5f;
-            dashCoolTime = 3.0f;
-            dashCoolOn = true;
-            //turtleShip.transform.Translate(0,0, rushAmount);
-            //tankOut = true;
-            //StartCoroutine(horizontalWDShip());
-            
-            source.Play();
-        }
-        /*else if ((Input.GetButtonDown(button2)) && (tankOut == false))
-        {
-            turtleShip.transform.Translate(0,rushAmount, 0);
-            tankOut = true;
-            StartCoroutine(horizontalWDShip());
-        }*/
-        else if ((Input.GetButtonDown(button2))&&(weaponOut==false)){
-            weaponThrust.transform.Translate(0,thrustAmount, 0);
-            weaponOut = true;
-            StartCoroutine(WithdrawWeapon());
-        }
-        else if ((Input.GetButtonDown(button3)) && shellActive == false)
-        {
-            shellActive = true;
-            smokeShell.SetActive(true);
-            smokeCoolTime = 10.0f;
-        }
-        else if ((Input.GetButtonDown(button3)) && shellActive == true)
-        {
-            shellActive = false;
-            smokeShell.SetActive(false);
-            smokeCoolTime = 0.0f;
-        }
+        
+        //if ((Input.GetButtonDown(button1)) && (tankOut == false) && (dashCoolOn == false))
+        //{
+        //    DashAttack();
+        //}
+        //else if ((Input.GetButtonDown(button2))&&(weaponOut==false))
+        //{
+        //    RodAttack();
+        //}
+        //else if ((Input.GetButtonDown(button3)) && shellActive == false)
+        //{
+        //    SmokeOn();
+        //}
+        //else if ((Input.GetButtonDown(button3)) && shellActive == true)
+        //{
+        //    SmokeOff();
+        //}
 
         TimeManagement();
     }
 
+    public void DashAttack()
+    {
+        currentDashTime = 0.5f;
+        dashCoolTime = 3.0f;
+        dashCoolOn = true;
+
+        source.Play();
+    }
+
+    public void RodAttack()
+    {
+        weaponThrust.transform.Translate(0,thrustAmount, 0);
+        weaponOut = true;
+        StartCoroutine(WithdrawWeapon());
+    }
+
+    public void SmokeOn()
+    {
+        shellActive = true;
+        smokeShell.SetActive(true);
+        smokeCoolTime = 10.0f;
+    }
+
+    public void SmokeOff()
+    {
+        shellActive = false;
+        smokeShell.SetActive(false);
+        smokeCoolTime = 0.0f;
+    }
+    
     IEnumerator horizontalWDShip()
     {
         yield return new WaitForSeconds(0.6f);
