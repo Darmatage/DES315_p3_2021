@@ -8,6 +8,7 @@ public class AustinStead_Button : MonoBehaviour
 
     private float cooldownClock;
 
+
     public delegate void ButtonAction();
     public event ButtonAction ButtonActivated;
 
@@ -48,8 +49,8 @@ public class AustinStead_Button : MonoBehaviour
 
             if (ButtonActivated != null)
                 ButtonActivated();
-        }
 
+        }
     }
 
     private void CooldownComplete()
@@ -57,6 +58,9 @@ public class AustinStead_Button : MonoBehaviour
         renderer.material = OpenMat;
     }
 
-
+    public bool IsPressed()
+    {
+        return cooldownClock > 0;
+    }
 
 }
