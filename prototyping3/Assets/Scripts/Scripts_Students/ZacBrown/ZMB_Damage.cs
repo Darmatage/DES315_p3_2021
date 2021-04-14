@@ -123,7 +123,7 @@ public class ZMB_Damage : MonoBehaviour
 			Vector3 directionVert = (other.transform.position - compassVertical.transform.position).normalized;
 
 			if (Vector3.Dot (transform.forward, directionFore) < (-sidelimit)) {
-				rb.AddForce(transform.forward * knockBackSpeed, ForceMode.Impulse);
+				//rb.AddForce(transform.forward * knockBackSpeed, ForceMode.Impulse);
 				//Debug.Log("HitBack " + Vector3.Dot (transform.forward, directionFore));
 				if (shieldPowerBack <= 0){
 					dmgParticlesBack.SetActive(true);
@@ -144,7 +144,7 @@ public class ZMB_Damage : MonoBehaviour
 			}
 
 			else if (Vector3.Dot (transform.forward, directionFore) > sidelimit) {
-				rb.AddForce(transform.forward * knockBackSpeed * -1, ForceMode.Impulse);
+				//rb.AddForce(transform.forward * knockBackSpeed * -1, ForceMode.Impulse);
 				//Debug.Log("HitFront "+ Vector3.Dot (transform.forward, directionFore));
 				if (shieldPowerFront <= 0){
 					dmgParticlesFront.SetActive(true);
@@ -166,7 +166,7 @@ public class ZMB_Damage : MonoBehaviour
 			} 
 
 			else if (Vector3.Dot (compassSides.transform.forward, directionSides) > sidelimit) {
-				rb.AddForce(transform.right * knockBackSpeed * -1, ForceMode.Impulse);
+				//rb.AddForce(transform.right * knockBackSpeed * -1, ForceMode.Impulse);
 				//Debug.Log("HitRight " + Vector3.Dot (compassSides.transform.forward, directionSides));
 				if (shieldPowerRight <= 0){
 					dmgParticlesRight.SetActive(true);
@@ -188,7 +188,7 @@ public class ZMB_Damage : MonoBehaviour
 			}
 
 			else if (Vector3.Dot (compassSides.transform.forward, directionSides) < (-sidelimit)) {
-				rb.AddForce(transform.right * knockBackSpeed, ForceMode.Impulse);
+				//rb.AddForce(transform.right * knockBackSpeed, ForceMode.Impulse);
 				//Debug.Log("HitLeft " + Vector3.Dot (compassSides.transform.forward, directionSides));
 				if (shieldPowerLeft <= 0){
 					dmgParticlesLeft.SetActive(true);
@@ -210,7 +210,7 @@ public class ZMB_Damage : MonoBehaviour
 			}
 
 			else if (Vector3.Dot (compassVertical.transform.forward, directionVert) > sidelimit) {
-				rb.AddForce(transform.up * knockBackSpeed * -1, ForceMode.Impulse);
+				//rb.AddForce(transform.up * knockBackSpeed * -1, ForceMode.Impulse);
 				//Debug.Log("HitTop " + Vector3.Dot (compassVertical.transform.forward, directionVert));
 				if (shieldPowerTop <= 0){
 					dmgParticlesTop.SetActive(true);
@@ -232,7 +232,7 @@ public class ZMB_Damage : MonoBehaviour
 			}
 
 			else if (Vector3.Dot (compassVertical.transform.forward, directionVert) < (-sidelimit)) {
-				rb.AddForce(transform.up * knockBackSpeed, ForceMode.Impulse);
+				//rb.AddForce(transform.up * knockBackSpeed, ForceMode.Impulse);
 				//Debug.Log("HitBottom " + Vector3.Dot (compassVertical.transform.forward, directionVert));
 				if (shieldPowerBottom <= 0){
 					//dmgParticlesBottom.SetActive(true);
