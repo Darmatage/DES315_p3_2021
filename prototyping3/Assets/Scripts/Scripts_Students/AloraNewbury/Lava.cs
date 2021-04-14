@@ -13,6 +13,7 @@ public class Lava : MonoBehaviour
     private float gameTimer = 0f;
     private bool isGameTime = false;
     public bool scaled;
+    
 
 
 
@@ -43,6 +44,15 @@ public class Lava : MonoBehaviour
             }
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.transform.parent.tag == "Player1" || other.gameObject.transform.parent.tag == "Player2")
+        {
+            
+        }
+
+    }
+
 
 
     void Update()
@@ -73,7 +83,7 @@ public class Lava : MonoBehaviour
 
         if (bigger && scaled)
         {
-            lava.transform.localScale += new Vector3(0, 2, 0);
+            lava.transform.localScale += new Vector3(0, 1, 0);
         }
         
 
