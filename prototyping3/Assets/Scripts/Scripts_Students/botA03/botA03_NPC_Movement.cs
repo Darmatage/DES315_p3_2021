@@ -59,22 +59,17 @@ public class botA03_NPC_Movement : MonoBehaviour
                 velocity.y = rigidbody.velocity.y;
 				
                 rigidbody.velocity = velocity;
+                
+                weapon.DemoAttack();
             }
         }
         else
         {
             enemy = EnemySetup();
-
-            //if (Vector3.Distance(transform.position, nm_agent.destination) < 6)
-            //{
-            //    Vector3 direction = Random.insideUnitSphere * distance;
-            //    NavMeshHit navHit;
-            //    if (NavMesh.SamplePosition(transform.position + direction, out navHit, distance, -1))
-            //    {
-            //        nm_agent.destination = navHit.position;
-            //    }
-            //}
         }
+        
+        
+        
     }
 
     private GameObject EnemySetup()
