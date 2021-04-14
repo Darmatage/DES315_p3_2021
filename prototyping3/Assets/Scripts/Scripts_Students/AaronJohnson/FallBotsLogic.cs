@@ -21,6 +21,7 @@ public class FallBotsLogic : MonoBehaviour
     public GameObject FallAwayOR6;
     public GameObject FallAwayOR7;
     public GameObject FallAwayOR8;
+    public GameObject GameHandler;
 
     int TileCount = 0;
 
@@ -53,24 +54,27 @@ public class FallBotsLogic : MonoBehaviour
     
     void Update()
     {
-        Timer -= Time.deltaTime;
-        if (Timer <= 0.0f)
+        if (GameHandler.GetComponent<GameHandler>().isGameTime && !GameHandler.GetComponent<GameHandler>().GameisPaused)
         {
-            ++TileCount;
-            SelectTile();
-            Timer = TimerMax;
-        }
+            Timer -= Time.deltaTime;
+            if (Timer <= 0.0f)
+            {
+                ++TileCount;
+                SelectTile();
+                Timer = TimerMax;
+            }
 
-        if (shakeDuration > 0)
-        {
-            Trans.localPosition = initialPosition + Random.insideUnitSphere * shakeMagnitude;
+            if (shakeDuration > 0)
+            {
+                Trans.localPosition = initialPosition + Random.insideUnitSphere * shakeMagnitude;
 
-            shakeDuration -= Time.deltaTime * dampingSpeed;
-        }
-        else
-        {
-            shakeDuration = 0f;
-            //transform.localPosition = initialPosition;
+                shakeDuration -= Time.deltaTime * dampingSpeed;
+            }
+            else
+            {
+                shakeDuration = 0f;
+                //transform.localPosition = initialPosition;
+            }
         }
     }
 
