@@ -8,6 +8,8 @@ public class QB_SpringOut : MonoBehaviour
 
     public float throwSpeed;
 
+    public ParticleSystem particles;
+
     private float timer = 0.0f;
     private float timer2 = 0.0f;
     private GameObject obj1;
@@ -69,6 +71,12 @@ public class QB_SpringOut : MonoBehaviour
         //    Debug.LogError("QB_SprintOut.cs: Object was not a part of a bot!");
         //}
 
+        if(!obj)
+        {
+            Debug.Log("QB_SpringOut.cs: Launch: obj is Null reference.");
+            return;
+        }
+
         Vector3 landingPos = new Vector3(7, 2, 0);
 
         if(obj.transform.position.x >= 0)
@@ -96,6 +104,8 @@ public class QB_SpringOut : MonoBehaviour
             Debug.LogError("QB_SpringOut.cs: Launch: Object didn't have a Rigidbody!");
             return;
         }
+
+        particles.Play();
     }
 
     private void OnTriggerEnter(Collider other)

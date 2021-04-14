@@ -13,7 +13,7 @@ public class DH_FlareTrap : MonoBehaviour
   float damageFrequency = 1.0f;
   float damageTimer = 1.0f;
 
-  List<string> playersInFlame = new List<string>();
+  List<GameObject> entitiesInFlame = new List<GameObject>();
 
   // Start is called before the first frame update
   void Start()
@@ -53,30 +53,41 @@ public class DH_FlareTrap : MonoBehaviour
     on = true;
     onTimer = onTime;
     transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+    transform.GetChild(2).gameObject.SetActive(true);
   }
 
   public void TurnOffFlare()
   {
     on = false;
     transform.GetChild(0).GetComponent<ParticleSystem>().Stop();
+    transform.GetChild(2).gameObject.SetActive(false);
   }
 
   public void DealDamage()
   {
-    foreach(string name in playersInFlame)
+    foreach(GameObject obj in entitiesInFlame)
     {
-      gameHandler.TakeDamage(name, 1);
+      if (!obj)
+        continue;
+      if (obj.GetComponent<DH_Health>())
+      {
+        obj.GetComponent<DH_Health>().TakeDamage(1);
+      }
+      else
+      {
+        gameHandler.TakeDamage(obj.tag, 1);
+      }
     }
   }
 
   private void OnTriggerEnter(Collider other)
   {
-    if(!playersInFlame.Contains(other.transform.root.tag))
-      playersInFlame.Add(other.transform.root.tag);
+    if(!entitiesInFlame.Contains(other.transform.root.gameObject))
+      entitiesInFlame.Add(other.transform.root.gameObject);
   }
 
   private void OnTriggerExit(Collider other)
   {
-    playersInFlame.Remove(other.transform.root.tag);
+    entitiesInFlame.Remove(other.transform.root.gameObject);
   }
 }

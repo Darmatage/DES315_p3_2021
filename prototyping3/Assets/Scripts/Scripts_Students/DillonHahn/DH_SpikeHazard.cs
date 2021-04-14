@@ -54,4 +54,15 @@ public class DH_SpikeHazard : MonoBehaviour
     active = true;
     activeTimer = activeTime;
   }
+
+  private void OnCollisionEnter(Collision collision)
+  {
+    if(collision.contacts[0].thisCollider == GetComponent<BoxCollider>())
+    {
+      if(collision.transform.GetComponent<DH_Health>())
+      {
+        collision.transform.GetComponent<DH_Health>().TakeDamage(2);
+      }
+    }
+  }
 }
