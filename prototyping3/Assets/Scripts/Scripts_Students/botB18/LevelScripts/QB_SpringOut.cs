@@ -77,7 +77,7 @@ public class QB_SpringOut : MonoBehaviour
             return;
         }
 
-        Vector3 landingPos = new Vector3(7, 2, 0);
+        Vector3 landingPos = new Vector3(9, 3, 0);
 
         if(obj.transform.position.x >= 0)
         {
