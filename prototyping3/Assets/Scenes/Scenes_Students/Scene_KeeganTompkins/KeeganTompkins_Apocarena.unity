@@ -10809,7 +10809,17 @@ MonoBehaviour:
     type: 3}
   LaserPrefab: {fileID: 2592183327629761254, guid: 1a37b3aa85a14af44b1e600d63f7827b,
     type: 3}
-  LaserTiming: 5
+  LaserTimes:
+    TimingPercents:
+    - percent: 0.2
+      Number: 1
+      Wait: 3
+    - percent: 0.3
+      Number: 1
+      Wait: 2.5
+    - percent: 0.5
+      Number: 2
+      Wait: 1.5
   FallTimings:
   - 4
   - 4
