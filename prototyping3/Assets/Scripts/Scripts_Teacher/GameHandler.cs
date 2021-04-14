@@ -78,7 +78,7 @@ public class GameHandler : MonoBehaviour{
 	public int gameTime = 60;
 	public GameObject gameTimerText;
 	private float gameTimer = 0f;
-	private bool isGameTime = false;
+	public bool isGameTime = false;
 
 	//Fall Does Damage
 	public bool fallDoesdamage = false;
