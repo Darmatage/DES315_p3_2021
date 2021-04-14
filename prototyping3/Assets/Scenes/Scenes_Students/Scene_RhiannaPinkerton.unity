@@ -1637,6 +1637,7 @@ MonoBehaviour:
   theButton: {fileID: 341414474}
   EMPParticles: {fileID: 537842282}
   FreezeTime: 3
+  CooldownTime: 4
 --- !u!136 &186701206
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4117,7 +4118,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 0
+    type: 2
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -12334,14 +12335,14 @@ RectTransform:
   m_GameObject: {fileID: 1365832374}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8066, y: 0.8066, z: 0.8066}
   m_Children: []
   m_Father: {fileID: 1898645765}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.3270175, y: 0.7023567}
   m_AnchorMax: {x: 0.6714544, y: 0.9791207}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 3.5}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1365832376

@@ -14,10 +14,7 @@ public class playerParent : MonoBehaviour{
 	public string action3Input;
 	public string action4Input;	
 	
-	
-	
-    // Start is called before the first frame update
-    void Start(){
+    void Awake(){
         if (isPlayer1==true){
 			rotateAxis = "p1Horizontal";
 			moveAxis = "p1Vertical";
