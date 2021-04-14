@@ -20,11 +20,11 @@ public class botA03_NPC_Movement : MonoBehaviour
     private GameObject enemy;
     private NavMeshAgent nm_agent;
 
-    private botA03_Weapons weapon;
+    private botA03_NPC_Weapons weapon;
     
     void Start()
     {
-        weapon = GetComponent<botA03_Weapons>();
+        weapon = GetComponent<botA03_NPC_Weapons>();
 
         parent_name = this.transform.parent.gameObject.name;
         parent_vertical = gameObject.transform.parent.GetComponent<playerParent>().moveAxis;
