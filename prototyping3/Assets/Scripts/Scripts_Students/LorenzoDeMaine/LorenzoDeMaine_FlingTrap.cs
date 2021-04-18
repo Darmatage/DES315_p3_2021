@@ -43,6 +43,9 @@ public class LorenzoDeMaine_FlingTrap : MonoBehaviour
     public void triggerOn()
     {
         triggered = true;
+
+        if (!GetComponent<AudioSource>().isPlaying)
+            GetComponent<AudioSource>().Play();
     }
 
     public void triggerOff()
