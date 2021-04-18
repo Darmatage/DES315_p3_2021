@@ -209,7 +209,7 @@ public class B03_NPC : MonoBehaviour
     {
         rigid.isKinematic = false;
         timer += Time.fixedDeltaTime;
-        if (timer >= 3.0f)
+        if (timer >= 4.0f)
         {
             timer = 0.0f;
             action = Action.IDLE;
@@ -236,7 +236,15 @@ public class B03_NPC : MonoBehaviour
             healthBar.value = 0;
             Destroy(gameObject);
         }
-        Text damageText = Instantiate(damageTextPrefab, transform.position, Quaternion.identity).GetComponentInChildren<Text>();
+        Text damageText = Instantiate(damageTextPrefab, transform.position, transform.rotation * Quaternion.Euler(0.0f, 180.0f, 0.0f)).GetComponentInChildren<Text>();
         damageText.text = damage.ToString();
+    }
+
+    private void OnDestroy()
+    {
+        if (webShot != null)
+        {
+            Destroy(webShot.gameObject);
+        }
     }
 }

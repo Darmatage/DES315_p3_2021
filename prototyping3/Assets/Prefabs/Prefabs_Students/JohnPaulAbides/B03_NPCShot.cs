@@ -38,9 +38,9 @@ public class B03_NPCShot : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // only activate after shot leaves parent
-        if (timer < 0.2f) return;
+        if (timer < 0.3f) return;
 
-        if (other.gameObject.transform.root.name == "B03_NPCMonster")
+        if (other.gameObject.transform.root.name.StartsWith("B03_NPCMonster"))
         {
             parent.webShot = null;
             parent.webPullFlag = false;

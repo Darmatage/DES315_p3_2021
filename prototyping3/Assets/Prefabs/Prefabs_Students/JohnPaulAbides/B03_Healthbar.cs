@@ -7,7 +7,10 @@ public class B03_Healthbar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // face towards camera direction
-        transform.rotation = Camera.main.transform.rotation;
+        // face upright
+        Vector3 euler = transform.eulerAngles;
+        euler.x = 0.0f;
+        euler.z = 0.0f;
+        transform.eulerAngles = euler;
     }
 }

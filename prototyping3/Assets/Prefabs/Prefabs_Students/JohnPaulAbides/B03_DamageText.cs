@@ -17,8 +17,8 @@ public class B03_DamageText : MonoBehaviour
     void Update()
     {
         // move towards the camera's up and right
-        transform.position += Camera.main.transform.right * Time.deltaTime * rightVel;
-        transform.position += Camera.main.transform.up * Time.deltaTime * upVel;
+        transform.position += transform.right * Time.deltaTime * rightVel;
+        transform.position += transform.up * Time.deltaTime * upVel;
 
         // apply gravity based on cameraUp
         upVel -= gravity * Time.deltaTime;
