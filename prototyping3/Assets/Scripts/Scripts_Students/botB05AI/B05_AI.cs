@@ -68,7 +68,13 @@ public class B05_AI : MonoBehaviour
                                                GetComponent<Bot05_Move>(), GetComponent<B05_ShootTop>());
 
         // utility node 
-        topNode = new B05_UtilitySelector(new List<B05_UNode> { idle_branch, moveAndTurn, rush_seq, shoot_node });
+        B05_UtilitySelector usel = new B05_UtilitySelector(new List<B05_UNode> { idle_branch, moveAndTurn, rush_seq, shoot_node });
+
+        // jump node
+        B05N_Jump jump_node = new B05N_Jump(GetComponent<Bot05_Move>());
+
+        // turtling node
+        topNode = new B05_GroundedSelector(usel, jump_node, GetComponent<Bot05_Move>());
     }
 
     // Update is called once per frame
@@ -80,7 +86,7 @@ public class B05_AI : MonoBehaviour
             return;
 
         topNode.Evaluate();
-        if (topNode.nodeState == NodeState.FAILURE)
-            Debug.LogError("Tree returned failure!");
+        //if (topNode.nodeState == NodeState.FAILURE)
+            //Debug.LogError("Tree returned failure!");
     }
 }

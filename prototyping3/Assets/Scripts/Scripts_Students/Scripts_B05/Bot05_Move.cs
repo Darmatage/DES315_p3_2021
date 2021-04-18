@@ -197,4 +197,13 @@ public class Bot05_Move : MonoBehaviour
     {
         return center_pt;
     }
+
+    public void Jump()
+    {
+        if (canFlip == true)
+        {
+            rb.AddForce(rb.centerOfMass + new Vector3(jumpSpeed / 2, 0, jumpSpeed / 2), ForceMode.Impulse);
+            transform.Rotate(flipSpeed, 0, 0);
+        }
+    }
 }
