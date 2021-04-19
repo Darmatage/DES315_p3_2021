@@ -80,8 +80,11 @@ public class B05_AI : MonoBehaviour
         B05N_Mag mag_node = new B05N_Mag(GetComponent<B05_MagneticForce>(), GetComponent<Bot05_Move>().center_pt, enemy_trans);
         //B05_USim mag_branch = new B05_USim(new List<B05_UNode> { ignore_turn, mag_node });
 
+        // defensive
+        B05N_Shield shield_node = new B05N_Shield(GetComponent<B05_MagneticForce>(), this);
+
         // utility node 
-        B05_UtilitySelector usel = new B05_UtilitySelector(new List<B05_UNode> { idle_branch, moveAndTurn, rush_seq, shoot_node, pound_node, mag_node });
+        B05_UtilitySelector usel = new B05_UtilitySelector(new List<B05_UNode> { idle_branch, moveAndTurn, rush_seq, shoot_node, pound_node, mag_node, shield_node });
 
         // jump node
         B05N_Jump jump_node = new B05N_Jump(GetComponent<Bot05_Move>());
