@@ -109,6 +109,6 @@ public class B05N_Mag : B05_UNode
         b_attracting = (attract_incentive >= repel_incentive);
         int largest_incentive = (b_attracting ? attract_incentive : repel_incentive);
 
-        return Mathf.Clamp(largest_incentive * 0.6f, 0.0f, 1.8f);
+        return Mathf.Clamp(largest_incentive * 0.5f, 0.0f, 1.5f);
     }
 }
