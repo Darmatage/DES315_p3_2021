@@ -19,11 +19,25 @@ public class FloorSwapperTileManager : MonoBehaviour
   {
     if (active == true)
     {
-      rotation += 180 * Time.deltaTime;
+      if (rotation >= 90 && rotation <= 270)
+      {
+        rotation += 45 * Time.deltaTime;
+      }
+      else
+      {
+        rotation += 180 * Time.deltaTime;
+      }
 
       if (rotation <= 360)
       {
-        rotator.transform.Rotate(Vector3.up, 180 * Time.deltaTime);
+        if (rotation >= 90 && rotation <= 270)
+        {
+          rotator.transform.Rotate(Vector3.up, 45 * Time.deltaTime);
+        }
+        else
+        {
+          rotator.transform.Rotate(Vector3.up, 180 * Time.deltaTime);
+        }
       }
       else
       {
