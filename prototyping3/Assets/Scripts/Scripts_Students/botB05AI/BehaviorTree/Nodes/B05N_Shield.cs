@@ -7,8 +7,8 @@ public class B05N_Shield : B05_UNode
     private bool b_running;
 
     private float timer;
-    private const float MIN_TIME = 2.8f;
-    private const float MAX_TIME = 4.2f;
+    private const float MIN_TIME = 2.2f;
+    private const float MAX_TIME = 3.5f;
     private float goal_time;
 
     private B05_MagneticForce mag;
@@ -58,11 +58,11 @@ public class B05N_Shield : B05_UNode
 
         if (ai.low_health)
         {
-            return Mathf.Clamp(tops.Count * 0.25f, 0.0f, 1.0f);
+            return Mathf.Clamp(tops.Count * 0.2f, 0.0f, 0.8f);
         }
         else
         {
-            return Mathf.Clamp(tops.Count * 0.05f, 0.0f, 0.2f);
+            return Mathf.Clamp(tops.Count * 0.02f, 0.0f, 0.08f);
         }
     }
 }

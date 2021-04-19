@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class B05N_Idle : B05_UNode
 {
-    private float TIME_MAX = 2.5f;
-    private float TIME_MIN = 1.0f;
+    private float TIME_MAX = 1.8f;
+    private float TIME_MIN = 0.5f;
     private float goal = 0.0f;
     private float timer = 0.0f;
 
