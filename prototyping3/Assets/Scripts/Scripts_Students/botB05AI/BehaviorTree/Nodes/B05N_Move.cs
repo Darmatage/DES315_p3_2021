@@ -29,6 +29,11 @@ public class B05N_Move : B05_UNode
 
     public override NodeState Evaluate()
     {
+        agent.enabled = true;
+
+        if (!agent.isOnNavMesh)
+            return NodeState.FAILURE;
+
         ai.mesh.material = ai.matmove;
         if (!b_have_goal)
         {
@@ -41,6 +46,7 @@ public class B05N_Move : B05_UNode
         if (Vector3.Distance(ai.transform.position, agent.destination) < MIN_DIST)
         {
             agent.isStopped = true;
+            agent.enabled = false;
             b_have_goal = false;
             return NodeState.SUCCESS;
         }
@@ -48,13 +54,14 @@ public class B05N_Move : B05_UNode
         {
             agent.isStopped = true;
             b_have_goal = false;
+            agent.enabled = false;
             return NodeState.FAILURE;
         }
         else
         {
             agent.isStopped = false;
             agent.SetDestination(goal);
-            ai.goalsphere.position = agent.destination;
+            //ai.goalsphere.position = agent.destination;
             return NodeState.RUNNING;
         }
     }

@@ -30,7 +30,7 @@ public class B05N_BladeRush : B05_UNode
         {
             rush.Attack();
             b_running = true;
-            Debug.Log("Blade Rush activated.");
+            //Debug.Log("Blade Rush activated.");
         }
         else if (bot.IsState(Bot05_Move.STATE.NORMAL))
         {
