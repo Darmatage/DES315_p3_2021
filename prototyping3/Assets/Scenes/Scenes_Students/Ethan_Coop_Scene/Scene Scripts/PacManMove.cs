@@ -29,6 +29,9 @@ public class PacManMove : MonoBehaviour
     int PelletsVisited;
     public bool start = false;
 
+
+	public bool isAngry=false;
+	
     AudioSource nom;
     // Start is called before the first frame update
     void Start()
@@ -126,8 +129,13 @@ public class PacManMove : MonoBehaviour
             anger_timer -= Time.deltaTime;
             if (!attack)
             {
-                GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[1];
-                SetDestination(true);
+                //GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[1];
+                float r=2.5f;
+				float g=0.2f;
+				float b=0.2f;
+				GetComponent<MeshRenderer>().material.color = new Color(r,g,b);
+				gameObject.GetComponent<NPC_Damage>().isInvincible = true;
+				SetDestination(true);
             }
         }
         else if (anger_timer <= 0)
@@ -136,7 +144,12 @@ public class PacManMove : MonoBehaviour
             anger_timer = 15;
             player = -1;
             attack = false;
-            GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[0];
+            //GetComponent<MeshRenderer>().material = GetComponent<MeshRenderer>().materials[0];
+			float r=2.3f;
+			float g=2.5f;
+			float b=0.3f;
+			GetComponent<MeshRenderer>().material.color = new Color(r,g,b);
+			gameObject.GetComponent<NPC_Damage>().isInvincible = false;
         }
 
         //Collected pellet code

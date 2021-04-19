@@ -11,6 +11,9 @@ public class NPC_Damage : MonoBehaviour{
 	
 	private GameHandler gameHandler;
 	
+	public bool isInvincible = false;
+	
+	
     // Start is called before the first frame update
     void Start(){
         if (GameObject.FindWithTag("GameHandler") != null){
@@ -29,11 +32,13 @@ public class NPC_Damage : MonoBehaviour{
 	}
 
 	public void TakeDamage(float damage){ 
-		health -= damage;
-		if (health <= 0){
-			health = 0;
+		if (isInvincible == false){
+			health -= damage;
+			if (health <= 0){
+				health = 0;
+			}
+			gameHandler.CoopUpdateMonster(health);
 		}
-		gameHandler.CoopUpdateMonster(health);
 	}
 
 }

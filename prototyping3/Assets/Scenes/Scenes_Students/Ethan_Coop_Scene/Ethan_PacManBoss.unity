@@ -4248,7 +4248,7 @@ GameObject:
   - component: {fileID: 379155832}
   - component: {fileID: 379155833}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: pacman_art
   m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4316,6 +4316,9 @@ MonoBehaviour:
   damage: 2
   GH: {fileID: 1812304296}
   wait: 10
+  tookDamage: 0
+  inContact: 0
+  pacman: {fileID: 0}
 --- !u!1 &380042766
 GameObject:
   m_ObjectHideFlags: 0
@@ -11675,7 +11678,10 @@ MonoBehaviour:
   currentPellet: {fileID: 0}
   previousPellet: {fileID: 0}
   startingPellet: {fileID: 0}
+  traveling: 0
+  attack: 0
   start: 0
+  isAngry: 0
 --- !u!114 &1008321288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11701,7 +11707,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d059d45be39ef4692ca8fe138efee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthStart: 20
+  healthStart: 80
+  isInvincible: 0
 --- !u!82 &1008321290
 AudioSource:
   m_ObjectHideFlags: 0
