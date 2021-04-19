@@ -5,9 +5,10 @@ using UnityEngine;
 public class ClosingFloor : MonoBehaviour
 {
     public Vector3 finalScale;
-    public float startCollapseTimer = 40.0f;
-    public float finishCollapseTimer = 10.0f;
+    private float startCollapseTimer = 0f;
+    private float finishCollapseTimer = 0f;
     public GameHandler Handler;
+    bool testedOnce = false;
 
     private bool collapseStarted = false;
     private Vector3 startScale;
@@ -19,19 +20,25 @@ public class ClosingFloor : MonoBehaviour
     {
         scaleLength = Vector3.Distance(gameObject.transform.localScale, finalScale);
         startScale = transform.localScale;
-        collapseSpeed = (startScale.x - finalScale.x) / (2 * (startCollapseTimer - finishCollapseTimer));
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Handler.gameTime == startCollapseTimer && collapseStarted == false)
+        if(Handler.isGameTime && !testedOnce)
+        {
+            startCollapseTimer = Handler.gameTime * 5.0f / 6.0f;
+            finishCollapseTimer = Handler.gameTime / 5.0f;
+            collapseSpeed = (startScale.x - finalScale.x) / (2 * (startCollapseTimer - finishCollapseTimer));
+            testedOnce = true;
+        }
+        if (Handler.isGameTime && Handler.gameTime <= startCollapseTimer && collapseStarted == false)
         {
             collapseStarted = true;
             startedJourneyTime = Time.time;
         }
-        else if (collapseStarted && Handler.gameTime > finishCollapseTimer)
+        else if (Handler.isGameTime && collapseStarted && Handler.gameTime > finishCollapseTimer)
         {
             // Distance moved equals elapsed time times speed..
             float distCovered = (Time.time - startedJourneyTime) * collapseSpeed;
