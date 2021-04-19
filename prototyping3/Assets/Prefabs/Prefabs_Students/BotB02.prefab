@@ -284,9 +284,9 @@ GameObject:
   - component: {fileID: 2068642586320478456}
   - component: {fileID: 4269227312966185148}
   - component: {fileID: 4046557083350133876}
-  - component: {fileID: 1564438888440188710}
   - component: {fileID: 6626176640383125581}
   - component: {fileID: 7453497283119041825}
+  - component: {fileID: 6534887188331884835}
   m_Layer: 0
   m_Name: BotB02
   m_TagString: Untagged
@@ -415,38 +415,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.65
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1564438888440188710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355330930375697355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bec5cb9e71c89af4e9ca5b99c6f638e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  compassSides: {fileID: 1029706280859159121}
-  compassVertical: {fileID: 4587639291210960121}
-  knockBackSpeed: 10
-  shieldPowerFront: 1
-  shieldPowerBack: 1
-  shieldPowerLeft: 1
-  shieldPowerRight: 1
-  shieldPowerTop: 1
-  shieldPowerBottom: 1
-  shieldFrontObj: {fileID: 5842800509108774881}
-  shieldBackObj: {fileID: 4646661635187871857}
-  shieldLeftObj: {fileID: 8925011698669544524}
-  shieldRightObj: {fileID: 4821323916589115341}
-  shieldTopObj: {fileID: 8258070864156453765}
-  shieldBottomObj: {fileID: 6481494695353506943}
-  dmgParticlesFront: {fileID: 8597115311037407773}
-  dmgParticlesBack: {fileID: 4910112883522963572}
-  dmgParticlesLeft: {fileID: 1892345917183961140}
-  dmgParticlesRight: {fileID: 6173963377318405683}
-  dmgParticlesTop: {fileID: 869345424931871733}
 --- !u!114 &6626176640383125581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,6 +467,40 @@ MonoBehaviour:
   button2: 
   button3: 
   button4: 
+--- !u!114 &6534887188331884835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355330930375697355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11712de1bbb4c024e9eaff6f3c3d5bff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  compassSides: {fileID: 1029706280859159121}
+  compassVertical: {fileID: 4587639291210960121}
+  sidelimit: 0.75
+  knockBackSpeed: 10
+  forceSideLimit_p75: 1
+  shieldPowerFront: 1
+  shieldPowerBack: 1
+  shieldPowerLeft: 1
+  shieldPowerRight: 1
+  shieldPowerTop: 1
+  shieldPowerBottom: 1
+  shieldFrontObj: {fileID: 5842800509108774881}
+  shieldBackObj: {fileID: 4646661635187871857}
+  shieldLeftObj: {fileID: 8925011698669544524}
+  shieldRightObj: {fileID: 4821323916589115341}
+  shieldTopObj: {fileID: 8258070864156453765}
+  shieldBottomObj: {fileID: 6481494695353506943}
+  dmgParticlesFront: {fileID: 8597115311037407773}
+  dmgParticlesBack: {fileID: 4910112883522963572}
+  dmgParticlesLeft: {fileID: 1892345917183961140}
+  dmgParticlesRight: {fileID: 6173963377318405683}
+  dmgParticlesTop: {fileID: 869345424931871733}
 --- !u!1 &1355330930662561729
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,6 +723,7 @@ MonoBehaviour:
   SpawnParticlesHere: {x: 0, y: 0, z: 0}
   isPlayer1Weapon: 0
   isPlayer2Weapon: 0
+  isMonsterWeapon: 0
 --- !u!1 &3130634370749735046
 GameObject:
   m_ObjectHideFlags: 0
@@ -5810,6 +5813,7 @@ MonoBehaviour:
   SpawnParticlesHere: {x: 0, y: 0, z: 0}
   isPlayer1Weapon: 0
   isPlayer2Weapon: 0
+  isMonsterWeapon: 0
 --- !u!1001 &1712468868433530864
 PrefabInstance:
   m_ObjectHideFlags: 0
