@@ -7,6 +7,16 @@ public class botA03_NPC_Weapons : MonoBehaviour
     //NOTE: This script goes on the main playerBot Game Object, and the weapon goes in the public GO slot
 
     public GameObject weaponThrust;
+    
+    private GameObject weaponThrustForward;
+    private GameObject weaponThrustLeft;
+    private GameObject weaponThrustRight;
+    private GameObject weaponThrustBack;
+    private GameObject weaponThrustNE;
+    private GameObject weaponThrustNW;
+    private GameObject weaponThrustSE;
+    private GameObject weaponThrustSW;
+    
     public GameObject turtleShip;
     public GameObject smokeShell;
 
@@ -16,6 +26,7 @@ public class botA03_NPC_Weapons : MonoBehaviour
     private float currentDashTime = 0.0f;
     private float dashCoolTime = 3.0f;
     private float smokeCoolTime = 0.0f;
+    private float barrierCoolTime = 0.0f;
 
     private bool tankOut = false;
     private bool weaponOut = false;
@@ -41,25 +52,8 @@ public class botA03_NPC_Weapons : MonoBehaviour
         smokeShell.SetActive(false);
     }
 
-    void Update(){
-        
-        //if ((Input.GetButtonDown(button1)) && (tankOut == false) && (dashCoolOn == false))
-        //{
-        //    DashAttack();
-        //}
-        //else if ((Input.GetButtonDown(button2))&&(weaponOut==false))
-        //{
-        //    RodAttack();
-        //}
-        //else if ((Input.GetButtonDown(button3)) && shellActive == false)
-        //{
-        //    SmokeOn();
-        //}
-        //else if ((Input.GetButtonDown(button3)) && shellActive == true)
-        //{
-        //    SmokeOff();
-        //}
-
+    void Update()
+    {
         TimeManagement();
     }
 
@@ -72,13 +66,33 @@ public class botA03_NPC_Weapons : MonoBehaviour
         source.Play();
     }
 
-    public void RodAttack()
+    public void WallAttack()
     {
-        weaponThrust.transform.Translate(0,thrustAmount, 0);
-        weaponOut = true;
-        StartCoroutine(WithdrawWeapon());
-    }
+        Vector3 tempTransform = turtleShip.transform.position;
+        tempTransform.z += 3;
+        weaponThrustForward = Instantiate(weaponThrust, tempTransform, Quaternion.Euler(0f, 90f, 90f), weaponThrust.transform);
+        tempTransform.z -= 6;
+        weaponThrustBack = Instantiate(weaponThrust, tempTransform, Quaternion.Euler(0f, -90f, 90f), weaponThrust.transform);
+        tempTransform.z += 3;
+        tempTransform.x += 3;
+        weaponThrustRight = Instantiate(weaponThrust, tempTransform, Quaternion.Euler(0f, 180f, 90f), weaponThrust.transform);
+        tempTransform.x -= 6;
+        weaponThrustLeft = Instantiate(weaponThrust, tempTransform, Quaternion.Euler(0f, 0f, 90f), weaponThrust.transform);
 
+        tempTransform.x += 5;
+        tempTransform.z += 2;
+        weaponThrustNE = Instantiate(weaponThrust, tempTransform, Quaternion.Euler(0f, 135f, 90f), weaponThrust.transform);
+        tempTransform.x -= 4;
+        weaponThrustNW = Instantiate(weaponThrust, tempTransform, Quaternion.Euler(0f, 45f, 90f), weaponThrust.transform);
+        tempTransform.z -= 4;
+        weaponThrustSW = Instantiate(weaponThrust, tempTransform, Quaternion.Euler(0f, -45f, 90f), weaponThrust.transform);
+        tempTransform.x += 4;
+        weaponThrustSE = Instantiate(weaponThrust, tempTransform, Quaternion.Euler(0f, -135f, 90f), weaponThrust.transform);
+            
+        barrierCoolTime = 0.5f;
+        weaponOut = true;
+    }
+    
     public void SmokeOn()
     {
         shellActive = true;
@@ -100,12 +114,40 @@ public class botA03_NPC_Weapons : MonoBehaviour
         tankOut = false;
     }
     
-    IEnumerator WithdrawWeapon(){
-        yield return new WaitForSeconds(0.6f);
-        weaponThrust.transform.Translate(0,-thrustAmount, 0);
-        weaponOut = false;
+    public IEnumerator SmokeWait()
+    {
+        yield return new WaitForSeconds(3.0f);
+        SmokeOff();
     }
 
+    public bool DashReady()
+    {
+        if(dashCoolOn == true)
+            return false;
+        else
+        {
+            return true;
+        }
+    }
+
+    public bool WallReady()
+    {
+        if (barrierCoolTime == 0.0f)
+            return true;
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool SmokeReady()
+    {
+        if (smokeCoolTime == 0.0f)
+            return true;
+        else
+            return false;
+    }
+    
     void TimeManagement()
     {
         if (currentDashTime > 0.0f)
@@ -127,6 +169,32 @@ public class botA03_NPC_Weapons : MonoBehaviour
             dashCoolTime = 3.0f;
             dashCoolOn = false;
         }
+        
+        if (barrierCoolTime > 0.0f)
+        {
+            barrierCoolTime -= Time.deltaTime;
+            weaponThrustForward.transform.Translate(0, 12 * Time.deltaTime, 0);
+            weaponThrustBack.transform.Translate(0, 12 * Time.deltaTime, 0);
+            weaponThrustRight.transform.Translate(0, 12 * Time.deltaTime, 0);
+            weaponThrustLeft.transform.Translate(0, 12 * Time.deltaTime, 0);
+            weaponThrustNE.transform.Translate(0, 12 * Time.deltaTime, 0);
+            weaponThrustNW.transform.Translate(0, 12 * Time.deltaTime, 0);
+            weaponThrustSE.transform.Translate(0, 12 * Time.deltaTime, 0);
+            weaponThrustSW.transform.Translate(0, 12 * Time.deltaTime, 0);
+        }
+        else
+        {
+            barrierCoolTime = 0.0f;
+            Destroy(weaponThrustForward);
+            Destroy(weaponThrustBack);
+            Destroy(weaponThrustRight);
+            Destroy(weaponThrustLeft);
+            Destroy(weaponThrustNE);
+            Destroy(weaponThrustNW);
+            Destroy(weaponThrustSE);
+            Destroy(weaponThrustSW);
+            weaponOut = false;
+        }
 
         if (smokeCoolTime > 0.0f)
         {
@@ -138,12 +206,5 @@ public class botA03_NPC_Weapons : MonoBehaviour
             shellActive = false;
             smokeCoolTime = 0.0f;
         }
-    }
-
-    public void DemoAttack()
-    {
-        weaponThrust.transform.Translate(0,thrustAmount, 0);
-        weaponOut = true;
-        StartCoroutine(WithdrawWeapon());
     }
 }
