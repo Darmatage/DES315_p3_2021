@@ -30,7 +30,7 @@ public class B05N_BladeRush : B05_UNode
         {
             rush.Attack();
             b_running = true;
-            Debug.Log("Blade Rush activated.");
+            //Debug.Log("Blade Rush activated.");
         }
         else if (bot.IsState(Bot05_Move.STATE.NORMAL))
         {
@@ -56,7 +56,7 @@ public class B05N_BladeRush : B05_UNode
 
         if (dist <= IDEAL_DIST)
         {
-            return 1.0f;
+            return (ai.low_health ? 0.6f : 1.0f);
         }
         else
         {

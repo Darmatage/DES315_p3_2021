@@ -89,4 +89,42 @@ public class B05_GroundPound : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         b05.SetState(Bot05_Move.STATE.JUMPING);
     }
+
+    public int NumOfTops()
+    {
+        int total = 0;
+        B05_MiniTop[] tops = FindObjectsOfType<B05_MiniTop>();
+        for (int i = 0; i < tops.Length; ++i)
+        {
+            // is the top in range of the impact?
+            if (Mathf.Abs(Vector3.Distance(tops[i].GetPosition(), center.position)) <= impact_range)
+            {
+                ++total;
+            }
+        }
+        return total;
+    }
+
+    public bool ActivateAI()
+    {
+        bool worked = false;
+
+        if (b05.isGrounded == true)
+        {
+            if (Mathf.Abs(center.rotation.eulerAngles.x) < 1.0f &&
+                Mathf.Abs(center.rotation.eulerAngles.z) < 1.0f)
+            {
+                rb.AddForce(rb.centerOfMass + new Vector3(0f, b05.jumpSpeed * 10, 0f), ForceMode.Impulse);
+                if (b05.IsState(Bot05_Move.STATE.NORMAL))
+                {
+                    this.Activate();
+                    Vector3 betterEulerAngles = new Vector3(gameObject.transform.parent.eulerAngles.x, transform.eulerAngles.y, gameObject.transform.parent.eulerAngles.z);
+                    center.eulerAngles = betterEulerAngles;
+                    worked = true;
+                }
+            }
+        }
+
+        return worked;
+    }
 }
