@@ -18,7 +18,7 @@ public class B05_AI : MonoBehaviour
     public Material matdef;
     public Material matmove;
     public Material matrush;
-    public Transform goalsphere;
+    //public Transform goalsphere;
 
     private void Awake()
     {
@@ -50,7 +50,7 @@ public class B05_AI : MonoBehaviour
     private void ConstructBehaviorTree()
     {
         // idle branch
-        B05N_Idle idle_node = new B05N_Idle();
+        B05N_Idle idle_node = new B05N_Idle(GetComponent<Bot05_Move>());
         B05N_FaceEnemy turn_node = new B05N_FaceEnemy(enemy_trans, GetComponent<Bot05_Move>());
         B05_UIgnoreFailure ignore_turn = new B05_UIgnoreFailure(turn_node);
         B05_USim idle_branch = new B05_USim(new List<B05_UNode> { ignore_turn, idle_node });
@@ -67,8 +67,11 @@ public class B05_AI : MonoBehaviour
         B05N_Shoot shoot_node = new B05N_Shoot(enemy_trans, enemy.GetComponentInChildren<Rigidbody>(),
                                                GetComponent<Bot05_Move>(), GetComponent<B05_ShootTop>());
 
+        // pound branch
+        B05N_Pound pound_node = new B05N_Pound(GetComponent<B05_GroundPound>(), GetComponent<Bot05_Move>(), this);
+
         // utility node 
-        B05_UtilitySelector usel = new B05_UtilitySelector(new List<B05_UNode> { idle_branch, moveAndTurn, rush_seq, shoot_node });
+        B05_UtilitySelector usel = new B05_UtilitySelector(new List<B05_UNode> { idle_branch, moveAndTurn, rush_seq, shoot_node, pound_node });
 
         // jump node
         B05N_Jump jump_node = new B05N_Jump(GetComponent<Bot05_Move>());
@@ -82,11 +85,16 @@ public class B05_AI : MonoBehaviour
     {
         mesh.material = matdef;
 
-        if (!agent.isOnNavMesh)
+        if (agent.enabled && !agent.isOnNavMesh)
             return;
 
         topNode.Evaluate();
         //if (topNode.nodeState == NodeState.FAILURE)
             //Debug.LogError("Tree returned failure!");
+    }
+
+    public NavMeshAgent GetAgent()
+    {
+        return agent;
     }
 }

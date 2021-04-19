@@ -31,6 +31,7 @@ public class B05N_Jump : B05_Node
         {
             bot.Jump();
             b_running = true;
+            Debug.Log("Jump choosen");
         }
 
         return NodeState.RUNNING;

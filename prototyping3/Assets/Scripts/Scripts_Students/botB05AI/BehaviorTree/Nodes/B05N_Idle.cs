@@ -13,6 +13,13 @@ public class B05N_Idle : B05_UNode
 
     private bool b_just_idled = false;
 
+    private Bot05_Move bot;
+
+    public B05N_Idle(Bot05_Move bot)
+    {
+        this.bot = bot;
+    }
+
     // stay still until time is up
     public override NodeState Evaluate()
     {
@@ -23,7 +30,7 @@ public class B05N_Idle : B05_UNode
         }
 
         timer += Time.deltaTime;
-        if (timer > goal)
+        if (timer > goal || !bot.isGrounded)
         {
             timer = goal = 0.0f;
             b_just_idled = true;
