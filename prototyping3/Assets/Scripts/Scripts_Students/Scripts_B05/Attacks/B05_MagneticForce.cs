@@ -97,4 +97,14 @@ public class B05_MagneticForce : MonoBehaviour
             ani.SetBool("b_attract", false);
         }
     }
+
+    public void GetTops(List<B05_MiniTop> list)
+    {
+        B05_MiniTop[] array = FindObjectsOfType<B05_MiniTop>();
+        list.Clear();
+        foreach (var t in array)
+        {
+            list.Add(t);
+        }
+    }
 }

@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class B05_AI : MonoBehaviour
 {
+    private string thisPlayer;
+
     private NavMeshAgent agent;
     private GameObject enemy;
     private Transform enemy_trans;
@@ -19,12 +21,14 @@ public class B05_AI : MonoBehaviour
     public Material matmove;
     public Material matrush;
     //public Transform goalsphere;
+    public bool low_health;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         distance_goal = ideal_distance;
+        low_health = false;
     }
 
     // Start is called before the first frame update
@@ -43,6 +47,8 @@ public class B05_AI : MonoBehaviour
         }
 
         enemy_trans = enemy.transform.GetChild(0);
+
+        thisPlayer = gameObject.transform.root.tag;
 
         ConstructBehaviorTree();
     }
@@ -70,8 +76,12 @@ public class B05_AI : MonoBehaviour
         // pound branch
         B05N_Pound pound_node = new B05N_Pound(GetComponent<B05_GroundPound>(), GetComponent<Bot05_Move>(), this);
 
+        // mag branch
+        B05N_Mag mag_node = new B05N_Mag(GetComponent<B05_MagneticForce>(), GetComponent<Bot05_Move>().center_pt, enemy_trans);
+        //B05_USim mag_branch = new B05_USim(new List<B05_UNode> { ignore_turn, mag_node });
+
         // utility node 
-        B05_UtilitySelector usel = new B05_UtilitySelector(new List<B05_UNode> { idle_branch, moveAndTurn, rush_seq, shoot_node, pound_node });
+        B05_UtilitySelector usel = new B05_UtilitySelector(new List<B05_UNode> { idle_branch, moveAndTurn, rush_seq, shoot_node, pound_node, mag_node });
 
         // jump node
         B05N_Jump jump_node = new B05N_Jump(GetComponent<Bot05_Move>());
@@ -87,6 +97,20 @@ public class B05_AI : MonoBehaviour
 
         if (agent.enabled && !agent.isOnNavMesh)
             return;
+
+        if (thisPlayer.Equals("Player1"))
+        {
+            low_health = (GameHandler.p1Health <= 8);
+        }
+        else
+        {
+            low_health = (GameHandler.p2Health <= 8);
+        }
+
+        if (low_health)
+        {
+            this.distance_goal = flee_distance;
+        }
 
         topNode.Evaluate();
         //if (topNode.nodeState == NodeState.FAILURE)

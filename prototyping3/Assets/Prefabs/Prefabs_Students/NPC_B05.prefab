@@ -1243,6 +1243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e173a7401170b4c8b91f0cf261062e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doesFallDamage: 0
+  playerFallDamage: 4
 --- !u!114 &9047055608394661728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1531,7 +1533,7 @@ MonoBehaviour:
   matdef: {fileID: 2100000, guid: 1a6f3a3a37599a441bd6c006a53a52ec, type: 2}
   matmove: {fileID: 2100000, guid: dcf313bcc6259154eae8b820bff67b0b, type: 2}
   matrush: {fileID: 2100000, guid: ca72386b5a7859e4f8ac7d9a01b0d381, type: 2}
-  goalsphere: {fileID: 3990344008220575632}
+  low_health: 0
 --- !u!1 &1355330930662561729
 GameObject:
   m_ObjectHideFlags: 0

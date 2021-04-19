@@ -47,7 +47,7 @@ public class B05N_Idle : B05_UNode
         if (b_just_idled)
         {
             b_just_idled = false;
-            return 0.0f;
+            return 0.001f;
         }
         else
         {
