@@ -50,15 +50,15 @@ public class B05N_Pound : B05_UNode
             case 0:
                 return 0.0f;
             case 1:
-                return 0.1f;
+                return 0.0f;
             case 2:
                 return 0.3f;
             case 3:
-                return 0.8f;
+                return 0.9f;
             case 4:
-                return 1.0f;
+                return 1.2f;
             case 5:
-                return 1.0f;
+                return 1.2f;
             default:
                 return 0.0f;
         }
