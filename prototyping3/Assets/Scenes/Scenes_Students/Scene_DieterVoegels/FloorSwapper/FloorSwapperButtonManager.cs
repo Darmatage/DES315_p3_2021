@@ -57,7 +57,7 @@ public class FloorSwapperButtonManager : MonoBehaviour
 
   private void OnTriggerExit(Collider other)
   {
-    if (active == true)
+    if (active == true && buttonRenderer.material.color == pushedColor)
     {
       //Set the position to the default position and the color to the inactive color
       button.transform.position = defaultPosition;

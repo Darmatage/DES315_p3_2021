@@ -25,6 +25,11 @@ public class FloorSwapperTileManager : MonoBehaviour
       {
         rotator.transform.Rotate(Vector3.up, 180 * Time.deltaTime);
       }
+      else
+      {
+        rotator.transform.rotation = Quaternion.identity;
+        active = false;
+      }
     }
   }
 
