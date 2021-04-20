@@ -40,7 +40,7 @@ public class ClosingWalls : MonoBehaviour
             calculateSpeed();
             testedOnce = true;
         }
-        if (Handler.isGameTime && Handler.gameTime == startCollapseTimer && collapseStarted == false)
+        if (Handler.isGameTime && Handler.gameTime <= startCollapseTimer && collapseStarted == false)
         {
             collapseStarted = true;
             startedJourneyTime = Time.time;
