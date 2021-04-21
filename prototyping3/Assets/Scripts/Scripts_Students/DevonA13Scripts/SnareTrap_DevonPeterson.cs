@@ -61,7 +61,7 @@ public class SnareTrap_DevonPeterson : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.transform.root.tag == "Player1" || other.gameObject.transform.root.tag == "Player2")
+        if ((other.gameObject.transform.root.tag == "Player1" || other.gameObject.transform.root.tag == "Player2") && other.gameObject.GetComponent<BotBasic_Move>())
         {
             other.gameObject.GetComponent<BotBasic_Move>().isGrabbed = true;
             grabtimer = timer;
