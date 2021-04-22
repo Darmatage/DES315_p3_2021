@@ -617,6 +617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthStart: 80
+  isInvincible: 0
 --- !u!114 &4582951975505182610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1262,6 +1263,11 @@ PrefabInstance:
         type: 3}
       propertyPath: isMonsterWeapon
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7919812908290139633, guid: 1baf8f87b80006947bc3040db99a6e03,
+        type: 3}
+      propertyPath: damage
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8130926249892479026, guid: 1baf8f87b80006947bc3040db99a6e03,
         type: 3}
