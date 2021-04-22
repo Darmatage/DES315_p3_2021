@@ -134,6 +134,7 @@ public class LJN_MonsterScript : MonoBehaviour
                         transform.LookAt(nextPatrolTarget);
                     }
                     attackStage = 1;
+                    myAgent.destination = myAgent.transform.position;
                 }
                 isAttacking = true;
 
@@ -220,7 +221,7 @@ public class LJN_MonsterScript : MonoBehaviour
             if (SawLerpAmount > 1.0f) SawLerpAmount = 1.0f;
             tail.transform.localEulerAngles = Vector3.Lerp(SawArmStart, SawArmEnd, SawLerpAmount);
 
-            if(attackTimer >= 1.5f)
+            if(attackTimer >= 2.5f)
             {
                 attackStage = 200;
                 isAttacking = false;
@@ -371,6 +372,8 @@ public class LJN_MonsterScript : MonoBehaviour
             {
                 tail.GetComponent<HazardDamage>().damage = 0;
                 attackChoice = 0 + (Random.Range(0, 2) * 2);
+
+                tail.GetComponent<LJN_MonSaw>().SetActiveTail(false);
             }
             else
             {
@@ -396,6 +399,7 @@ public class LJN_MonsterScript : MonoBehaviour
                     break;
                 case 1: //spin
                     tail.GetComponent<HazardDamage>().damage = 10;
+                    tail.GetComponent<LJN_MonSaw>().SetActiveTail(true);
                     tail.transform.localPosition = new Vector3(0, 0, -2.01f);
                     currentEnd = EndRot;
                     nextPatrolTarget = transform;

@@ -21,5 +21,15 @@ public class LJN_MonSaw : MonoBehaviour
     public void SetActiveTail(bool state)
     {
 
+        if(state)
+        {
+            sec1.GetComponent<HazardDamage>().damage = 5;
+            sec2.GetComponent<HazardDamage>().damage = 5;
+        }
+        else
+        {
+            sec1.GetComponent<HazardDamage>().damage = 0;
+            sec2.GetComponent<HazardDamage>().damage = 0;
+        }
     }
 }
