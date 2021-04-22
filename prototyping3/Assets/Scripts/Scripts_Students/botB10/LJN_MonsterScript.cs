@@ -147,11 +147,28 @@ public class LJN_MonsterScript : MonoBehaviour
                     myAgent.destination = nextPatrolTarget.position;
                 }
             }
+            else
+            {
+                if (attackStage == 0)
+                {
+                    if (distToTarget > turnThreshold)
+                    {
+                        transform.LookAt(nextPatrolTarget);
+                    }
+                    attackStage = 1;
+                }
+               
+            }
             AttackPlayer();
         }
         else if(distToTarget > playerAttackDistance)
         {
             myAgent.destination = nextPatrolTarget.position;
+            if(attackChoice == 2)
+            {
+                AttackPlayer();
+                
+            }
         }
 
         //if (distToTarget <= patrolSwitchThreshold1)
@@ -249,6 +266,48 @@ public class LJN_MonsterScript : MonoBehaviour
 
         }
 
+        if(attackChoice == 2)
+        {
+            if (attackStage == 0)
+            {
+                ArmLerpAmountLeft += dt * ArmSpeed;
+                ArmLerpAmountRight += dt * ArmSpeed;
+
+
+                if (ArmLerpAmountLeft > 1.0f && ArmLerpAmountRight > 1.0f)
+                {
+                    ArmLerpAmountLeft = 1.0f;
+                    ArmLerpAmountRight = 1.0f;
+                    if(distToTarget < playerAttackDistance)
+                        attackStage = 1;
+
+                }
+
+                rightArm.transform.localEulerAngles = Vector3.Lerp(RightGrabArmStart, RightGrabArmEnd, ArmLerpAmountRight);
+                leftArm.transform.localEulerAngles = Vector3.Lerp(LeftGrabArmStart, LeftGrabArmEnd, ArmLerpAmountLeft);
+
+                
+            }
+            else if (attackStage == 1)
+            {
+                ArmLerpAmountLeft -= dt * ArmSpeed;
+                ArmLerpAmountRight -= dt * ArmSpeed;
+
+
+                if (ArmLerpAmountLeft < 0.0f && ArmLerpAmountRight < 0.0f)
+                {
+                    ArmLerpAmountLeft = 0.0f;
+                    ArmLerpAmountRight = 0.0f;
+                    attackStage = 200;
+
+                }
+
+                rightArm.transform.localEulerAngles = Vector3.Lerp(RightGrabArmStart, RightGrabArmEnd, ArmLerpAmountRight);
+                leftArm.transform.localEulerAngles = Vector3.Lerp(LeftGrabArmStart, LeftGrabArmEnd, ArmLerpAmountLeft);
+            }
+           
+        }
+
         attackTimer += dt;
     }
 
@@ -292,6 +351,8 @@ public class LJN_MonsterScript : MonoBehaviour
                 }
             }
         }
+
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -305,13 +366,20 @@ public class LJN_MonsterScript : MonoBehaviour
         if(attackStage == 200)
         {
             attackStage = 0;
-            if(attackChoice == 1 )
+            myAgent.speed = 30;
+            if (attackChoice == 1)
             {
                 tail.GetComponent<HazardDamage>().damage = 0;
+                attackChoice = 0 + (Random.Range(0, 2) * 2);
+            }
+            else
+            {
+                attackChoice = Random.Range(0, 2);
+
             }
 
-             attackChoice = Random.Range(0, 2);
-            
+            //attackChoice = 1;
+
             tail.transform.localPosition = new Vector3(0f, 0.5f, -2.01f);
             switch (attackChoice)
             {
@@ -330,8 +398,19 @@ public class LJN_MonsterScript : MonoBehaviour
                     tail.GetComponent<HazardDamage>().damage = 10;
                     tail.transform.localPosition = new Vector3(0, 0, -2.01f);
                     currentEnd = EndRot;
+                    nextPatrolTarget = transform;
                     break;
                 case 2: //block and push
+                    myAgent.speed = 60;
+                   
+                    if (Random.Range(1, 3) == 1)
+                    {
+                        nextPatrolTarget = player1Target;
+                    }
+                    else
+                    {
+                        nextPatrolTarget = player2Target;
+                    }
                     break;
             }
            
