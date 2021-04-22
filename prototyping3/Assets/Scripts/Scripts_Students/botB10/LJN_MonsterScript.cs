@@ -148,7 +148,7 @@ public class LJN_MonsterScript : MonoBehaviour
                     myAgent.destination = nextPatrolTarget.position;
                 }
             }
-            else
+            else if (attackChoice == 2)
             {
                 if (attackStage == 0)
                 {
@@ -160,16 +160,21 @@ public class LJN_MonsterScript : MonoBehaviour
                 }
                
             }
+
+            
             AttackPlayer();
         }
         else if(distToTarget > playerAttackDistance)
         {
+            
             myAgent.destination = nextPatrolTarget.position;
             if(attackChoice == 2)
             {
                 AttackPlayer();
                 
             }
+
+            
         }
 
         //if (distToTarget <= patrolSwitchThreshold1)
@@ -309,6 +314,12 @@ public class LJN_MonsterScript : MonoBehaviour
            
         }
 
+
+        if(attackChoice == 3 && attackTimer >= 4.5f)
+        {
+           
+            attackStage = 200;
+        }
         attackTimer += dt;
     }
 
@@ -368,22 +379,35 @@ public class LJN_MonsterScript : MonoBehaviour
         {
             attackStage = 0;
             myAgent.speed = 30;
+            myAgent.angularSpeed = 180;
             if (attackChoice == 1)
             {
                 tail.GetComponent<HazardDamage>().damage = 0;
-                attackChoice = 0 + (Random.Range(0, 2) * 2);
+                
+                do
+                {
+                    attackChoice = Random.Range(0, 4);
+                } while (attackChoice == 1);
 
                 tail.GetComponent<LJN_MonSaw>().SetActiveTail(false);
             }
+            else if (attackChoice == 3)
+            {
+                do
+                {
+                    attackChoice = Random.Range(0, 4);
+                } while (attackChoice == 3);
+            }
             else
             {
-                attackChoice = Random.Range(0, 2);
+                attackChoice = Random.Range(0, 4);
 
             }
 
             //attackChoice = 1;
 
             tail.transform.localPosition = new Vector3(0f, 0.5f, -2.01f);
+            currentEnd = SawArmEnd;
             switch (attackChoice)
             {
                 case 0: //charge
@@ -395,7 +419,6 @@ public class LJN_MonsterScript : MonoBehaviour
                     {
                         nextPatrolTarget = player2Target;
                     }
-                    currentEnd = SawArmEnd;
                     break;
                 case 1: //spin
                     tail.GetComponent<HazardDamage>().damage = 10;
@@ -416,6 +439,11 @@ public class LJN_MonsterScript : MonoBehaviour
                         nextPatrolTarget = player2Target;
                     }
                     break;
+                case 3:
+                    nextPatrolTarget = transform;
+                    myAgent.angularSpeed = 0;
+                   
+                    break;
             }
            
             attackTimer = 0;
@@ -423,7 +451,7 @@ public class LJN_MonsterScript : MonoBehaviour
         else
         {
             myAgent.destination = gameObject.transform.position;
-            Debug.Log("wait");
+            //Debug.Log("wait");
         }
     }
 
