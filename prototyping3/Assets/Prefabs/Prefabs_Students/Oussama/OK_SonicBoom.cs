@@ -13,10 +13,10 @@ public class OK_SonicBoom : MonoBehaviour
 	//public AudioClip sonicBoomSound;
 	public float SonicCooldown = 0.5f;
 	public float projectileSpeed;
-	public float thrustAmount = 2.5f;
+	public float thrustAmount = 3f;
 	private float Sonictimer;
 	private float flashTimer;
-	public float flashCooldown = 0.5f;
+	public float flashCooldown = 1.0f;
 
 	//grab axis from parent object
 	public string button1;
@@ -40,6 +40,20 @@ public class OK_SonicBoom : MonoBehaviour
 		//if (Input.GetKeyDown(KeyCode.T)){
 		if ((Input.GetButtonDown(button1)) && (Sonictimer <= 0))
 		{
+			sonicBoomattack();
+
+		}
+		if (Input.GetButtonDown(button2) && (flashTimer <= 0))
+		{
+			flashKickAttack();
+			
+		}
+
+	}
+	public void sonicBoomattack()
+	{
+		if (Sonictimer <= 0)
+		{
 			if (GameObject.FindGameObjectWithTag("camP1") != null)
 			{
 				GetComponent<AudioSource>().clip = SonicBoomSound;
@@ -51,11 +65,13 @@ public class OK_SonicBoom : MonoBehaviour
 
 			GameObject projectile = Instantiate(projectilePrefab, transform.position + transform.forward * 3.5f, transform.rotation);
 			projectile.GetComponent<Rigidbody>().velocity = transform.forward * projectileSpeed;
-
 		}
-		if ((Input.GetButtonDown(button2)) && (flashTimer <= 0))
-		{
+	}
 
+	public void flashKickAttack()
+	{
+		if (flashTimer <= 0)
+		{
 			if (GameObject.FindGameObjectWithTag("camP1") != null)
 			{
 				GetComponent<AudioSource>().clip = FlashKickSound;
@@ -67,10 +83,9 @@ public class OK_SonicBoom : MonoBehaviour
 			flashKick.GetComponent<OK_FlashKick>().weaponOut = true;
 			StartCoroutine(WithdrawWeapon());
 		}
-
 	}
 
-	IEnumerator WithdrawWeapon()
+		IEnumerator WithdrawWeapon()
 	{
 		yield return new WaitForSeconds(flashCooldown);
 		flashKick.transform.Translate(0, 0, -thrustAmount);
