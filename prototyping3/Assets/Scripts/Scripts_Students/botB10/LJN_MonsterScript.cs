@@ -50,6 +50,8 @@ public class LJN_MonsterScript : MonoBehaviour
 
     private float distThreshold = 12f;
     private float spinTimer;
+
+    private int attackChoice;
  
 
     // Start is called before the first frame update
@@ -227,7 +229,32 @@ public class LJN_MonsterScript : MonoBehaviour
         //based on attack pattern
         if(attackTimer >= 2.5f)
         {
-            nextPatrolTarget = player1Target;
+            if(attackChoice == 1 )
+            {
+                tail.GetComponent<HazardDamage>().damage = 0;
+            }
+
+            attackChoice = Random.Range(0, 3);
+
+            switch(attackChoice)
+            {
+                case 0: //charge
+                    if(Random.Range(1,3) == 1)
+                    {
+                        nextPatrolTarget = player1Target;
+                    }
+                    else
+                    {
+                        nextPatrolTarget = player2Target;
+                    }
+                    break;
+                case 1: //spin
+                    tail.GetComponent<HazardDamage>().damage = 10;
+                    break;
+                case 2: //block and push
+                    break;
+            }
+           
             attackTimer = 0;
         }
         else
