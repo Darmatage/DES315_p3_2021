@@ -2215,8 +2215,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   risingSpeed: 0.25
-  timeBeforeRising: 20
+  timeBeforeRising: 5
   maxRiseAmount: 100
+  gameHandler: {fileID: 1166622675}
+  p1Parent: {fileID: 1672804433}
+  p2Parent: {fileID: 2092700480}
 --- !u!65 &433884777
 BoxCollider:
   m_ObjectHideFlags: 0
