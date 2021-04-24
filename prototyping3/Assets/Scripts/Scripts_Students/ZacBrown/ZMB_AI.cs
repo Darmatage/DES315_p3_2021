@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class ZMB_AI : MonoBehaviour
 {
@@ -55,30 +57,37 @@ public class ZMB_AI : MonoBehaviour
         
         if (move.isGrabbed)
             return;
-
-        MoveToTarget();
         
         float dist = (transform.position - target.transform.position).magnitude;
-            
-        if (dist < 15.0f)
+        float angle = Vector3.Dot((transform.position + transform.forward).normalized,
+            (transform.position + (target.transform.position - transform.position)).normalized);
+
+        angle = angle * 180f / (float)Math.PI;
+        
+        if (dist > 9f)
+            MoveToTarget();
+        else if (dist < 9f)
+        {
+            agent.isStopped = true;
+        }
+
+        if (dist < 9f)
         {
             Vector3 len = transform.position - target.transform.position;
             Vector3 flat = new Vector2(transform.forward.x, transform.forward.z);
             
-            float angle = Mathf.Acos(Vector2.Dot((new Vector3(flat.x, flat.z)).normalized, (new Vector2(len.x, len.z)).normalized));
-            
-            if (angle < Mathf.PI && !attacking && weapons.Acid > 6.0f)
+            if (!attacking && weapons.Acid > 6.0f)
             {
                 weapons.StartAcidSpray();
                 attacking = true;
             }
-            else if (angle > Mathf.PI && attacking)
+            else if (attacking && weapons.Acid < 2f)
             {
                 weapons.StopAcidSpray();
                 attacking = false;
             }
             
-            if (weapons.Acid > 4.0f && dist < 7.0f)
+            if (weapons.Acid > 2.0f && dist < 6.0f)
             {
                 weapons.ActivateAcidPool();
             }
@@ -98,6 +107,7 @@ public class ZMB_AI : MonoBehaviour
 
     void MoveToTarget()
     {
+        agent.isStopped = false;
         agent.SetDestination(target.transform.position);
     }
 
@@ -115,8 +125,11 @@ public class ZMB_AI : MonoBehaviour
         }
     }
 
-    void RotateToTarget()
+    void RotateToTarget(float angle)
     {
+        //Vector3 rotation = new Vector3(0f, angle, 0f) * 5;
+        //transform.Rotate(rotation * Time.deltaTime);
         
+        transform.rotation = Quaternion.Euler(Vector3.RotateTowards(transform.forward, target.transform.position - transform.position, Time.deltaTime, 0f));
     }
 }
