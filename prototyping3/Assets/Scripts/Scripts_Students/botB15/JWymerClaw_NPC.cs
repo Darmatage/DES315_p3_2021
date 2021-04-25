@@ -19,6 +19,8 @@ public class JWymerClaw_NPC : MonoBehaviour
     public float extendTime = 1.0f;
     private float timer = 0.0f;
 
+    public JWymer_NPC_Rotation rotater;
+
     enum ClawState
     { 
         RETRACTED,
@@ -133,6 +135,11 @@ public class JWymerClaw_NPC : MonoBehaviour
 
     private bool ShouldFire()
 	{
-        return true;
+        if (rotater)
+		{
+            return rotater.targetingPlayer1 ? rotater.patrolStrafe.attackPlayer1 : rotater.patrolStrafe.attackPlayer2;
+		}
+        else
+            return true;
 	}
 }

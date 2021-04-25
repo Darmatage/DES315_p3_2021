@@ -19,7 +19,7 @@ public class JWymer_NPC_Rotation : MonoBehaviour
 
         if (targetingPlayer1)
 		{
-            if (patrolStrafe.player1Target)
+            if (patrolStrafe.attackPlayer1)
             {
                 target = patrolStrafe.player1Target;
             }
@@ -28,7 +28,7 @@ public class JWymer_NPC_Rotation : MonoBehaviour
 		}
         else
 		{
-            if (patrolStrafe.player2Target)
+            if (patrolStrafe.attackPlayer2)
             {
                 target = patrolStrafe.player2Target;
             }
