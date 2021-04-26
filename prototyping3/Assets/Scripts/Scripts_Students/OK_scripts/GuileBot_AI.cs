@@ -15,8 +15,8 @@ public class GuileBot_AI : MonoBehaviour
     public float range = 10;
     private Vector3 escapePosition;
     private bool escaping = false;
+    private int escapeCounter = 0;
 
-    private NavMeshPath path;
     private float elapsed = 0.0f;
 
     // Start is called before the first frame update
@@ -31,8 +31,6 @@ public class GuileBot_AI : MonoBehaviour
             enemyBot = gh.Player1Holder.transform.GetChild(0).gameObject;
         agent = GetComponent<NavMeshAgent>();
 
-
-        path = new NavMeshPath();
     }
 
     // Update is called once per frame
@@ -54,10 +52,12 @@ public class GuileBot_AI : MonoBehaviour
             }
             if (escaping == true)
             {
-                agent.SetDestination(escapePosition);
+                agent.SetDestination(escapePosition); 
+                escapeCounter++;
             }
-            if (!agent.hasPath || Vector3.Distance(transform.position,escapePosition) < 3)
+            if (escapeCounter > 3 || !agent.hasPath || Vector3.Distance(transform.position,escapePosition) < 3)
             {
+                escapeCounter = 0;
                 escaping = false;
             }
         }
@@ -71,23 +71,17 @@ public class GuileBot_AI : MonoBehaviour
         }
         
         float distance = Vector3.Distance(enemyBot.transform.position, this.transform.position);
-        if (distance >= 7)
+        Vector3 connection = enemyBot.transform.position - this.transform.position;
+
+        float angle = Mathf.Acos(Vector3.Dot(connection, this.transform.forward) / (connection.magnitude * transform.forward.magnitude));
+        angle = Mathf.Rad2Deg * angle;
+
+        if (!(angle > 30 || (Vector3.Dot(connection, this.transform.forward) < 0)))
         {
-            Vector3 myPos = transform.position;
-            myPos.y = 0;
-
-            Vector3 targetPos = enemyBot.transform.position;
-            targetPos.y = 0;
-
-            Vector3 toOther = (myPos - targetPos).normalized;
-
-            float angle = Mathf.Atan2(toOther.z, toOther.x) * Mathf.Rad2Deg + 180;
-
-            if ((angle >= 45) || (angle <= 135))
-            {
-                weaponSystem.sonicBoomattack();
-            }
+            weaponSystem.sonicBoomattack();
         }
+
+
         if (distance < 5)
         {
             if (!escaping)
