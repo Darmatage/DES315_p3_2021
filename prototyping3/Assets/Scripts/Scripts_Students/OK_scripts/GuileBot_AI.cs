@@ -75,7 +75,6 @@ public class GuileBot_AI : MonoBehaviour
 
         float angle = Mathf.Acos(Vector3.Dot(connection, this.transform.forward) / (connection.magnitude * transform.forward.magnitude));
         angle = Mathf.Rad2Deg * angle;
-        Debug.Log(angle);
 
         if (!(angle > 30 || (Vector3.Dot(connection, this.transform.forward) < 0)))
         {
